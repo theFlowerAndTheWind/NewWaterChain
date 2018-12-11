@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edittext_height"
+    android:paddingLeft="@dimen/activity_horizontal_padding"
+    android:paddingRight="@dimen/activity_horizontal_padding">
+    <!--adapter中position==0处显示-->
+    <LinearLayout
+        android:id="@+id/linear_warnning"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="配送信息"
+            android:textColor="@color/black"
+            android:textSize="@dimen/middle_btn_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50px"
+            android:text="为了您能顺利洗涤，请准确填写配送信息"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/small_text_size" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_counter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_service_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/nomal_text_size"
+            android:textColor="@color/black"
+            android:text="床单"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/view_space"/>
+
+
+        <ImageButton
+            android:id="@+id/btn_go_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_go_to"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/view_space"/>
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="100000"
+            android:layout_toLeftOf="@+id/btn_go_set"
+            android:textSize="@dimen/nomal_text_size"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_padding">48px</dimen>
+    <dimen name="activity_horizontal_margin">48px</dimen>
+
+    <dimen name="title_bar_height">146px</dimen>
+    <dimen name="nav_bac_height">132px</dimen>
+    <dimen name="edittext_height">132px</dimen>
+    <dimen name="edittext_margin_top">25px</dimen>
+    <dimen name="edittext_padding_left">25px</dimen>
+    <dimen name="view_space">25px</dimen>
+    <dimen name="divider_width">2px</dimen>
+
+
+
+
+    <!--titleBar中间-->
+    <dimen name="title_center_text_size">60px</dimen>
+    <!--titleBar左右两边-->
+    <dimen name="title_left_text_size">55px</dimen>
+    <!--大按钮-->
+    <dimen name="btn_text_size">60px</dimen>
+    <!--中等按钮-->
+    <dimen name="middle_btn_text_size">55px</dimen>
+    <!--中等按钮-->
+    <dimen name="small_btn_text_size">45px</dimen>
+    <!--普通文字-->
+    <dimen name="nomal_text_size">45px</dimen>
+    <!--小文字-->
+    <dimen name="small_text_size">35px</dimen>
+    <!--最小文字-->
+    <dimen name="micro_text_size">30px</dimen>
+    <!--radioButton   文字大小与在textview button不一样  单独设置 -->
+    <!--<dimen name="rb_text_size">35px</dimen>-->
+
+</resources>

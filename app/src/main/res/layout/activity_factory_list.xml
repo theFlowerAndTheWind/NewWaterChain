@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/module_include_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200px"
+                android:background="@color/primary_blue"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="全球领先的独家节水技术节省企业成本"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/nomal_text_size" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_space"
+                android:background="@color/space_gray" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_space"
+                android:background="@color/space_gray" />
+
+            <LinearLayout
+                style="@style/MyPadding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:id="@+id/tv_intr"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="技术介绍"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/nomal_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_intr_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/small_text_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

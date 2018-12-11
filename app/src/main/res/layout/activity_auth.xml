@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/module_include_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_padding"
+        android:paddingBottom="0px">
+
+        <LinearLayout
+            style="@style/MarginTopBottom"
+            android:id="@+id/linear_choice"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_company"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/blue_bg_shape"
+                android:button="@null"
+                android:gravity="center"
+                android:text="企业账号"
+                android:textColor="@color/white"
+                android:textSize="@dimen/middle_btn_text_size" />
+
+            <Button
+                android:id="@+id/btn_personal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/blue_border_bg_shape"
+                android:button="@null"
+                android:gravity="center"
+                android:text="个人账号"
+                android:textColor="@color/primary_blue"
+                android:textSize="@dimen/middle_btn_text_size" />
+        </LinearLayout>
+        <!--<RadioGroup-->
+        <!--android:id="@+id/rg"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/edittext_height"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/rb_company"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/blue_bg_shape"-->
+        <!--android:button="@null"-->
+        <!--android:gravity="center"-->
+        <!--android:text="企业账号"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/rb_text_size" />-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/rb_personal"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/blue_border_bg_shape"-->
+        <!--android:button="@null"-->
+        <!--android:gravity="center"-->
+        <!--android:text="个人账号"-->
+        <!--android:textColor="@color/primary_blue"-->
+        <!--android:textSize="@dimen/rb_text_size" />-->
+        <!--</RadioGroup>-->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linear_choice"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!--personal-->
+                <FrameLayout
+                    android:id="@+id/frame_nationality"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/sp_nationality"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:entries="@array/nationality" />
+                </FrameLayout>
+
+                <!--company  personal-->
+                <LinearLayout
+                    style="@style/MarginTopBottom"
+                    android:id="@+id/linear_cities"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:orientation="horizontal">
+                    <FrameLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_border_bg_shape">
+
+                        <Spinner
+                            style="@style/EdtTopBottomLeft"
+                            android:id="@+id/sp_province"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:entries="@array/province" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="@dimen/view_space"
+                        android:layout_height="match_parent" />
+
+                    <FrameLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/gray_border_bg_shape">
+
+                        <Spinner
+                            style="@style/EdtTopBottomLeft"
+                            android:id="@+id/sp_city"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:entries="@array/city" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edt_company_name"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_name" />
+
+                <EditText
+                    android:id="@+id/edt_company_license_no"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_license_no" />
+
+                <EditText
+                    android:id="@+id/edt_company_boss_name"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_boss_name"
+                    android:inputType="phone"
+                    android:maxLength="11" />
+
+                <LinearLayout
+                    android:id="@+id/linear_boss_id_img_a"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_boss_id_img_a"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/trans"
+                        android:hint="@string/hint_input_id_img_a" />
+
+                    <ImageButton
+                        android:id="@+id/btn_upload_boss_id_img_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_upload_img" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_boss_id_img_b"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_boss_id_img_b"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/trans"
+                        android:hint="@string/hint_input_id_img_a" />
+
+                    <ImageButton
+                        android:id="@+id/btn_upload_boss_id_img_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_upload_img" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edt_company_boss_tel"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_boss_tel"
+                    android:inputType="phone"
+                    android:maxLength="11" />
+
+                <EditText
+                    android:id="@+id/edt_company_other_name"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_other_name"
+                    android:inputType="phone"
+                    android:maxLength="11" />
+
+                <EditText
+                    android:id="@+id/edt_company_other_tel"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_other_tel"
+                    android:inputType="phone"
+                    android:maxLength="11" />
+
+                <!--personal-->
+                <EditText
+                    android:id="@+id/edt_user_name"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_license_no"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/edt_id_no"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:hint="@string/hint_input_company_boss_name"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/linear_p_id_img_a"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/edt_p_id_img_a"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/trans"
+                        android:hint="@string/hint_input_id_img_a" />
+
+                    <ImageButton
+                        android:id="@+id/btn_upload_p_id_img_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_upload_img" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_p_id_img_b"
+                    style="@style/EdtTopBottomLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/gray_border_bg_shape"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/edt_p_id_img_b"
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/trans"
+                        android:hint="@string/hint_input_id_img_a" />
+
+                    <ImageButton
+                        android:id="@+id/btn_upload_p_id_img_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_upload_img" />
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="162px"
+                    android:layout_marginBottom="@dimen/title_bar_height"
+                    android:background="@drawable/btn_bg_selector"
+                    android:text="下一步"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/btn_text_size" />
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</LinearLayout>

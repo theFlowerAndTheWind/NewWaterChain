@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <RadioGroup
+            android:id="@+id/rg_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableTop="@drawable/homepage_rb1_icon"
+                android:drawablePadding="10px"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:textColor="@color/homepage_rb_color"
+                android:text="我的设备"
+                android:textSize="22px"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawablePadding="10px"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:drawableTop="@drawable/homepage_rb2_icon"
+                android:textColor="@color/homepage_rb_color"
+                android:text="摄像头"
+                android:textSize="22px"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+
+            <RadioButton
+                android:id="@+id/rb3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableTop="@drawable/homepage_rb3_icon"
+                android:textColor="@color/homepage_rb_color"
+                android:drawablePadding="10px"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:text="报警信息"
+                android:textSize="22px"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+
+            <RadioButton
+                android:id="@+id/rb4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawablePadding="10px"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:drawableTop="@drawable/homepage_rb4_icon"
+                android:textColor="@color/homepage_rb_color"
+                android:text="个人中心"
+                android:textSize="22px"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/rb5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawablePadding="10px"
+                android:paddingBottom="10px"
+                android:paddingTop="10px"
+                android:drawableTop="@drawable/homepage_rb4_icon"
+                android:textColor="@color/homepage_rb_color"
+                android:text="个人中心"
+                android:textSize="22px"
+                android:gravity="center"
+                android:layout_weight="1"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_main_ll"
+        android:layout_above="@id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
+
+</RelativeLayout>
