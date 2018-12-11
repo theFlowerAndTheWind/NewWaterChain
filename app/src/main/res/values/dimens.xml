@@ -30,7 +30,7 @@
     <dimen name="small_text_size">35px</dimen>
     <!--最小文字-->
     <dimen name="micro_text_size">30px</dimen>
-    <!--radioButton   文字大小与在textview button不一样  单独设置 -->
-    <!--<dimen name="rb_text_size">35px</dimen>-->
+    radioButton   文字大小与在textview button不一样  单独设置
+    <dimen name="rb_text_size">35px</dimen>
 
 </resources>
