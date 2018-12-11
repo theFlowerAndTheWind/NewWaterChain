@@ -7,8 +7,11 @@ package com.quanminjieshui.waterchain.http.config;
 public class HttpConfig {
 
     public static int HTTP_TIME = 30000;
-//    public static String BASE_URL = "http://quanminjieshui.com/";
-    public static String BASE_URL = "http://192.144.140.202:8769/";
+    //生成环境
+//    public static String BASE_URL = "https://www.jsl.com";
+    //开发环境
+    public static String BASE_URL = "http://jsl.sshsky.com";
+
     public static final String HEAD_TOKEN_KEY = "TOKEN";
     public static final String HEAD_SYSTEM_KEY = "SYSTEM";
     public static final String HEAD_PRODUCT_KEY = "PRODUCT";

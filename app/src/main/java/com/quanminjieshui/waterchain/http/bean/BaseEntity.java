@@ -6,7 +6,7 @@ package com.quanminjieshui.waterchain.http.bean;
 
 public class BaseEntity <T> {
 
-    private static String SUCCESS_CODE = "200";//成功的code
+    private static String SUCCESS_CODE = "1";//成功的code
     private String code;
     private String msg;
     private T data;

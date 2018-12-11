@@ -10,6 +10,8 @@ import com.quanminjieshui.waterchain.http.config.UrlConfig;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -25,13 +27,13 @@ import retrofit2.http.Query;
 public interface APIService {
 
     //登录接口
-    @POST(UrlConfig.login)
+    @POST(UrlConfig.LOGIN)
     @FormUrlEncoded
     Observable<BaseEntity<UserBean>> login(@Field("name") String name, @Field("password") String password);
 
-    //消息列表
-    @GET(UrlConfig.getMessageList)
-    Observable<BaseEntity<MessageBean>> getMessageList(@Query("currentPage") String currentPage, @Query("pageSize") String pageSize);  //消息列表
+    //忘记密码
+//    @GET(UrlConfig.getMessageList)
+//    Observable<BaseEntity<MessageBean>> getMessageList(@Query("currentPage") String currentPage, @Query("pageSize") String pageSize);  //消息列表
 
     @POST(UrlConfig.GET_SMS)
     @FormUrlEncoded
@@ -44,5 +46,9 @@ public interface APIService {
     @POST(UrlConfig.RESET)
     @FormUrlEncoded
     Observable<BaseEntity<RegisterResponseBean>> reset(@FieldMap Map<String,Object> map);
+
+    //修改密码
+    @POST(UrlConfig.CHANGE_PASS)
+    Observable<BaseEntity> changePass(@Body RequestBody requestBody);
 
 }

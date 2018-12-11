@@ -17,26 +17,4 @@ package com.quanminjieshui.waterchain.beans;
  * @Date: 2018/12/8 3:05 PM
  */
 public class SmsResponseBean {
-
-    private int respCode;
-
-    public SmsResponseBean(int respCode) {
-        this.respCode = respCode;
-    }
-
-    public int getRespCode() {
-        return respCode;
-    }
-
-    public void setRespCode(int respCode) {
-        this.respCode = respCode;
-    }
-
-
-    @Override
-    public String toString() {
-        return new StringBuilder().append("SmsResponseBean{")
-                .append("respCode='").append(respCode).append("\'")
-                .append("}").toString();
-    }
 }

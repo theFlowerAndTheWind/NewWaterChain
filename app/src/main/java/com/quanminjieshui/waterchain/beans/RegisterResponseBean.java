@@ -18,17 +18,5 @@ package com.quanminjieshui.waterchain.beans;
  */
 public class RegisterResponseBean {
 
-    private int respCode;
 
-    public RegisterResponseBean(int respCode) {
-        this.respCode = respCode;
-    }
-
-    public int getRespCode() {
-        return respCode;
-    }
-
-    public void setRespCode(int respCode) {
-        this.respCode = respCode;
-    }
 }
