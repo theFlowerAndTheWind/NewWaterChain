@@ -52,7 +52,7 @@ public class RegisterSuccessActivity extends BaseActivity {
 
     @Override
     public void initContentView() {
-        setContentView(R.layout.activity_register_success);
+        setContentView(R.layout.activity_success);
     }
 
     @Override

@@ -40,8 +40,7 @@ public interface APIService {
     Observable<BaseEntity<SmsResponseBean>> getSms(@Field("mobile") String mobile);
 
     @POST(UrlConfig.REGISTER)
-    @FormUrlEncoded
-    Observable<BaseEntity<RegisterResponseBean>> register(@FieldMap Map<String,Object> map);
+    Observable<BaseEntity> register(@Body RequestBody requestBody);
 
     @POST(UrlConfig.RESET)
     @FormUrlEncoded

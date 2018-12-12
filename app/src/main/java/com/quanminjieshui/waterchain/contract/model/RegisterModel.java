@@ -16,11 +16,21 @@ import android.util.Log;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.WaterChainApplication;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
+import com.quanminjieshui.waterchain.http.BaseObserver;
+import com.quanminjieshui.waterchain.http.RetrofitFactory;
+import com.quanminjieshui.waterchain.http.bean.BaseEntity;
+import com.quanminjieshui.waterchain.http.config.HttpConfig;
+import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
+import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.AccountValidatorUtil;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.RequestBody;
 
 /**
  * @ClassName: RegisterModel
@@ -94,26 +104,31 @@ public class RegisterModel {
 
     public Map<String, Boolean> verify(final String mobile, final String pwd,final String confirm, final String sms, final String invitation, final boolean agreement) {
         verifyResult.clear();
-        if (!TextUtils.isEmpty(mobile) && AccountValidatorUtil.isMobile(mobile)) {
+        if (true) {
+//        if (!TextUtils.isEmpty(mobile) && AccountValidatorUtil.isMobile(mobile)) {
             verifyResult.put(context.getString(R.string.key_edt_name_mobile), true);
         } else {
             verifyResult.put(context.getString(R.string.key_edt_name_mobile), false);
         }
-        if(!TextUtils.isEmpty(sms)/*&&sms.length()==4*/){
+        if(true){
+//        if(!TextUtils.isEmpty(sms)/*&&sms.length()==4*/){
             verifyResult.put(context.getString(R.string.key_edt_name_sms),true);
         }else{
             verifyResult.put(context.getString(R.string.key_edt_name_sms),false);
         }
-        if(!TextUtils.isEmpty(pwd)&&pwd.equals(confirm)&&AccountValidatorUtil.isPassword(pwd)&&AccountValidatorUtil.isPassword(confirm)){
+        if(true){
+//        if(!TextUtils.isEmpty(pwd)&&pwd.equals(confirm)&&AccountValidatorUtil.isPassword(pwd)&&AccountValidatorUtil.isPassword(confirm)){
             verifyResult.put(context.getString(R.string.key_edt_name_pwd),true);
         }else{
             verifyResult.put(context.getString(R.string.key_edt_name_pwd),false);
         }
-        if(agreement){
+        if(true){
+//        if(agreement){
             verifyResult.put(context.getString(R.string.key_checkbox_agreement),true);
         }else{
             verifyResult.put(context.getString(R.string.key_checkbox_agreement),false);
         }
+
         return verifyResult;
     }
 
@@ -132,45 +147,41 @@ public class RegisterModel {
             return;
         }
         Log.e("TAG", "开始注册请求");
-        callback.onRegisterSuccess();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("user_login", mobile);
+        params.put("ver_code", sms);
+        params.put("user_pass", pwd);
+        params.put("inv_code", invitation);
+        RetrofitFactory.getInstance().createService()
+                .register(RequestUtil.getRequestBody(params))
+                .compose(activity.<BaseEntity>bindToLifecycle())//绑定activity生命周期，防止内存溢出
+                .compose(ObservableTransformerUtils.<BaseEntity>io())//选择线程
+                .subscribe(new BaseObserver(activity) {
+                    @Override
+                    protected void onSuccess(Object obj) throws Exception {
+                        callback.onRegisterSuccess();
+                    }
 
-//        Map<String, Object> form = new HashMap<>();
-//        form.put(context.getString(R.string.field_mobile), mobile);
-//        form.put(context.getString(R.string.field_pwd), pwd);
-//        form.put(context.getString(R.string.field_sms), sms);
-//        form.put(context.getString(R.string.field_invitation), invitation);
-//        form.put("agreement", agreement);
-//        RetrofitFactory.getInstance().createService()
-//                .register(form)
-//                .compose(activity.<BaseEntity<RegisterResponseBean>>bindToLifecycle())//绑定activity生命周期，防止内存溢出
-//                .compose(ObservableTransformerUtils.<BaseEntity<RegisterResponseBean>>io())//选择线程
-//                .subscribe(new BaseObserver<RegisterResponseBean>(activity) {
-//                    @Override
-//                    protected void onSuccess(RegisterResponseBean bean) throws Exception {
-//                        //todo save sth. or do sth.
-//                        callback.onRegisterSuccess();
-//                    }
-//
-//                    @Override
-//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//                        if (e != null && e.getMessage() != null) {
-//                            if (isNetWorkError) {
-//                                LogUtils.e(e.getMessage());
-//                                callback.onRegisterFaild(HttpConfig.ERROR_MSG);
-//                            } else {
-//                                callback.onRegisterFaild(e.getMessage());
-//                            }
-//                        } else {
-//                            callback.onRegisterFaild("");
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onCodeError(String code, String msg) throws Exception {
-//                        super.onCodeError(code, msg);
-//                        callback.onRegisterFaild(msg);
-//                    }
-//                });
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        if (e != null && e.getMessage() != null) {
+                            if (isNetWorkError) {
+                                LogUtils.e(e.getMessage());
+                                callback.onRegisterFaild(HttpConfig.ERROR_MSG);
+                            } else {
+                                callback.onRegisterFaild(e.getMessage());
+                            }
+                        } else {
+                            callback.onRegisterFaild("");
+                        }
+                    }
+
+                    @Override
+                    protected void onCodeError(String code, String msg) throws Exception {
+                        super.onCodeError(code, msg);
+                        callback.onRegisterFaild(msg);
+                    }
+                });
 
     }
 
