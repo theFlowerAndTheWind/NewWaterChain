@@ -50,6 +50,7 @@ public class BasePermissionFragment extends RxFragment implements EasyPermission
      */
     public void performCodeWithPermission(@NonNull String rationale, final int requestCode, @NonNull String[] perms, @NonNull PermissionCallback callback) {
 
+        EasyPermissions.dismissDialog();
 
         if (EasyPermissions.hasPermissions(getActivity(), perms)) {
             callback.hasPermission(Arrays.asList(perms));

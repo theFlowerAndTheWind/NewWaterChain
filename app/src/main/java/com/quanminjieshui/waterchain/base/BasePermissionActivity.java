@@ -45,8 +45,9 @@ public class BasePermissionActivity extends AutoLayoutActivity implements EasyPe
      * @param perms permissions
      * @param callback callback
      */
-    public void performCodeWithPermission(@NonNull String rationale,
-                                          final int requestCode, @NonNull String[] perms, @NonNull PermissionCallback callback) {
+    public void performCodeWithPermission(@NonNull String rationale,final int requestCode, @NonNull String[] perms, @NonNull PermissionCallback callback) {
+
+        EasyPermissions.dismissDialog();
         if (EasyPermissions.hasPermissions(this, perms)) {
             callback.hasPermission(Arrays.asList(perms));
         } else {

@@ -1,9 +1,13 @@
 package com.quanminjieshui.waterchain.http;
 
 import android.accounts.NetworkErrorException;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
+import com.quanminjieshui.waterchain.base.ActivityManager;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
+import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.net.ConnectException;
@@ -90,15 +94,15 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
      * @throws Exception
      */
     protected void onCodeError(String code, String msg) throws Exception {
-//        if (code.equals("1006") && mContext != null) {
-//            Activity lastActivity = ActivityManager.currentActivity();
-//            if (!(lastActivity instanceof LoginActivity)) {
-//                Intent intent = new Intent(mContext, LoginActivity.class);
-//                intent.putExtra("reLogin", true);
-//                LogUtils.d("===========Loginactivity==========");
-//                mContext.startActivity(intent);
-//            }
-//        }
+        if (code.equals("0") && msg.equals("用户未登录") && mContext != null) {
+            Activity lastActivity = ActivityManager.currentActivity();
+            if (!(lastActivity instanceof LoginActivity)) {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                intent.putExtra("reLogin", true);
+                LogUtils.d("===========Loginactivity==========");
+                mContext.startActivity(intent);
+            }
+        }
     }
 
     /**

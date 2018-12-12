@@ -191,7 +191,7 @@ public class FindPassActivity extends BaseActivity implements FindPassViewImpl {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onGetSmsSuccess() {
-        new FindPassActivity.TimeCount(61000, 1000).start();
+        new TimeCount(61000, 1000).start();
         tv_get_sms.setEnabled(false);
         tv_get_sms.setBackground(getDrawable(R.drawable.blue_bg_shape));
         tv_get_sms.setTextColor(getResources().getColor(R.color.white));

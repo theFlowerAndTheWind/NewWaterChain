@@ -109,7 +109,7 @@ public class LoginModel {
     public interface LoginCallback {
         void onEdtContentsLegal();
 
-        void onEdtContentsIllegal(Map<String,Boolean>verify);
+        void onEdtContentsIllegal(Map<String, Boolean> verify);
 
         void loginSuccess();
 

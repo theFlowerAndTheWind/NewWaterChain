@@ -1,8 +1,10 @@
 package com.quanminjieshui.waterchain.contract.model;
 
-import android.text.TextUtils;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -11,31 +13,22 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
-import java.util.HashMap;
+import java.util.List;
 
 /**
- * Created by WanghongHe on 2018/12/10 12:57.
- * 修改密码
+ * Created by WanghongHe on 2018/12/12 15:26.
+ * 订单详情
  */
 
-public class ChangePassModel {
+public class OrderDetailModel {
 
-    public void changePass(BaseActivity activity, String user_login, String old_pass, String new_pass, final ChangePassCallBack callBack){
-        HashMap<String, Object> params = new HashMap<>();
-        if (!TextUtils.isEmpty(user_login)) {
-            params.put("user_login", user_login);
-        }
-        if (!TextUtils.isEmpty(old_pass)) {
-            params.put("old_pass", old_pass);
-        }
-        if (!TextUtils.isEmpty(old_pass)) {
-            params.put("new_pass", new_pass);
-        }
+    public void getOrderDetail(BaseActivity activity,final OrderDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
-                .changePass(RequestUtil.getRequestHashBody(params,false))
+                .orderDetail(RequestUtil.getRequestHashBody(null,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver(activity) {
+
                     /**
                      * 返回成功
                      *
@@ -44,7 +37,9 @@ public class ChangePassModel {
                      */
                     @Override
                     protected void onSuccess(Object o) throws Exception {
-                        callBack.success();
+                        Gson gson = new Gson();
+                        OrderDetailResponseBean orderDetailBeans = gson.fromJson((JsonElement) o,new TypeToken<OrderDetailResponseBean>() {}.getType());
+                        callBack.success(orderDetailBeans);
                     }
 
                     /**
@@ -66,7 +61,6 @@ public class ChangePassModel {
                         } else {
                             callBack.failed("");
                         }
-
                     }
 
                     @Override
@@ -77,8 +71,9 @@ public class ChangePassModel {
                 });
     }
 
-    public interface ChangePassCallBack{
-        void success();
+
+    public interface OrderDetailCallBack{
+        void success(OrderDetailResponseBean orderDetailBeans);
         void failed(String msg);
     }
 }

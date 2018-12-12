@@ -1,8 +1,11 @@
 package com.quanminjieshui.waterchain.contract.model;
 
-import android.text.TextUtils;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.OrderListResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -14,28 +17,21 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 import java.util.HashMap;
 
 /**
- * Created by WanghongHe on 2018/12/10 12:57.
- * 修改密码
+ * Created by WanghongHe on 2018/12/12 18:08.
+ * 成交明细
  */
 
-public class ChangePassModel {
+public class TradeDetailModel {
 
-    public void changePass(BaseActivity activity, String user_login, String old_pass, String new_pass, final ChangePassCallBack callBack){
-        HashMap<String, Object> params = new HashMap<>();
-        if (!TextUtils.isEmpty(user_login)) {
-            params.put("user_login", user_login);
-        }
-        if (!TextUtils.isEmpty(old_pass)) {
-            params.put("old_pass", old_pass);
-        }
-        if (!TextUtils.isEmpty(old_pass)) {
-            params.put("new_pass", new_pass);
-        }
+    public void getTradeDetail(BaseActivity activity,int id,final TradeDetailCallBack callBack){
+        HashMap<String , Object> params = new HashMap<>();
+        params.put("id",id);
         RetrofitFactory.getInstance().createService()
-                .changePass(RequestUtil.getRequestHashBody(params,false))
+                .tradeDetail(RequestUtil.getRequestHashBody(params,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver(activity) {
+
                     /**
                      * 返回成功
                      *
@@ -44,7 +40,9 @@ public class ChangePassModel {
                      */
                     @Override
                     protected void onSuccess(Object o) throws Exception {
-                        callBack.success();
+                        Gson gson = new Gson();
+                        TradeDetailResponseBean tradeDetailBean = gson.fromJson((JsonElement) o,new TypeToken<OrderListResponseBean>() {}.getType());
+                        callBack.success(tradeDetailBean);
                     }
 
                     /**
@@ -66,7 +64,6 @@ public class ChangePassModel {
                         } else {
                             callBack.failed("");
                         }
-
                     }
 
                     @Override
@@ -77,8 +74,9 @@ public class ChangePassModel {
                 });
     }
 
-    public interface ChangePassCallBack{
-        void success();
+    public interface TradeDetailCallBack{
+        void success(TradeDetailResponseBean tradeDetailResponseBean);
         void failed(String msg);
     }
+
 }

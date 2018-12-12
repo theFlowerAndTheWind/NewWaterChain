@@ -80,7 +80,7 @@ public class EasyPermissions {
      * Request a set of permissions, showing rationale if the system requests it.
      *
      * @param object      Activity or Fragment requesting permissions. Should implement
-     *                    {@link android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback}
+     *                    {@link ActivityCompat.OnRequestPermissionsResultCallback}
      *                    or {@code android.support.v13.app.FragmentCompat.OnRequestPermissionsResultCallback}
      * @param rationale   a message explaining why the application needs this set of permissions, will be displayed if the user rejects the request the first
      *                    time.
@@ -99,7 +99,7 @@ public class EasyPermissions {
      * Request a set of permissions, showing rationale if the system requests it.
      *
      * @param object         Activity or Fragment requesting permissions. Should implement
-     *                       {@link android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback}
+     *                       {@link ActivityCompat.OnRequestPermissionsResultCallback}
      *                       or {@code android.support.v13.app.FragmentCompat.OnRequestPermissionsResultCallback}
      * @param rationale      a message explaining why the application needs this set of permissions, will be displayed if the user rejects the request the first
      *                       time.
@@ -244,7 +244,7 @@ public class EasyPermissions {
 
 
     /**
-     * Handle the result of a permission request, should be called from the calling Activity's {@link android.support.v4.app.ActivityCompat
+     * Handle the result of a permission request, should be called from the calling Activity's {@link ActivityCompat
      * .OnRequestPermissionsResultCallback#onRequestPermissionsResult(int, String[], int[])} method.
      * <p>
      * If any permissions were granted or denied, the {@code object} will receive the appropriate callbacks through {@link PermissionCallbacks} and
@@ -312,10 +312,10 @@ public class EasyPermissions {
     @TargetApi(23)
     static void executePermissionsRequest(@NonNull Object object, @NonNull String[] perms, int requestCode) {
         checkCallingObjectSuitability(object);
-        if (object instanceof android.app.Activity) {
+        if (object instanceof Activity) {
             ActivityCompat.requestPermissions((Activity) object, perms, requestCode);
-        } else if (object instanceof android.support.v4.app.Fragment) {
-            ((android.support.v4.app.Fragment) object).requestPermissions(perms, requestCode);
+        } else if (object instanceof Fragment) {
+            ((Fragment) object).requestPermissions(perms, requestCode);
         } else if (object instanceof android.app.Fragment) {
             ((android.app.Fragment) object).requestPermissions(perms, requestCode);
         }
@@ -325,8 +325,8 @@ public class EasyPermissions {
     private static Activity getActivity(@NonNull Object object) {
         if (object instanceof Activity) {
             return ((Activity) object);
-        } else if (object instanceof android.support.v4.app.Fragment) {
-            return ((android.support.v4.app.Fragment) object).getActivity();
+        } else if (object instanceof Fragment) {
+            return ((Fragment) object).getActivity();
         } else if (object instanceof android.app.Fragment) {
             return ((android.app.Fragment) object).getActivity();
         } else {
@@ -339,10 +339,10 @@ public class EasyPermissions {
     private static android.support.v4.app.FragmentManager getSupportFragmentManager(
             @NonNull Object object) {
 
-        if (object instanceof android.support.v4.app.FragmentActivity) {
+        if (object instanceof FragmentActivity) {
             // Support library FragmentActivity
             return ((FragmentActivity) object).getSupportFragmentManager();
-        } else if (object instanceof android.support.v4.app.Fragment) {
+        } else if (object instanceof Fragment) {
             // Support library Fragment
             return ((Fragment) object).getChildFragmentManager();
         }
@@ -410,8 +410,8 @@ public class EasyPermissions {
             throw new NullPointerException("Activity or Fragment should not be null");
         }
         // Make sure Object is an Activity or Fragment
-        boolean isActivity = object instanceof android.app.Activity;
-        boolean isSupportFragment = object instanceof android.support.v4.app.Fragment;
+        boolean isActivity = object instanceof Activity;
+        boolean isSupportFragment = object instanceof Fragment;
         boolean isAppFragment = object instanceof android.app.Fragment;
         boolean isMinSdkM = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
         if (!(isSupportFragment || isActivity || (isAppFragment && isMinSdkM))) {

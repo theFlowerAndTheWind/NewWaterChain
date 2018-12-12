@@ -262,13 +262,13 @@ public class NetworkUtils {
      *
      * @return type of network
      * <ul>
-     * <li>{@link NetworkUtils.NetworkType#NETWORK_ETHERNET} </li>
-     * <li>{@link NetworkUtils.NetworkType#NETWORK_WIFI    } </li>
-     * <li>{@link NetworkUtils.NetworkType#NETWORK_4G      } </li>
-     * <li>{@link NetworkUtils.NetworkType#NETWORK_3G      } </li>
-     * <li>{@link NetworkUtils.NetworkType#NETWORK_2G      } </li>
-     * <li>{@link NetworkUtils.NetworkType#NETWORK_UNKNOWN } </li>
-     * <li>{@link NetworkUtils.NetworkType#NETWORK_NO      } </li>
+     * <li>{@link NetworkType#NETWORK_ETHERNET} </li>
+     * <li>{@link NetworkType#NETWORK_WIFI    } </li>
+     * <li>{@link NetworkType#NETWORK_4G      } </li>
+     * <li>{@link NetworkType#NETWORK_3G      } </li>
+     * <li>{@link NetworkType#NETWORK_2G      } </li>
+     * <li>{@link NetworkType#NETWORK_UNKNOWN } </li>
+     * <li>{@link NetworkType#NETWORK_NO      } </li>
      * </ul>
      */
     @RequiresPermission(ACCESS_NETWORK_STATE)

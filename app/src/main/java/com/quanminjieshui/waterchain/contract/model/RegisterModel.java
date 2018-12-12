@@ -16,7 +16,6 @@ import android.util.Log;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.WaterChainApplication;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -29,8 +28,6 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.RequestBody;
 
 /**
  * @ClassName: RegisterModel
@@ -147,13 +144,13 @@ public class RegisterModel {
             return;
         }
         Log.e("TAG", "开始注册请求");
-        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>();
         params.put("user_login", mobile);
         params.put("ver_code", sms);
         params.put("user_pass", pwd);
         params.put("inv_code", invitation);
         RetrofitFactory.getInstance().createService()
-                .register(RequestUtil.getRequestBody(params))
+                .register(RequestUtil.getRequestHashBody(params,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())//绑定activity生命周期，防止内存溢出
                 .compose(ObservableTransformerUtils.<BaseEntity>io())//选择线程
                 .subscribe(new BaseObserver(activity) {
