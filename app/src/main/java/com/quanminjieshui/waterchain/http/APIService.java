@@ -1,13 +1,11 @@
 package com.quanminjieshui.waterchain.http;
 
-import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.SmsResponseBean;
 import com.quanminjieshui.waterchain.beans.UserBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -20,7 +18,7 @@ import retrofit2.http.POST;
 
 /**
  * Created by WanghongHe on 2018/12/3 11:41.
- * post和gest
+ * post 对应@Body 和get 对应@Query
  */
 
 public interface APIService {
@@ -64,4 +62,24 @@ public interface APIService {
     //交易中心
     @POST(UrlConfig.TRADE_CENTER)
     Observable<BaseEntity> tradeCenter(@Body RequestBody requestBody);
+
+    //用户身份认证信息
+    @POST(UrlConfig.AUTH_DETAIL)
+    Observable<BaseEntity> authDetail(@Body RequestBody requestBody);
+
+    //我的资产
+    @POST(UrlConfig.USER_ACCOUNT)
+    Observable<BaseEntity> accountDetail(@Body RequestBody requestBody);
+
+    //用户信息
+    @POST(UrlConfig.USER_DETAIL)
+    Observable<BaseEntity> userDetail(@Body RequestBody requestBody);
+
+    //平台咨询详情
+    @POST(UrlConfig.INFO_DETAIL)
+    Observable<BaseEntity> infoDetail(@Body RequestBody requestBody);
+
+    //平台咨询列表
+    @POST(UrlConfig.INFO_LIST)
+    Observable<BaseEntity> infoList(@Body RequestBody requestBody);
 }
