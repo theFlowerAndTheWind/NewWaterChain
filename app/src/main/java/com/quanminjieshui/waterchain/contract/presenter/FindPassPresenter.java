@@ -23,7 +23,7 @@ import java.util.Map;
  * @Author: sxt
  * @Date: 2018/12/9 2:17 AM
  */
-public class FindPassPresenter extends BasePresenter<FindPassViewImpl>  {
+public class FindPassPresenter extends BasePresenter<FindPassViewImpl> {
 
     private FindPassModel model;
 

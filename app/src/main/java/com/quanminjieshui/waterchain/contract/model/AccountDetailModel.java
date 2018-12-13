@@ -20,7 +20,7 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 
 public class AccountDetailModel {
 
-    public void getAccountDetail(BaseActivity activity,final AccountDetailCallBack callBack){
+    public void getAccountDetail(BaseActivity activity, final AccountDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .accountDetail(RequestUtil.getRequestHashBody(null,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())

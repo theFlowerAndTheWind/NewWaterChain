@@ -13,8 +13,6 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
-import java.util.List;
-
 /**
  * Created by WanghongHe on 2018/12/12 15:26.
  * 订单详情
@@ -22,7 +20,7 @@ import java.util.List;
 
 public class OrderDetailModel {
 
-    public void getOrderDetail(BaseActivity activity,final OrderDetailCallBack callBack){
+    public void getOrderDetail(BaseActivity activity, final OrderDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .orderDetail(RequestUtil.getRequestHashBody(null,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())

@@ -19,7 +19,7 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
  */
 
 public class AuthDetailModel {
-    public void getAuthDetail(BaseActivity activity,final AuthDetailCallBack callBack){
+    public void getAuthDetail(BaseActivity activity, final AuthDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .authDetail(RequestUtil.getRequestBeanBody(null,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())

@@ -9,8 +9,20 @@ public class UrlConfig {
     //登录接口
     public final static String LOGIN = "/api/home/public/login";
     //获取短信验证码接口
-    public final static String GET_SMS = "";
-    //注册接口
+    public final static String SEND_VER_CODE = "api/home/common/sendVercode";
+    /***
+     * 注册接口
+     *
+     * {
+     *     "code":1,
+     *    "msg":"注册成功",
+     *     "data":{
+     *        "uid":"14",
+     *        "user_login":"18329257177",
+     *        "token":"d6bdbc551eb58413b80cd619cc9c4e65d19cedfb02ed04699cba16906f1c21a6"
+     *    }
+     * }
+     */
     public final static String REGISTER = "api/home/public/register";
     //找回/重置密码借口
     public static final String RESET = "api/home/public/findPass";
@@ -58,7 +70,7 @@ public class UrlConfig {
     //用户身份证认证信息
     public static final String AUTH_DETAIL = "api/home/user/authDetail";
     //个人中心-全部委托
-    public static final String PERSONAL_CENTER = "api/home/user/tradeLists";
+    public static final String TRADE_LIST = "api/home/user/tradeLists";
     //交易明细
     public static final String TRADE_DETAIL = "api/home/user/tradeDetail";
     //洗涤订单

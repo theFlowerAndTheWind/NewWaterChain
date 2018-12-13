@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class InfoDetailModel {
 
-    public void getInfoDetail(BaseActivity activity,int id,final InfoDetailCallBack callBack){
+    public void getInfoDetail(BaseActivity activity, int id, final InfoDetailCallBack callBack){
         HashMap<String,Object> params = new HashMap<>();
         params.put("id",id);
         RetrofitFactory.getInstance().createService()

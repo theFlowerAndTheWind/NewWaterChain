@@ -147,11 +147,12 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     }
 
-    @OnClick({R.id.tv_get_sms, R.id.tv_agreement, R.id.btn_register, R.id.tv_existing,R.id.img_title_left})
+    @OnClick({R.id.tv_get_sms, R.id.tv_agreement, R.id.btn_register, R.id.tv_existing, R.id.img_title_left})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.tv_get_sms:
+                new TimeCount(61000, 1000).start();
                 mobile = edt_mobile.getText().toString();
                 presenter.verify(mobile);
                 presenter.getSms(this, mobile);
@@ -162,14 +163,17 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
                 //todo startAct 2 agreement webView
                 break;
             case R.id.btn_register:
-                mobile = edt_mobile.getText().toString();
-                sms = edt_sms.getText().toString();
-                pwd = edt_pwd.getText().toString();
-                confirm = edt_confirm.getText().toString();
-                invitation = edt_invitation.getText().toString();
-                presenter.verify(mobile, pwd, confirm, sms, invitation, isChecked);
-                presenter.register(this, mobile, pwd, confirm, sms, invitation, isChecked);
-
+                if (isChecked) {
+                    mobile = edt_mobile.getText().toString();
+                    sms = edt_sms.getText().toString();
+                    pwd = edt_pwd.getText().toString();
+                    confirm = edt_confirm.getText().toString();
+                    invitation = edt_invitation.getText().toString();
+                    presenter.verify(mobile, pwd, confirm, sms, invitation, isChecked);
+                    presenter.register(this, mobile, pwd, confirm, sms, invitation, isChecked);
+                } else {
+                    showToast("请阅读并同意《节水链平台用书协议》");
+                }
                 break;
             case R.id.tv_existing:
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
@@ -223,7 +227,6 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onGetSmsSuccess() {
-        new TimeCount(61000, 1000).start();
         tv_get_sms.setEnabled(false);
         tv_get_sms.setBackground(getDrawable(R.drawable.blue_bg_shape));
         tv_get_sms.setTextColor(getResources().getColor(R.color.white));
@@ -236,7 +239,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @Override
     public void onRegisterSuccess() {
-        startActivity(new Intent(RegisterActivity.this,AuthActivity.class));
+        startActivity(new Intent(RegisterActivity.this, AuthActivity.class));
     }
 
     @Override

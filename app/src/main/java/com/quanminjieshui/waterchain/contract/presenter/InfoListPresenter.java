@@ -21,7 +21,7 @@ public class InfoListPresenter extends BasePresenter<InfoListViewImpl> {
         this.infoListModel = infoListModel;
     }
 
-    public void getInfoList(BaseActivity activity,int count){
+    public void getInfoList(BaseActivity activity, int count){
         if(infoListModel == null){
             infoListModel = new InfoListModel();
         }

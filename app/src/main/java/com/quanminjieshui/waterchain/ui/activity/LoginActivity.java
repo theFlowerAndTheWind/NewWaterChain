@@ -18,8 +18,6 @@ import com.quanminjieshui.waterchain.beans.OrderListResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
 import com.quanminjieshui.waterchain.contract.model.LoginModel;
-import com.quanminjieshui.waterchain.contract.model.OrderDetailModel;
-import com.quanminjieshui.waterchain.contract.model.TradeDetailModel;
 import com.quanminjieshui.waterchain.contract.presenter.LoginPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.OrderDetailPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.OrderListPresenter;
@@ -33,7 +31,6 @@ import com.quanminjieshui.waterchain.contract.view.TradeDetailViewImpl;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindDrawable;
@@ -45,7 +42,7 @@ import butterknife.OnClick;
  * Created by WanghongHe on 2018/12/3 11:53.
  */
 
-public class LoginActivity extends BaseActivity implements LoginViewImpl ,OrderDetailViewImpl,OrderListViewImpl,TradeDetailViewImpl,TradeCenterViewImpl{
+public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDetailViewImpl,OrderListViewImpl,TradeDetailViewImpl,TradeCenterViewImpl {
     private LoginPresenter loginPresenter;
     private OrderDetailPresenter orderDetailPresenter;
     private OrderListPresenter orderListPresenter;

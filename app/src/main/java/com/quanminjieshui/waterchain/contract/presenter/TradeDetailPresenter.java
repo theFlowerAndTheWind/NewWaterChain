@@ -20,7 +20,7 @@ public class TradeDetailPresenter extends BasePresenter<TradeDetailViewImpl> {
         this.tradeDetailModel = tradeDetailModel;
     }
 
-    public void getTradeDetail(BaseActivity activity,int id){
+    public void getTradeDetail(BaseActivity activity, int id){
         if(tradeDetailModel == null){
             tradeDetailModel = new TradeDetailModel();
         }

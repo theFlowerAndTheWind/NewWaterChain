@@ -32,16 +32,16 @@ public interface APIService {
 //    @GET(UrlConfig.getMessageList)
 //    Observable<BaseEntity<MessageBean>> getMessageList(@Query("currentPage") String currentPage, @Query("pageSize") String pageSize);  //消息列表
 
-    @POST(UrlConfig.GET_SMS)
-    @FormUrlEncoded
-    Observable<BaseEntity<SmsResponseBean>> getSms(@Field("mobile") String mobile);
+    //获取验证码
+    @POST(UrlConfig.SEND_VER_CODE)
+    Observable<BaseEntity<SmsResponseBean>> getSms(@Body RequestBody requestBody);
 
     @POST(UrlConfig.REGISTER)
-    Observable<BaseEntity> register(@Body RequestBody requestBody);
+    Observable<BaseEntity<RegisterResponseBean>> register(@Body RequestBody requestBody);
 
     @POST(UrlConfig.RESET)
     @FormUrlEncoded
-    Observable<BaseEntity<RegisterResponseBean>> reset(@FieldMap Map<String, Object> map);
+    Observable<BaseEntity> reset(@Body RequestBody requestBody);
 
     //修改密码
     @POST(UrlConfig.CHANGE_PASS)
@@ -63,6 +63,10 @@ public interface APIService {
     @POST(UrlConfig.TRADE_CENTER)
     Observable<BaseEntity> tradeCenter(@Body RequestBody requestBody);
 
+    //个人中心
+    @POST(UrlConfig.TRADE_LIST)
+    Observable<BaseEntity> tradeList(@Body RequestBody requestBody);
+
     //用户身份认证信息
     @POST(UrlConfig.AUTH_DETAIL)
     Observable<BaseEntity> authDetail(@Body RequestBody requestBody);
@@ -82,4 +86,8 @@ public interface APIService {
     //平台咨询列表
     @POST(UrlConfig.INFO_LIST)
     Observable<BaseEntity> infoList(@Body RequestBody requestBody);
+
+    //轮播列表
+    @POST(UrlConfig.BANNER_LIST)
+    Observable<BaseEntity> bannerList(@Body RequestBody requestBody);
 }

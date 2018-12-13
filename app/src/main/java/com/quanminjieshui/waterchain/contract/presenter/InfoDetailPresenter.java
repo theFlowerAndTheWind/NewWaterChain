@@ -21,7 +21,7 @@ public class InfoDetailPresenter extends BasePresenter<InfoDetailViewImpl> {
         this.infoDetailModel = infoDetailModel;
     }
 
-    public void getInfoDetail(BaseActivity activity,int id){
+    public void getInfoDetail(BaseActivity activity, int id){
         if(infoDetailModel == null){
             infoDetailModel = new InfoDetailModel();
         }

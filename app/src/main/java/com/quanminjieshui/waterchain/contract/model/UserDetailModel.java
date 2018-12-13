@@ -20,7 +20,7 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 
 public class UserDetailModel {
 
-    public void getUserDetail(BaseActivity activity,final UserDetailCallBack callBack){
+    public void getUserDetail(BaseActivity activity, final UserDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .userDetail(RequestUtil.getRequestHashBody(null,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())

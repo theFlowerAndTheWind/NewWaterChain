@@ -20,7 +20,7 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 
 public class TradeCenterModel {
 
-    public void getTradeDetail(BaseActivity activity,final TradeCenterCallBack callBack){
+    public void getTradeDetail(BaseActivity activity, final TradeCenterCallBack callBack){
 
         RetrofitFactory.getInstance().createService()
                 .tradeCenter(RequestUtil.getRequestHashBody(null,false))

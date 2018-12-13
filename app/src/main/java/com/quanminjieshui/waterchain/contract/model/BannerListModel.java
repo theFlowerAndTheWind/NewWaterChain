@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.OrderListResponseBean;
-import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -17,20 +16,27 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 import java.util.HashMap;
 
 /**
- * Created by WanghongHe on 2018/12/12 18:08.
- * 成交明细
+ * Created by WanghongHe on 2018/12/13 14:29.
  */
 
-public class TradeDetailModel {
+public class BannerListModel {
 
-    public void getTradeDetail(BaseActivity activity, int id, final TradeDetailCallBack callBack){
-        HashMap<String , Object> params = new HashMap<>();
-        params.put("id",id);
+    /**
+     *
+     * @param activity
+     * @param cate 终端类型 （2IOS/3ANDROID）
+     * @param position 1首页 2资讯页
+     * @param callBack
+     */
+    public void getBannerList(BaseActivity activity, int cate, int position, final BannerListCallBack callBack){
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("cate",cate);
+        params.put("position",position);
         RetrofitFactory.getInstance().createService()
-                .tradeDetail(RequestUtil.getRequestHashBody(params,false))
+                .bannerList(RequestUtil.getRequestHashBody(params,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(activity) {
+                .subscribe(new BaseObserver() {
 
                     /**
                      * 返回成功
@@ -41,8 +47,8 @@ public class TradeDetailModel {
                     @Override
                     protected void onSuccess(Object o) throws Exception {
                         Gson gson = new Gson();
-                        TradeDetailResponseBean tradeDetailBean = gson.fromJson((JsonElement) o,new TypeToken<OrderListResponseBean>() {}.getType());
-                        callBack.success(tradeDetailBean);
+                        BannerListResponseBean bannerListBean = gson.fromJson((JsonElement) o,new TypeToken<BannerListResponseBean>() {}.getType());
+                        callBack.success(bannerListBean);
                     }
 
                     /**
@@ -72,11 +78,11 @@ public class TradeDetailModel {
                         callBack.failed(msg);
                     }
                 });
+
     }
 
-    public interface TradeDetailCallBack{
-        void success(TradeDetailResponseBean tradeDetailResponseBean);
+    public interface BannerListCallBack{
+        void success(BannerListResponseBean bannerListResponseBean);
         void failed(String msg);
     }
-
 }

@@ -17,4 +17,11 @@ package com.quanminjieshui.waterchain.beans;
  * @Date: 2018/12/8 3:05 PM
  */
 public class SmsResponseBean {
+
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
 }

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderListResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
@@ -21,7 +20,7 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 
 public class OrderListModel {
 
-    public void orderList(BaseActivity activity,final OrderListCallBack callBack){
+    public void orderList(BaseActivity activity, final OrderListCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .orderList(RequestUtil.getRequestHashBody(null,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())

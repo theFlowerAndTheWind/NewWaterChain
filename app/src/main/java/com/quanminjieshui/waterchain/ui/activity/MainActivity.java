@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.ActivityManager;
@@ -19,6 +21,7 @@ import com.quanminjieshui.waterchain.ui.fragment.HomeFragment;
 import com.quanminjieshui.waterchain.ui.fragment.PersonalFragment;
 import com.quanminjieshui.waterchain.ui.fragment.TransactionFragment;
 import com.quanminjieshui.waterchain.ui.fragment.WashFragment;
+import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -29,6 +32,13 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
+    @BindView(R.id.title_bar)
+    View titleBar;
+    @BindView(R.id.img_title_left)
+    ImageView titleLeft;
+
+    @BindView(R.id.tv_title_center)
+    TextView tv_title_center;
     @BindView(R.id.ll)
     public LinearLayout ll;
     @BindView(R.id.rg_main)
@@ -58,7 +68,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        StatusBarUtil.setImmersionStatus(this,titleBar);
         ButterKnife.bind(this);
         initView();
     }
@@ -87,7 +97,8 @@ public class MainActivity extends BaseActivity {
         homeFragment = new HomeFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.activity_main_ll, homeFragment).commit();
-
+        titleLeft.setVisibility(View.GONE);
+        tv_title_center.setText("首页");
     }
 
 
@@ -124,45 +135,51 @@ public class MainActivity extends BaseActivity {
         hideFragment();
         switch (view.getId()) {
             case R.id.rb1:
-
+                tv_title_center.setText("首页");
                 if (homeFragment != null) {
                     fragmentManager.beginTransaction().show(homeFragment).commit();
                 }
+
                 break;
             case R.id.rb2:
-
+                tv_title_center.setText("洗涤");
                 if (washFragment != null) {
                     fragmentManager.beginTransaction().show(washFragment).commit();
                     return;
                 }
                 washFragment = new WashFragment();
                 fragmentManager.beginTransaction().add(R.id.activity_main_ll, washFragment).commit();
+
                 break;
             case R.id.rb3:
-
+                tv_title_center.setText("交易");
                 if (transactionFragment != null) {
                     fragmentManager.beginTransaction().show(transactionFragment).commit();
                     return;
                 }
                 transactionFragment = new TransactionFragment();
                 fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commit();
+
                 break;
             case R.id.rb4:
-
+                tv_title_center.setText("发现");
                 if (findFragment != null) {
                     fragmentManager.beginTransaction().show(findFragment).commit();
                     return;
                 }
                 findFragment = new FindFragment();
                 fragmentManager.beginTransaction().add(R.id.activity_main_ll, findFragment).commit();
+
                 break;
             case R.id.rb5:
+                tv_title_center.setText("我的");
                 if(personalFragment != null){
                     fragmentManager.beginTransaction().show(personalFragment).commit();
                     return;
                 }
                 personalFragment = new PersonalFragment();
                 fragmentManager.beginTransaction().add(R.id.activity_main_ll, personalFragment).commit();
+
                 break;
             default:
                 break;
