@@ -1,5 +1,7 @@
 package com.quanminjieshui.waterchain.http;
 
+import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
+import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.SmsResponseBean;
 import com.quanminjieshui.waterchain.beans.UserBean;
@@ -25,10 +27,8 @@ public interface APIService {
 
     //登录接口
     @POST(UrlConfig.LOGIN)
-    @FormUrlEncoded
-    Observable<BaseEntity<UserBean>> login(@Field("name") String name, @Field("password") String password);
+    Observable<BaseEntity<LoginResponseBean>> login(@Body RequestBody requestBody);
 
-    //忘记密码
 //    @GET(UrlConfig.getMessageList)
 //    Observable<BaseEntity<MessageBean>> getMessageList(@Query("currentPage") String currentPage, @Query("pageSize") String pageSize);  //消息列表
 
@@ -36,12 +36,21 @@ public interface APIService {
     @POST(UrlConfig.SEND_VER_CODE)
     Observable<BaseEntity<SmsResponseBean>> getSms(@Body RequestBody requestBody);
 
+    //注册
     @POST(UrlConfig.REGISTER)
     Observable<BaseEntity<RegisterResponseBean>> register(@Body RequestBody requestBody);
 
-    @POST(UrlConfig.RESET)
-    @FormUrlEncoded
-    Observable<BaseEntity> reset(@Body RequestBody requestBody);
+    //忘记密码
+    @POST(UrlConfig.FIND_PASS)
+    Observable<BaseEntity> findPass(@Body RequestBody requestBody);
+
+    //企业认证
+    @POST(UrlConfig.COMPANY_AUTH)
+    Observable<BaseEntity> companyAuth(@Body RequestBody body);
+
+    //个人认证
+    @POST(UrlConfig.PERSONAL_AUTH)
+    Observable<BaseEntity> personalAuth(@Body RequestBody body);
 
     //修改密码
     @POST(UrlConfig.CHANGE_PASS)
@@ -89,5 +98,5 @@ public interface APIService {
 
     //轮播列表
     @POST(UrlConfig.BANNER_LIST)
-    Observable<BaseEntity> bannerList(@Body RequestBody requestBody);
+    Observable<BaseEntity<BannerListResponseBean>> bannerList(@Body RequestBody requestBody);
 }

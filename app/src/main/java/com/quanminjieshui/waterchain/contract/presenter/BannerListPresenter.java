@@ -1,10 +1,11 @@
 package com.quanminjieshui.waterchain.contract.presenter;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.BannerListModel;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
+
+import java.util.List;
 
 /**
  * Created by WanghongHe on 2018/12/13 14:43.
@@ -26,10 +27,11 @@ public class BannerListPresenter extends BasePresenter<BannerListViewImpl> {
         }
 
         bannerListModel.getBannerList(activity, cate, position, new BannerListModel.BannerListCallBack() {
+
             @Override
-            public void success(BannerListResponseBean bannerListResponseBean) {
+            public void success(List<Object> list) {
                 if (mView!=null){
-                    mView.onBannerListSuccess(bannerListResponseBean);
+                    mView.onBannerListSuccess(list);
                 }
             }
 

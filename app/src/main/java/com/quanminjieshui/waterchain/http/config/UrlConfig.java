@@ -6,12 +6,32 @@ package com.quanminjieshui.waterchain.http.config;
 
 public class UrlConfig {
 
-    //登录接口
+    /**
+     * 登录
+     * {
+     *      "code":1,
+     *      "msg":"登录成功",
+     *      "data":{
+     *      "id":14,
+     *      "is_blocked":0,
+     *      "user_login":"18329257177",
+     *      "avatar":"http:\/\/jsl.sshsky.com\/upload\/",
+     *      "user_nickname":"",
+     *      "token":"880486ea9371415e52b8ef0878b743fa7b4ea77fa1a8dd89ec9067c6e8a63129"
+     * }
+     */
     public final static String LOGIN = "/api/home/public/login";
-    //获取短信验证码接口
+    /**
+     * 获取短信验证码
+     * {
+     *      "code":1,
+     *     "msg":"操作成功",
+     *     "data":"4444"
+     *  }
+     */
     public final static String SEND_VER_CODE = "api/home/common/sendVercode";
     /***
-     * 注册接口
+     * 注册
      *
      * {
      *     "code":1,
@@ -24,8 +44,8 @@ public class UrlConfig {
      * }
      */
     public final static String REGISTER = "api/home/public/register";
-    //找回/重置密码借口
-    public static final String RESET = "api/home/public/findPass";
+    //找回密码
+    public static final String FIND_PASS = "api/home/public/findPass";
     //身份认证-企业
     public static final String COMPANY_AUTH = "api/home/public/companyAuth";
     //身份认证-个人
@@ -74,10 +94,10 @@ public class UrlConfig {
     //交易明细
     public static final String TRADE_DETAIL = "api/home/user/tradeDetail";
     //洗涤订单
-    public static  final String ORDER_LIST = "api/home/user/orderLists";
+    public static final String ORDER_LIST = "api/home/user/orderLists";
     //订单详情
     public static final String ORDER_DETAIL = "api/home/user/orderDetail";
     //修改密码
-    public static final     String CHANGE_PASS = "api/home/user/changePass";
+    public static final String CHANGE_PASS = "api/home/user/changePass";
 
 }

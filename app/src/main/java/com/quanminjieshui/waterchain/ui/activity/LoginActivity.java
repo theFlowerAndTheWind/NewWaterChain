@@ -42,7 +42,8 @@ import butterknife.OnClick;
  * Created by WanghongHe on 2018/12/3 11:53.
  */
 
-public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDetailViewImpl,OrderListViewImpl,TradeDetailViewImpl,TradeCenterViewImpl {
+//public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDetailViewImpl,OrderListViewImpl,TradeDetailViewImpl,TradeCenterViewImpl {
+public class LoginActivity extends BaseActivity implements LoginViewImpl {
     private LoginPresenter loginPresenter;
     private OrderDetailPresenter orderDetailPresenter;
     private OrderListPresenter orderListPresenter;
@@ -77,14 +78,14 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDe
 
         loginPresenter = new LoginPresenter(new LoginModel());
         loginPresenter.attachView(this);
-        orderDetailPresenter = new OrderDetailPresenter();
-        orderDetailPresenter.attachView(this);
-        orderListPresenter = new OrderListPresenter();
-        orderListPresenter.attachView(this);
-        tradeDetailPresenter = new TradeDetailPresenter();
-        tradeDetailPresenter.attachView(this);
-        tradeCenterPresenter = new TradeCenterPresenter();
-        tradeCenterPresenter.attachView(this);
+//        orderDetailPresenter = new OrderDetailPresenter();
+//        orderDetailPresenter.attachView(this);
+//        orderListPresenter = new OrderListPresenter();
+//        orderListPresenter.attachView(this);
+//        tradeDetailPresenter = new TradeDetailPresenter();
+//        tradeDetailPresenter.attachView(this);
+//        tradeCenterPresenter = new TradeCenterPresenter();
+//        tradeCenterPresenter.attachView(this);
         StatusBarUtil.setImmersionStatus(this, title_bar);
         initView();
     }
@@ -94,11 +95,11 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDe
         switch (view.getId()) {
             case R.id.btn_login:
 //                tradeDetailPresenter.getTradeDetail(this,1);
-                tradeCenterPresenter.getTradeCenter(this);
-                String mobile = edt_mobile.getText().toString();
-                String pwd = edt_pwd.getText().toString();
-                loginPresenter.verify(mobile, pwd);
-                loginPresenter.login(this, mobile, pwd);
+//                tradeCenterPresenter.getTradeCenter(this);
+                String user_login = edt_mobile.getText().toString();
+                String user_pass = edt_pwd.getText().toString();
+                loginPresenter.verify(user_login, user_pass);
+                loginPresenter.login(this, user_login, user_pass);
                 break;
             case R.id.tv_register:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
@@ -125,8 +126,8 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDe
 
     private void initView() {
         tv_title_center.setText("用户登录");
-        orderDetailPresenter.orderDetail(this);
-        orderListPresenter.getOrderList(this);
+//        orderDetailPresenter.orderDetail(this);
+//        orderListPresenter.getOrderList(this);
     }
 
     /**
@@ -165,13 +166,13 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDe
 
     @Override
     public void onLoginSuccess() {
-        //todo
+        showToast("login success！");
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 
     @Override
     public void onLoginFailed(String msg) {
-
+        showToast(msg);
     }
 
     @Override
@@ -182,44 +183,44 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDe
         }
     }
 
-    @Override
-    public void onOrderDetailSuccess(OrderDetailResponseBean orderDetailResponseBeans) {
-        LogUtils.d("ceshi"+orderDetailResponseBeans);
-
-    }
-
-    @Override
-    public void onOrderDetailFailed(String msg) {
-        LogUtils.d("ceshi"+msg);
-    }
-
-    @Override
-    public void onOrderListSuccess(OrderListResponseBean orderListBean) {
-        LogUtils.d("ceshi"+orderListBean);
-    }
-
-    @Override
-    public void onOrderListFailed(String msg) {
-        LogUtils.d("ceshi-list"+msg);
-    }
-
-    @Override
-    public void onTradeDetailSuccess(TradeDetailResponseBean tradeDetailResponseBean) {
-
-    }
-
-    @Override
-    public void onTradeDetailFailed(String msg) {
-
-    }
-
-    @Override
-    public void onTradeCenterSuccess(TradeCenterResponseBean tradeCenterResponseBean) {
-
-    }
-
-    @Override
-    public void onTradeCenterFailed(String msg) {
-
-    }
+//    @Override
+//    public void onOrderDetailSuccess(OrderDetailResponseBean orderDetailResponseBeans) {
+//        LogUtils.d("ceshi"+orderDetailResponseBeans);
+//
+//    }
+//
+//    @Override
+//    public void onOrderDetailFailed(String msg) {
+//        LogUtils.d("ceshi"+msg);
+//    }
+//
+//    @Override
+//    public void onOrderListSuccess(OrderListResponseBean orderListBean) {
+//        LogUtils.d("ceshi"+orderListBean);
+//    }
+//
+//    @Override
+//    public void onOrderListFailed(String msg) {
+//        LogUtils.d("ceshi-list"+msg);
+//    }
+//
+//    @Override
+//    public void onTradeDetailSuccess(TradeDetailResponseBean tradeDetailResponseBean) {
+//
+//    }
+//
+//    @Override
+//    public void onTradeDetailFailed(String msg) {
+//
+//    }
+//
+//    @Override
+//    public void onTradeCenterSuccess(TradeCenterResponseBean tradeCenterResponseBean) {
+//
+//    }
+//
+//    @Override
+//    public void onTradeCenterFailed(String msg) {
+//
+//    }
 }

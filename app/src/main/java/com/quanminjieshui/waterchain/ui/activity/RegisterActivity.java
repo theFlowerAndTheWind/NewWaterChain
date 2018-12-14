@@ -234,7 +234,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @Override
     public void onGetSmsFailed(String msg) {
-
+        showToast(msg);
     }
 
     @Override
@@ -244,7 +244,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @Override
     public void onRegisterFaild(String msg) {
-
+        showToast(msg);
     }
 
     @Override

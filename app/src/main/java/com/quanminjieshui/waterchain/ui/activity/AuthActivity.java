@@ -24,7 +24,15 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.BaseBean;
+import com.quanminjieshui.waterchain.beans.request.CompanyAuthReqParams;
+import com.quanminjieshui.waterchain.beans.request.PersonalAuthReqParams;
+import com.quanminjieshui.waterchain.contract.model.AuthModel;
+import com.quanminjieshui.waterchain.contract.presenter.AuthPresenter;
+import com.quanminjieshui.waterchain.contract.view.AuthViewImpl;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,7 +43,7 @@ import butterknife.OnClick;
  * @Author: sxt
  * @Date: 2018/12/9 8:19 PM
  */
-public class AuthActivity extends BaseActivity {
+public class AuthActivity extends BaseActivity implements AuthViewImpl {
     @BindView(R.id.title_bar)
     View title_bar;
     @BindView(R.id.img_title_left)
@@ -111,10 +119,17 @@ public class AuthActivity extends BaseActivity {
 
     private View[] companyViews;
     private View[] personalViews;
+    /**
+     * 用户认证类型 true 企业   false 个人
+     */
+    private boolean user_type = true;
+    private AuthPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new AuthPresenter(new AuthModel());
+        presenter.attachView(this);
 
         StatusBarUtil.setImmersionStatus(this, title_bar);
         initView();
@@ -135,13 +150,14 @@ public class AuthActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_company, R.id.btn_personal, R.id.img_title_left,R.id.btn_next})
+    @OnClick({R.id.btn_company, R.id.btn_personal, R.id.img_title_left, R.id.btn_next})
     public void onClick(View view) {
         int id = view.getId();
 
         switch (id) {
             case R.id.btn_company:
-                if(companyViews==null||personalViews==null){
+                user_type = true;
+                if (companyViews == null || personalViews == null) {
                     initViewArr();
                 }
                 setBtnBlueBgShape(btn_company);
@@ -150,7 +166,8 @@ public class AuthActivity extends BaseActivity {
                 setGone(personalViews);
                 break;
             case R.id.btn_personal:
-                if(companyViews==null||personalViews==null){
+                user_type = false;
+                if (companyViews == null || personalViews == null) {
                     initViewArr();
                 }
                 setBtnBlueBgShape(btn_personal);
@@ -163,7 +180,20 @@ public class AuthActivity extends BaseActivity {
                 break;
 
             case R.id.btn_next:
-                startActivity(new Intent(AuthActivity.this,RegisterSuccessActivity.class));
+                BaseBean params;
+                if (user_type) {
+                    params = new CompanyAuthReqParams(
+                            "山西","大同",
+                            "公司名称","123456789","company_license_img",
+                            "老板","18329257177",
+                            "id_img_a","id_img_b",
+                            "合伙人","18329257178");
+                } else {
+                    params = new PersonalAuthReqParams("中国","山西", "大同",
+                            "节水链",
+                            "14062119900101","id_img_a","id_img_b");
+                }
+                presenter.auth(this, user_type, params);
                 break;
             default:
                 break;
@@ -193,7 +223,7 @@ public class AuthActivity extends BaseActivity {
         }
     }
 
-    private void initViewArr(){
+    private void initViewArr() {
         if (companyViews == null) {
             companyViews = new View[]{
                     edt_company_name,
@@ -220,4 +250,40 @@ public class AuthActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    public void onEdtContentsLegal() {
+
+    }
+
+    @Override
+    public void onEdtContentsIllegal(Map<String, Boolean> verify) {
+
+    }
+
+    @Override
+    public void onCompanyAuthSuccess() {
+        go2SuccessActivity();
+    }
+
+    @Override
+    public void onCompanyAuthFailed(String msg) {
+        go2SuccessActivity();
+    }
+
+    @Override
+    public void onPersonalAuthSuccess() {
+        go2SuccessActivity();
+    }
+
+    @Override
+    public void onPersonalAuthFailed(String msg) {
+        go2SuccessActivity();
+    }
+
+    private void go2SuccessActivity() {
+        startActivity(new Intent(AuthActivity.this, RegisterSuccessActivity.class));
+        finish();
+    }
+
 }

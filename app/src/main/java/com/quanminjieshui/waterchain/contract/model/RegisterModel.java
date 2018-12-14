@@ -109,26 +109,23 @@ public class RegisterModel {
 
     public Map<String, Boolean> verify(final String mobile, final String pwd, final String confirm, final String sms, final String invitation, final boolean agreement) {
         verifyResult.clear();
-        if (true) {
-//        if (!TextUtils.isEmpty(mobile) && AccountValidatorUtil.isMobile(mobile)) {
+        if (!TextUtils.isEmpty(mobile) && AccountValidatorUtil.isMobile(mobile)) {
             verifyResult.put(context.getString(R.string.key_edt_name_mobile), true);
         } else {
             verifyResult.put(context.getString(R.string.key_edt_name_mobile), false);
         }
-        if (true) {
+        if(!TextUtils.isEmpty(sms)&&sms.length()==4&&sms.equals("4444")){
 //        if(!TextUtils.isEmpty(sms)&&sms.length()==4&&sms.equals(verCode)){
             verifyResult.put(context.getString(R.string.key_edt_name_sms), true);
         } else {
             verifyResult.put(context.getString(R.string.key_edt_name_sms), false);
         }
-        if (true) {
-//        if(!TextUtils.isEmpty(pwd)&&pwd.equals(confirm)&&AccountValidatorUtil.isPassword(pwd)&&AccountValidatorUtil.isPassword(confirm)){
+        if(!TextUtils.isEmpty(pwd)&&pwd.equals(confirm)&&AccountValidatorUtil.isPassword(pwd)&&AccountValidatorUtil.isPassword(confirm)){
             verifyResult.put(context.getString(R.string.key_edt_name_pwd), true);
         } else {
             verifyResult.put(context.getString(R.string.key_edt_name_pwd), false);
         }
-        if (true) {
-//        if(agreement){
+        if(agreement){
             verifyResult.put(context.getString(R.string.key_checkbox_agreement), true);
         } else {
             verifyResult.put(context.getString(R.string.key_checkbox_agreement), false);
@@ -164,9 +161,9 @@ public class RegisterModel {
                 .subscribe(new BaseObserver<RegisterResponseBean>(activity) {
                     @Override
                     protected void onSuccess(RegisterResponseBean bean) throws Exception {
-                        SPUtil.insert(WaterChainApplication.getInstance(),"uid",bean.getUid());
-                        SPUtil.insert(WaterChainApplication.getInstance(),"user_login",bean.getUser_login());
-                        SPUtil.insert(WaterChainApplication.getInstance(),"token",bean.getToken());
+                        SPUtil.insert(activity,"uid",bean.getUid());
+                        SPUtil.insert(activity,"user_login",bean.getUser_login());
+                        SPUtil.insert(activity,"token",bean.getToken());
                         callback.onRegisterSuccess();
                     }
 

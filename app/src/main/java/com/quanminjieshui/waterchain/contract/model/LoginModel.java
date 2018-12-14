@@ -6,7 +6,17 @@ import android.util.Log;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.WaterChainApplication;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.LoginResponseBean;
+import com.quanminjieshui.waterchain.beans.UserBean;
+import com.quanminjieshui.waterchain.http.BaseObserver;
+import com.quanminjieshui.waterchain.http.RetrofitFactory;
+import com.quanminjieshui.waterchain.http.bean.BaseEntity;
+import com.quanminjieshui.waterchain.http.config.HttpConfig;
+import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
+import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.AccountValidatorUtil;
+import com.quanminjieshui.waterchain.utils.LogUtils;
+import com.quanminjieshui.waterchain.utils.SPUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +26,11 @@ import java.util.Map;
  */
 
 public class LoginModel {
+    private static final String TAG = "LoginModel";
     /**
      * 提交信息是否合法，View中根据value值标红并清除控件内容
      * value    true->内容合法，控件内容不变
-     *          false->内容不合法，edittext边框变红，内容清空
+     * false->内容不合法，edittext边框变红，内容清空
      */
     private Map<String, Boolean> verifyResult = new HashMap<String, Boolean>();
 
@@ -33,7 +44,7 @@ public class LoginModel {
      */
     public Map<String, Boolean> verify(final String mobile, final String pwd) {
         verifyResult.clear();
-        WaterChainApplication context=WaterChainApplication.getInstance();
+        WaterChainApplication context = WaterChainApplication.getInstance();
         if (!TextUtils.isEmpty(mobile) && AccountValidatorUtil.isMobile(mobile)) {
             verifyResult.put(context.getString(R.string.key_edt_name_mobile), true);
         } else {
@@ -48,7 +59,7 @@ public class LoginModel {
         return verifyResult;
     }
 
-    public void login(final BaseActivity activity, final String userName, String password, final LoginCallback callback) {
+    public void login(final BaseActivity activity, final String user_login, String user_pass, final LoginCallback callback) {
 
         int Illegal = 0;
         for (Map.Entry<String, Boolean> entry : verifyResult.entrySet()) {
@@ -63,46 +74,46 @@ public class LoginModel {
             callback.onEdtContentsIllegal(verifyResult);
             return;
         }
-        Log.e("TAG","开始登陆请求");
-        callback.loginSuccess();//开发用，后期需删除。使用下面代码
-//        RetrofitFactory.getInstance().createService()
-//                .login(userName, password)
-//                .compose(activity.<BaseEntity<UserBean>>bindToLifecycle())//绑定activity生命周期，防止内存溢出
-//                .compose(ObservableTransformerUtils.<BaseEntity<UserBean>>io())//选择线程
-//                .subscribe(new BaseObserver<UserBean>(activity) {
-//                    @Override
-//                    protected void onSuccess(UserBean userBean) throws Exception {
-////                        //保存token
-////                        SPUtils.put(activity, HttpConfig.HEAD_TOKEN_KEY, userBean.getToken());
-////                        SPUtils.put(activity, SPConfig.USERID_KEY, userBean.getUserId());
-////                        SPUtils.put(activity, SPConfig.USER_NAME_KEY, userBean.getUserName());
-////                        //保存用户信息
-////                        Gson gson = new Gson();
-////                        String userJson = gson.toJson(userBean);
-////                        SPUtils.put(activity, SPConfig.USER_INFO, userJson);
-//                        callback.loginSuccess();
-//                    }
-//
-//                    @Override
-//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//                        if (e != null && e.getMessage() != null) {
-//                            if (isNetWorkError) {
-//                                LogUtils.e(e.getMessage());
-//                                callback.loginFailed(HttpConfig.ERROR_MSG);
-//                            } else {
-//                                callback.loginFailed(e.getMessage());
-//                            }
-//                        } else {
-//                            callback.loginFailed("");
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onCodeError(String code, String msg) throws Exception {
-//                        super.onCodeError(code, msg);
-//                        callback.loginFailed(msg);
-//                    }
-//                });
+        Log.e("TAG", "开始登陆请求");
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("user_login", user_login);
+        params.put("user_pass", user_pass);
+        RetrofitFactory.getInstance().createService()
+                .login(RequestUtil.getRequestHashBody(params, false))
+                .compose(activity.<BaseEntity<LoginResponseBean>>bindToLifecycle())//绑定activity生命周期，防止内存溢出
+                .compose(ObservableTransformerUtils.<BaseEntity<LoginResponseBean>>io())//选择线程
+                .subscribe(new BaseObserver<LoginResponseBean>(activity) {
+                    @Override
+                    protected void onSuccess(LoginResponseBean bean) throws Exception {
+                        SPUtil.insert(activity,"id",bean.getId());
+                        SPUtil.insert(activity,"is_blocked",bean.getIs_blocked());
+                        SPUtil.insert(activity,"user_login",bean.getUser_login());
+                        SPUtil.insert(activity,"user_nickname",bean.getUser_nickname());
+                        SPUtil.insert(activity,"token",bean.getToken());
+
+                        callback.loginSuccess();
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        if (e != null && e.getMessage() != null) {
+                            if (isNetWorkError) {
+                                LogUtils.e(e.getMessage());
+                                callback.loginFailed(HttpConfig.ERROR_MSG);
+                            } else {
+                                callback.loginFailed(e.getMessage());
+                            }
+                        } else {
+                            callback.loginFailed("");
+                        }
+                    }
+
+                    @Override
+                    protected void onCodeError(String code, String msg) throws Exception {
+                        super.onCodeError(code, msg);
+                        callback.loginFailed(msg);
+                    }
+                });
 
     }
 
