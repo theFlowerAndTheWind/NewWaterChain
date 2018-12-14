@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">WaterChain</string>
+
+    <string name="hint_input_mobile">请输入您的手机号</string>
+    <string name="hint_input_security_code">请输入验证码</string>
+    <string name="hint_input_pwd">请输入密码</string>
+    <string name="hint_confirm_pwd">请重复输入密码</string>
+    <string name="hint_input_invitation_code">请输入邀请码（选填）</string>
+    <string name="hint_input_company_name">营业执照登记名称</string>
+    <string name="hint_input_company_license_no">营业执照登注册号</string>
+    <string name="hint_input_company_boss_name">法人代表姓名</string>
+    <string name="hint_input_id_img_a">身份证正面</string>
+    <string name="hint_input_id_img_b">身份证反面</string>
+    <string name="hint_input_company_boss_tel">法人联系方式</string>
+    <string name="hint_input_company_other_name">其他联系人</string>
+    <string name="hint_input_company_other_tel">联系方式</string>
+
+
+    <string name="register">注册账号</string>
+    <string name="forget">忘记密码</string>
+    <string name="agreement">《节水链平台用户协议》</string>
+    <string name="existing_account">已有账号，前往登录</string>
+
+
+
+    <string name="key_edt_name_mobile">edt_mobile</string>
+    <string name="key_edt_name_pwd">edt_pwd</string>
+    <string name="key_edt_name_sms">edt_sms</string>
+    <string name="key_checkbox_agreement">cb_agreement</string>
+
+    <string name="field_mobile">mobile</string>
+    <string name="field_pwd">pwd</string>
+    <string name="field_invitation">invitation</string>
+    <string name="field_sms">sms</string>
+
+</resources>
