@@ -33,4 +33,6 @@
     <string name="field_invitation">invitation</string>
     <string name="field_sms">sms</string>
 
+    <string name="hit_edt_mobile">请输入您的手机号</string>
+    <string name="hit_edt_password">请输入密码</string>
 </resources>

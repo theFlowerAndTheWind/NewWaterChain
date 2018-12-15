@@ -19,14 +19,16 @@
     <color name="color_grey_press">#999999</color>
 
 
-    <color name="primary_blue">#FF2F97FE</color>
+    <color name="primary_blue">#3DAAFF</color>
     <color name="primary_dark_blue">#FF2F6DFE</color>
     <color name="tint_blue">#FFE6F4FD</color>
     <color name="space_gray">#FFECEAF3</color>
     <color name="divider_gray">#FFF4F4F8</color>
-    <color name="edittext_border_gray">#FFE1E3EE</color>
+    <color name="edittext_border_gray">#E7E9F1</color>
     <color name="text_gray">#FF7A7A7A</color>
     <color name="primary_red">#FFFF4C50</color>
     <color name="primary_dark_red">#FFC42F18</color>
+
+    <color name="hit_color">#ffaab1b5</color>
 
 </resources>

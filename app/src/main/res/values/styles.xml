@@ -114,4 +114,27 @@
         <item name="banner_placeholderDrawable">@drawable/holder</item>
     </style>
 
+    <style name="style_txt_title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/title_center_text_size</item>
+    </style>
+    <style name="style_btn">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/title_center_text_size</item>
+        <item name="android:background">@drawable/btn_blue_bg_selector</item>
+        <item name="android:minHeight">45dp</item>
+    </style>
+    <style name="style_edt">
+        <item name="android:paddingLeft">@dimen/edittext_padding_left</item>
+        <item name="android:background">@drawable/gray_border_bg_shape</item>
+        <item name="android:textColorHint">@color/hit_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">@dimen/edittext_height</item>
+    </style>
+    <style name="style_href">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ff3daaff</item>
+    </style>
+
+
 </resources>

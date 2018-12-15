@@ -7,7 +7,7 @@
     <solid android:color="@color/trans" />
 
     <stroke
-        android:width="2px"
+        android:width="1px"
         android:color="@color/edittext_border_gray" />
 
 </shape>
