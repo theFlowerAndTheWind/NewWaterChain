@@ -1,8 +1,8 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
 
 import butterknife.BindView;
@@ -125,18 +125,14 @@ public class PersonalFragment extends BaseFragment {
 
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView=inflater.inflate(R.layout.fragment_personal,container,false);
+        ButterKnife.bind(this,rootView);
+        return rootView;
+    }
+
+    @Override
     public void onReNetRefreshData(int viewId) {
-
-    }
-
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_personal;
-    }
-
-    @Override
-    protected void init() {
 
     }
 

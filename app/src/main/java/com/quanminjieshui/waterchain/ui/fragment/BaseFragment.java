@@ -18,15 +18,11 @@ import com.quanminjieshui.waterchain.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import de.greenrobot.event.EventBus;
 
 
 public abstract class BaseFragment extends BasePermissionFragment {
     private BaseActivity baseActivity;
-    private Unbinder unbinder;
-    protected View rootView;
     private boolean haveShowNetView = false;
     private static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
     public BaseFragment() {
@@ -71,14 +67,10 @@ public abstract class BaseFragment extends BasePermissionFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView=inflater.inflate(getLayoutId(),container,false);
-        unbinder=ButterKnife.bind(getBaseActivity(),rootView);
-        return rootView;
+        TextView textView = new TextView(getActivity());
+        textView.setText("");
+        return textView;
     }
-
-    protected abstract int getLayoutId();
-
-    protected abstract void init();
 
     /**
      * 手动点击切换fragment时 加载无网UI
@@ -180,7 +172,6 @@ public abstract class BaseFragment extends BasePermissionFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
         EventBus.getDefault().unregister(this);
     }
 }

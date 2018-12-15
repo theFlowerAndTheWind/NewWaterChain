@@ -51,14 +51,15 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl {
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_home;
-    }
-
-    @Override
-    protected void init(){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_home, container, false);
+            ButterKnife.bind(this, rootView);
+        }
         alertChainDialog = new AlertChainDialog(getBaseActivity());
         initList();
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     private void initList() {

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.quanminjieshui.waterchain.R;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by songxiaotao on 2018/12/5.
  * Class Note:洗涤
@@ -18,13 +20,11 @@ public class WashFragment extends BaseFragment {
     public void onReNetRefreshData(int viewId) {
     }
 
-
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_wash;
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView=inflater.inflate(R.layout.fragment_wash,container,false);
 
-    @Override
-    protected void init() {
+
+        return rootView;
     }
 }
