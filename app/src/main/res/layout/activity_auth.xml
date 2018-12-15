@@ -324,7 +324,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="162px"
                     android:layout_marginBottom="@dimen/title_bar_height"
-                    android:background="@drawable/btn_bg_selector"
+                    android:background="@drawable/btn_blue_bg_selector"
                     android:text="下一步"
                     android:textColor="@color/white"
                     android:textSize="@dimen/btn_text_size" />

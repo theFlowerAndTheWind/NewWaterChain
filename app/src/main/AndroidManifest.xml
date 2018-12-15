@@ -30,42 +30,53 @@
             android:name="design_height"
             android:value="1920" />
 
+        <activity android:name=".ui.activity.TestActivity" />
+
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".ui.activity.GuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Splash" />
+
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.GuideActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Splash" />
         <activity
             android:name=".ui.activity.RegisterActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.AuthActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.RegisterSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"></activity>
+
         <activity
             android:name=".ui.activity.FindPassActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.RegisterSuccessActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".ui.activity.AuthActivity"
-            android:screenOrientation="portrait">
-        </activity>
+
+
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:screenOrientation="portrait"

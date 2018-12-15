@@ -26,5 +26,7 @@
     <color name="divider_gray">#FFF4F4F8</color>
     <color name="edittext_border_gray">#FFE1E3EE</color>
     <color name="text_gray">#FF7A7A7A</color>
+    <color name="primary_red">#FFFF4C50</color>
+    <color name="primary_dark_red">#FFC42F18</color>
 
 </resources>

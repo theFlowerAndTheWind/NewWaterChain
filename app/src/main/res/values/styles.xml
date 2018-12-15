@@ -44,7 +44,10 @@
         <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
     </style>
-
+    <style name="MarginLeftRight">
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+    </style>
     <style name="MarginTopBottom">
         <item name="android:layout_marginTop">@dimen/edittext_margin_top</item>
         <item name="android:layout_marginBottom">@dimen/edittext_margin_top</item>
@@ -62,14 +65,14 @@
     </style>
 
     <style name="MyPadding">
-        <item name="android:paddingTop">@dimen/edittext_margin_top</item>
-        <item name="android:paddingBottom">@dimen/edittext_margin_top</item>
-        <item name="android:paddingLeft">@dimen/edittext_padding_left</item>
-        <item name="android:paddingRight">@dimen/edittext_padding_left</item>
+        <item name="android:paddingTop">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingBottom">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_padding</item>
     </style>
     <style name="PaddinLeftRight">
-        <item name="android:paddingLeft">@dimen/edittext_padding_left</item>
-        <item name="android:paddingRight">@dimen/edittext_padding_left</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_padding</item>
     </style>
 
     <!--启动页-->

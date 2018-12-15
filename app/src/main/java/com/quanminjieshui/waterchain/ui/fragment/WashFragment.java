@@ -14,18 +14,17 @@ import com.quanminjieshui.waterchain.R;
 
 public class WashFragment extends BaseFragment {
 
-    private View rootView;
     @Override
     public void onReNetRefreshData(int viewId) {
+    }
 
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_wash;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(rootView==null){
-            rootView = inflater.inflate(R.layout.fragment_wash, container, false);
-        }
-
-            return rootView;
+    protected void init() {
     }
 }

@@ -99,4 +99,11 @@ public interface APIService {
     //轮播列表
     @POST(UrlConfig.BANNER_LIST)
     Observable<BaseEntity<BannerListResponseBean>> bannerList(@Body RequestBody requestBody);
+
+
+    /**
+     * 测试哥接口
+     */
+    @POST(UrlConfig.BANNER_LIST)
+    Observable<BaseEntity>request(@Body RequestBody requestBody);
 }

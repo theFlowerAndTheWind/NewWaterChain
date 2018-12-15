@@ -97,7 +97,7 @@
                         <!--android:layout_width="500px"-->
                         <!--android:layout_height="100px"-->
                         <!--android:layout_alignParentBottom="true"-->
-                        <!--android:background="@drawable/btn_bg_selector"-->
+                        <!--android:background="@drawable/btn_blue_bg_selector"-->
                         <!--android:text="立即下单"-->
                         <!--android:textColor="@color/white"-->
                         <!--android:textSize="@dimen/small_btn_text_size" />-->

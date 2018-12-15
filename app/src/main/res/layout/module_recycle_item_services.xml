@@ -37,7 +37,7 @@
             android:id="@+id/btn_see_detail"
             android:layout_width="500px"
             android:layout_height="100px"
-            android:background="@drawable/btn_bg_selector"
+            android:background="@drawable/btn_blue_bg_selector"
             android:text="立即下单"
             android:layout_alignParentBottom="true"
             android:textColor="@color/white"

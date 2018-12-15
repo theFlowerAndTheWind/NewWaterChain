@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 注册成功  支付成功共用
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,13 +43,12 @@
 
     <Button
         android:id="@+id/btn_register_success"
+        style="@style/MarginLeftRight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_confirm"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="162px"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@drawable/btn_bg_selector"
+        android:background="@drawable/btn_blue_bg_selector"
         android:text="确定"
         android:textColor="@color/white"
         android:textSize="@dimen/btn_text_size" />

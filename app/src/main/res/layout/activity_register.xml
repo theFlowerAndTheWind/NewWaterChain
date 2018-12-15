@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cb_agreement"
             android:layout_marginTop="162px"
-            android:background="@drawable/btn_bg_selector"
+            android:background="@drawable/btn_blue_bg_selector"
             android:text="注册"
             android:textColor="@color/white"
             android:textSize="@dimen/btn_text_size" />

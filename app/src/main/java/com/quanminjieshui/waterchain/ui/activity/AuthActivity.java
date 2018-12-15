@@ -39,7 +39,7 @@ import butterknife.OnClick;
 
 /**
  * @ClassName: AuthActivity
- * @Description: java类作用描述
+ * @Description: 接口测试Activity
  * @Author: sxt
  * @Date: 2018/12/9 8:19 PM
  */
