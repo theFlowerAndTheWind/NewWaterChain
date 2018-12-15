@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:padding="20px"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_weight="1"
+            android:src="@drawable/splash_bg"
+            android:layout_marginRight="20px"
+            android:layout_width="match_parent"
+            android:layout_height="300px" />
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_order_title"
+                android:textStyle="bold"
+                android:gravity="left|center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="酒店步草洗涤"/>
+            <TextView
+                android:id="@+id/tv_order_desc"
+                android:gravity="center|left"
+                android:layout_marginBottom="20px"
+                android:layout_marginTop="20px"
+                android:layout_below="@+id/tv_order_title"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:text="专业技术专业技术专业技术专业技术专业技术专业技术专业技术专业技术专业技术专业技术专业技术专业技术"/>
+
+            <Button
+                android:id="@+id/btn_order"
+                style="@style/style_btn"
+                android:layout_marginRight="20px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom|left"
+                android:text="立即下单" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
