@@ -4,18 +4,12 @@ import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.SmsResponseBean;
-import com.quanminjieshui.waterchain.beans.UserBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
-
-import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
@@ -100,10 +94,7 @@ public interface APIService {
     @POST(UrlConfig.BANNER_LIST)
     Observable<BaseEntity<BannerListResponseBean>> bannerList(@Body RequestBody requestBody);
 
-
-    /**
-     * 测试哥接口
-     */
-    @POST(UrlConfig.BANNER_LIST)
-    Observable<BaseEntity>request(@Body RequestBody requestBody);
+    //洗涤项目列表
+    @POST(UrlConfig.SERVICE_LIST)
+    Observable<BaseEntity> serviceList(@Body RequestBody requestBody);
 }

@@ -10,6 +10,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/wash_img"
             android:layout_weight="1"
             android:src="@drawable/splash_bg"
             android:layout_marginRight="20px"

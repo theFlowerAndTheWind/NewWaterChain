@@ -2,10 +2,13 @@ package com.quanminjieshui.waterchain.ui.fragment;
 
 
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +26,18 @@ import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
+import com.quanminjieshui.waterchain.contract.presenter.ServiceListPresneter;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
+import com.quanminjieshui.waterchain.contract.view.ServiceListViewImpl;
+import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.Util;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -45,25 +54,31 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements BannerListViewImpl {
+public class HomeFragment extends BaseFragment implements BannerListViewImpl,ServiceListViewImpl {
 
 
     @BindView(R.id.banner_guide_content)
     BGABanner mContentBanner;
     @BindView(R.id.lineChart)
     LineChart lineChart;
-
+    @BindView(R.id.rc_wash_list)
+    XRecyclerView serviceList;
 
     private AlertChainDialog alertChainDialog;
     private Unbinder unbinder;
     private View rootView;
     private BannerListPresenter bannerListPresenter;
+    private ServiceListPresneter serviceListPresneter;
+    private ServiceListAdapter serviceListAdapter;
+    private List<ServiceListResponseBean.serviceListEntity> listEntities = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bannerListPresenter = new BannerListPresenter();
         bannerListPresenter.attachView(this);
+        serviceListPresneter = new ServiceListPresneter();
+        serviceListPresneter.attachView(this);
 
     }
 
@@ -74,6 +89,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl {
             ButterKnife.bind(this, rootView);
         }
         alertChainDialog = new AlertChainDialog(getBaseActivity());
+
         initList();
         initLineChart();
         unbinder = ButterKnife.bind(this, rootView);
@@ -96,6 +112,28 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl {
 
         mContentBanner.setData(Arrays.asList("网络图片路径1", "网络图片路径2", "网络图片路径3"), Arrays.asList("提示文字1", "提示文字2", "提示文字3"));
 
+        serviceListAdapter = new ServiceListAdapter(getBaseActivity(),listEntities);
+        serviceList.setArrowImageView(R.drawable.iconfont_downgrey);
+        serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        serviceList.addItemDecoration(new SpaceItemDecoration(Util.px2px(getActivity(), 20, 1334)));
+        serviceList.setAdapter(serviceListAdapter);
+
+        serviceList.setLoadingMoreEnabled(true);
+        serviceList.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                if (serviceListPresneter != null) {
+                    serviceListPresneter.getServiceList(getBaseActivity());
+                }
+            }
+
+            @Override
+            public void onLoadMore() {
+                if (serviceListPresneter != null) {
+                    serviceListPresneter.getServiceList(getBaseActivity());
+                }
+            }
+        });
     }
 
     public void initLineChart(){
@@ -230,12 +268,16 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl {
         if(bannerListPresenter!=null){
             bannerListPresenter.getBannerList(getBaseActivity(),3,1);
         }
+        if(serviceListPresneter!=null){
+            serviceListPresneter.getServiceList(getBaseActivity());
+        }
         mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
             @Override
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
                 ToastUtils.showCustomToast("点击了" + position);
             }
         });
+        showLoadingDialog();
     }
 
     @Override
@@ -255,6 +297,9 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl {
         if(bannerListPresenter!=null){
             bannerListPresenter.detachView();
         }
+        if(serviceListPresneter!=null){
+            serviceListPresneter.detachView();
+        }
     }
 
     @Override
@@ -262,16 +307,60 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl {
         if(bannerListPresenter!=null){
             bannerListPresenter.getBannerList(getBaseActivity(),3,1);
         }
+        if(serviceListPresneter!=null){
+            serviceListPresneter.getServiceList(getBaseActivity());
+        }
+        dismissLoadingDialog();
+    }
+
+    public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int space;
+
+        public SpaceItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+
+            outRect.left = space;
+            outRect.right = space;
+            outRect.bottom = space;
+            if (parent.getChildPosition(view) == 0) {
+                outRect.top = space;
+            }
+        }
     }
 
     @Override
     public void onBannerListSuccess(List<Object> list) {
+        dismissLoadingDialog();
         LogUtils.d(list.toArray());
 
     }
 
     @Override
     public void onBannerListFailed(String msg) {
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void onServiceListSuccess(List<ServiceListResponseBean.serviceListEntity> serviceListEntities) {
+        dismissLoadingDialog();
+        LogUtils.d("serviceListEntities；"+serviceListEntities.toArray());
+        listEntities.clear();
+        listEntities.addAll(serviceListEntities);
+        serviceListAdapter.notifyDataSetChanged();
+        serviceList.refreshComplete();
+//        serviceList.loadMoreComplete();
+    }
+
+    @Override
+    public void onServiceListFailed(String msg) {
+        dismissLoadingDialog();
+        LogUtils.d("serviceListEntities；"+msg);
 
     }
 }

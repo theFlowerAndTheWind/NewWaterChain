@@ -1,9 +1,13 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +29,8 @@ public abstract class BaseFragment extends BasePermissionFragment {
     private BaseActivity baseActivity;
     private boolean haveShowNetView = false;
     private static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
+    private AlertDialog alertDialog;
+
     public BaseFragment() {
         // Required empty public constructor
     }
@@ -173,5 +179,30 @@ public abstract class BaseFragment extends BasePermissionFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+
+    public void showLoadingDialog() {
+        alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        alertDialog.setCancelable(false);
+        alertDialog.setMessage("加载中");
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
+                    return true;
+                return false;
+            }
+        });
+        alertDialog.show();
+        alertDialog.setContentView(R.layout.loading);
+        alertDialog.setCanceledOnTouchOutside(false);
+    }
+
+    public void dismissLoadingDialog() {
+        if (null != alertDialog && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
     }
 }

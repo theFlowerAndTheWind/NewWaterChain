@@ -1,13 +1,17 @@
 package com.quanminjieshui.waterchain.base;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -41,6 +45,7 @@ public abstract class BaseActivity  extends BasePermissionActivity implements Li
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
     private boolean haveShowNetView = false;
+    private AlertDialog alertDialog;
 
     @Override
     @NonNull
@@ -299,5 +304,29 @@ public abstract class BaseActivity  extends BasePermissionActivity implements Li
         ViewGroup parent = (ViewGroup) defaultView.getParent();
         parent.removeView(defaultView);
         parent.addView(replaceView, index, params);
+    }
+
+    public void showLoadingDialog() {
+        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        alertDialog.setCancelable(false);
+        alertDialog.setMessage("加载中");
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
+                    return true;
+                return false;
+            }
+        });
+        alertDialog.show();
+        alertDialog.setContentView(R.layout.loading);
+        alertDialog.setCanceledOnTouchOutside(false);
+    }
+
+    public void dismissLoadingDialog() {
+        if (null != alertDialog && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
     }
 }
