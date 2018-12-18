@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title_bar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_height"
-    android:background="@color/primary_blue">
+    android:background="@color/primary_blue"
+    style="@style/PaddinLeftRight">
 
     <TextView
         android:id="@+id/tv_title_left"
+        style="@style/style_txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
         android:text="左侧文字"
-        style="@style/style_txt_title"
         android:visibility="gone" />
 
     <ImageView
@@ -21,17 +22,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:src="@mipmap/back" />
 
     <TextView
         android:id="@+id/tv_title_center"
+        style="@style/style_txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="中间文字"
-        style="@style/style_txt_title" />
+        android:text="中间文字" />
 
     <ImageView
         android:id="@+id/img_title_center"
@@ -43,13 +43,12 @@
 
     <TextView
         android:id="@+id/tv_title_right"
+        style="@style/style_txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:text="右侧文字"
-        style="@style/style_txt_title"
         android:visibility="gone" />
 
     <ImageView
@@ -58,7 +57,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:src="@drawable/ic_launcher"
         android:visibility="gone" />
 

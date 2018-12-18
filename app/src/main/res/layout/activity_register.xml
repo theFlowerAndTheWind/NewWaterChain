@@ -4,150 +4,146 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/title_bar"
-        layout="@layout/module_include_title_bar" />
+    <include layout="@layout/module_include_title_bar" />
 
     <RelativeLayout
+        style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_padding">
+        android:layout_marginTop="@dimen/view_space_title_bar_bottom">
 
         <EditText
             android:id="@+id/edt_mobile"
-            style="@style/EdtTopBottomLeft"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/gray_border_bg_shape"
+            android:layout_height="wrap_content"
             android:hint="@string/hint_input_mobile"
             android:inputType="phone"
             android:maxLength="11" />
 
         <LinearLayout
             android:id="@+id/linear_sms"
-            style="@style/MarginTopBottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="@dimen/edt_height"
             android:layout_below="@+id/edt_mobile"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/edt_sms"
+                style="@style/style_edt"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/view_space"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20px"
                 android:layout_weight="4"
-                android:background="@drawable/gray_border_bg_shape"
                 android:hint="@string/hint_input_security_code"
+                android:inputType="number"
                 android:maxLength="20"
                 android:maxLines="1"
-                android:inputType="number"
-                android:paddingLeft="@dimen/edittext_padding_left" />
+                android:paddingLeft="@dimen/edt_padding_left" />
 
             <TextView
                 android:id="@+id/tv_get_sms"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/edt_height"
                 android:layout_weight="2"
                 android:background="@drawable/blue_border_bg_shape"
                 android:gravity="center"
                 android:text="发送验证码"
                 android:textColor="@color/primary_blue"
-                android:textSize="@dimen/middle_btn_text_size" />
+                android:textSize="@dimen/text_size_edt" />
         </LinearLayout>
 
 
         <EditText
             android:id="@+id/edt_pwd"
-            style="@style/EdtTopBottomLeft"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/linear_sms"
-            android:background="@drawable/gray_border_bg_shape"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hint_input_pwd"
             android:maxLength="20"
             android:maxLines="1" />
 
         <EditText
             android:id="@+id/edt_confirm"
-            style="@style/EdtTopBottomLeft"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/edt_pwd"
-            android:background="@drawable/gray_border_bg_shape"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hint_confirm_pwd"
             android:maxLength="20"
             android:maxLines="1" />
 
         <EditText
             android:id="@+id/edt_invitation"
-            style="@style/EdtTopBottomLeft"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="@dimen/edt_height"
             android:layout_below="@+id/edt_confirm"
-            android:background="@drawable/gray_border_bg_shape"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hint_input_invitation_code"
             android:maxLength="20"
             android:maxLines="1" />
 
-        <CheckBox
-            android:id="@+id/cb_agreement"
+        <RelativeLayout
+            android:id="@+id/linear_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_invitation"
-            android:layout_marginLeft="-20px"
-            android:checked="true"
-            android:theme="@style/MyCheckBox" />
+            android:layout_below="@id/edt_invitation"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_readed"
-            style="@style/MarginTopBottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_invitation"
-            android:layout_alignBaseline="@id/cb_agreement"
-            android:layout_toRightOf="@id/cb_agreement"
-            android:text="我已阅读并同意"
-            android:textColor="@color/black"
-            android:textSize="@dimen/normal_text_size" />
+            <CheckBox
+                android:id="@+id/cb_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:theme="@style/MyCheckBox" />
 
-        <TextView
-            android:id="@+id/tv_agreement"
-            style="@style/MarginTopBottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_invitation"
-            android:layout_alignBaseline="@id/cb_agreement"
-            android:layout_toRightOf="@id/tv_readed"
-            android:paddingTop="10px"
-            android:paddingBottom="10px"
-            android:text="@string/agreement"
-            android:textColor="@color/primary_blue"
-            android:textSize="@dimen/normal_text_size" />
+            <TextView
+                android:id="@+id/tv_readed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/cb_agreement"
+                android:layout_toRightOf="@id/cb_agreement"
+                android:text="我已阅读并同意"
+                android:textColor="@color/text_gray"
+                android:textSize="24px" />
+
+            <TextView
+                android:id="@+id/tv_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/cb_agreement"
+                android:layout_toRightOf="@id/tv_readed"
+                android:text="@string/agreement"
+                android:textColor="@color/primary_blue"
+                android:textSize="24px" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_register"
+            style="@style/style_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cb_agreement"
-            android:layout_marginTop="162px"
+            android:layout_below="@+id/linear_agreement"
+            android:layout_marginTop="@dimen/view_space_bottom_btn_above"
             android:background="@drawable/btn_blue_bg_selector"
-            android:text="注册"
-            android:textColor="@color/white"
-            android:textSize="@dimen/btn_text_size" />
+            android:text="注册" />
 
 
         <TextView
             android:id="@+id/tv_existing"
-            style="@style/MarginTopBottom"
+            style="@style/style_href"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/btn_register"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="40px"
             android:padding="10px"
-            android:text="@string/existing_account"
-            android:textColor="@color/primary_blue"
-            android:textSize="@dimen/normal_text_size" />
+            android:text="@string/existing_account" />
 
     </RelativeLayout>
 

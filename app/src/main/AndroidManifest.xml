@@ -26,10 +26,10 @@
 
         <meta-data
             android:name="design_width"
-            android:value="1080" />
+            android:value="720" />
         <meta-data
             android:name="design_height"
-            android:value="1920" />
+            android:value="1280" />
 
         <activity android:name=".ui.activity.TestActivity" />
 
@@ -71,6 +71,8 @@
         <activity
             android:name=".ui.activity.FindPassActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.UserDetailActivity"
+            android:screenOrientation="portrait"/>
 
 
         <activity

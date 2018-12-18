@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/linear_warnning"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收货信息" />
+
+        <!--<TextView-->
+            <!--style="@style/style_txt_distribution_info_1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingLeft="45px"-->
+            <!--android:text="为了您能顺利洗涤，请准确填写配送信息" />-->
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:background="@color/divider_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height">
+
+        <TextView
+            android:id="@+id/tv1"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="收件人" />
+
+
+        <ImageButton
+            android:id="@+id/btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_go_to"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv11"
+            style="@style/style_txt_distribution_info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn1"
+            android:gravity="center"
+            android:text="李某某" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:background="@color/divider_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl2"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height">
+
+        <TextView
+            android:id="@+id/tv2"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="手机号码" />
+
+
+        <ImageButton
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_go_to"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv22"
+            style="@style/style_txt_distribution_info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn2"
+            android:gravity="center"
+            android:text="123 4567 1234" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:background="@color/divider_gray" />
+
+    <RelativeLayout
+        android:id="@+id/rl4"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height">
+
+        <TextView
+            android:id="@+id/tv4"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="所在城市" />
+
+
+        <ImageButton
+            android:id="@+id/btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_go_to" />
+
+        <TextView
+            android:id="@+id/tv44"
+            style="@style/style_txt_distribution_info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn4"
+            android:gravity="center"
+            android:text="山东 临沂" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:background="@color/divider_gray" />
+
+    <RelativeLayout
+        android:id="@+id/r5"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height">
+
+        <TextView
+            android:id="@+id/tv5"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="详细地址" />
+
+
+        <ImageButton
+            android:id="@+id/btn5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_go_to"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv55"
+            style="@style/style_txt_distribution_info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn5"
+            android:gravity="center"
+            android:text="某个详细地址" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:background="@color/divider_gray" />
+
+    <Button
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:layout_marginRight="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="@dimen/view_space_bottom_btn_above"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/style_btn"
+        android:text="保存"/>
+
+
+</LinearLayout>

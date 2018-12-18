@@ -44,19 +44,10 @@
         <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
     </style>
-    <style name="MarginLeftRight">
-        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
-    </style>
-    <style name="MarginTopBottom">
-        <item name="android:layout_marginTop">@dimen/edittext_margin_top</item>
-        <item name="android:layout_marginBottom">@dimen/edittext_margin_top</item>
-    </style>
 
-    <style name="EdtTopBottomLeft">
-        <item name="android:layout_marginTop">@dimen/edittext_margin_top</item>
-        <item name="android:layout_marginBottom">@dimen/edittext_margin_top</item>
-        <item name="android:paddingLeft">@dimen/edittext_padding_left</item>
+    <style name="MarginLeftRight">
+        <item name="android:layout_marginLeft">@dimen/layout_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/layout_horizontal_margin</item>
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
@@ -65,14 +56,15 @@
     </style>
 
     <style name="MyPadding">
-        <item name="android:paddingTop">@dimen/activity_horizontal_padding</item>
-        <item name="android:paddingBottom">@dimen/activity_horizontal_padding</item>
-        <item name="android:paddingLeft">@dimen/activity_horizontal_padding</item>
-        <item name="android:paddingRight">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingTop">@dimen/layout_horizontal_padding</item>
+        <item name="android:paddingBottom">@dimen/layout_horizontal_padding</item>
+        <item name="android:paddingLeft">@dimen/layout_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/layout_horizontal_padding</item>
     </style>
+
     <style name="PaddinLeftRight">
-        <item name="android:paddingLeft">@dimen/activity_horizontal_padding</item>
-        <item name="android:paddingRight">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingLeft">@dimen/layout_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/layout_horizontal_padding</item>
     </style>
 
     <!--启动页-->
@@ -116,24 +108,54 @@
 
     <style name="style_txt_title">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/title_center_text_size</item>
+        <item name="android:textSize">@dimen/text_size_title_center</item>
     </style>
+
     <style name="style_btn">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/title_center_text_size</item>
+        <item name="android:textSize">@dimen/text_size_commit</item>
         <item name="android:background">@drawable/btn_blue_bg_selector</item>
-        <item name="android:minHeight">45dp</item>
+        <item name="android:minHeight">@dimen/commit_btn_height</item>
     </style>
+
     <style name="style_edt">
-        <item name="android:paddingLeft">@dimen/edittext_padding_left</item>
+        <item name="android:paddingLeft">@dimen/edt_padding_left</item>
         <item name="android:background">@drawable/gray_border_bg_shape</item>
         <item name="android:textColorHint">@color/hit_color</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:minHeight">@dimen/edittext_height</item>
+        <item name="android:textSize">@dimen/text_size_edt</item>
+        <item name="android:minHeight">@dimen/edt_height</item>
     </style>
+
     <style name="style_href">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#ff3daaff</item>
+    </style>
+
+    <style name="style_hit">
+        <item name="android:textSize">@dimen/text_size_hint</item>
+        <item name="android:textColor">#ff3daaff</item>
+        <item name="android:layout_marginTop">39px</item>
+    </style>
+
+    <style name="style_txt_confirm_order1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">28px</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:paddingLeft">@dimen/layout_horizontal_padding</item>
+    </style>
+
+    <style name="style_txt_confirm_order2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">32px</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:paddingLeft">20px</item>
+    </style>
+
+    <style name="style_txt_distribution_info_1">
+        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textSize">22px</item>
     </style>
 
 

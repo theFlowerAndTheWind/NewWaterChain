@@ -4,91 +4,88 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/title_bar"
-        layout="@layout/module_include_title_bar" />
+    <include layout="@layout/module_include_title_bar" />
 
     <RelativeLayout
+        style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/MyPadding">
+        android:layout_marginTop="@dimen/view_space_title_bar_bottom">
 
         <EditText
             android:id="@+id/edt_mobile"
-            style="@style/EdtTopBottomLeft"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:background="@drawable/gray_border_bg_shape"
+            android:layout_height="wrap_content"
             android:hint="@string/hint_input_mobile"
             android:inputType="phone"
             android:maxLength="11" />
 
         <LinearLayout
             android:id="@+id/linear_sms"
-            style="@style/MarginTopBottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="@dimen/edt_height"
             android:layout_below="@+id/edt_mobile"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/edt_sms"
+                style="@style/style_edt"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/view_space"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20px"
                 android:layout_weight="4"
-                android:background="@drawable/gray_border_bg_shape"
                 android:hint="@string/hint_input_security_code"
                 android:inputType="number"
                 android:maxLength="20"
                 android:maxLines="1"
-                android:paddingLeft="@dimen/edittext_padding_left" />
+                android:paddingLeft="@dimen/edt_padding_left" />
 
             <TextView
                 android:id="@+id/tv_get_sms"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/edt_height"
                 android:layout_weight="2"
                 android:background="@drawable/blue_border_bg_shape"
                 android:gravity="center"
                 android:text="发送验证码"
                 android:textColor="@color/primary_blue"
-                android:textSize="@dimen/middle_btn_text_size" />
+                android:textSize="@dimen/text_size_edt" />
         </LinearLayout>
 
 
         <EditText
             android:id="@+id/edt_pwd"
-            style="@style/EdtTopBottomLeft"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/linear_sms"
-            android:background="@drawable/gray_border_bg_shape"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hint_input_pwd"
             android:maxLength="20"
             android:maxLines="1" />
 
         <EditText
             android:id="@+id/edt_confirm"
-            style="@style/EdtTopBottomLeft"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/edt_pwd"
-            android:background="@drawable/gray_border_bg_shape"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hint_confirm_pwd"
             android:maxLength="20"
             android:maxLines="1" />
 
         <Button
             android:id="@+id/btn_find"
+            style="@style/style_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edt_confirm"
-            android:layout_marginTop="162px"
-            android:background="@drawable/btn_blue_bg_selector"
+            android:layout_marginTop="@dimen/view_space_bottom_btn_above"
             android:text="确定"
-            android:textColor="@color/white"
-            android:textSize="@dimen/btn_text_size" />
+            android:textColor="@color/white" />
 
 
     </RelativeLayout>
