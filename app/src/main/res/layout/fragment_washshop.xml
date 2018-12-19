@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/space_gray"
     android:scrollbars="none">
 
     <LinearLayout
@@ -24,25 +25,19 @@
                 android:textSize="@dimen/text_size_edt" />
         </LinearLayout>
 
-        <View
+        <include
+            android:id="@+id/wash_list"
+            layout="@layout/fragment_wash_shop_list"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/view_space_gray"
-            android:background="@color/space_gray" />
-
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/view_space_gray"
-            android:background="@color/space_gray" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:layout_marginTop="20px" />
 
         <LinearLayout
             style="@style/MyPadding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView

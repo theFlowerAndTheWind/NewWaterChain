@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/actionsheet_gray"
+    android:background="@color/divider_gray"
+    android:scrollbars="none"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,7 +24,7 @@
 
         <include
             android:id="@+id/wash_list"
-            layout="@layout/fragment_wash_list"
+            layout="@layout/fragment_home_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20px"
@@ -31,7 +32,7 @@
 
         <include
             android:id="@+id/wash_borken_line"
-            layout="@layout/fragment_wash_borken_lint"
+            layout="@layout/fragment_home_borken_lint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20px" />
