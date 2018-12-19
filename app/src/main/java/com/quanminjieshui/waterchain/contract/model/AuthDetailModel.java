@@ -25,10 +25,6 @@ public class AuthDetailModel {
                 .compose(activity.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver(activity) {
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
 
                     @Override
                     protected void onSuccess(Object o) throws Exception {

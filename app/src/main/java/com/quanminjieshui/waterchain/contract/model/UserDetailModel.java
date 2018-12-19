@@ -26,10 +26,6 @@ public class UserDetailModel {
                 .compose(activity.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver() {
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
 
                     @Override
                     protected void onSuccess(Object o) throws Exception {

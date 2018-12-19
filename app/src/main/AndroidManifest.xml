@@ -51,8 +51,7 @@
 
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait" />
@@ -66,13 +65,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.FindPassActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.UserDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.UserDetailActivity"
+            android:screenOrientation="portrait" />
 
 
         <activity

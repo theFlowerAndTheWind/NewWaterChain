@@ -25,20 +25,6 @@ public class TradeListModel {
                 .compose(activity.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver(activity) {
-                    /**
-                     * Provides the Observer with a new item to observe.
-                     * <p>
-                     * The {@link Observable} may call this method 0 or more times.
-                     * <p>
-                     * The {@code Observable} will not call this method again after it calls either {@link #onComplete} or
-                     * {@link #onError}.
-                     *
-                     * @param o the item emitted by the Observable
-                     */
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
 
                     /**
                      * 返回成功

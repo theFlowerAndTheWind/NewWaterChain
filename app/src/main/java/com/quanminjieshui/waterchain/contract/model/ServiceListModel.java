@@ -1,8 +1,6 @@
 package com.quanminjieshui.waterchain.contract.model;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
@@ -13,6 +11,7 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -24,19 +23,13 @@ public class ServiceListModel {
     public void getSrviceList(BaseActivity activity,final ServiceListCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .serviceList(RequestUtil.getRequestHashBody(null,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(activity) {
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
+                .compose(activity.<BaseEntity<ServiceListResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<ServiceListResponseBean>>io())
+                .subscribe(new BaseObserver<ServiceListResponseBean>(activity) {
 
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        ServiceListResponseBean serviceListBean = gson.fromJson((JsonElement) o,new TypeToken<ServiceListResponseBean>() {}.getType());
-                        callBack.success(serviceListBean.getLists());
+                    protected void onSuccess(ServiceListResponseBean serviceListResponseBean) throws Exception {
+                        callBack.success(serviceListResponseBean.getLists());
                     }
 
                     @Override

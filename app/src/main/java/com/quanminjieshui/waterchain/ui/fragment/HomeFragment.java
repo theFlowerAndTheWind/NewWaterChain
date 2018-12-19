@@ -37,7 +37,6 @@ import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
-import com.quanminjieshui.waterchain.utils.Util;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -115,10 +114,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         serviceListAdapter = new ServiceListAdapter(getBaseActivity(),listEntities);
         serviceList.setArrowImageView(R.drawable.iconfont_downgrey);
         serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        serviceList.addItemDecoration(new SpaceItemDecoration(Util.px2px(getActivity(), 20, 1334)));
+//        serviceList.addItemDecoration(new RecyclerViewDivider(getBaseActivity(),LinearLayoutManager.HORIZONTAL,1,getResources().getColor(R.color.item_line)));
         serviceList.setAdapter(serviceListAdapter);
 
-        serviceList.setLoadingMoreEnabled(true);
+        serviceList.setLoadingMoreEnabled(false);
         serviceList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
@@ -132,6 +131,13 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
                 if (serviceListPresneter != null) {
                     serviceListPresneter.getServiceList(getBaseActivity());
                 }
+            }
+        });
+        serviceListAdapter.setOnItemClickListener(new ServiceListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                ToastUtils.showCustomToast("立即下单跳转"+position);
+
             }
         });
     }
@@ -280,9 +286,48 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         showLoadingDialog();
     }
 
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            if(bannerListPresenter!=null){
+                bannerListPresenter.getBannerList(getBaseActivity(),3,1);
+            }
+            if(serviceListPresneter!=null){
+                serviceListPresneter.getServiceList(getBaseActivity());
+            }
+            mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+                @Override
+                public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+                    ToastUtils.showCustomToast("点击了" + position);
+                }
+            });
+            showLoadingDialog();
+        }
+
+    }
+
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        if(!hidden){
+            if(bannerListPresenter!=null){
+                bannerListPresenter.getBannerList(getBaseActivity(),3,1);
+            }
+            if(serviceListPresneter!=null){
+                serviceListPresneter.getServiceList(getBaseActivity());
+            }
+            mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+                @Override
+                public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+                    ToastUtils.showCustomToast("点击了" + position);
+                }
+            });
+            showLoadingDialog();
+        }
     }
 
     @Override

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200px"
+            android:background="@color/primary_blue"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="全球领先的独家节水技术节省企业成本"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_edt" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_space_gray"
+            android:background="@color/space_gray" />
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_space_gray"
+            android:background="@color/space_gray" />
+
+        <LinearLayout
+            style="@style/MyPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:id="@+id/tv_intr"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="技术介绍"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:id="@+id/tv_intr_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_edt" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

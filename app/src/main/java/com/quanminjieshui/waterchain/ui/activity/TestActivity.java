@@ -66,10 +66,6 @@ public class TestActivity extends BaseActivity {
                 .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver(TestActivity.this) {
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
 
                     @Override
                     protected void onSuccess(Object o) throws Exception {

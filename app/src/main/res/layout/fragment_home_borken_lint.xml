@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="交易中心"
+        android:padding="20px"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divider_gray"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            android:text="1 JSL=3.245T"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_gain"
+            android:layout_weight="1"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:textColor="@color/primary_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="涨幅+1.26%"/>
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="500px"
+        android:background="@color/white"
+        android:paddingRight="10px"
+        android:paddingLeft="10px"/>
+</LinearLayout>
+
+
