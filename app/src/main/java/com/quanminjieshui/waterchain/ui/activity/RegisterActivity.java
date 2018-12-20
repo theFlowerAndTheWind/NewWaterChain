@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
@@ -48,8 +49,8 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @BindView(R.id.title_bar)
     View title_bar;
-    @BindView(R.id.img_title_left)
-    ImageView img_title_left;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
     @BindView(R.id.tv_title_center)
     TextView tv_title_center;
     @BindView(R.id.edt_mobile)
@@ -147,7 +148,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     }
 
-    @OnClick({R.id.tv_get_sms, R.id.tv_agreement, R.id.btn_register, R.id.tv_existing, R.id.img_title_left})
+    @OnClick({R.id.tv_get_sms, R.id.tv_agreement, R.id.btn_register, R.id.tv_existing, R.id.left_ll})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -178,7 +179,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
             case R.id.tv_existing:
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 break;
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(view);
                 break;
             default:

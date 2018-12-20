@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.contract.view.ChangePassViewImpl;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
@@ -42,11 +41,11 @@ public class UserDetailActivity extends BaseActivity {
     TextView tvAuthStatus;
     @BindView(R.id.btn_logout)
     Button btnLogout;
-    @OnClick({R.id.img_title_left,R.id.tv_change_pass,R.id.tv_auth_status})
+    @OnClick({R.id.left_ll,R.id.tv_change_pass,R.id.tv_auth_status})
     public void onClick(View v){
         int id=v.getId();
         switch (id){
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(v);
                 finish();
                 break;

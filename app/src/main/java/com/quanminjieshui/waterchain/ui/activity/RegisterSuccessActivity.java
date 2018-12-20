@@ -13,7 +13,7 @@ package com.quanminjieshui.waterchain.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
@@ -33,8 +33,8 @@ public class RegisterSuccessActivity extends BaseActivity {
 
     @BindView(R.id.title_bar)
     View title_bar;
-    @BindView(R.id.img_title_left)
-    ImageView img_title_left;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
     @BindView(R.id.tv_title_center)
     TextView tv_title_center;
 
@@ -60,13 +60,13 @@ public class RegisterSuccessActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.img_title_left, R.id.btn_register_success})
+    @OnClick({R.id.left_ll, R.id.btn_register_success})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_register_success:
                 startActivity(new Intent(RegisterSuccessActivity.this,MainActivity.class));
                 break;
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(view);
                 break;
 

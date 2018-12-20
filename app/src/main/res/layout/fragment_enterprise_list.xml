@@ -8,14 +8,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="洗涤企业"
+        android:text="服务项目"
         android:padding="20px"
         android:textStyle="bold"
         android:textSize="18sp"/>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/factoryList"
-        android:background="@color/white"
+        android:id="@+id/enterpriseList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

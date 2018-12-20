@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,8 +33,8 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.title_bar)
     View titleBar;
-    @BindView(R.id.img_title_left)
-    ImageView titleLeft;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
 
     @BindView(R.id.tv_title_center)
     TextView tv_title_center;
@@ -97,7 +96,7 @@ public class MainActivity extends BaseActivity {
         homeFragment = new HomeFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.activity_main_ll, homeFragment).commit();
-        titleLeft.setVisibility(View.GONE);
+        left_ll.setVisibility(View.GONE);
         tv_title_center.setText("首页");
     }
 

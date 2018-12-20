@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,10 +13,10 @@ import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.contract.presenter.FactoryListPresenter;
 import com.quanminjieshui.waterchain.contract.view.FactoryListViewImpl;
+import com.quanminjieshui.waterchain.ui.activity.EnterpriseActivity;
 import com.quanminjieshui.waterchain.ui.adapter.WashShopAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.LogUtils;
-import com.quanminjieshui.waterchain.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +126,12 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl{
         washShopAdapter.setOnItemClickListener(new WashShopAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                ToastUtils.showCustomToast("立即下单跳转"+position);
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("enterpriseId",listEntities.get(position).getId());
+                intent.putExtras(bundle);
+                intent.setClass(getBaseActivity(), EnterpriseActivity.class);
+                startActivity(intent);
 
             }
         });

@@ -8,15 +8,11 @@ import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
-import com.quanminjieshui.waterchain.beans.OrderListResponseBean;
-import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
-import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
 import com.quanminjieshui.waterchain.contract.model.LoginModel;
 import com.quanminjieshui.waterchain.contract.presenter.LoginPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.OrderDetailPresenter;
@@ -24,11 +20,6 @@ import com.quanminjieshui.waterchain.contract.presenter.OrderListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeCenterPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeDetailPresenter;
 import com.quanminjieshui.waterchain.contract.view.LoginViewImpl;
-import com.quanminjieshui.waterchain.contract.view.OrderDetailViewImpl;
-import com.quanminjieshui.waterchain.contract.view.OrderListViewImpl;
-import com.quanminjieshui.waterchain.contract.view.TradeCenterViewImpl;
-import com.quanminjieshui.waterchain.contract.view.TradeDetailViewImpl;
-import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import java.util.Map;
@@ -51,8 +42,8 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     private TradeCenterPresenter tradeCenterPresenter;
     @BindView(R.id.title_bar)
     View title_bar;
-    @BindView(R.id.img_title_left)
-    ImageView img_title_left;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
     @BindView(R.id.tv_title_center)
     TextView tv_title_center;
     @BindView(R.id.edt_mobile)
@@ -90,7 +81,7 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
         initView();
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_reset, R.id.img_title_left})
+    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_reset, R.id.left_ll})
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -107,7 +98,7 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
             case R.id.tv_reset:
                 startActivity(new Intent(LoginActivity.this, FindPassActivity.class));
                 break;
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(view);
                 break;
             default:

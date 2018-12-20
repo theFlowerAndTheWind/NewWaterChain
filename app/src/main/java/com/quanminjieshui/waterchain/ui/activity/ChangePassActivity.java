@@ -2,7 +2,7 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
@@ -16,8 +16,8 @@ public class ChangePassActivity extends BaseActivity implements ChangePassViewIm
 
     @BindView(R.id.title_bar)
     View titleBar;
-    @BindView(R.id.img_title_left)
-    ImageView imgTitleLeft;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
     @BindView(R.id.tv_title_center)
     TextView tvTitleCenter;
 

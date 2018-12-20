@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,8 +45,8 @@ import butterknife.OnClick;
 public class AuthActivity extends BaseActivity implements AuthViewImpl {
     @BindView(R.id.title_bar)
     View title_bar;
-    @BindView(R.id.img_title_left)
-    ImageView img_title_left;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
     @BindView(R.id.tv_title_center)
     TextView tv_title_center;
 
@@ -150,7 +149,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
 
     }
 
-    @OnClick({R.id.btn_company, R.id.btn_personal, R.id.img_title_left, R.id.btn_next})
+    @OnClick({R.id.btn_company, R.id.btn_personal, R.id.left_ll, R.id.btn_next})
     public void onClick(View view) {
         int id = view.getId();
 
@@ -175,7 +174,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
                 setVisiable(personalViews);
                 setGone(companyViews);
                 break;
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(view);
                 break;
 

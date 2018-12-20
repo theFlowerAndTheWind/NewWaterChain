@@ -73,7 +73,9 @@
         <activity
             android:name=".ui.activity.UserDetailActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ui.activity.EnterpriseActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"

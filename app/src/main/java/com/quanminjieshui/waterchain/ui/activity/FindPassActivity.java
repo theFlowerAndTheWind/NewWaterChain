@@ -18,7 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
@@ -45,8 +45,8 @@ public class FindPassActivity extends BaseActivity implements FindPassViewImpl {
 
     @BindView(R.id.title_bar)
     View title_bar;
-    @BindView(R.id.img_title_left)
-    ImageView img_title_left;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
     @BindView(R.id.tv_title_center)
     TextView tv_title_center;
     @BindView(R.id.edt_mobile)
@@ -127,7 +127,7 @@ public class FindPassActivity extends BaseActivity implements FindPassViewImpl {
 
     }
 
-    @OnClick({R.id.tv_get_sms, R.id.btn_find,R.id.img_title_left})
+    @OnClick({R.id.tv_get_sms, R.id.btn_find,R.id.left_ll})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -144,7 +144,7 @@ public class FindPassActivity extends BaseActivity implements FindPassViewImpl {
                 presenter.verify(mobile, pwd, confirm, sms);
                 presenter.reset(this, mobile, pwd, confirm, sms);
                 break;
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(view);
                 break;
             default:

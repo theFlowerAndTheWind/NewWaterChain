@@ -1,6 +1,7 @@
 package com.quanminjieshui.waterchain.http;
 
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
@@ -105,4 +106,8 @@ public interface APIService {
     //洗涤商城企业列表
     @POST(UrlConfig.FACTORY_LIST)
     Observable<BaseEntity<List<FactoryListResponseBean>>> factoryList(@Body RequestBody requestBody);
+
+    //洗涤企业详情
+    @POST(UrlConfig.FACTORY_DETAIL)
+    Observable<BaseEntity<FactoryDetailResponseBean>> factoryDetail(@Body RequestBody requestBody);
 }
