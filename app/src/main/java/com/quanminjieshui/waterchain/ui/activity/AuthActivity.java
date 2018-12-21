@@ -111,6 +111,8 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
     EditText edt_p_id_img_b;
     @BindView(R.id.btn_upload_p_id_img_b)
     ImageButton btn_upload_p_id_img_b;
+    @BindView(R.id.tv_standing_off)
+    private TextView tvStandingOff;
 
     @BindView(R.id.btn_next)
     Button btn_next;
@@ -149,7 +151,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
 
     }
 
-    @OnClick({R.id.btn_company, R.id.btn_personal, R.id.left_ll, R.id.btn_next})
+    @OnClick({R.id.btn_company, R.id.btn_personal, R.id.left_ll, R.id.btn_next,R.id.tv_standing_off})
     public void onClick(View view) {
         int id = view.getId();
 
@@ -193,6 +195,9 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
                             "14062119900101","id_img_a","id_img_b");
                 }
                 presenter.auth(this, user_type, params);
+                break;
+            case R.id.tv_standing_off:
+                startActivity(new Intent(AuthActivity.this,MainActivity.class));
                 break;
             default:
                 break;
