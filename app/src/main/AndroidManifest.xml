@@ -70,12 +70,16 @@
         <activity
             android:name=".ui.activity.FindPassActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.ChangePassActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.UserDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EnterpriseActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.OrderListsActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"

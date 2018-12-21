@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.ui.activity.AuthActivity;
+import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
+import com.quanminjieshui.waterchain.ui.activity.OrderListsActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
 
 import butterknife.BindView;
@@ -102,20 +104,25 @@ public class PersonalFragment extends BaseFragment {
                 jump(UserDetailActivity.class);
                 break;
             case R.id.relative_account_detail:
-
+showToast("nothing!");
                 break;
             case R.id.relative_auth_detail:
                 jump(AuthActivity.class);
                 break;
             case R.id.relative_trade_lists:
+                showToast("nothing!");
                 break;
             case R.id.relative_order_lists:
+                jump(OrderListsActivity.class);
                 break;
             case R.id.relative_sys_msg:
+                showToast("nothing!");
                 break;
             case R.id.relative_change_pass:
+                jump(ChangePassActivity.class);
                 break;
             case R.id.relative_about_us:
+                showToast("nothing!");
                 break;
             default:
                 break;

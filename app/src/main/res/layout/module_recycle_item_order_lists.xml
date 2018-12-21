@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_factory_name"
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="0px"
+            android:text="企业名称" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_go_to" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="216px"
+            android:layout_height="139px"
+            android:layout_marginRight="17px"
+            android:layout_marginBottom="30px"
+            android:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:id="@+id/tv_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14px"
+            android:layout_toRightOf="@+id/img"
+            android:text="酒店布草洗涤"
+            android:textColor="@color/text_black"
+            android:textSize="22px" />
+
+        <TextView
+            android:id="@+id/tv_dingdanjine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_service"
+            android:layout_marginTop="30px"
+            android:layout_toRightOf="@+id/img"
+            android:text="订单金额："
+            android:textColor="@color/text_gray"
+            android:textSize="22px" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_dingdanjine"
+            android:layout_toRightOf="@+id/tv_dingdanjine"
+            android:text="￥100.00"
+            android:textColor="@color/primary_red"
+            android:textSize="22px" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="洗涤中"
+            android:textSize="22px"
+            android:textColor="@color/text_gray"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layout_horizontal_margin"
+            android:layout_marginTop="14px"/>
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:background="@color/divider_gray" />
+
+
+</LinearLayout>

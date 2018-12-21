@@ -11,6 +11,7 @@ import com.quanminjieshui.waterchain.contract.view.ChangePassViewImpl;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ChangePassActivity extends BaseActivity implements ChangePassViewImpl {
 
@@ -21,10 +22,20 @@ public class ChangePassActivity extends BaseActivity implements ChangePassViewIm
     @BindView(R.id.tv_title_center)
     TextView tvTitleCenter;
 
+    @OnClick({})
+    public void onClick(View v) {
+        int id=v.getId();
+        switch (id){
+            case R.id.img_title_left:
+                goBack(v);
+                finish();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setImmersionStatus(this,titleBar);
+        StatusBarUtil.setImmersionStatus(this, titleBar);
         initView();
     }
 

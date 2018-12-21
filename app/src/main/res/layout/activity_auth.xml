@@ -297,11 +297,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_bottom_btn_above"
-                    android:layout_marginBottom="@dimen/title_bar_height"
                     android:background="@drawable/btn_blue_bg_selector"
                     android:text="下一步"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_commit" />
+                <TextView
+                    android:id="@+id/tv_standing_off"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/style_hit"
+                    android:text="以后认证"
+                    android:layout_marginBottom="@dimen/title_bar_height"
+                    android:gravity="center_horizontal"/>
             </LinearLayout>
         </ScrollView>
 
