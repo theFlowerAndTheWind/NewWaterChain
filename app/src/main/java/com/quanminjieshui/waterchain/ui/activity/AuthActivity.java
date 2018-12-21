@@ -112,7 +112,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
     @BindView(R.id.btn_upload_p_id_img_b)
     ImageButton btn_upload_p_id_img_b;
     @BindView(R.id.tv_standing_off)
-    private TextView tvStandingOff;
+    TextView tvStandingOff;
 
     @BindView(R.id.btn_next)
     Button btn_next;
