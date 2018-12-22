@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -77,17 +78,11 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
     @BindView(R.id.edt_company_boss_name)
     EditText edt_company_boss_name;
     @BindView(R.id.linear_boss_id_img_a)
-    LinearLayout linear_boss_id_img_a;
-    @BindView(R.id.edt_boss_id_img_a)
-    EditText edt_boss_id_img_a;
+    RelativeLayout linear_boss_id_img_a;
     @BindView(R.id.btn_upload_boss_id_img_a)
-    ImageButton btn_upload_boss_id_img_a;
-    @BindView(R.id.linear_boss_id_img_b)
-    LinearLayout linear_boss_id_img_b;
-    @BindView(R.id.edt_boss_id_img_b)
-    EditText edt_boss_id_img_b;
+    Button btn_upload_boss_id_img_a;
     @BindView(R.id.btn_upload_boss_id_img_b)
-    ImageButton btn_upload_boss_id_img_b;
+    Button btn_upload_boss_id_img_b;
     @BindView(R.id.edt_company_boss_tel)
     EditText edt_company_boss_tel;
     @BindView(R.id.edt_company_other_name)
@@ -234,7 +229,6 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl {
                     edt_company_license_no,
                     edt_company_boss_name,
                     linear_boss_id_img_a,
-                    linear_boss_id_img_b,
                     edt_company_boss_tel,
                     edt_company_other_name,
                     edt_company_other_tel};

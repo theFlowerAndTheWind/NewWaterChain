@@ -136,59 +136,31 @@
                     android:inputType="phone"
                     android:maxLength="11" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/linear_boss_id_img_a"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
-                    android:background="@drawable/gray_border_bg_shape"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/edt_boss_id_img_a"
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/trans"
-                        android:hint="法人身份证反面"
-                        android:minHeight="@dimen/edt_height"
-                        android:paddingLeft="@dimen/edt_padding_left"
-                        android:textColorHint="@color/hit_color"
-                        android:textSize="@dimen/text_size_edt" />
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_upload_boss_id_img_a"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_upload_img" />
-                </LinearLayout>
+                        android:layout_alignParentLeft="true"
+                        android:text="身份证正面"
+                        style="@style/btn_upload" />
 
-                <LinearLayout
-                    android:id="@+id/linear_boss_id_img_b"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/view_space_edt_vertical"
-                    android:background="@drawable/gray_border_bg_shape"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/edt_boss_id_img_b"
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/trans"
-                        android:hint="法人身份证反面"
-                        android:minHeight="@dimen/edt_height"
-                        android:paddingLeft="@dimen/edt_padding_left"
-                        android:textColorHint="@color/hit_color"
-                        android:textSize="@dimen/text_size_edt" />
-
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_upload_boss_id_img_b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_upload_img" />
-                </LinearLayout>
+                        android:layout_alignParentRight="true"
+                        android:text="身份证反面"
+                        style="@style/btn_upload" />
+                </RelativeLayout>
+
 
                 <EditText
                     android:id="@+id/edt_company_boss_tel"
