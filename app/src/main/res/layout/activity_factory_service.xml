@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/divider_gray"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/module_include_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/factory_service_ll"
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/service_img"
+            android:src="@drawable/ic_default_image"
+            android:layout_width="match_parent"
+            android:layout_height="250px" />
+        <TextView
+            android:id="@+id/factory_service_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:layout_marginHorizontal="20px"
+            android:textSize="45px"
+            android:textStyle="bold"
+            android:text="酒店布草洗涤"/>
+        <TextView
+            android:id="@+id/factory_service_des"
+            android:layout_marginHorizontal="20px"
+            android:layout_marginBottom="10px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="专业技术专业技术专业技术专业技术专业技术"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_above="@+id/factory_btn_ll"
+        android:layout_below="@+id/factory_service_ll"
+        android:layout_marginTop="20px"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/factory_service_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/commit_btn_height"
+            app:tabIndicatorColor="@color/primary_blue"
+            app:tabIndicatorHeight="4px"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/primary_blue"
+            app:tabTextColor="@color/text_black"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/divider_gray"/>
+
+        <android.support.v4.view.ViewPager
+            android:background="@color/white"
+            android:id="@+id/factory_service_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/factory_btn_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20px"
+        android:paddingVertical="20px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/factoty_btn_order"
+            style="@style/style_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:text="立即下单" />
+
+    </LinearLayout>
+
+</RelativeLayout>

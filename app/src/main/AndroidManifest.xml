@@ -85,6 +85,8 @@
         <activity android:name=".ui.activity.OrderListsActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.FactoryServiceActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:screenOrientation="portrait"

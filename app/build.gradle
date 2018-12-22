@@ -26,7 +26,7 @@ android {
     buildTypes {
         debug {
             //不写默认为false
-            debuggable false
+            debuggable true
             //是否混淆
             minifyEnabled false
             //是否zip对齐
@@ -39,7 +39,7 @@ android {
         }
         release {
             //不写默认为false
-            debuggable true
+            debuggable false
             //是否混淆
             minifyEnabled false
             //是否zip对齐
