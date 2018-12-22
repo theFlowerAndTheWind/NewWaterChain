@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.ui.activity.AboutActivity;
 import com.quanminjieshui.waterchain.ui.activity.AuthActivity;
 import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
 import com.quanminjieshui.waterchain.ui.activity.OrderListsActivity;
@@ -122,7 +123,7 @@ showToast("nothing!");
                 jump(ChangePassActivity.class);
                 break;
             case R.id.relative_about_us:
-                showToast("nothing!");
+                jump(AboutActivity.class);
                 break;
             default:
                 break;
