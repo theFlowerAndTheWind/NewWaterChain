@@ -120,7 +120,7 @@
                     android:drawablePadding="10px"
                     android:paddingBottom="10px"
                     android:paddingTop="10px"
-                    android:drawableTop="@drawable/homepage_rb4_icon"
+                    android:drawableTop="@drawable/homepage_rb5_icon"
                     android:textColor="@color/homepage_rb_color"
                     android:text="我的"
                     android:textSize="22px"
