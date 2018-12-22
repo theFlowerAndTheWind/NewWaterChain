@@ -16,6 +16,7 @@ import com.quanminjieshui.waterchain.ui.activity.AboutListActivity;
 import com.quanminjieshui.waterchain.ui.activity.AuthActivity;
 import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
 import com.quanminjieshui.waterchain.ui.activity.OrderListsActivity;
+import com.quanminjieshui.waterchain.ui.activity.UserAssetActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
 
 import butterknife.BindView;
@@ -106,7 +107,7 @@ public class PersonalFragment extends BaseFragment {
                 jump(UserDetailActivity.class);
                 break;
             case R.id.relative_account_detail:
-showToast("nothing!");
+                jump(UserAssetActivity.class);
                 break;
             case R.id.relative_auth_detail:
                 jump(AuthActivity.class);

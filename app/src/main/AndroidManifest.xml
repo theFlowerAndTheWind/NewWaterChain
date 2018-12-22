@@ -91,6 +91,9 @@
             android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".ui.activity.UserAssetActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImagePickerThemeFullScreen" />
