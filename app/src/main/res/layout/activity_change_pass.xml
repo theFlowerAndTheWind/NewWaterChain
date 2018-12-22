@@ -8,65 +8,41 @@
 
     <include layout="@layout/module_include_title_bar" />
 
-    <RelativeLayout
+    <LinearLayout
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tv_old_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/edt_height"
-            android:layout_marginTop="@dimen/view_space_title_bar_bottom"
-            android:gravity="center_vertical"
-            android:text="原登录密码"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_size_edt" />
 
         <EditText
             android:id="@+id/edt_old_pass"
             style="@style/style_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_old_pass"
+            android:hint="原登录密码"
+            android:layout_marginTop="40px"
             android:inputType="phone"
             android:maxLength="11" />
 
-        <TextView
-            android:id="@+id/tv_new_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/edt_height"
-            android:layout_below="@+id/edt_old_pass"
-            android:gravity="center_vertical"
-            android:text="设置新密码"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_size_edt" />
+
 
         <EditText
             android:id="@+id/edt_new_pass"
             style="@style/style_edt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edt_height"
-            android:layout_below="@+id/tv_new_pass"
+            android:layout_marginTop="30px"
+            android:hint="设置新密码"
             android:maxLength="20"
             android:maxLines="1" />
-
-        <TextView
-            android:id="@+id/tv_confirm_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/edt_height"
-            android:layout_below="@+id/edt_new_pass"
-            android:gravity="center_vertical"
-            android:text="设置新密码"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_size_edt" />
 
         <EditText
             android:id="@+id/edt_confirm_pass"
             android:layout_width="match_parent"
+            android:layout_marginTop="30px"
             android:layout_height="@dimen/edt_height"
-            android:layout_below="@+id/tv_confirm_pass"
-            android:background="@drawable/gray_border_bg_shape"
+            android:hint="确认新密码"
+            style="@style/style_edt"
             android:maxLength="20"
             android:maxLines="1" />
 
@@ -82,6 +58,6 @@
             android:textSize="@dimen/text_size_commit" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

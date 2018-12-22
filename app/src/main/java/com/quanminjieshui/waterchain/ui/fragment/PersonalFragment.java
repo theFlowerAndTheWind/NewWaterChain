@@ -11,10 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.ui.activity.AboutActivity;
+import com.quanminjieshui.waterchain.ui.activity.AboutListActivity;
 import com.quanminjieshui.waterchain.ui.activity.AuthActivity;
 import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
 import com.quanminjieshui.waterchain.ui.activity.OrderListsActivity;
+import com.quanminjieshui.waterchain.ui.activity.UserAssetActivity;
+import com.quanminjieshui.waterchain.ui.activity.UserConfirmActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
+import com.quanminjieshui.waterchain.ui.activity.UserMessageActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,10 +109,10 @@ public class PersonalFragment extends BaseFragment {
                 jump(UserDetailActivity.class);
                 break;
             case R.id.relative_account_detail:
-showToast("nothing!");
+                jump(UserAssetActivity.class);
                 break;
             case R.id.relative_auth_detail:
-                jump(AuthActivity.class);
+                jump(UserConfirmActivity.class);
                 break;
             case R.id.relative_trade_lists:
                 showToast("nothing!");
@@ -116,13 +121,13 @@ showToast("nothing!");
                 jump(OrderListsActivity.class);
                 break;
             case R.id.relative_sys_msg:
-                showToast("nothing!");
+                jump(UserMessageActivity.class);
                 break;
             case R.id.relative_change_pass:
                 jump(ChangePassActivity.class);
                 break;
             case R.id.relative_about_us:
-                showToast("nothing!");
+                jump(AboutListActivity.class);
                 break;
             default:
                 break;

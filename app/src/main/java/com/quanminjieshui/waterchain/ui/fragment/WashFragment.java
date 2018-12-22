@@ -67,7 +67,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl{
         super.onViewCreated(view, savedInstanceState);
         if (factoryListPresenter != null) {
             factoryListPresenter.getFactoryList(getBaseActivity(),0);
-            showLoadingDialog();
+//            showLoadingDialog();
         }
 
     }
@@ -78,7 +78,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl{
         if(!hidden){
             if (factoryListPresenter != null) {
                 factoryListPresenter.getFactoryList(getBaseActivity(),0);
-                showLoadingDialog();
+//                showLoadingDialog();
             }
         }
     }
@@ -88,7 +88,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl{
         super.setUserVisibleHint(isVisibleToUser);
         if (factoryListPresenter != null) {
             factoryListPresenter.getFactoryList(getBaseActivity(),0);
-            showLoadingDialog();
+//            showLoadingDialog();
         }
     }
 
@@ -96,7 +96,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl{
     public void onReNetRefreshData(int viewId) {
         if (factoryListPresenter != null) {
             factoryListPresenter.getFactoryList(getBaseActivity(),0);
-            showLoadingDialog();
+//            showLoadingDialog();
         }
     }
 
