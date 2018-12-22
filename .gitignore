@@ -17,7 +17,7 @@ target/
 gradle/
 
 # Local configuration files (sdk path, etc)
-local.properties
+#local.properties
 oc_workaround/local.properties
 oc_framework/local.properties
 oc_framework-test-project/local.properties
@@ -44,6 +44,6 @@ build
 captures
 
 build.gradle
-gradle.properties
+#gradle.properties
 gradlew.bat
-local.properties
+#local.properties
