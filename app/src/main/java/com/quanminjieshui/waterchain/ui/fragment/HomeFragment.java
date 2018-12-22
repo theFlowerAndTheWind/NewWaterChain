@@ -283,7 +283,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
                 ToastUtils.showCustomToast("点击了" + position);
             }
         });
-        showLoadingDialog();
+//        showLoadingDialog();
     }
 
 
@@ -304,7 +304,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
                     ToastUtils.showCustomToast("点击了" + position);
                 }
             });
-            showLoadingDialog();
+//            showLoadingDialog();
         }
 
     }
@@ -326,7 +326,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
                     ToastUtils.showCustomToast("点击了" + position);
                 }
             });
-            showLoadingDialog();
+//            showLoadingDialog();
         }
     }
 

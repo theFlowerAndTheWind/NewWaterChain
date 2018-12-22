@@ -307,21 +307,21 @@ public abstract class BaseActivity  extends BasePermissionActivity implements Li
     }
 
     public void showLoadingDialog() {
-//        alertDialog = new AlertDialog.Builder(this).create();
-//        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
-//        alertDialog.setCancelable(false);
-//        alertDialog.setMessage("加载中");
-//        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-//            @Override
-//            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-//                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
-//                    return true;
-//                return false;
-//            }
-//        });
-//        alertDialog.show();
-//        alertDialog.setContentView(R.layout.loading);
-//        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        alertDialog.setCancelable(false);
+        alertDialog.setMessage("加载中");
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
+                    return true;
+                return false;
+            }
+        });
+        alertDialog.show();
+        alertDialog.setContentView(R.layout.loading);
+        alertDialog.setCanceledOnTouchOutside(false);
     }
 
     public void dismissLoadingDialog() {
