@@ -15,12 +15,9 @@ import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.contract.model.LoginModel;
 import com.quanminjieshui.waterchain.contract.presenter.LoginPresenter;
-import com.quanminjieshui.waterchain.contract.presenter.OrderDetailPresenter;
-import com.quanminjieshui.waterchain.contract.presenter.OrderListPresenter;
-import com.quanminjieshui.waterchain.contract.presenter.TradeCenterPresenter;
-import com.quanminjieshui.waterchain.contract.presenter.TradeDetailPresenter;
 import com.quanminjieshui.waterchain.contract.view.LoginViewImpl;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 
 import java.util.Map;
 
@@ -33,13 +30,8 @@ import butterknife.OnClick;
  * Created by WanghongHe on 2018/12/3 11:53.
  */
 
-//public class LoginActivity extends BaseActivity implements LoginViewImpl,OrderDetailViewImpl,OrderListViewImpl,TradeDetailViewImpl,TradeCenterViewImpl {
 public class LoginActivity extends BaseActivity implements LoginViewImpl {
     private LoginPresenter loginPresenter;
-    private OrderDetailPresenter orderDetailPresenter;
-    private OrderListPresenter orderListPresenter;
-    private TradeDetailPresenter tradeDetailPresenter;
-    private TradeCenterPresenter tradeCenterPresenter;
     @BindView(R.id.title_bar)
     View title_bar;
     @BindView(R.id.left_ll)
@@ -66,18 +58,10 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setImmersionStatus(this, title_bar);
 
         loginPresenter = new LoginPresenter(new LoginModel());
         loginPresenter.attachView(this);
-//        orderDetailPresenter = new OrderDetailPresenter();
-//        orderDetailPresenter.attachView(this);
-//        orderListPresenter = new OrderListPresenter();
-//        orderListPresenter.attachView(this);
-//        tradeDetailPresenter = new TradeDetailPresenter();
-//        tradeDetailPresenter.attachView(this);
-//        tradeCenterPresenter = new TradeCenterPresenter();
-//        tradeCenterPresenter.attachView(this);
-        StatusBarUtil.setImmersionStatus(this, title_bar);
         initView();
     }
 
@@ -85,8 +69,6 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     public void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-//                tradeDetailPresenter.getTradeDetail(this,1);
-//                tradeCenterPresenter.getTradeCenter(this);
                 String user_login = edt_mobile.getText().toString();
                 String user_pass = edt_pwd.getText().toString();
                 loginPresenter.verify(user_login, user_pass);
@@ -117,8 +99,6 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
 
     private void initView() {
         tv_title_center.setText("用户登录");
-//        orderDetailPresenter.orderDetail(this);
-//        orderListPresenter.getOrderList(this);
     }
 
     /**
@@ -157,13 +137,13 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
 
     @Override
     public void onLoginSuccess() {
-        showToast("login success！");
+        ToastUtils.showCustomToast("登录成功");
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 
     @Override
     public void onLoginFailed(String msg) {
-        showToast(msg);
+        ToastUtils.showCustomToast(msg);
     }
 
     @Override
@@ -174,44 +154,4 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
         }
     }
 
-//    @Override
-//    public void onOrderDetailSuccess(OrderDetailResponseBean orderDetailResponseBeans) {
-//        LogUtils.d("ceshi"+orderDetailResponseBeans);
-//
-//    }
-//
-//    @Override
-//    public void onOrderDetailFailed(String msg) {
-//        LogUtils.d("ceshi"+msg);
-//    }
-//
-//    @Override
-//    public void onOrderListSuccess(OrderListResponseBean orderListBean) {
-//        LogUtils.d("ceshi"+orderListBean);
-//    }
-//
-//    @Override
-//    public void onOrderListFailed(String msg) {
-//        LogUtils.d("ceshi-list"+msg);
-//    }
-//
-//    @Override
-//    public void onTradeDetailSuccess(TradeDetailResponseBean tradeDetailResponseBean) {
-//
-//    }
-//
-//    @Override
-//    public void onTradeDetailFailed(String msg) {
-//
-//    }
-//
-//    @Override
-//    public void onTradeCenterSuccess(TradeCenterResponseBean tradeCenterResponseBean) {
-//
-//    }
-//
-//    @Override
-//    public void onTradeCenterFailed(String msg) {
-//
-//    }
 }

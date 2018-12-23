@@ -22,11 +22,11 @@ public class ChangePassActivity extends BaseActivity implements ChangePassViewIm
     @BindView(R.id.tv_title_center)
     TextView tvTitleCenter;
 
-    @OnClick({})
+    @OnClick({R.id.left_ll})
     public void onClick(View v) {
         int id=v.getId();
         switch (id){
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(v);
                 finish();
         }

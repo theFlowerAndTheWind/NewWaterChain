@@ -845,7 +845,7 @@ public class LogUtils {
                 StreamResult xmlOutput = new StreamResult(new StringWriter());
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                transformer.setOutputProperty("{com.quanminjieshui.watechain.RequestUtil://xml.apache.org/xslt}indent-amount", "4");
+                transformer.setOutputProperty("{com.quanminjieshui.waterchain.RequestUtil://xml.apache.org/xslt}indent-amount", "4");
                 transformer.transform(xmlInput, xmlOutput);
                 xml = xmlOutput.getWriter().toString().replaceFirst(">", ">" + LINE_SEP);
             } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -17,7 +18,6 @@ import com.quanminjieshui.waterchain.ui.adapter.FactoryListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
-import com.quanminjieshui.waterchain.utils.ToastUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.util.ArrayList;
@@ -114,7 +114,12 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
         factoryListAdapter.setOnItemClickListener(new FactoryListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                ToastUtils.showCustomToast("立即下单跳转"+position);
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",position);
+                intent.putExtras(bundle);
+                intent.setClass(EnterpriseActivity.this,FactoryServiceActivity.class);
+                startActivity(intent);
 
             }
         });

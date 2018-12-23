@@ -1,6 +1,7 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -33,6 +34,7 @@ import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.ServiceListPresneter;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.ServiceListViewImpl;
+import com.quanminjieshui.waterchain.ui.activity.FactoryServiceActivity;
 import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.LogUtils;
@@ -136,7 +138,12 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         serviceListAdapter.setOnItemClickListener(new ServiceListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                ToastUtils.showCustomToast("立即下单跳转"+position);
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",position);
+                intent.putExtras(bundle);
+                intent.setClass(getBaseActivity(),FactoryServiceActivity.class);
+                startActivity(intent);
 
             }
         });
