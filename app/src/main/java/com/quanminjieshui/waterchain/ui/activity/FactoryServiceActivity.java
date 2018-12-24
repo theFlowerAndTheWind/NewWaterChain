@@ -2,7 +2,9 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -10,11 +12,18 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.ui.adapter.OrderListsViewpagerAdapter;
-import com.quanminjieshui.waterchain.ui.fragment.OrderListsTabFragment;
+import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
+import com.quanminjieshui.waterchain.contract.presenter.FactoryServiceParsenter;
+import com.quanminjieshui.waterchain.contract.view.FactoryServiceViewImpl;
+import com.quanminjieshui.waterchain.ui.adapter.TableViewpagerAdapter;
+import com.quanminjieshui.waterchain.ui.fragment.CommonProblemFragment;
+import com.quanminjieshui.waterchain.ui.fragment.PriceSystemFragment;
+import com.quanminjieshui.waterchain.ui.fragment.ProcessDescFragment;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +33,7 @@ import butterknife.OnClick;
  * Class Note:
  */
 
-public class FactoryServiceActivity extends BaseActivity {
+public class FactoryServiceActivity extends BaseActivity implements FactoryServiceViewImpl{
 
 
     @BindView(R.id.left_ll)
@@ -37,34 +46,88 @@ public class FactoryServiceActivity extends BaseActivity {
     TabLayout factoryTabLayout;
     @BindView(R.id.factory_service_viewpager)
     ViewPager factoryViewpager;
+    private FactoryServiceParsenter serviceParsenter;
+    private TableViewpagerAdapter adapter;
 
     private String[] titles=new String[]{"价格体系","流程介绍","常见问题"};
-    private ArrayList<OrderListsTabFragment>fragments=new ArrayList<>();
-    private OrderListsViewpagerAdapter adapter;
+    private List<Fragment> fragments=new ArrayList<>();
 
+    private int fsid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setImmersionStatus(this,titleBar);
+
+        serviceParsenter = new FactoryServiceParsenter();
+        serviceParsenter.attachView(this);
         initView();
 
     }
 
     private void initView() {
         tvTitleCenter.setText("宾馆酒店系列");
-        for(int i=0;i<titles.length;i++){
-            OrderListsTabFragment fragment=new OrderListsTabFragment();
-            fragment.setTxt(titles[i]);
-            fragments.add(fragment);
-            factoryTabLayout.addTab(factoryTabLayout.newTab());
+        if(getIntent()!= null){
+            fsid = getIntent().getIntExtra("fsid",-1);
         }
-        factoryTabLayout.setupWithViewPager(factoryViewpager,false);
-        adapter = new OrderListsViewpagerAdapter(getSupportFragmentManager(),fragments,titles);
-        factoryViewpager.setAdapter(adapter);
 
-        for(int i=0;i<titles.length;i++){
-            factoryTabLayout.getTabAt(i).setText(titles[i]);
-        }
+
+        fragments.add(new PriceSystemFragment());
+        fragments.add(new ProcessDescFragment());
+        fragments.add(new CommonProblemFragment());
+
+        adapter = new TableViewpagerAdapter(getSupportFragmentManager(),fragments,titles);
+        factoryViewpager.setAdapter(adapter);
+        factoryViewpager.setCurrentItem(0);//默认选中第一项
+        factoryTabLayout.setupWithViewPager(factoryViewpager,false);
+        factoryViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0://默示什么都没做
+                        break;
+                    case 1://默认正在滑动
+                        break;
+                    case 2://默认滑动完毕
+                        break;
+                    default:break;
+
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        factoryTabLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position= (int) view.getTag();
+                boolean isSelect = factoryTabLayout.getTabAt(position).isSelected();
+                if (position==0 && isSelect){
+                    factoryViewpager.setCurrentItem(0);
+                    ToastUtils.showCustomToast("点击了价格体系");
+                }else if (position==1 && isSelect){
+                    factoryViewpager.setCurrentItem(1);
+                    ToastUtils.showCustomToast("点击了流程介绍");
+                }else {
+                    TabLayout.Tab tab = factoryTabLayout.getTabAt(position);
+                    if (tab != null) {
+                        tab.select();
+                    }
+                    factoryViewpager.setCurrentItem(2);
+                    ToastUtils.showCustomToast("点击了常见问题");
+                }
+
+            }
+        });
     }
 
     @OnClick({R.id.img_title_left})
@@ -90,10 +153,23 @@ public class FactoryServiceActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        serviceParsenter.getFactoryService(this,fsid);
+        showLoadingDialog();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onFactoryServiceSuceess(FactoryServiceResponseBean factoryServiceResponseBean) {
+        Log.d("",factoryServiceResponseBean.toString());
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void onFactoryServiceFailed(String msg) {
+        dismissLoadingDialog();
     }
 }

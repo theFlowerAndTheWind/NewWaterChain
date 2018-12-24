@@ -61,7 +61,7 @@ public class FactoryDetailResponseBean {
         int id;
         String s_name;
         String img;
-        String service_id;
+        int service_id;
         String description;
 
 
@@ -89,11 +89,11 @@ public class FactoryDetailResponseBean {
             this.img = img;
         }
 
-        public String getService_id() {
+        public int getService_id() {
             return service_id;
         }
 
-        public void setService_id(String service_id) {
+        public void setService_id(int service_id) {
             this.service_id = service_id;
         }
 

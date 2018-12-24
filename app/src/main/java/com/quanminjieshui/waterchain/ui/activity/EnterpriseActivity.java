@@ -116,7 +116,7 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putInt("id",position);
+                bundle.putInt("fsid",listEntities.get(position).getService_id());
                 intent.putExtras(bundle);
                 intent.setClass(EnterpriseActivity.this,FactoryServiceActivity.class);
                 startActivity(intent);
