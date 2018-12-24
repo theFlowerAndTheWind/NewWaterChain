@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pay_cate_choice" />
+                android:src="@mipmap/wallet" />
 
             <TextView
                 android:id="@+id/tv_account_detail"
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pay_cate_choice" />
+                android:src="@mipmap/laptop"  />
 
             <TextView
                 android:id="@+id/tv_auth_detail"
@@ -134,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pay_cate_choice" />
+                android:src="@mipmap/clock" />
 
             <TextView
                 android:id="@+id/tv_trade_lists"
@@ -170,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pay_cate_choice" />
+                android:src="@mipmap/drop" />
 
             <TextView
                 android:id="@+id/tv_order_lists"
@@ -246,7 +246,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pay_cate_choice" />
+                android:src="@mipmap/speach" />
 
             <TextView
                 android:id="@+id/tv_sys_msg"
@@ -282,7 +282,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pay_cate_choice" />
+                android:src="@mipmap/umbrella" />
 
             <TextView
                 android:id="@+id/tv_change_pass"
@@ -318,7 +318,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pay_cate_choice" />
+                android:src="@mipmap/user" />
 
             <TextView
                 android:id="@+id/tv_about_us"
