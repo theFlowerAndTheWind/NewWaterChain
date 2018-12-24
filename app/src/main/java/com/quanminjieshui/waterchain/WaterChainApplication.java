@@ -1,8 +1,10 @@
 package com.quanminjieshui.waterchain;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.support.multidex.MultiDex;
 
 import com.quanminjieshui.waterchain.utils.NetworkStateReceiver;
 
@@ -37,5 +39,9 @@ public class WaterChainApplication extends Application {
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkStateReceiver, filter);
     }
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }
