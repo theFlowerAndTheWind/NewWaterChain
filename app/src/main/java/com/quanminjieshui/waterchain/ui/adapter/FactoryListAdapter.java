@@ -55,7 +55,7 @@ public class FactoryListAdapter extends RecyclerView.Adapter<FactoryListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull RecycleHolder holder, final int position) {
-        GlidImageManager.getInstance().loadImageById(context,list.get(position).getImg(),holder.washImg,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageUri(context,list.get(position).getImg(),holder.washImg,R.drawable.ic_default_image);
         holder.washDesc.setText(TextUtils.isEmpty(list.get(position).getDescription()) ? "" :list.get(position).getDescription());
         holder.washTitle.setText(list.get(position).getS_name());
         if(position == list.size()-1){

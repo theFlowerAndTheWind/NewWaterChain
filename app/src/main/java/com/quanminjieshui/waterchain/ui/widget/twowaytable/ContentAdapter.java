@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 
 import java.util.List;
 
@@ -17,10 +18,10 @@ import java.util.List;
  */
 
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHolder> {
-    private List<ContentBean> contentBeanList;
+    private List<FactoryServiceResponseBean.WashFatoryCageGory> contentBeanList;
     private Context context;
 
-    public ContentAdapter(List<ContentBean> contentBeanList, Context context) {
+    public ContentAdapter(List<FactoryServiceResponseBean.WashFatoryCageGory> contentBeanList, Context context) {
         this.contentBeanList = contentBeanList;
         this.context = context;
     }
@@ -33,9 +34,9 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.t0.setText(contentBeanList.get(position).getT0() + "");
-        holder.t1.setText(contentBeanList.get(position).getT1() + "");
-        holder.t2.setText(contentBeanList.get(position).getT2() + "");
+        holder.t0.setText(contentBeanList.get(position).getPiece());
+        holder.t1.setText(contentBeanList.get(position).getStandard());
+        holder.t2.setText(contentBeanList.get(position).getUnit_price());
     }
 
     @Override

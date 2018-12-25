@@ -9,7 +9,7 @@
         android:layout_width="90dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:background="@drawable/black_bg_shape"
+        android:background="@drawable/black_border_bg_shape"
         android:orientation="vertical">
 
         <TextView

@@ -140,7 +140,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putInt("id",position);
+                bundle.putInt("fsid",listEntities.get(position).getId());
                 intent.putExtras(bundle);
                 intent.setClass(getBaseActivity(),FactoryServiceActivity.class);
                 startActivity(intent);

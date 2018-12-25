@@ -118,6 +118,13 @@
         <item name="android:minHeight">@dimen/commit_btn_height</item>
     </style>
 
+    <style name="style_btn_no_coner">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_commit</item>
+        <item name="android:background">@drawable/btn_blue_bg_selector_noconer</item>
+        <item name="android:minHeight">@dimen/commit_btn_height</item>
+    </style>
+
     <style name="style_edt">
         <item name="android:paddingLeft">@dimen/edt_padding_left</item>
         <item name="android:background">@drawable/gray_border_bg_shape</item>

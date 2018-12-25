@@ -55,7 +55,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull RecycleHolder holder, final int position) {
-        GlidImageManager.getInstance().loadImageById(context,list.get(position).getImg(),holder.washImg,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageUri(context,list.get(position).getImg(),holder.washImg,R.drawable.ic_default_image);
         holder.washDesc.setText(TextUtils.isEmpty(list.get(position).getS_desc()) ? "专业技术，节水95%,不用洗涤剂，不产生污染，已在深圳和山东江苏等地推广  " :list.get(position).getS_desc());
         holder.washTitle.setText(list.get(position).getS_name());
         if(position == list.size()-1){

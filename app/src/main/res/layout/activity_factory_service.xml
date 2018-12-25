@@ -77,15 +77,13 @@
         android:id="@+id/factory_btn_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20px"
-        android:paddingVertical="20px"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/factoty_btn_order"
-            style="@style/style_btn"
+            style="@style/style_btn_no_coner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"

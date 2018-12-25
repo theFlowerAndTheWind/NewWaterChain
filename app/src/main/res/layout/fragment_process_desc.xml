@@ -1,11 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="流程介绍"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_weight="1"
+            android:textSize="24px"
+            android:gravity="center"
+            android:textColor="@color/primary_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_border_bg_shape"
+            android:text="登录账号"/>
+        <Button
+            android:layout_weight="1"
+            android:textSize="24px"
+            android:gravity="center"
+            android:textColor="@color/primary_blue"
+            android:background="@drawable/blue_border_bg_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交洗涤需求"/>
+        <Button
+            android:layout_weight="1"
+            android:textSize="24px"
+            android:gravity="center"
+            android:textColor="@color/primary_blue"
+            android:background="@drawable/blue_border_bg_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交订单"/>
+        <Button
+            android:layout_weight="1"
+            android:textSize="24px"
+            android:gravity="center"
+            android:textColor="@color/primary_blue"
+            android:background="@drawable/blue_border_bg_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付费用"/>
+        <Button
+            android:layout_weight="1"
+            android:textSize="24px"
+            android:gravity="center"
+            android:textColor="@color/primary_blue"
+            android:background="@drawable/blue_border_bg_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上门取件"/>
+
+    </LinearLayout>
 
 </LinearLayout>

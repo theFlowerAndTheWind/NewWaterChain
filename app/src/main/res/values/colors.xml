@@ -24,6 +24,7 @@
     <color name="tint_blue">#FFE6F4FD</color>
     <color name="space_gray">#FFECEAF3</color>
     <color name="divider_gray">#F0EFF5</color>
+    <color name="divider_gray_bg">#E7E9F1</color>
     <color name="edittext_border_gray">#E7E9F1</color>
     <color name="text_gray">#888888</color>
     <color name="primary_red">#FFFF4C50</color>

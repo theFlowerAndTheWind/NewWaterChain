@@ -116,7 +116,7 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putInt("fsid",listEntities.get(position).getService_id());
+                bundle.putInt("fsid",listEntities.get(position).getId());
                 intent.putExtras(bundle);
                 intent.setClass(EnterpriseActivity.this,FactoryServiceActivity.class);
                 startActivity(intent);
@@ -147,7 +147,7 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
         dismissLoadingDialog();
         LogUtils.d("factoryDetailResponseBean；"+factoryDetailResponseBean);
         enterpriseDetail.setText(factoryDetailResponseBean.getDetail().getDescription());
-        GlidImageManager.getInstance().loadImageById(EnterpriseActivity.this,factoryDetailResponseBean.getDetail().getLogo(),enterpriseImg,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageUri(EnterpriseActivity.this,factoryDetailResponseBean.getDetail().getLogo(),enterpriseImg,R.drawable.ic_default_image);
         listEntities.clear();
         listEntities.addAll(factoryDetailResponseBean.getService_lists());
         factoryListAdapter.notifyDataSetChanged();

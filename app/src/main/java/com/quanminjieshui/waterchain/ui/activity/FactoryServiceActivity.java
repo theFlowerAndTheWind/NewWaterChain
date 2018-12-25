@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +21,7 @@ import com.quanminjieshui.waterchain.ui.fragment.PriceSystemFragment;
 import com.quanminjieshui.waterchain.ui.fragment.ProcessDescFragment;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +47,29 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
     TabLayout factoryTabLayout;
     @BindView(R.id.factory_service_viewpager)
     ViewPager factoryViewpager;
+    @BindView(R.id.factory_service_title)
+    TextView factory_service_title;
+    @BindView(R.id.factory_service_des)
+    TextView factory_service_des;
+    @BindView(R.id.service_img)
+    ImageView service_img;
+
+
+
+
     private FactoryServiceParsenter serviceParsenter;
     private TableViewpagerAdapter adapter;
 
     private String[] titles=new String[]{"价格体系","流程介绍","常见问题"};
     private List<Fragment> fragments=new ArrayList<>();
+    private List<FactoryServiceResponseBean.WashFatoryCageGory> list = new ArrayList<>();
+    private String s_name,description,img;
+    private int fsid,service_id,factory_id;
 
-    private int fsid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setImmersionStatus(this,titleBar);
-
         serviceParsenter = new FactoryServiceParsenter();
         serviceParsenter.attachView(this);
         initView();
@@ -69,7 +81,63 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
         if(getIntent()!= null){
             fsid = getIntent().getIntExtra("fsid",-1);
         }
+        serviceParsenter.getFactoryService(this,fsid);
 
+
+
+    }
+
+    @OnClick({R.id.img_title_left})
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.img_title_left:
+                goBack(v);
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void initContentView() {
+        setContentView(R.layout.activity_factory_service);
+    }
+
+    @Override
+    public void onReNetRefreshData(int viewId) {
+
+    }
+
+    public List<FactoryServiceResponseBean.WashFatoryCageGory> getList(){
+
+        return this.list;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        serviceParsenter.getFactoryService(this,fsid);
+        showLoadingDialog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onFactoryServiceSuceess(FactoryServiceResponseBean factoryServiceResponseBean) {
+        s_name = factoryServiceResponseBean.getDetail().getS_name();
+        description = factoryServiceResponseBean.getDetail().getDescription();
+        img = factoryServiceResponseBean.getDetail().getImg();
+        service_id = factoryServiceResponseBean.getDetail().getService_id();
+        factory_id = factoryServiceResponseBean.getDetail().getFactory_id();
+
+        factory_service_title.setText(s_name);
+        factory_service_des.setText(description);
+        GlidImageManager.getInstance().loadImageUri(this,img,service_img,R.drawable.ic_default_image);
+        list.clear();
+        list.addAll(factoryServiceResponseBean.getCate_lists());
+        dismissLoadingDialog();
 
         fragments.add(new PriceSystemFragment());
         fragments.add(new ProcessDescFragment());
@@ -128,44 +196,7 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
 
             }
         });
-    }
 
-    @OnClick({R.id.img_title_left})
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.img_title_left:
-                goBack(v);
-                finish();
-                break;
-        }
-    }
-
-    @Override
-    public void initContentView() {
-        setContentView(R.layout.activity_factory_service);
-    }
-
-    @Override
-    public void onReNetRefreshData(int viewId) {
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        serviceParsenter.getFactoryService(this,fsid);
-        showLoadingDialog();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onFactoryServiceSuceess(FactoryServiceResponseBean factoryServiceResponseBean) {
-        Log.d("",factoryServiceResponseBean.toString());
-        dismissLoadingDialog();
     }
 
     @Override

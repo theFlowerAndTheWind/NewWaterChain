@@ -55,7 +55,7 @@ public class WashShopAdapter extends RecyclerView.Adapter<WashShopAdapter.Recycl
 
     @Override
     public void onBindViewHolder(@NonNull WashShopAdapter.RecycleHolder holder, final int position) {
-        GlidImageManager.getInstance().loadImageById(context,list.get(position).getLogo(),holder.serviceImg,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageUri(context,list.get(position).getLogo(),holder.serviceImg,R.drawable.ic_default_image);
         holder.serviceName.setText(TextUtils.isEmpty(list.get(position).getF_name()) ? "未知" :list.get(position).getF_name());
         holder.serviceScope.setText("服务范围："+(TextUtils.isEmpty(list.get(position).getService_scope()) ? "未知" :list.get(position).getService_scope()));
         holder.businessScope.setText("业务范围："+(TextUtils.isEmpty(list.get(position).getBussiness_scope()) ? "未知" :list.get(position).getBussiness_scope()));

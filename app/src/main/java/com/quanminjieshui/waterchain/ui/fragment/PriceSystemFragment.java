@@ -1,5 +1,7 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
+import com.quanminjieshui.waterchain.ui.activity.FactoryServiceActivity;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.ui.widget.twowaytable.ContentAdapter;
-import com.quanminjieshui.waterchain.ui.widget.twowaytable.ContentBean;
 import com.quanminjieshui.waterchain.ui.widget.twowaytable.LeftAdapter;
 import com.quanminjieshui.waterchain.ui.widget.twowaytable.TopAdapter;
 
@@ -38,20 +41,20 @@ public class PriceSystemFragment extends BaseFragment {
     @BindView(R.id.contentRecyclerView)
     RecyclerView contentRecyclerView;
 
+    private FactoryServiceActivity factoryServiceActivity;
+    private List<FactoryServiceResponseBean.WashFatoryCageGory> list = new ArrayList<>();
     private RecyclerView.Adapter topAdapter, leftAdapter, contentAdapter;
-    private List<ContentBean> contentBeanList = new ArrayList<>();
-    private String[] types = {"床单", "被套", "枕套", "床垫","床罩", "床尾垫", "羽绒被芯", "棉被芯","浴袍", "浴巾", "地巾", "面巾","方巾", "台衬"};
     private String[] typesTitles = {"单位", "规格", "单价（元）"};
     private AlertChainDialog alertChainDialog;
     private Unbinder unbinder;
+    private String c_name,unit_price,piece,standard;
+    private int fscid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,24 +69,26 @@ public class PriceSystemFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        list = this.factoryServiceActivity.getList();
     }
 
-    private void genData() {
-        contentBeanList.clear();
-        for (int i = 0; i < 21; i++) {
-            ContentBean bean = new ContentBean();
-            bean.setT0((int) (Math.random() * 10000));
-            bean.setT1((int) (Math.random() * 10000));
-            bean.setT2((int) (Math.random() * 10000));
-            bean.setT3((int) (Math.random() * 10000));
-            bean.setT4((int) (Math.random() * 10000));
-            bean.setT5((int) (Math.random() * 10000));
-            bean.setT6((int) (Math.random() * 10000));
-            bean.setT7((int) (Math.random() * 10000));
-            bean.setT8((int) (Math.random() * 10000));
-            contentBeanList.add(bean);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.factoryServiceActivity = (FactoryServiceActivity) context;
+        if(context instanceof FactoryServiceActivity){
+            list = ((FactoryServiceActivity) context).getList();
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.factoryServiceActivity = (FactoryServiceActivity) activity;
+        if(activity instanceof FactoryServiceActivity){
+            list = ((FactoryServiceActivity) activity).getList();
+        }
+
     }
 
     private class SelfRemovingOnScrollListener extends RecyclerView.OnScrollListener {
@@ -97,7 +102,7 @@ public class PriceSystemFragment extends BaseFragment {
     }
 
     private void initView() {
-//表格title
+        //表格title
         LinearLayoutManager topManager = new LinearLayoutManager(getBaseActivity());
         topManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         topRecyclerView.setLayoutManager(topManager);
@@ -107,7 +112,7 @@ public class PriceSystemFragment extends BaseFragment {
         //表格左侧
         LinearLayoutManager leftManager = new LinearLayoutManager(getBaseActivity());
         leftManager.setOrientation(LinearLayoutManager.VERTICAL);
-        leftAdapter = new LeftAdapter(types, getBaseActivity());
+        leftAdapter = new LeftAdapter(list, getBaseActivity());
         leftRecyclerView.setLayoutManager(leftManager);
         leftRecyclerView.setAdapter(leftAdapter);
 
@@ -155,10 +160,9 @@ public class PriceSystemFragment extends BaseFragment {
             }
         });
 
-        genData();
         LinearLayoutManager contentManager = new LinearLayoutManager(getBaseActivity());
         contentManager.setOrientation(LinearLayoutManager.VERTICAL);
-        contentAdapter = new ContentAdapter(contentBeanList, getBaseActivity());
+        contentAdapter = new ContentAdapter(list, getBaseActivity());
         contentRecyclerView.setLayoutManager(contentManager);
         contentRecyclerView.setAdapter(contentAdapter);
         final RecyclerView.OnScrollListener contentListener = new SelfRemovingOnScrollListener() {
