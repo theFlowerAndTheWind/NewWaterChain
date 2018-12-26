@@ -22,14 +22,12 @@ public class AuthDetailModel {
     public void getAuthDetail(BaseActivity activity, final AuthDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .authDetail(RequestUtil.getRequestBeanBody(null,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(activity) {
+                .compose(activity.<BaseEntity<AuthDetailResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<AuthDetailResponseBean>>io())
+                .subscribe(new BaseObserver<AuthDetailResponseBean>(activity) {
 
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        AuthDetailResponseBean authDetailBean = gson.fromJson((JsonElement) o,new TypeToken<AuthDetailResponseBean>() {}.getType());
+                    protected void onSuccess(AuthDetailResponseBean authDetailBean) throws Exception {
                         callBack.success(authDetailBean);
                     }
 

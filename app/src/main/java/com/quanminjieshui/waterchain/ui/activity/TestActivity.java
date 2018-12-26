@@ -63,14 +63,14 @@ public class TestActivity extends BaseActivity {
 
 
         RetrofitFactory.getInstance().createService()
-                .userDetail(RequestUtil.getRequestHashBody(params,false))
-                .compose(TestActivity.this.<BaseEntity<UserDetailResponseBean>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<UserDetailResponseBean>>io())
-                .subscribe(new BaseObserver<UserDetailResponseBean>(TestActivity.this) {
+                .authDetail(RequestUtil.getRequestHashBody(params,false))
+                .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity>io())
+                .subscribe(new BaseObserver(TestActivity.this) {
 
                     @Override
-                    protected void onSuccess(UserDetailResponseBean o) throws Exception {
-                        LogUtils.e("tag",o.getAvatar()+"--"+o.getCreate_time());
+                    protected void onSuccess(Object o) throws Exception {
+//                        LogUtils.e("tag",o.getAvatar()+"--"+o.getCreate_time());
                     }
 
                     @Override

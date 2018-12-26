@@ -76,7 +76,6 @@ public class UrlConfig {
     //用户撤单
     public static final String TRADE_CANCEL = "api/home/trade/cancel";
 
-
     //平台资讯列表
     public static final String INFO_LIST = "api/home/info/infoLists";
     //平台咨询详情
@@ -100,7 +99,21 @@ public class UrlConfig {
     public static final String USER_DETAIL = "api/home/user/userDetail";
     //我的资产
     public static final String USER_ACCOUNT = "api/home/user/accountDetail";
-    //用户身份证认证信息
+    /**
+     * 用户身份证认证信息
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "user_status":"待审核",
+     *     │         "user_name":"",
+     *     │         "id_no":"",
+     *     │         "company_name":"公司名称",
+     *     │         "company_license_no":"123456789",
+     *     │         "user_type":2
+     *     │     }
+     *     │ }
+     */
     public static final String AUTH_DETAIL = "api/home/user/authDetail";
     //个人中心-全部委托
     public static final String TRADE_LIST = "api/home/user/tradeLists";

@@ -94,8 +94,6 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
     }
 
 
-
-
     @Override
     public void initContentView() {
         setContentView(R.layout.activity_user_detail);
@@ -111,15 +109,15 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
     public void onPositiveClicked(String tag) {
         if (tag.equals("logout")) {
             SPUtil.insert(UserDetailActivity.this, SPUtil.IS_LOGIN, false);//更改用户登录状态为未登录
-            SPUtil.delete(this,SPUtil.USER_LOGIN);
-            SPUtil.delete(this,SPUtil.UID);
-            SPUtil.delete(this,SPUtil.TOKEN);
+            SPUtil.delete(this, SPUtil.USER_LOGIN);
+            SPUtil.delete(this, SPUtil.UID);
+            SPUtil.delete(this, SPUtil.TOKEN);
 
-            SPUtil.delete(this,SPUtil.ID);
-            SPUtil.delete(this,SPUtil.IS_BLOCKED);
-            SPUtil.delete(this,SPUtil.USER_LOGIN);
-            SPUtil.delete(this,SPUtil.USER_NICKNAME);
-            SPUtil.delete(this,SPUtil.TOKEN);
+            SPUtil.delete(this, SPUtil.ID);
+            SPUtil.delete(this, SPUtil.IS_BLOCKED);
+            SPUtil.delete(this, SPUtil.USER_LOGIN);
+            SPUtil.delete(this, SPUtil.USER_NICKNAME);
+            SPUtil.delete(this, SPUtil.TOKEN);
 //            SPUtil.delete(this,SPUtil.IS_LOGIN);
 
             jump(MainActivity.class);
@@ -134,24 +132,32 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
 
     @Override
     public void onUserDetailSuccess(UserDetailResponseBean userDetailResponseBean) {
-        tvUserLogin.setText(userDetailResponseBean.getUser_login());
-        tvCreateTime.setText(userDetailResponseBean.getCreate_time());
-        tvUserLoginTel.setText(userDetailResponseBean.getUser_login());
-        tvUserType.setText(userDetailResponseBean.getUser_type());
-        int user_status = userDetailResponseBean.getUser_status();
-        if (user_status == 0) {
-            tvAuthStatus.setText("去认证");
-            tvAuthStatus.setTextColor(getResources().getColor(R.color.primary_blue));
-            tvAuthStatus.setEnabled(true);
-        } else if (user_status == 1) {
-            tvAuthStatus.setText("已认证");
-            tvAuthStatus.setTextColor(getResources().getColor(R.color.text_black));
-            tvAuthStatus.setEnabled(false);
+        if (userDetailResponseBean != null) {
+            tvUserLogin.setText(userDetailResponseBean.getUser_login());
+            tvCreateTime.setText(userDetailResponseBean.getCreate_time());
+            tvUserLoginTel.setText(userDetailResponseBean.getUser_login());
+            tvUserType.setText(userDetailResponseBean.getUser_type());
+            int user_status = userDetailResponseBean.getUser_status();
+            if (user_status == 0) {
+                tvAuthStatus.setText("去认证");
+                tvAuthStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+                tvAuthStatus.setEnabled(true);
+            } else if (user_status == 1) {
+                tvAuthStatus.setText("已认证");
+                tvAuthStatus.setTextColor(getResources().getColor(R.color.text_black));
+                tvAuthStatus.setEnabled(false);
+            }
         }
     }
 
     @Override
     public void onUserDetailFailed(String msg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        userDetailPresenter.detachView();
     }
 }

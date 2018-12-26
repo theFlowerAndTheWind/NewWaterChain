@@ -57,6 +57,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -242,7 +243,8 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     private void initCityData() {
 
         String[] stringArray = getResources().getStringArray(R.array.nationality);
-        nationalityStr= (ArrayList<String>) Arrays.asList(stringArray);
+        List<String> strings = Arrays.asList(stringArray);
+        nationalityStr=new ArrayList<String>(strings);
 
         Observable.create(new ObservableOnSubscribe<ArrayList<ProvinceBean>>() {
             @Override

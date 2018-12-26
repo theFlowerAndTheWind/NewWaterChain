@@ -6,112 +6,221 @@
 
     <include layout="@layout/module_include_title_bar" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <FrameLayout
         style="@style/PaddinLeftRight"
-        android:orientation="vertical">
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/ll_did_not"
             android:layout_width="match_parent"
             android:layout_height="290px"
-            android:padding="40px"
             android:layout_marginTop="40px"
+            android:background="@drawable/gray_bg_shape"
             android:orientation="vertical"
-            android:background="@drawable/gray_bg_shape">
+            android:padding="40px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="身份认证"
                 android:textColor="@color/text_black"
-                android:textSize="32px"/>
+                android:textSize="32px" />
 
             <TextView
+                style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="51px"
-                style="@style/style_txt_content_gray"
-                android:text="请如实填写您的身份信息，认证后方能参与交易"/>
+                android:text="请如实填写您的身份信息，认证后方能参与交易" />
 
-            <Button
+            <TextView
                 android:id="@+id/tv_do_auth"
-                android:layout_width="200px"
-                android:layout_height="70px"
-                android:textSize="28px"
-                android:layout_marginTop="37px"
                 style="@style/style_href"
-                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="立即认证"/>
+                android:layout_marginTop="37px"
+                android:text="立即认证" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_ing"
             android:layout_width="match_parent"
             android:layout_height="290px"
-            android:padding="40px"
             android:layout_marginTop="40px"
+            android:background="@drawable/gray_bg_shape"
             android:orientation="vertical"
-            android:background="@drawable/gray_bg_shape">
+            android:padding="40px"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="身份认证"
                 android:textColor="@color/text_black"
-                android:textSize="32px"/>
+                android:textSize="32px" />
 
             <TextView
+                style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="51px"
-                style="@style/style_txt_content_gray"
-                android:text="请您的身份信息正在审核中，请耐心等待"/>
+                android:text="请您的身份信息正在审核中，请耐心等待" />
 
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/ll_done"
             android:layout_width="match_parent"
             android:layout_height="290px"
-            android:padding="40px"
             android:layout_marginTop="40px"
+            android:background="@drawable/gray_bg_shape"
             android:orientation="vertical"
-            android:background="@drawable/gray_bg_shape">
+            android:padding="40px"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="身份认证"
                 android:textColor="@color/text_black"
-                android:textSize="32px"/>
+                android:textSize="32px" />
 
             <TextView
+                style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="45px"
-                style="@style/style_txt_content_gray"
-                android:text="姓名：徐正琦"/>
+                android:text="***" />
 
             <TextView
+                android:id="@+id/tv_user_name"
+                style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10px"
-                style="@style/style_txt_content_gray"
-                android:text="证件号码：110***********13"/>
+                android:text="证件号码：110***********13" />
 
             <TextView
+                android:id="@+id/tv_id_no"
+                style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18px"
-                style="@style/style_txt_content_gray"
-                android:textColor="#2E9A08"
-                android:text="认证成功"/>
+                android:text="认证成功"
+                android:textColor="#2E9A08" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--style="@style/PaddinLeftRight"-->
+    <!--android:orientation="vertical">-->
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="290px"-->
+    <!--android:padding="40px"-->
+    <!--android:layout_marginTop="40px"-->
+    <!--android:orientation="vertical"-->
+    <!--android:background="@drawable/gray_bg_shape">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="身份认证"-->
+    <!--android:textColor="@color/text_black"-->
+    <!--android:textSize="32px"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="51px"-->
+    <!--style="@style/style_txt_content_gray"-->
+    <!--android:text="请如实填写您的身份信息，认证后方能参与交易"/>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/tv_do_auth"-->
+    <!--android:layout_width="200px"-->
+    <!--android:layout_height="70px"-->
+    <!--android:textSize="28px"-->
+    <!--android:layout_marginTop="37px"-->
+    <!--style="@style/style_href"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:text="立即认证"/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="290px"-->
+    <!--android:padding="40px"-->
+    <!--android:layout_marginTop="40px"-->
+    <!--android:orientation="vertical"-->
+    <!--android:background="@drawable/gray_bg_shape">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="身份认证"-->
+    <!--android:textColor="@color/text_black"-->
+    <!--android:textSize="32px"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="51px"-->
+    <!--style="@style/style_txt_content_gray"-->
+    <!--android:text="请您的身份信息正在审核中，请耐心等待"/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="290px"-->
+    <!--android:padding="40px"-->
+    <!--android:layout_marginTop="40px"-->
+    <!--android:orientation="vertical"-->
+    <!--android:background="@drawable/gray_bg_shape">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="身份认证"-->
+    <!--android:textColor="@color/text_black"-->
+    <!--android:textSize="32px"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="45px"-->
+    <!--style="@style/style_txt_content_gray"-->
+    <!--android:text="姓名：徐正琦"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="10px"-->
+    <!--style="@style/style_txt_content_gray"-->
+    <!--android:text="证件号码：110***********13"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="18px"-->
+    <!--style="@style/style_txt_content_gray"-->
+    <!--android:textColor="#2E9A08"-->
+    <!--android:text="认证成功"/>-->
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
 
 </LinearLayout>

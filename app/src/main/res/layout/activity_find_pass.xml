@@ -38,8 +38,6 @@
                 android:layout_weight="4"
                 android:hint="@string/hint_input_security_code"
                 android:inputType="number"
-                android:maxLength="20"
-                android:maxLines="1"
                 android:paddingLeft="@dimen/edt_padding_left" />
 
             <TextView

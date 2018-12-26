@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.http;
 
+import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
@@ -79,7 +80,7 @@ public interface APIService {
 
     //用户身份认证信息
     @POST(UrlConfig.AUTH_DETAIL)
-    Observable<BaseEntity> authDetail(@Body RequestBody requestBody);
+    Observable<BaseEntity<AuthDetailResponseBean>> authDetail(@Body RequestBody requestBody);
 
     //我的资产
     @POST(UrlConfig.USER_ACCOUNT)

@@ -217,8 +217,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
                     android:hint="身份证号"
-                    android:inputType="phone"
-                    android:maxLength="11"
                     android:visibility="gone" />
 
                 <RelativeLayout
