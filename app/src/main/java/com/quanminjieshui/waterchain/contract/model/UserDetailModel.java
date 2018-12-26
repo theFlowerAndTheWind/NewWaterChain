@@ -23,14 +23,12 @@ public class UserDetailModel {
     public void getUserDetail(BaseActivity activity, final UserDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .userDetail(RequestUtil.getRequestHashBody(null,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver() {
+                .compose(activity.<BaseEntity<UserDetailResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<UserDetailResponseBean>>io())
+                .subscribe(new BaseObserver<UserDetailResponseBean>() {
 
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        UserDetailResponseBean userDetailBean = gson.fromJson((JsonElement) o,new TypeToken<UserDetailResponseBean>() {}.getType());
+                    protected void onSuccess(UserDetailResponseBean userDetailBean) throws Exception {
                         callBack.success(userDetailBean);
                     }
 

@@ -10,12 +10,18 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
+import com.quanminjieshui.waterchain.contract.model.UserDetailModel;
+import com.quanminjieshui.waterchain.contract.presenter.UserDetailPresenter;
+import com.quanminjieshui.waterchain.contract.view.UserDetailViewImpl;
+import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
+import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UserDetailActivity extends BaseActivity {
+public class UserDetailActivity extends BaseActivity implements UserDetailViewImpl, WarningFragment.OnWarningDialogClickedListener {
 
     @BindView(R.id.title_bar)
     View titleBar;
@@ -41,10 +47,13 @@ public class UserDetailActivity extends BaseActivity {
     TextView tvAuthStatus;
     @BindView(R.id.btn_logout)
     Button btnLogout;
-    @OnClick({R.id.left_ll,R.id.tv_change_pass,R.id.tv_auth_status})
-    public void onClick(View v){
-        int id=v.getId();
-        switch (id){
+
+    private UserDetailPresenter userDetailPresenter;
+
+    @OnClick({R.id.left_ll, R.id.tv_change_pass, R.id.tv_auth_status, R.id.btn_logout})
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
             case R.id.left_ll:
                 goBack(v);
                 finish();
@@ -54,24 +63,37 @@ public class UserDetailActivity extends BaseActivity {
                 break;
 
             case R.id.tv_auth_status:
-
+                jump(AuthActivity.class);
+                break;
+            case R.id.btn_logout:
+                WarningFragment fragment = new WarningFragment("提示消息", "确认退出当前账号", "确定", "取消", "logout", this);
+                fragment.show(getSupportFragmentManager(), "warning_fragment");
+                break;
+            default:
                 break;
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setImmersionStatus(this,titleBar );
+        StatusBarUtil.setImmersionStatus(this, titleBar);
         initView();
+
+        userDetailPresenter = new UserDetailPresenter(new UserDetailModel());
+        userDetailPresenter.attachView(this);
+        userDetailPresenter.getUserDetail(this);
     }
 
     private void initView() {
         tvTitleCenter.setText("账户信息");
     }
 
-    private void jump(Class<?>cls){
-        startActivity(new Intent(UserDetailActivity.this,cls));
+    private void jump(Class<?> cls) {
+        startActivity(new Intent(UserDetailActivity.this, cls));
     }
+
+
 
 
     @Override
@@ -85,4 +107,51 @@ public class UserDetailActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onPositiveClicked(String tag) {
+        if (tag.equals("logout")) {
+            SPUtil.insert(UserDetailActivity.this, SPUtil.IS_LOGIN, false);//更改用户登录状态为未登录
+            SPUtil.delete(this,SPUtil.USER_LOGIN);
+            SPUtil.delete(this,SPUtil.UID);
+            SPUtil.delete(this,SPUtil.TOKEN);
+
+            SPUtil.delete(this,SPUtil.ID);
+            SPUtil.delete(this,SPUtil.IS_BLOCKED);
+            SPUtil.delete(this,SPUtil.USER_LOGIN);
+            SPUtil.delete(this,SPUtil.USER_NICKNAME);
+            SPUtil.delete(this,SPUtil.TOKEN);
+//            SPUtil.delete(this,SPUtil.IS_LOGIN);
+
+            jump(MainActivity.class);
+            finish();
+        }
+    }
+
+    @Override
+    public void onNegativeClicked(String tag) {
+
+    }
+
+    @Override
+    public void onUserDetailSuccess(UserDetailResponseBean userDetailResponseBean) {
+        tvUserLogin.setText(userDetailResponseBean.getUser_login());
+        tvCreateTime.setText(userDetailResponseBean.getCreate_time());
+        tvUserLoginTel.setText(userDetailResponseBean.getUser_login());
+        tvUserType.setText(userDetailResponseBean.getUser_type());
+        int user_status = userDetailResponseBean.getUser_status();
+        if (user_status == 0) {
+            tvAuthStatus.setText("去认证");
+            tvAuthStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+            tvAuthStatus.setEnabled(true);
+        } else if (user_status == 1) {
+            tvAuthStatus.setText("已认证");
+            tvAuthStatus.setTextColor(getResources().getColor(R.color.text_black));
+            tvAuthStatus.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onUserDetailFailed(String msg) {
+
+    }
 }

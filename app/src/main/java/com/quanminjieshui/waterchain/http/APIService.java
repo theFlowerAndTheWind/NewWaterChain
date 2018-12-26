@@ -8,6 +8,7 @@ import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.beans.SmsResponseBean;
+import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
 
@@ -86,7 +87,7 @@ public interface APIService {
 
     //用户信息
     @POST(UrlConfig.USER_DETAIL)
-    Observable<BaseEntity> userDetail(@Body RequestBody requestBody);
+    Observable<BaseEntity<UserDetailResponseBean>> userDetail(@Body RequestBody requestBody);
 
     //平台咨询详情
     @POST(UrlConfig.INFO_DETAIL)

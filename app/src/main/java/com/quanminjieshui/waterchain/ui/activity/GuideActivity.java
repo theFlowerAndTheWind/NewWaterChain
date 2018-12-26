@@ -55,7 +55,7 @@ public class GuideActivity extends BaseActivity {
         mForegroundBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
-                SPUtil.insert(GuideActivity.this,"isFirstLaunch",false);
+                SPUtil.insert(GuideActivity.this,SPUtil.IS_FIRST_LAUNCH,false);
 //                startActivity(new Intent(GuideActivity.this, MainActivity.class));
                 startActivity(new Intent(GuideActivity.this, LoginActivity.class));
                 finish();

@@ -55,6 +55,7 @@ import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,6 +107,8 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     EditText edt_company_name;
     @BindView(R.id.edt_company_license_no)
     EditText edt_company_license_no;
+    @BindView(R.id.btn_license_img)
+    Button btn_license_img;
     @BindView(R.id.edt_company_boss_name)
     EditText edt_company_boss_name;
     @BindView(R.id.relative_boss_id_img)
@@ -154,12 +157,15 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     private String bossIdImgStrB = "";//企业法人身份证反面字符串
     private String personalIdImgStrA = "";//个人身份证正面
     private String personalIdImgStrB = "";//个人身份证反面
+    private String licenseImgStr="";//营业执照扫描件
     private String nationalityName;
     private String provinceName;
     private String cityName;
+    private ArrayAdapter<String> nationalityAdapter;
     private ArrayAdapter<String> provinceAdapter;
     private ArrayAdapter<String> cityAdapter;
-    private ArrayList<ProvinceBean> cities;
+    private ArrayList<String> nationalityStr;//从array.xml获取而来的国籍list
+    private ArrayList<ProvinceBean> cities;//从json文件解析而来的provinceBean list
     private ArrayList<String> provinceStr;
     private HashMap<String, ArrayList<String>> cityMap;
     private AdapterView.OnItemSelectedListener onCityItemSelectedListener=new AdapterView.OnItemSelectedListener() {
@@ -195,6 +201,21 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     }
 
     private void initAdapter() {
+        nationalityAdapter=new SpinnerAdapter(this,android.R.layout.simple_spinner_item,nationalityStr);
+        nationalityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);// 设置下拉风格
+        sp_nationality.setAdapter(nationalityAdapter); // 将adapter 添加到spinner中
+        sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                nationalityName=nationalityStr.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         provinceAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item, provinceStr);
         provinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);// 设置下拉风格
         sp_province.setAdapter(provinceAdapter); // 将adapter 添加到spinner中
@@ -219,6 +240,10 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     }
 
     private void initCityData() {
+
+        String[] stringArray = getResources().getStringArray(R.array.nationality);
+        nationalityStr= (ArrayList<String>) Arrays.asList(stringArray);
+
         Observable.create(new ObservableOnSubscribe<ArrayList<ProvinceBean>>() {
             @Override
             public void subscribe(ObservableEmitter<ArrayList<ProvinceBean>> e) throws Exception {
@@ -270,7 +295,8 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     }
 
     @OnClick({R.id.btn_company, R.id.btn_personal, R.id.left_ll, R.id.btn_next, R.id.tv_standing_off,
-            R.id.btn_upload_boss_id_img_a, R.id.btn_upload_boss_id_img_b, R.id.btn_upload_p_id_img_a, R.id.btn_upload_p_id_img_b})
+            R.id.btn_upload_boss_id_img_a, R.id.btn_upload_boss_id_img_b,
+            R.id.btn_upload_p_id_img_a, R.id.btn_upload_p_id_img_b,R.id.btn_license_img})
     public void onClick(View view) {
         int id = view.getId();
 
@@ -307,6 +333,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                     ((CompanyAuthReqParams) params).setCity(cityName);
                     ((CompanyAuthReqParams) params).setCompany_name(edt_company_name.getText().toString());
                     ((CompanyAuthReqParams) params).setCompany_license_no(edt_company_license_no.getText().toString());
+                    ((CompanyAuthReqParams) params).setCompany_license_img(licenseImgStr);
                     ((CompanyAuthReqParams) params).setCompany_boss_name(edt_company_boss_name.getText().toString());
                     ((CompanyAuthReqParams) params).setId_img_a(bossIdImgStrA);
                     ((CompanyAuthReqParams) params).setId_img_b(bossIdImgStrB);
@@ -322,6 +349,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
 //                            "合伙人", "18329257178");
                 } else {
                     params=new PersonalAuthReqParams();
+                    ((PersonalAuthReqParams) params).setNationality(nationalityName);
                     ((PersonalAuthReqParams) params).setProvince(provinceName);
                     ((PersonalAuthReqParams) params).setCity(cityName);
                     ((PersonalAuthReqParams) params).setUser_name(edt_user_name.getText().toString());
@@ -354,6 +382,11 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                 break;
             case R.id.btn_upload_p_id_img_b:
                 view_no = PicturePresenter.VIEW_NO[4];
+                onViewClicked();
+                showPopupView();
+                break;
+            case R.id.btn_license_img:
+                view_no = PicturePresenter.VIEW_NO[5];
                 onViewClicked();
                 showPopupView();
                 break;
@@ -390,6 +423,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
             companyViews = new View[]{
                     edt_company_name,
                     edt_company_license_no,
+                    btn_license_img,
                     edt_company_boss_name,
                     relative_boss_id_img,
                     edt_company_boss_tel,
@@ -493,6 +527,9 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
         } else if (view_no == PicturePresenter.VIEW_NO[4]) {
             btn_upload_p_id_img_b.setBackground(bitmapDrawable);
             personalIdImgStrB = imgStr;
+        }else if(view_no==PicturePresenter.VIEW_NO[5]){
+            btn_license_img.setBackground(bitmapDrawable);
+            licenseImgStr=imgStr;
         }
     }
 

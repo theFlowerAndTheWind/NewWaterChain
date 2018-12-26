@@ -6,10 +6,28 @@ package com.quanminjieshui.waterchain.beans;
  */
 
 public class UserDetailResponseBean {
-    public String avatar; 	//头像
-    public String user_login; 	//用户账号
-    public String create_time; 	//注册时间
-    public String user_type; //账号类型
+    private String avatar; 	//头像
+    private String user_login; 	//用户账号
+    private String create_time; 	//注册时间
+    private String user_type; //账号类型
+    private int user_status;//是否注册
+    private int is_block;//?? 用户账号被限制？？？
+
+    public int getUser_status() {
+        return user_status;
+    }
+
+    public void setUser_status(int user_status) {
+        this.user_status = user_status;
+    }
+
+    public int getIs_block() {
+        return is_block;
+    }
+
+    public void setIs_block(int is_block) {
+        this.is_block = is_block;
+    }
 
     public String getAvatar() {
         return avatar;

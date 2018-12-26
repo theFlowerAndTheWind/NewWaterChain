@@ -23,7 +23,7 @@ public class SplashActivity extends BaseActivity {
     TextView countDown;
 
     private CountDownTimer timer;
-    private boolean isFirstLaunch = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,17 +46,26 @@ public class SplashActivity extends BaseActivity {
         }.start();
     }
 
-    public void jumpGuidOrSplash(){
-        isFirstLaunch = (boolean) SPUtil.get(this,"isFirstLaunch",true);
-        if(isFirstLaunch){
-            startActivity(new Intent(SplashActivity.this, GuideActivity.class));
-            finish();
-        }else{
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-//            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
+    public void jumpGuidOrSplash() {
+        boolean isFirstLaunch = (boolean) SPUtil.get(this, SPUtil.IS_FIRST_LAUNCH, true);
+
+        if (isFirstLaunch) {
+            jump(GuideActivity.class);
+        } else {
+            boolean isLogin = (boolean) SPUtil.get(this, SPUtil.IS_LOGIN, false);
+            if (isLogin) {
+                jump(MainActivity.class);
+            } else {
+                jump(LoginActivity.class);
+            }
         }
+        finish();
     }
+
+    private void jump(Class<?> cls) {
+        startActivity(new Intent(SplashActivity.this, cls));
+    }
+
 
     @Override
     public void initContentView() {

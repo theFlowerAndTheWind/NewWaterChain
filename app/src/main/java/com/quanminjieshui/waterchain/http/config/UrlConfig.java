@@ -82,8 +82,21 @@ public class UrlConfig {
     //平台咨询详情
     public static final String INFO_DETAIL = "api/home/info/infoDetail";
 
-
-    //用户信息
+    /**
+     * 用户信息
+     *      {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "user_login":"18329257177",
+     *     │         "create_time":"2018-12-13",
+     *     │         "avatar":"http:\/\/www.quanminjieshui.com\/upload\/",
+     *     │         "user_type":"企业",
+     *     │         "is_blocked":0,
+     *     │         "user_status":1
+     *     │     }
+     *     │ }
+     */
     public static final String USER_DETAIL = "api/home/user/userDetail";
     //我的资产
     public static final String USER_ACCOUNT = "api/home/user/accountDetail";

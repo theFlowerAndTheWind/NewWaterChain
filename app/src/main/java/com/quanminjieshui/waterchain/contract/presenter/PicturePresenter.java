@@ -61,7 +61,7 @@ public class PicturePresenter extends BasePresenter<PictureViewImpl> {
      * 3个人身份证正面
      * 4个人身份证反面
      */
-    public static final int[] VIEW_NO = {0, 1, 2, 3, 4};
+    public static final int[] VIEW_NO = {0, 1, 2, 3, 4,5};
     private PictureModel pictureModel;
     private static PicturePresenter picturePresenter;
 

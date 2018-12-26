@@ -85,11 +85,12 @@ public class LoginModel {
                 .subscribe(new BaseObserver<LoginResponseBean>(activity) {
                     @Override
                     protected void onSuccess(LoginResponseBean bean) throws Exception {
-                        SPUtil.insert(activity,"id",bean.getId());
-                        SPUtil.insert(activity,"is_blocked",bean.getIs_blocked());
-                        SPUtil.insert(activity,"user_login",bean.getUser_login());
-                        SPUtil.insert(activity,"user_nickname",bean.getUser_nickname());
-                        SPUtil.insert(activity,"token",bean.getToken());
+                        SPUtil.insert(activity,SPUtil.ID,bean.getId());
+                        SPUtil.insert(activity,SPUtil.IS_BLOCKED,bean.getIs_blocked());
+                        SPUtil.insert(activity,SPUtil.USER_LOGIN,bean.getUser_login());
+                        SPUtil.insert(activity,SPUtil.USER_NICKNAME,bean.getUser_nickname());
+                        SPUtil.insert(activity,SPUtil.TOKEN,bean.getToken());
+                        SPUtil.insert(activity,SPUtil.IS_LOGIN,true);
 
                         callback.loginSuccess();
                     }

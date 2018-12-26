@@ -15,11 +15,14 @@ import com.quanminjieshui.waterchain.ui.activity.AboutActivity;
 import com.quanminjieshui.waterchain.ui.activity.AboutListActivity;
 import com.quanminjieshui.waterchain.ui.activity.AuthActivity;
 import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
+import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
 import com.quanminjieshui.waterchain.ui.activity.OrderListsActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserAssetActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserConfirmActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserMessageActivity;
+import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
+import com.quanminjieshui.waterchain.utils.SPUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +34,7 @@ import butterknife.Unbinder;
  * Class Note:我的个人中心
  */
 
-public class PersonalFragment extends BaseFragment {
+public class PersonalFragment extends BaseFragment implements WarningFragment.OnWarningDialogClickedListener {
     @BindView(R.id.img_avatar)
     ImageView imgAvatar;
     @BindView(R.id.tv_user_login)
@@ -102,37 +105,57 @@ public class PersonalFragment extends BaseFragment {
     private Unbinder unbinder;
 
     @OnClick({R.id.relative_user_detail, R.id.relative_account_detail, R.id.relative_auth_detail,
-            R.id.relative_trade_lists, R.id.relative_order_lists, R.id.relative_sys_msg, R.id.relative_change_pass, R.id.relative_about_us})
+            R.id.relative_trade_lists, R.id.relative_order_lists, R.id.relative_sys_msg,
+            R.id.relative_change_pass, R.id.relative_about_us})
     public void onClick(View v) {
+
         switch (v.getId()) {
+
             case R.id.relative_user_detail:
-                jump(UserDetailActivity.class);
+                if(checkLoginStatus())
+                    jump(UserDetailActivity.class);
                 break;
             case R.id.relative_account_detail:
-                jump(UserAssetActivity.class);
+                if(checkLoginStatus())
+                    jump(UserAssetActivity.class);
                 break;
             case R.id.relative_auth_detail:
-                jump(UserConfirmActivity.class);
+                if(checkLoginStatus())
+                    jump(UserConfirmActivity.class);
                 break;
             case R.id.relative_trade_lists:
-                showToast("nothing!");
+                if(checkLoginStatus())
+                    showToast("nothing!");
                 break;
             case R.id.relative_order_lists:
-                jump(OrderListsActivity.class);
+                if(checkLoginStatus())
+                    jump(OrderListsActivity.class);
                 break;
             case R.id.relative_sys_msg:
-                jump(UserMessageActivity.class);
+                if(checkLoginStatus())
+                    jump(UserMessageActivity.class);
                 break;
             case R.id.relative_change_pass:
-                jump(ChangePassActivity.class);
+                if(checkLoginStatus())
+                    jump(ChangePassActivity.class);
                 break;
             case R.id.relative_about_us:
-                jump(AboutListActivity.class);
+                if(checkLoginStatus())
+                    jump(AboutListActivity.class);
                 break;
             default:
                 break;
         }
 
+    }
+
+    private boolean checkLoginStatus(){
+        boolean isLogin= (boolean) SPUtil.get(getActivity(),SPUtil.IS_LOGIN,false);
+        if(!isLogin){
+            WarningFragment fragment=new WarningFragment("提示消息","您当前未登录，请登录","登录","取消","checkLoginStatus",this);
+            fragment.show(getActivity().getSupportFragmentManager(),"warning_fragment");
+        }
+        return isLogin;
     }
 
     private void jump(Class<?> cls){
@@ -144,7 +167,13 @@ public class PersonalFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_personal,container,false);
         unbinder=ButterKnife.bind(this,rootView);
+
+        initView();
         return rootView;
+    }
+
+    private void initView() {
+        tvUserLogin.setText(SPUtil.get(getActivity(),SPUtil.USER_LOGIN,"12345671234")+"");
     }
 
     @Override
@@ -173,5 +202,17 @@ public class PersonalFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onPositiveClicked(String tag) {
+        if(tag.equals("checkLoginStatus")){
+            jump(LoginActivity.class);
+        }
+    }
+
+    @Override
+    public void onNegativeClicked(String tag) {
+
     }
 }

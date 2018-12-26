@@ -15,11 +15,13 @@ import android.view.View;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.util.HashMap;
 
@@ -58,18 +60,17 @@ public class TestActivity extends BaseActivity {
     @OnClick({R.id.btn_request})
     public void onClick(View v){
         HashMap<String,Object> params=new HashMap<>();
-        params.put("cate",3);
-        params.put("position",1);
+
 
         RetrofitFactory.getInstance().createService()
-                .serviceList(RequestUtil.getRequestHashBody(params,false))
-                .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(TestActivity.this) {
+                .userDetail(RequestUtil.getRequestHashBody(params,false))
+                .compose(TestActivity.this.<BaseEntity<UserDetailResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<UserDetailResponseBean>>io())
+                .subscribe(new BaseObserver<UserDetailResponseBean>(TestActivity.this) {
 
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-
+                    protected void onSuccess(UserDetailResponseBean o) throws Exception {
+                        LogUtils.e("tag",o.getAvatar()+"--"+o.getCreate_time());
                     }
 
                     @Override

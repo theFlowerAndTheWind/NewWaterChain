@@ -26,6 +26,16 @@ import java.util.Map;
 public class SPUtil {
     private static final String FILE_NAME = "WaterChain";
 
+    public static final String IS_FIRST_LAUNCH="isFirstLaunch";
+    public static final String IS_LOGIN="isLogin";
+    public static final String USER_LOGIN="user_login";
+    public static final String TOKEN = "token";
+    public static final String UID = "uid";
+    public static final String ID = "id";
+    public static final String USER_NICKNAME = "user_nickname";
+    public static final String IS_BLOCKED = "is_blocked";
+
+
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
      *

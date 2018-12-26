@@ -161,9 +161,9 @@ public class RegisterModel {
                 .subscribe(new BaseObserver<RegisterResponseBean>(activity) {
                     @Override
                     protected void onSuccess(RegisterResponseBean bean) throws Exception {
-                        SPUtil.insert(activity,"uid",bean.getUid());
-                        SPUtil.insert(activity,"user_login",bean.getUser_login());
-                        SPUtil.insert(activity,"token",bean.getToken());
+                        SPUtil.insert(activity,SPUtil.UID,bean.getUid());
+                        SPUtil.insert(activity,SPUtil.USER_LOGIN,bean.getUser_login());
+                        SPUtil.insert(activity,SPUtil.TOKEN,bean.getToken());
                         callback.onRegisterSuccess();
                     }
 

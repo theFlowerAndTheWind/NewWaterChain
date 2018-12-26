@@ -69,7 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:entries="@array/nationality"
-                        android:paddingLeft="10px"/>
+                        android:paddingLeft="10px" />
                 </FrameLayout>
 
                 <!--company  personal-->
@@ -91,7 +91,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:entries="@array/province"
-                            android:paddingLeft="10px"/>
+                            android:paddingLeft="10px" />
                     </FrameLayout>
 
                     <View
@@ -109,7 +109,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:entries="@array/city"
-                            android:paddingLeft="10px"/>
+                            android:paddingLeft="10px" />
                     </FrameLayout>
                 </LinearLayout>
 
@@ -129,6 +129,15 @@
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
                     android:hint="@string/hint_input_company_license_no" />
 
+                <Button
+                    android:id="@+id/btn_license_img"
+                    style="@style/btn_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/view_space_edt_vertical"
+                    android:text="营业执照扫描件" />
+
                 <EditText
                     android:id="@+id/edt_company_boss_name"
                     style="@style/style_edt"
@@ -147,19 +156,19 @@
 
                     <Button
                         android:id="@+id/btn_upload_boss_id_img_a"
+                        style="@style/btn_upload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="法人身份证正面"
-                        style="@style/btn_upload" />
+                        android:text="法人身份证正面" />
 
                     <Button
                         android:id="@+id/btn_upload_boss_id_img_b"
+                        style="@style/btn_upload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="法人身份证反面"
-                        style="@style/btn_upload" />
+                        android:text="法人身份证反面" />
                 </RelativeLayout>
 
 
@@ -179,7 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
-                    android:hint="@string/hint_input_company_other_name"/>
+                    android:hint="@string/hint_input_company_other_name" />
 
                 <EditText
                     android:id="@+id/edt_company_other_tel"
@@ -223,19 +232,19 @@
 
                     <Button
                         android:id="@+id/btn_upload_p_id_img_a"
+                        style="@style/btn_upload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="身份证正面"
-                        style="@style/btn_upload" />
+                        android:text="身份证正面" />
 
                     <Button
                         android:id="@+id/btn_upload_p_id_img_b"
+                        style="@style/btn_upload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="身份证反面"
-                        style="@style/btn_upload" />
+                        android:text="身份证反面" />
                 </RelativeLayout>
 
 
@@ -248,14 +257,15 @@
                     android:text="下一步"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_commit" />
+
                 <TextView
                     android:id="@+id/tv_standing_off"
+                    style="@style/style_hit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/style_hit"
-                    android:text="以后认证"
                     android:layout_marginBottom="@dimen/title_bar_height"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal"
+                    android:text="以后认证" />
             </LinearLayout>
         </ScrollView>
 

@@ -40,7 +40,7 @@ public class ChangePassActivity extends BaseActivity implements ChangePassViewIm
     }
 
     private void initView() {
-        tvTitleCenter.setText("");
+        tvTitleCenter.setText("修改密码");
     }
 
     @Override

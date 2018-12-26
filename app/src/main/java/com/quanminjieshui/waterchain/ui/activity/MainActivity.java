@@ -140,6 +140,10 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rb1:
                 tv_title_center.setText("首页");
+                //by sxt
+                left_ll.setVisibility(View.GONE);
+                tv_title_center.setVisibility(View.GONE);
+                img_title_center.setVisibility(View.VISIBLE);
                 if (homeFragment != null) {
                     fragmentManager.beginTransaction().show(homeFragment).commit();
                 }
@@ -147,6 +151,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rb2:
                 tv_title_center.setText("洗涤");
+                //by sxt
+                tv_title_center.setVisibility(View.VISIBLE);
+                img_title_center.setVisibility(View.GONE);
                 if (washFragment != null) {
                     fragmentManager.beginTransaction().show(washFragment).commit();
                     return;
@@ -157,6 +164,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rb3:
                 tv_title_center.setText("交易");
+                //by sxt
+                tv_title_center.setVisibility(View.VISIBLE);
+                img_title_center.setVisibility(View.GONE);
                 if (transactionFragment != null) {
                     fragmentManager.beginTransaction().show(transactionFragment).commit();
                     return;
@@ -167,6 +177,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rb4:
                 tv_title_center.setText("发现");
+                //by sxt
+                tv_title_center.setVisibility(View.VISIBLE);
+                img_title_center.setVisibility(View.GONE);
                 if (findFragment != null) {
                     fragmentManager.beginTransaction().show(findFragment).commit();
                     return;
@@ -177,6 +190,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rb5:
                 tv_title_center.setText("我的");
+                //by sxt
+                tv_title_center.setVisibility(View.VISIBLE);
+                img_title_center.setVisibility(View.GONE);
                 if(personalFragment != null){
                     fragmentManager.beginTransaction().show(personalFragment).commit();
                     return;
