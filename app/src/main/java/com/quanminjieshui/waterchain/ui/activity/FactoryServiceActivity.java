@@ -134,7 +134,7 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
 
         factory_service_title.setText(s_name);
         factory_service_des.setText(description);
-        GlidImageManager.getInstance().loadImageUri(this,img,service_img,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageView(this,img,service_img,R.drawable.ic_default_image);
         list.clear();
         list.addAll(factoryServiceResponseBean.getCate_lists());
         dismissLoadingDialog();

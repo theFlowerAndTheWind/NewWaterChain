@@ -147,7 +147,7 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
         dismissLoadingDialog();
         LogUtils.d("factoryDetailResponseBean；"+factoryDetailResponseBean);
         enterpriseDetail.setText(factoryDetailResponseBean.getDetail().getDescription());
-        GlidImageManager.getInstance().loadImageUri(EnterpriseActivity.this,factoryDetailResponseBean.getDetail().getLogo(),enterpriseImg,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageView(EnterpriseActivity.this,factoryDetailResponseBean.getDetail().getLogo(),enterpriseImg,R.drawable.ic_default_image);
         listEntities.clear();
         listEntities.addAll(factoryDetailResponseBean.getService_lists());
         factoryListAdapter.notifyDataSetChanged();

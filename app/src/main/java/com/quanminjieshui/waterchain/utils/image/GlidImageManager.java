@@ -15,6 +15,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.WaterChainApplication;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
@@ -74,6 +75,14 @@ public class GlidImageManager {
                 .into(imageView);
     }
 
+    public void loadImageView(Context context, String imageUrl,ImageView imageView, int default_img){
+        Glide.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_default_image)
+                .error(R.drawable.ic_default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
+                .into(imageView);
+    }
     //加载圆角图片
     public void loadRoundImage(Context context, String imageId, final ImageView imageView, int placeholder, int errorImg) {
         GlideUrl glideUrl=getGlideUrl(context,imageId);
