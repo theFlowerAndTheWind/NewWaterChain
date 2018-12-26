@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,11 +15,12 @@ import butterknife.OnClick;
 /**
  * @Author: fushizhe
  */
-public class UserConfirmActivity extends BaseActivity{
+public class UserConfirmActivity extends BaseActivity {
     @BindView(R.id.tv_title_center)
     TextView tv_title_center;
     @BindView(R.id.title_bar)
     View title_bar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class UserConfirmActivity extends BaseActivity{
 
     }
 
-    @OnClick({R.id.left_ll,R.id.img_title_left})
+    @OnClick({R.id.left_ll, R.id.img_title_left, R.id.tv_do_auth})
     public void onClick(View view) {
         int id = view.getId();
 
@@ -52,13 +54,15 @@ public class UserConfirmActivity extends BaseActivity{
             case R.id.left_ll:
                 goBack(view);
                 break;
+            case R.id.tv_do_auth:
+                startActivity(new Intent(UserConfirmActivity.this,AuthActivity.class));
+                break;
 
             default:
                 break;
         }
 
     }
-
 
 
 }

@@ -139,6 +139,7 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     public void onLoginSuccess() {
         ToastUtils.showCustomToast("登录成功");
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 
     @Override

@@ -68,7 +68,8 @@
                         android:id="@+id/sp_nationality"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:entries="@array/nationality" />
+                        android:entries="@array/nationality"
+                        android:paddingLeft="10px"/>
                 </FrameLayout>
 
                 <!--company  personal-->
@@ -89,7 +90,8 @@
                             android:id="@+id/sp_province"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:entries="@array/province" />
+                            android:entries="@array/province"
+                            android:paddingLeft="10px"/>
                     </FrameLayout>
 
                     <View
@@ -106,7 +108,8 @@
                             android:id="@+id/sp_city"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:entries="@array/city" />
+                            android:entries="@array/city"
+                            android:paddingLeft="10px"/>
                     </FrameLayout>
                 </LinearLayout>
 
@@ -132,12 +135,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
-                    android:hint="@string/hint_input_company_boss_name"
-                    android:inputType="phone"
-                    android:maxLength="11" />
+                    android:hint="@string/hint_input_company_boss_name" />
 
                 <RelativeLayout
-                    android:id="@+id/linear_boss_id_img_a"
+                    android:id="@+id/relative_boss_id_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
@@ -149,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:text="身份证正面"
+                        android:text="法人身份证正面"
                         style="@style/btn_upload" />
 
                     <Button
@@ -157,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="身份证反面"
+                        android:text="法人身份证反面"
                         style="@style/btn_upload" />
                 </RelativeLayout>
 
@@ -178,9 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
-                    android:hint="@string/hint_input_company_other_name"
-                    android:inputType="phone"
-                    android:maxLength="11" />
+                    android:hint="@string/hint_input_company_other_name"/>
 
                 <EditText
                     android:id="@+id/edt_company_other_tel"
@@ -213,55 +212,31 @@
                     android:maxLength="11"
                     android:visibility="gone" />
 
-                <LinearLayout
-                    android:id="@+id/linear_p_id_img_a"
+                <RelativeLayout
+                    android:id="@+id/relative_p_id_img"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/edt_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
-                    android:background="@drawable/gray_border_bg_shape"
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <EditText
-                        android:id="@+id/edt_p_id_img_a"
-                        style="@style/style_edt"
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/trans"
-                        android:hint="@string/hint_input_id_img_a" />
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_upload_p_id_img_a"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_upload_img" />
-                </LinearLayout>
+                        android:layout_alignParentLeft="true"
+                        android:text="身份证正面"
+                        style="@style/btn_upload" />
 
-                <LinearLayout
-                    android:id="@+id/linear_p_id_img_b"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edt_height"
-                    android:layout_marginTop="@dimen/view_space_edt_vertical"
-                    android:background="@drawable/gray_border_bg_shape"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <EditText
-                        android:id="@+id/edt_p_id_img_b"
-                        style="@style/style_edt"
-                        android:layout_width="0px"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/trans"
-                        android:hint="@string/hint_input_id_img_b" />
-
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_upload_p_id_img_b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_upload_img" />
-                </LinearLayout>
+                        android:layout_alignParentRight="true"
+                        android:text="身份证反面"
+                        style="@style/btn_upload" />
+                </RelativeLayout>
 
 
                 <Button

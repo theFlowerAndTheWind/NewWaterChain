@@ -35,6 +35,16 @@
             android:value="CHANNEL_VALUE"
             android:name="CHANNEL"/>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.quanminjieshui.waterchain.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".ui.activity.TestActivity" />
 
         <activity
@@ -62,6 +72,10 @@
 
         <activity
             android:name=".ui.activity.AuthActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.PictureSettingActivity"
             android:screenOrientation="portrait" />
 
         <activity

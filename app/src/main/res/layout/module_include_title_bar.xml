@@ -14,11 +14,14 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:orientation="horizontal">
-
+        <!--设备内边距，方便用户点击-->
         <ImageView
             android:id="@+id/img_title_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="30px"
+            android:paddingBottom="30px"
+            android:paddingRight="30px"
             android:layout_gravity="center"
             android:src="@mipmap/back" />
 
