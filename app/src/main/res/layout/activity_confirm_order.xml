@@ -41,7 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_go_to" />
+                        android:background="@drawable/ic_go_to" />
 
                 </RelativeLayout>
 
@@ -64,7 +64,7 @@
                         android:layout_height="190px"
                         android:layout_weight="1"
                         android:minWidth="294px"
-                        android:src="@drawable/ic_launcher" />
+                        android:src="@drawable/ic_default_image" />
 
                     <RelativeLayout
                         android:layout_width="0px"
@@ -81,8 +81,9 @@
                             android:textSize="22px" />
 
                         <TextView
+                            android:id="@+id/tv_services_desc"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_below="@id/tv_service_title"
                             android:layout_marginTop="21px"
                             android:text="专业技术，节水95%，不用洗涤剂，不产生污染，已经在推广"
@@ -142,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_go_to" />
+                        android:background="@drawable/ic_go_to" />
 
                     <!--<TextView-->
                     <!--android:id="@+id/tv_jian"-->
@@ -218,7 +219,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_go_to" />
+                        android:background="@drawable/ic_go_to" />
 
                 </RelativeLayout>
 
@@ -453,6 +454,7 @@
                 android:layout_height="@dimen/commit_btn_height">
 
                 <Button
+                    android:id="@+id/order_detail"
                     style="@style/PaddinLeftRight"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
@@ -464,10 +466,11 @@
                     android:textSize="@dimen/text_size_commit" />
 
                 <Button
+                    android:id="@+id/create_order"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_blue_bg_selector"
+                    android:background="@drawable/btn_blue_bg_selector_noconer"
                     android:text="立即下单"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_commit" />

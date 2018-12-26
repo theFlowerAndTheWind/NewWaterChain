@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.http;
 
 import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
+import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
@@ -9,6 +10,7 @@ import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.beans.SmsResponseBean;
+import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
@@ -117,4 +119,12 @@ public interface APIService {
     //洗涤企业项目详情
     @POST(UrlConfig.FACTORY_SERVICE)
     Observable<BaseEntity<FactoryServiceResponseBean>> factoryService(@Body RequestBody requestBody);
+
+    //下单支付总金额
+    @POST(UrlConfig.TOTAL_PRICE)
+    Observable<BaseEntity<TotalPriceResponseBean>> totalPrice(@Body RequestBody requestBody);
+
+    //创建订单
+    @POST(UrlConfig.CREATE_ORDER)
+    Observable<BaseEntity<CreateOrderResponseBean>> createOrder(@Body RequestBody requestBody);
 }

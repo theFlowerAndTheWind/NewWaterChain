@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -53,12 +54,9 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
     TextView factory_service_des;
     @BindView(R.id.service_img)
     ImageView service_img;
-
-
-
-
     private FactoryServiceParsenter serviceParsenter;
     private TableViewpagerAdapter adapter;
+    private FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail;
 
     private String[] titles=new String[]{"价格体系","流程介绍","常见问题"};
     private List<Fragment> fragments=new ArrayList<>();
@@ -87,13 +85,22 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
 
     }
 
-    @OnClick({R.id.img_title_left})
+    @OnClick({R.id.img_title_left,R.id.factoty_btn_order})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.img_title_left:
                 goBack(v);
                 finish();
                 break;
+            case R.id.factoty_btn_order:
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("WashFatoryDetail", washFatoryDetail);
+                intent.putExtras(bundle);
+                intent.setClass(FactoryServiceActivity.this,ConfirmOrderActivity.class);
+                startActivity(intent);
+                break;
+            default:break;
         }
     }
 
@@ -126,18 +133,20 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
 
     @Override
     public void onFactoryServiceSuceess(FactoryServiceResponseBean factoryServiceResponseBean) {
-        s_name = factoryServiceResponseBean.getDetail().getS_name();
-        description = factoryServiceResponseBean.getDetail().getDescription();
-        img = factoryServiceResponseBean.getDetail().getImg();
-        service_id = factoryServiceResponseBean.getDetail().getService_id();
-        factory_id = factoryServiceResponseBean.getDetail().getFactory_id();
+        dismissLoadingDialog();
+        washFatoryDetail = factoryServiceResponseBean.getDetail();
+        s_name = washFatoryDetail.getS_name();
+        description = washFatoryDetail.getDescription();
+        img = washFatoryDetail.getImg();
+        service_id = washFatoryDetail.getService_id();
+        factory_id = washFatoryDetail.getFactory_id();
 
         factory_service_title.setText(s_name);
         factory_service_des.setText(description);
         GlidImageManager.getInstance().loadImageView(this,img,service_img,R.drawable.ic_default_image);
         list.clear();
         list.addAll(factoryServiceResponseBean.getCate_lists());
-        dismissLoadingDialog();
+
 
         fragments.add(new PriceSystemFragment());
         fragments.add(new ProcessDescFragment());

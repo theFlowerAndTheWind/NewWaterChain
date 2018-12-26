@@ -1,5 +1,8 @@
 package com.quanminjieshui.waterchain.beans;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -27,13 +30,34 @@ public class FactoryServiceResponseBean {
         this.cate_lists = cate_lists;
     }
 
-    public static class WashFatoryDetail{
+    public static class WashFatoryDetail implements Parcelable {
         int id;
         int service_id;
         String img;
         String s_name;
         String description;
         int factory_id;
+
+        protected WashFatoryDetail(Parcel in) {
+            id = in.readInt();
+            service_id = in.readInt();
+            img = in.readString();
+            s_name = in.readString();
+            description = in.readString();
+            factory_id = in.readInt();
+        }
+
+        public static final Creator<WashFatoryDetail> CREATOR = new Creator<WashFatoryDetail>() {
+            @Override
+            public WashFatoryDetail createFromParcel(Parcel in) {
+                return new WashFatoryDetail(in);
+            }
+
+            @Override
+            public WashFatoryDetail[] newArray(int size) {
+                return new WashFatoryDetail[size];
+            }
+        };
 
         public int getId() {
             return id;
@@ -81,6 +105,21 @@ public class FactoryServiceResponseBean {
 
         public void setFactory_id(int factory_id) {
             this.factory_id = factory_id;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeInt(id);
+            parcel.writeInt(service_id);
+            parcel.writeString(img);
+            parcel.writeString(s_name);
+            parcel.writeString(description);
+            parcel.writeInt(factory_id);
         }
     }
 
