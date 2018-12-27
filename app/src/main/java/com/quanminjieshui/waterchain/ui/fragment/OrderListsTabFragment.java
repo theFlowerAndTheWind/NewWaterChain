@@ -16,14 +16,14 @@ import butterknife.Unbinder;
 public class OrderListsTabFragment extends BaseFragment {
 
 
-    @BindView(R.id.tv_content)
-    TextView tvContent;
+    @BindView(R.id.tv_)
+    TextView tv;
     Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_order_lists_tab, container, false);
-//        unbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -35,15 +35,15 @@ public class OrderListsTabFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-//        unbinder.unbind();
+        unbinder.unbind();
     }
 
 
-    public void setTxt(String txt){
-        if(tvContent==null){
-            LogUtils.e("TAG","NULL!NULL!NULL!NULL!NULL!NULL!");
-        }else{
-            tvContent.setText(txt);
+    public void setTxt(String txt) {
+        if (tv == null) {
+            LogUtils.e("TAG", "NULL!NULL!NULL!NULL!NULL!NULL!");
+        } else {
+            tv.setText(txt);
         }
     }
 

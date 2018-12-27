@@ -117,6 +117,9 @@
         <activity
             android:name=".ui.activity.UserMessageActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.GoodsActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:screenOrientation="portrait"

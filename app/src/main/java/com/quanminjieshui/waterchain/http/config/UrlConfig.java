@@ -97,7 +97,22 @@ public class UrlConfig {
      *     │ }
      */
     public static final String USER_DETAIL = "api/home/user/userDetail";
-    //我的资产
+    /**
+     * 我的资产
+     *
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "jsl":"0.16908",
+     *     │         "jsl_freeze":"0.00000",
+     *     │         "ds":"0.42439",
+     *     │         "ds_freeze":"0.00000",
+     *     │         "jsl_lock_view":"0.00000",
+     *     │         "jsl_gyj":"0.00000"
+     *     │     }
+     *     │ }
+     */
     public static final String USER_ACCOUNT = "api/home/user/accountDetail";
     /**
      * 用户身份证认证信息
@@ -125,5 +140,37 @@ public class UrlConfig {
     public static final String ORDER_DETAIL = "api/home/user/orderDetail";
     //修改密码
     public static final String CHANGE_PASS = "api/home/user/changePass";
+    /**
+     * 我的-兑换记录
+     *      实际请求：
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":[
+     *     │
+     *     │     ]
+     *     │ }
+     *
+     *
+     *      文档示例:
+     *     {
+     *     "code": "",
+     *     "data": [
+     *         {
+     *             "order_sn": "8056040072755409",
+     *             "g_name": "",
+     *             "c_name": "",
+     *             "total_price": "",
+     *             "createtime": "",
+     *             "status_view": ""
+     *         }
+     *     ],
+     *     "msg": ""
+     * }
+     *
+     *
+     *
+     */
+    public static final String GOODS="api/home/user/goods";
 
 }

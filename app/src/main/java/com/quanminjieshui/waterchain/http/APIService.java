@@ -1,11 +1,13 @@
 package com.quanminjieshui.waterchain.http;
 
+import com.quanminjieshui.waterchain.beans.AccountDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
+import com.quanminjieshui.waterchain.beans.GoodsResposeBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
@@ -86,7 +88,7 @@ public interface APIService {
 
     //我的资产
     @POST(UrlConfig.USER_ACCOUNT)
-    Observable<BaseEntity> accountDetail(@Body RequestBody requestBody);
+    Observable<BaseEntity<AccountDetailResponseBean>> accountDetail(@Body RequestBody requestBody);
 
     //用户信息
     @POST(UrlConfig.USER_DETAIL)
@@ -127,4 +129,8 @@ public interface APIService {
     //创建订单
     @POST(UrlConfig.CREATE_ORDER)
     Observable<BaseEntity<CreateOrderResponseBean>> createOrder(@Body RequestBody requestBody);
+    //我的兑换
+    @POST(UrlConfig.GOODS)
+    Observable<BaseEntity<List<GoodsResposeBean>>>goods(@Body RequestBody requestBody);
 }
+

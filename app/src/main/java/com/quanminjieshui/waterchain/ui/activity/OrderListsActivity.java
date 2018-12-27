@@ -56,6 +56,7 @@ public class OrderListsActivity extends BaseActivity {
 
     private void initView() {
         tvTitleCenter.setText("洗涤订单");
+
         for(int i=0;i<titles.length;i++){
             OrderListsTabFragment fragment=new OrderListsTabFragment();
             fragment.setTxt(titles[i]);
@@ -63,6 +64,7 @@ public class OrderListsActivity extends BaseActivity {
             tabLayout.addTab(tabLayout.newTab());
         }
         tabLayout.setupWithViewPager(viewpager,false);
+
         adapter = new OrderListsViewpagerAdapter(getSupportFragmentManager(),fragments,titles);
         viewpager.setAdapter(adapter);
 

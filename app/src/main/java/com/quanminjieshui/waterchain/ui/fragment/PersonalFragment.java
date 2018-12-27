@@ -15,6 +15,7 @@ import com.quanminjieshui.waterchain.ui.activity.AboutActivity;
 import com.quanminjieshui.waterchain.ui.activity.AboutListActivity;
 import com.quanminjieshui.waterchain.ui.activity.AuthActivity;
 import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
+import com.quanminjieshui.waterchain.ui.activity.GoodsActivity;
 import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
 import com.quanminjieshui.waterchain.ui.activity.OrderListsActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserAssetActivity;
@@ -39,74 +40,76 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     ImageView imgAvatar;
     @BindView(R.id.tv_user_login)
     TextView tvUserLogin;
-    @BindView(R.id.img_go_user_detail)
-    ImageView imgGoUserDetail;
-    @BindView(R.id.relative_user_detail)
-    RelativeLayout relativeUserDetail;//
-    @BindView(R.id.img1)
-    ImageView img1;
-    @BindView(R.id.tv_account_detail)
-    TextView tvAccountDetail;
-    @BindView(R.id.img_go_account_detail)
-    ImageView imgGoAccountDetail;
-    @BindView(R.id.relative_account_detail)
-    RelativeLayout relativeAccountDetail;//
-    @BindView(R.id.img2)
-    ImageView img2;
-    @BindView(R.id.tv_auth_detail)
-    TextView tvAuthDetail;
-    @BindView(R.id.img_go_auth_detail)
-    ImageView imgGoAuthDetail;
-    @BindView(R.id.relative_auth_detail)
-    RelativeLayout relativeAuthDetail;//
-    @BindView(R.id.img3)
-    ImageView img3;
-    @BindView(R.id.tv_trade_lists)
-    TextView tvTradeLists;
-    @BindView(R.id.img_go_trade_lists)
-    ImageView imgGoTradeLists;
-    @BindView(R.id.relative_trade_lists)
-    RelativeLayout relativeTradeLists;//
-    @BindView(R.id.img4)
-    ImageView img4;
-    @BindView(R.id.tv_order_lists)
-    TextView tvOrderLists;
-    @BindView(R.id.img_go_order_lists)
-    ImageView imgGoOrderLists;
-    @BindView(R.id.relative_order_lists)
-    RelativeLayout relativeOrderLists;//
-    @BindView(R.id.img6)
-    ImageView img6;
-    @BindView(R.id.tv_sys_msg)
-    TextView tvSysMsg;
-    @BindView(R.id.img_go_sys_msg)
-    ImageView imgGoSysMsg;
-    @BindView(R.id.relative_sys_msg)
-    RelativeLayout relativeSysMsg;//
-    @BindView(R.id.img7)
-    ImageView img7;
-    @BindView(R.id.tv_change_pass)
-    TextView tvChangPass;
-    @BindView(R.id.img_go_change_pass)
-    ImageView imgGoChanggePass;
-    @BindView(R.id.relative_change_pass)
-    RelativeLayout relativeChangePass;//
-    @BindView(R.id.img8)
-    ImageView img8;
-    @BindView(R.id.tv_about_us)
-    TextView tvAboutUs;
-    @BindView(R.id.img_go_about_us)
-    ImageView imgGoAboutUs;
-    @BindView(R.id.relative_about_us)
-    RelativeLayout relativeAboutUs;//
+    //    @BindView(R.id.img_go_user_detail)
+//    ImageView imgGoUserDetail;
+//    @BindView(R.id.relative_user_detail)
+//    RelativeLayout relativeUserDetail;//
+//    @BindView(R.id.img1)
+//    ImageView img1;
+//    @BindView(R.id.tv_account_detail)
+//    TextView tvAccountDetail;
+//    @BindView(R.id.img_go_account_detail)
+//    ImageView imgGoAccountDetail;
+//    @BindView(R.id.relative_account_detail)
+//    RelativeLayout relativeAccountDetail;//
+//    @BindView(R.id.img2)
+//    ImageView img2;
+//    @BindView(R.id.tv_auth_detail)
+//    TextView tvAuthDetail;
+//    @BindView(R.id.img_go_auth_detail)
+//    ImageView imgGoAuthDetail;
+//    @BindView(R.id.relative_auth_detail)
+//    RelativeLayout relativeAuthDetail;//
+//    @BindView(R.id.img3)
+//    ImageView img3;
+//    @BindView(R.id.tv_trade_lists)
+//    TextView tvTradeLists;
+//    @BindView(R.id.img_go_trade_lists)
+//    ImageView imgGoTradeLists;
+//    @BindView(R.id.relative_trade_lists)
+//    RelativeLayout relativeTradeLists;//
+//    @BindView(R.id.img4)
+//    ImageView img4;
+//    @BindView(R.id.tv_order_lists)
+//    TextView tvOrderLists;
+//    @BindView(R.id.img_go_order_lists)
+//    ImageView imgGoOrderLists;
+//    @BindView(R.id.relative_order_lists)
+//    RelativeLayout relativeOrderLists;//
+//    @BindView(R.id.relative_goods)
+//    RelativeLayout relative_goods;
+//    @BindView(R.id.img6)
+//    ImageView img6;
+//    @BindView(R.id.tv_sys_msg)
+//    TextView tvSysMsg;
+//    @BindView(R.id.img_go_sys_msg)
+//    ImageView imgGoSysMsg;
+//    @BindView(R.id.relative_sys_msg)
+//    RelativeLayout relativeSysMsg;//
+//    @BindView(R.id.img7)
+//    ImageView img7;
+//    @BindView(R.id.tv_change_pass)
+//    TextView tvChangPass;
+//    @BindView(R.id.img_go_change_pass)
+//    ImageView imgGoChanggePass;
+//    @BindView(R.id.relative_change_pass)
+//    RelativeLayout relativeChangePass;//
+//    @BindView(R.id.img8)
+//    ImageView img8;
+//    @BindView(R.id.tv_about_us)
+//    TextView tvAboutUs;
+//    @BindView(R.id.img_go_about_us)
+//    ImageView imgGoAboutUs;
+//    @BindView(R.id.relative_about_us)
+//    RelativeLayout relativeAboutUs;//
     @BindView(R.id.tv_version)
     TextView tvVersion;
 
     private Unbinder unbinder;
 
     @OnClick({R.id.relative_user_detail, R.id.relative_account_detail, R.id.relative_auth_detail,
-            R.id.relative_trade_lists, R.id.relative_order_lists, R.id.relative_sys_msg,
-            R.id.relative_change_pass, R.id.relative_about_us})
+            R.id.relative_trade_lists, R.id.relative_order_lists, R.id.relative_goods,
+            R.id.relative_sys_msg, R.id.relative_change_pass, R.id.relative_about_us})
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -130,6 +133,10 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
             case R.id.relative_order_lists:
                 if(checkLoginStatus())
                     jump(OrderListsActivity.class);
+                break;
+            case R.id.relative_goods:
+                if(checkLoginStatus())
+                    jump(GoodsActivity.class);
                 break;
             case R.id.relative_sys_msg:
                 if(checkLoginStatus())

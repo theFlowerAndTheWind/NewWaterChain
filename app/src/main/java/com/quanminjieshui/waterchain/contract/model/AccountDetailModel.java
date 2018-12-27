@@ -23,14 +23,12 @@ public class AccountDetailModel {
     public void getAccountDetail(BaseActivity activity, final AccountDetailCallBack callBack){
         RetrofitFactory.getInstance().createService()
                 .accountDetail(RequestUtil.getRequestHashBody(null,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(activity) {
+                .compose(activity.<BaseEntity<AccountDetailResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<AccountDetailResponseBean>>io())
+                .subscribe(new BaseObserver<AccountDetailResponseBean>(activity) {
 
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        AccountDetailResponseBean accountDetailBean = gson.fromJson((JsonElement) o,new TypeToken<AccountDetailResponseBean>() {}.getType());
+                    protected void onSuccess(AccountDetailResponseBean accountDetailBean) throws Exception {
                         callBack.success(accountDetailBean);
                     }
 

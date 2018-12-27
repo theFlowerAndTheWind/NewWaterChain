@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include layout="@layout/module_include_title_bar" />
@@ -14,8 +14,10 @@
         android:minHeight="@dimen/commit_btn_height"
         app:tabIndicatorColor="@color/primary_blue"
         app:tabIndicatorHeight="4px"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
         app:tabSelectedTextColor="@color/primary_blue"
+        app:tabTextAppearance="@style/style_tablayout"
         app:tabTextColor="@color/text_black"/>
 
     <android.support.v4.view.ViewPager

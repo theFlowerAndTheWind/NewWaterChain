@@ -32,9 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
-            android:layout_marginLeft="20px"
             android:text="左侧文字"
-            android:visibility="gone" />
+            android:textSize="28px"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

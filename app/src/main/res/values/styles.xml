@@ -186,5 +186,9 @@
         <item name="android:textColor">@color/text_gray</item>
     </style>
 
+    <style name="style_tablayout">
+        <item name="android:textSize">@dimen/text_size_edt</item>
+    </style>
+
 
 </resources>

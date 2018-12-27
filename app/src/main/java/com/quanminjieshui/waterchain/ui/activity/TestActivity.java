@@ -63,7 +63,7 @@ public class TestActivity extends BaseActivity {
 
 
         RetrofitFactory.getInstance().createService()
-                .authDetail(RequestUtil.getRequestHashBody(params,false))
+                .accountDetail(RequestUtil.getRequestHashBody(params,false))
                 .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver(TestActivity.this) {

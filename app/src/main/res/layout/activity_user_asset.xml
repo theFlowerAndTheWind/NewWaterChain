@@ -6,137 +6,146 @@
 
     <include layout="@layout/module_include_title_bar" />
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         style="@style/PaddinLeftRight"
-         android:paddingTop="40px"
-         android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/PaddinLeftRight"
+        android:paddingTop="40px"
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/style_txt_content"
             android:text="总资产折合：2497.45 JSL ≈ 10492.35 T"/>
 
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:padding="40px"
-             android:layout_marginTop="40px"
-             android:background="@drawable/gray_bg_shape">
-             <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical">
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="JSL"
-                     android:textColor="@color/text_black"
-                     android:textSize="32px"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="40px"
+            android:layout_marginTop="40px"
+            android:background="@drawable/gray_bg_shape">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="JSL"
+                    android:textColor="@color/text_black"
+                    android:textSize="32px"/>
 
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="51px"
-                     style="@style/style_txt_content_gray"
-                     android:text="可用：1997.45"/>
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="18px"
-                     style="@style/style_txt_content_gray"
-                     android:text="可用：1997.45"/>
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="18px"
-                     style="@style/style_txt_content_gray"
-                     android:text="可用：1997.45"/>
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="18px"
-                     style="@style/style_txt_content_gray"
-                     android:text="可用：1997.45"/>
+                <TextView
+                    android:id="@+id/tv_jsl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="51px"
+                    style="@style/style_txt_content_gray"
+                    android:text="可用：1997.45"/>
+                <TextView
+                    android:id="@+id/tv_jsl_freeze"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    style="@style/style_txt_content_gray"
+                    android:text="冻结：1997.45"/>
+                <TextView
+                    android:id="@+id/tv_jsl_lock_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    style="@style/style_txt_content_gray"
+                    android:text="锁定：1997.45"/>
+                <TextView
+                    android:id="@+id/tv_jsl_gyj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    style="@style/style_txt_content_gray"
+                    android:text="公益金：1997.45"/>
 
-             </LinearLayout>
-             <LinearLayout
-                 android:layout_alignParentRight="true"
-                 android:layout_centerVertical="true"
-                 android:orientation="vertical"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content">
-                 <Button
-                     android:layout_width="200px"
-                     android:layout_height="70px"
-                     android:textSize="28px"
-                     android:textColor="@android:color/white"
-                     android:background="@drawable/btn_normal_blue_bg_shape"
-                     android:text="交易"/>
-                 <Button
-                     android:layout_width="200px"
-                     android:layout_height="70px"
-                     android:textSize="28px"
-                     android:layout_marginTop="30px"
-                     android:textColor="@color/text_gray"
-                     android:background="@drawable/btn_bg_white_shape"
-                     android:text="申请转账"/>
-             </LinearLayout>
-         </RelativeLayout>
-
-
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:padding="40px"
-             android:layout_marginTop="40px"
-             android:background="@drawable/gray_bg_shape">
-             <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical">
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="节水指标"
-                     android:textColor="@color/text_black"
-                     android:textSize="32px"/>
-
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="51px"
-                     style="@style/style_txt_content_gray"
-                     android:text="可用：1997.45"/>
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="18px"
-                     style="@style/style_txt_content_gray"
-                     android:text="可用：1997.45"/>
-
-             </LinearLayout>
-             <LinearLayout
-                 android:layout_alignParentRight="true"
-                 android:layout_centerVertical="true"
-                 android:orientation="vertical"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content">
-                 <Button
-                     android:layout_width="200px"
-                     android:layout_height="70px"
-                     android:textSize="28px"
-                     android:textColor="@android:color/white"
-                     android:background="@drawable/btn_normal_blue_bg_shape"
-                     android:text="交易"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_jsl_jy"
+                    android:layout_width="200px"
+                    android:layout_height="70px"
+                    android:textSize="28px"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/btn_normal_blue_bg_shape"
+                    android:text="交易"/>
+                <Button
+                    android:id="@+id/btn_jsl_zz"
+                    android:layout_width="200px"
+                    android:layout_height="70px"
+                    android:textSize="28px"
+                    android:layout_marginTop="30px"
+                    android:textColor="@color/text_gray"
+                    android:background="@drawable/btn_bg_white_shape"
+                    android:text="申请转账"/>
+            </LinearLayout>
+        </RelativeLayout>
 
 
-             </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="40px"
+            android:layout_marginTop="40px"
+            android:background="@drawable/gray_bg_shape">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="节水指标"
+                    android:textColor="@color/text_black"
+                    android:textSize="32px"/>
+
+                <TextView
+                    android:id="@+id/tv_ds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="51px"
+                    style="@style/style_txt_content_gray"
+                    android:text="可用：1997.45"/>
+                <TextView
+                    android:id="@+id/tv_ds_freeze"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    style="@style/style_txt_content_gray"
+                    android:text="冻结：1997.45"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_ds_jy"
+                    android:layout_width="200px"
+                    android:layout_height="70px"
+                    android:textSize="28px"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/btn_normal_blue_bg_shape"
+                    android:text="交易"/>
 
 
-         </RelativeLayout>
+            </LinearLayout>
 
-     </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
