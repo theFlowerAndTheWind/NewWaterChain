@@ -123,12 +123,32 @@ public class FactoryServiceResponseBean {
         }
     }
 
-    public static class WashFatoryCageGory{
+    public static class WashFatoryCageGory implements Parcelable{
         String c_name;
         String unit_price;
         String piece;
         String standard;
         int fscid;
+
+        protected WashFatoryCageGory(Parcel in) {
+            c_name = in.readString();
+            unit_price = in.readString();
+            piece = in.readString();
+            standard = in.readString();
+            fscid = in.readInt();
+        }
+
+        public static final Creator<WashFatoryCageGory> CREATOR = new Creator<WashFatoryCageGory>() {
+            @Override
+            public WashFatoryCageGory createFromParcel(Parcel in) {
+                return new WashFatoryCageGory(in);
+            }
+
+            @Override
+            public WashFatoryCageGory[] newArray(int size) {
+                return new WashFatoryCageGory[size];
+            }
+        };
 
         public String getC_name() {
             return c_name;
@@ -168,6 +188,20 @@ public class FactoryServiceResponseBean {
 
         public void setFscid(int fscid) {
             this.fscid = fscid;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(c_name);
+            parcel.writeString(unit_price);
+            parcel.writeString(piece);
+            parcel.writeString(standard);
+            parcel.writeInt(fscid);
         }
     }
 }

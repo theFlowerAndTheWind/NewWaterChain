@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,8 @@ import com.quanminjieshui.waterchain.contract.view.CreateOrderViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TotalPriceViewImpl;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,6 +46,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     TextView tv_serivces_desc;
     private TotalPricePresenter totalPricePresenter;
     private CreateOrderPresenter createOrderPresenter;
+    private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
             FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail = getIntent().getParcelableExtra("WashFatoryDetail");
             GlidImageManager.getInstance().loadImageView(this,washFatoryDetail.getImg(),service_img,R.drawable.ic_default_image);
 
+            washFatoryCageGory = getIntent().getParcelableArrayListExtra("WashFatoryCageGory");
+
             tv_service_title.setText(washFatoryDetail.getS_name());
             tv_serivces_desc.setText(washFatoryDetail.getDescription());
         }
@@ -73,7 +79,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         setContentView(R.layout.activity_confirm_order);
     }
 
-    @OnClick({R.id.img_title_left,R.id.order_detail,R.id.create_order})
+    @OnClick({R.id.img_title_left,R.id.order_detail,R.id.create_order,R.id.wash_delivery_rl,R.id.wash_demand_rl})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.img_title_left:
@@ -83,6 +89,16 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
             case R.id.order_detail:
                 break;
             case R.id.create_order:
+                break;
+            case R.id.wash_delivery_rl://配送信息
+                break;
+            case R.id.wash_demand_rl://洗涤需求
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
+                intent.putExtras(bundle);
+                intent.setClass(ConfirmOrderActivity.this,WashDemandActivity.class);
+                startActivity(intent);
                 break;
 
             default:break;

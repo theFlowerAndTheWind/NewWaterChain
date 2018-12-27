@@ -1,0 +1,100 @@
+package com.quanminjieshui.waterchain.ui.activity;
+
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
+import com.quanminjieshui.waterchain.ui.adapter.WashDetailListsAdapter;
+import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+/**
+ * Created by songxiaotao on 2018/12/28.
+ * Class Note:
+ */
+
+public class WashDemandActivity extends BaseActivity {
+
+    @BindView(R.id.wash_detail_list)
+    RecyclerView wash_detail_list;
+    @BindView(R.id.title_bar)
+    View title_bar;
+    @BindView(R.id.left_ll)
+    LinearLayout left_ll;
+    @BindView(R.id.tv_title_center)
+    TextView tv_title_center;
+    @BindView(R.id.tv_title_left)
+    TextView tv_title_left;
+    private WashDetailListsAdapter adapter;
+    private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarUtil.setImmersionStatus(this, title_bar);
+        initView();
+    }
+
+    private void initView() {
+        tv_title_center.setText("洗涤需求");
+        if(getIntent()!=null){
+            washFatoryCageGory = getIntent().getParcelableArrayListExtra("washFatoryCageGory");
+            adapter = new WashDetailListsAdapter(WashDemandActivity.this,washFatoryCageGory);
+            wash_detail_list.setLayoutManager(new LinearLayoutManager(WashDemandActivity.this));
+            wash_detail_list.setAdapter(adapter);
+            adapter.setOnPlusClickListener(new WashDetailListsAdapter.OnPlusClickListener() {
+                @Override
+                public void onItemPlusClick(int piece, String type) {
+
+                }
+            });
+            adapter.setOnSubtractClickListener(new WashDetailListsAdapter.OnSubtractClickListener() {
+                @Override
+                public void onItemSubtractClick(int piece, String type) {
+
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void initContentView() {
+        setContentView(R.layout.activity_wash_detail_list);
+
+    }
+
+    @OnClick({R.id.left_ll})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.left_ll:
+                goBack(view);
+                break;
+            default:break;
+        }
+    }
+
+    @Override
+    public void onReNetRefreshData(int viewId) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+}

@@ -61,6 +61,7 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
     private String[] titles=new String[]{"价格体系","流程介绍","常见问题"};
     private List<Fragment> fragments=new ArrayList<>();
     private List<FactoryServiceResponseBean.WashFatoryCageGory> list = new ArrayList<>();
+    private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> arrayList = new ArrayList<>();
     private String s_name,description,img;
     private int fsid,service_id,factory_id;
 
@@ -96,6 +97,7 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("WashFatoryDetail", washFatoryDetail);
+                bundle.putParcelableArrayList("WashFatoryCageGory",arrayList);
                 intent.putExtras(bundle);
                 intent.setClass(FactoryServiceActivity.this,ConfirmOrderActivity.class);
                 startActivity(intent);
@@ -145,8 +147,9 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
         factory_service_des.setText(description);
         GlidImageManager.getInstance().loadImageView(this,img,service_img,R.drawable.ic_default_image);
         list.clear();
+        arrayList.clear();
         list.addAll(factoryServiceResponseBean.getCate_lists());
-
+        arrayList.addAll(factoryServiceResponseBean.getCate_lists());
 
         fragments.add(new PriceSystemFragment());
         fragments.add(new ProcessDescFragment());
