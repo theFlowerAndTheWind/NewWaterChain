@@ -78,8 +78,8 @@ public class GlidImageManager {
     public void loadImageView(Context context, String imageUrl,ImageView imageView, int default_img){
         Glide.with(context)
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_default_image)
-                .error(R.drawable.ic_default_image)
+                .placeholder(R.mipmap.default_img)
+                .error(R.mipmap.default_img)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸
                 .into(imageView);
     }

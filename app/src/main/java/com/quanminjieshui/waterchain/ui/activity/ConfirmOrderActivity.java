@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,7 +66,8 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         tvTitleCenter.setText("确认下单");
         if(getIntent()!= null){
             FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail = getIntent().getParcelableExtra("WashFatoryDetail");
-            GlidImageManager.getInstance().loadImageView(this,washFatoryDetail.getImg(),service_img,R.drawable.ic_default_image);
+            if(washFatoryDetail==null)return;
+            GlidImageManager.getInstance().loadImageView(this,washFatoryDetail.getImg(),service_img,R.mipmap.default_img);
 
             washFatoryCageGory = getIntent().getParcelableArrayListExtra("WashFatoryCageGory");
 

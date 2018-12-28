@@ -62,7 +62,7 @@ public class OrderListsAdapter extends RecyclerView.Adapter<OrderListsAdapter.Or
             }
         });
         holder.tvFactoryName.setText(entity.getF_name());
-        GlidImageManager.getInstance().loadImageView(context,list.get(position).getImg(),holder.img,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageView(context,list.get(position).getImg(),holder.img,R.mipmap.default_img);
         holder.tvService.setText(entity.getS_name());
         holder.tvTotalPrice.setText(entity.getTotal_price());
         holder.tvStatus.setText(entity.getStatus());
