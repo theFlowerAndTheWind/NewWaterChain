@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.OrderListResponseBean;
+import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
@@ -41,7 +41,7 @@ public class TradeDetailModel {
                     @Override
                     protected void onSuccess(Object o) throws Exception {
                         Gson gson = new Gson();
-                        TradeDetailResponseBean tradeDetailBean = gson.fromJson((JsonElement) o,new TypeToken<OrderListResponseBean>() {}.getType());
+                        TradeDetailResponseBean tradeDetailBean = gson.fromJson((JsonElement) o,new TypeToken<OrderListsResponseBean>() {}.getType());
                         callBack.success(tradeDetailBean);
                     }
 

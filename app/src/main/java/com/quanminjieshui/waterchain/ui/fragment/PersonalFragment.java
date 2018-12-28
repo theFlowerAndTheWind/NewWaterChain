@@ -180,7 +180,7 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     }
 
     private void initView() {
-        tvUserLogin.setText(SPUtil.get(getActivity(),SPUtil.USER_LOGIN,"12345671234")+"");
+        tvUserLogin.setText(SPUtil.get(getActivity(),SPUtil.USER_LOGIN,"*** **** ****")+"");
     }
 
     @Override

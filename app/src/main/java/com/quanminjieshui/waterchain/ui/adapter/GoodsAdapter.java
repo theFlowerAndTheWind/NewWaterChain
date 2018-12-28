@@ -59,7 +59,7 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.GoodsHolder>
     @NonNull
     @Override
     public GoodsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.module_recycle_goods, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.module_recycle_item_goods, parent, false);
         AutoUtils.auto(view);
         return new GoodsHolder(view);
     }

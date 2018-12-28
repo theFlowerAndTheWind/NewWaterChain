@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:padding="@dimen/layout_horizontal_padding">
+
+        <TextView
+            android:id="@+id/tv_action_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:text="贡献"
+            android:textColor="@color/primary_red"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_action_type"
+            android:layout_marginLeft="10px"
+            android:layout_toRightOf="@+id/tv_action_type"
+            android:text="JSL/节水指标"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv"
+            android:layout_marginLeft="30px"
+            android:layout_toRightOf="@+id/tv"
+            android:text="2018-12-27 05:00:00"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_action_type"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/blue_border_bg_shape"
+            android:paddingLeft="30px"
+            android:paddingTop="5px"
+            android:paddingRight="30px"
+            android:paddingBottom="5px"
+            android:text="撤销"
+            android:textSize="@dimen/text_size_edt" />
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_action_type"
+            android:layout_marginTop="15px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="单价"
+                android:textColor="@color/text_gray"
+                android:textSize="24px" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="委托量（JSL）"
+                android:textColor="@color/text_gray"
+                android:textSize="24px" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="实际成交（JSL）"
+                android:textColor="@color/text_gray"
+                android:textSize="24px" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_avg_price"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2.50/T"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:id="@+id/tv_old_total"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="300.00"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:id="@+id/tv_shiji"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0.00"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_edt" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll2"
+            android:layout_marginTop="15px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="已成交量（JSL）"
+                android:textColor="@color/text_gray"
+                android:textSize="24px" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="手续费"
+                android:textColor="@color/text_gray"
+                android:textSize="24px" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textColor="@color/text_gray"
+                android:textSize="24px" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2.50/T"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:id="@+id/tv_deal_total"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="300.00"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:id="@+id/tv_fee"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_edt" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/module_divider" />
+
+</LinearLayout>

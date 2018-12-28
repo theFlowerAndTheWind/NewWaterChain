@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/container">
 
     <RelativeLayout
         android:id="@+id/rl1"
@@ -37,7 +38,8 @@
             android:layout_height="139px"
             android:layout_marginRight="17px"
             android:layout_marginBottom="30px"
-            android:src="@mipmap/ic_launcher_round" />
+            android:src="@drawable/ic_default_image"
+            android:layout_marginLeft="@dimen/layout_horizontal_margin"/>
 
         <TextView
             android:id="@+id/tv_service"
@@ -61,7 +63,7 @@
             android:textSize="22px" />
 
         <TextView
-            android:id="@+id/tv_money"
+            android:id="@+id/tv_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_dingdanjine"
@@ -70,6 +72,7 @@
             android:textColor="@color/primary_red"
             android:textSize="22px" />
         <TextView
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="洗涤中"

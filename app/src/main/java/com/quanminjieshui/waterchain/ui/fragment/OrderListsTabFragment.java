@@ -1,13 +1,21 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
+import com.quanminjieshui.waterchain.event.OrderListsTabScrollEvent;
+import com.quanminjieshui.waterchain.ui.adapter.OrderListsAdapter;
 import com.quanminjieshui.waterchain.utils.LogUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,16 +24,43 @@ import butterknife.Unbinder;
 public class OrderListsTabFragment extends BaseFragment {
 
 
-    @BindView(R.id.tv_)
-    TextView tv;
     Unbinder unbinder;
+    @BindView(R.id.xrv)
+    XRecyclerView xrv;
+
+    private String title;
+    private OrderListsAdapter orderListsAdapter;
+    private List<OrderListsResponseBean.OrderListEntity> datas;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_order_lists_tab, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+    }
+
+    private void init() {
+        datas = new ArrayList<>();
+
+        orderListsAdapter = new OrderListsAdapter(getActivity(), datas);
+        xrv.setArrowImageView(R.drawable.iconfont_downgrey);
+        xrv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        xrv.setAdapter(orderListsAdapter);
+        xrv.setLoadingMoreEnabled(false);
+    }
+
 
     @Override
     public void onReNetRefreshData(int viewId) {
@@ -38,13 +73,19 @@ public class OrderListsTabFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-
-    public void setTxt(String txt) {
-        if (tv == null) {
-            LogUtils.e("TAG", "NULL!NULL!NULL!NULL!NULL!NULL!");
-        } else {
-            tv.setText(txt);
+    public void onEventMainThread(OrderListsTabScrollEvent event) {
+        final String status = event.getStatus();
+        final List<OrderListsResponseBean.OrderListEntity> list = event.getList();
+        if (title.equals(status)) {
+            this.datas.clear();
+            this.datas.addAll(list);
+            orderListsAdapter.notifyDataSetChanged();
+            xrv.refreshComplete();
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

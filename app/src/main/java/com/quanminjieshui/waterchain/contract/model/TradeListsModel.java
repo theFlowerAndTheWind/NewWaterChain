@@ -1,10 +1,19 @@
+/**
+ * @ProjectName: NewWaterChain
+ * @Package: com.quanminjieshui.waterchain.contract.model
+ * @ClassName: TradeListsModel
+ * @Description: java类作用描述
+ * @Author: sxt
+ * @CreateDate: 2018/12/27 7:10 PM
+ * @UpdateUser: 更新者
+ * @UpdateDate: 2018/12/27 7:10 PM
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
 package com.quanminjieshui.waterchain.contract.model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.TradeListResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -13,63 +22,63 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
-/**
- * Created by WanghongHe on 2018/12/13 14:06.
- * 个人中心
- */
+import java.util.HashMap;
+import java.util.List;
 
-public class TradeListModel {
-    public void getTradeList(BaseActivity activity, final TradeListCallBack callBack){
+/**
+ *
+ * @ProjectName: NewWaterChain
+ * @Package: com.quanminjieshui.waterchain.contract.model
+ * @ClassName: TradeListsModel
+ * @Description: java类作用描述
+ * @Author: sxt
+ * @CreateDate: 2018/12/27 7:10 PM
+ * @UpdateUser: 更新者
+ * @UpdateDate: 2018/12/27 7:10 PM
+ * @UpdateRemark: 更新说明
+ * @Version: 1.0
+ */
+public class TradeListsModel {
+
+    public void getTradeLists(BaseActivity activity, final TradeListsCallback callback){
+
         RetrofitFactory.getInstance().createService()
                 .tradeList(RequestUtil.getRequestHashBody(null,false))
                 .compose(activity.<BaseEntity>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity>io())
                 .subscribe(new BaseObserver(activity) {
-
-                    /**
-                     * 返回成功
-                     *
-                     * @param o
-                     * @throws Exception
-                     */
                     @Override
                     protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        TradeListResponseBean tradeListBean = gson.fromJson((JsonElement) o,new TypeToken<TradeListResponseBean>(){}.getType());
-                        callBack.success(tradeListBean);
+                        callback.onGetTradeListsSuccess(o);
                     }
 
-                    /**
-                     * 返回失败
-                     *
-                     * @param e
-                     * @param isNetWorkError 是否是网络错误
-                     * @throws Exception
-                     */
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
                         if (e != null && e.getMessage() != null) {
                             if (isNetWorkError) {
                                 LogUtils.e(e.getMessage());
-                                callBack.failed(HttpConfig.ERROR_MSG);
+                                callback.onGetTradeListsFailed(HttpConfig.ERROR_MSG);
                             } else {
-                                callBack.failed(e.getMessage());
+                                callback.onGetTradeListsFailed(e.getMessage());
                             }
                         } else {
-                            callBack.failed("");
+                            callback.onGetTradeListsFailed("");
                         }
                     }
 
                     @Override
                     protected void onCodeError(String code, String msg) throws Exception {
                         super.onCodeError(code, msg);
+                        callback.onGetTradeListsFailed(msg);
                     }
                 });
-
     }
 
-    public interface TradeListCallBack{
-        void success(TradeListResponseBean tradeListResponseBean);
-        void failed(String msg);
+
+    public interface TradeListsCallback{
+        void onGetTradeListsSuccess(Object o);//参数类型待确定
+        void onGetTradeListsFailed(String msg);
     }
+
+
 }

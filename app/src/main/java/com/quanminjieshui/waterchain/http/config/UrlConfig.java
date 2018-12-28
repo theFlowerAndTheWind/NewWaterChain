@@ -53,7 +53,23 @@ public class UrlConfig {
 
     //轮播图列表地址
     public static final String BANNER_LIST = "api/home/banner/bannerLists";
-    //洗涤企业列表
+    /**
+     * 洗涤企业列表
+     *
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功！",
+     *     │     "data":[
+     *     │         {
+     *     │             "id":1,
+     *     │             "f_name":"洗涤工厂",
+     *     │             "logo":"http:\/\/www.quanminjieshui.com\/upload\/fac\/20181202\/e3e8abc9439e5d42286449533770f8ed.jpg",
+     *     │             "service_area":"山东临沂市区内",
+     *     │             "service_lists":"酒店餐厅布草、餐具消毒类等"
+     *     │         }
+     *     │     ]
+     *     │ }
+     */
     public static final String FACTORY_LIST = "api/home/factory/factoryLists";
     //洗涤项目列表
     public static final String SERVICE_LIST = "api/home/common/serviceLists";
@@ -134,7 +150,27 @@ public class UrlConfig {
     public static final String TRADE_LIST = "api/home/user/tradeLists";
     //交易明细
     public static final String TRADE_DETAIL = "api/home/user/tradeDetail";
-    //洗涤订单
+    /**
+     * 洗涤订单
+     *
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "lists":[
+     *     │             {
+     *     │                 "fid":1,
+     *     │                 "f_name":"洗涤工厂",
+     *     │                 "s_name":"餐具消毒类",
+     *     │                 "img":"http:\/\/www.quanminjieshui.com\/upload\/admin\/20181211\/4aadf0b4a721ffa8bc2dbc298bfa3c27.jpg",
+     *     │                 "total_price":"2.00000",
+     *     │                 "status":"已取消",
+     *     │                 "id":48
+     *     │             }
+     *     │         ]
+     *     │     }
+     *     │ }
+     */
     public static final String ORDER_LIST = "api/home/user/orderLists";
     //订单详情
     public static final String ORDER_DETAIL = "api/home/user/orderDetail";

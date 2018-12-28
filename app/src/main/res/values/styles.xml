@@ -187,7 +187,7 @@
     </style>
 
     <style name="style_tablayout">
-        <item name="android:textSize">@dimen/text_size_edt</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 

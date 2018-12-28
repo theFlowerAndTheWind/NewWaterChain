@@ -27,6 +27,7 @@
     <color name="divider_gray_bg">#E7E9F1</color>
     <color name="edittext_border_gray">#E7E9F1</color>
     <color name="text_gray">#888888</color>
+    <color name="text_green">#FF289308</color>
     <color name="primary_red">#FFFF4C50</color>
     <color name="primary_dark_red">#FFC42F18</color>
     <color name="item_black_trans">#50000000</color>

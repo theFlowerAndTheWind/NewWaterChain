@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hit_edt_mobile"
-            android:text="18329257177"
             android:inputType="phone"
             android:maxLength="11" />
 
@@ -31,7 +30,6 @@
             android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hit_edt_password"
             android:inputType="textPassword"
-            android:text="qwerty"
             android:maxLength="20"
             android:maxLines="1" />
 

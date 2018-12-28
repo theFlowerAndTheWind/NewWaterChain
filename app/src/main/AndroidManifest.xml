@@ -100,6 +100,9 @@
         <activity android:name=".ui.activity.OrderListsActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.OrderDetailActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.activity.FactoryServiceActivity"
             android:screenOrientation="portrait"/>
         <activity

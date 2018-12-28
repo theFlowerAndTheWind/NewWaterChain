@@ -9,6 +9,7 @@ import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsResposeBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
+import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.beans.SmsResponseBean;
@@ -68,7 +69,7 @@ public interface APIService {
 
     //洗地订单列表
     @POST(UrlConfig.ORDER_LIST)
-    Observable<BaseEntity> orderList(@Body RequestBody requestBody);
+    Observable<BaseEntity<OrderListsResponseBean>> orderList(@Body RequestBody requestBody);
 
     //成交明细
     @POST(UrlConfig.TRADE_DETAIL)
