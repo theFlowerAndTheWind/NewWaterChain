@@ -127,6 +127,7 @@
                     android:background="@color/divider_gray" />
 
                 <RelativeLayout
+                    android:id="@+id/wash_demand_rl"
                     style="@style/PaddinLeftRight"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/commit_btn_height"
@@ -203,6 +204,7 @@
                     android:background="@color/divider_gray" />
 
                 <RelativeLayout
+                    android:id="@+id/wash_delivery_rl"
                     style="@style/PaddinLeftRight"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/commit_btn_height"

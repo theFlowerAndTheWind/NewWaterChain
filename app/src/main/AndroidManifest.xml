@@ -130,6 +130,8 @@
         <activity android:name=".ui.activity.ConfirmOrderActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.WashDemandActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
