@@ -47,29 +47,29 @@ import java.util.List;
 
 
 public class OrderDetailResponseBean {
-    public String f_name; //洗涤企业名称
+    public String f_name=""; //洗涤企业名称
     public int fid;// 	洗涤企业id
-    public String s_name;// 	洗涤项目名称
-    public String img;// 	洗涤项目图片
-    public String total_price;// 	订单金额
+    public String s_name="";// 	洗涤项目名称
+    public String img="";// 	洗涤项目图片
+    public String total_price="";// 	订单金额
     public List<ServiceCateEntry> service_cate;//
-    public String order_sn;// 	订单编号
-    public String status;// 	订单状态
-    public String createtime;// 	下单时间
-    public String pay_cate;// 	支付方式
-    public String pay_type;// 	支付通道
-    public String pay_price;//	支付金额
-    public String pay_jsl;// 	支付jsl
-    public String updatetime;// 	支付时间
-    public String contact_name;// 	发件人
-    public String contact_tel;// 	发件人手机号码
-    public String express;// 	取件方式
-    public String province;// 	省
-    public String city;// 	市
-    public String address;// 	详细地址
-    public String pickup_time;// 取件时间
-    public String pay_sn;
-    public int id;//重要！！！
+    public String order_sn="";// 	订单编号
+    public String status="";// 	订单状态
+    public String createtime="";// 	下单时间
+    public String pay_cate="";// 	支付方式  1全额支付   2组合支付
+    public String pay_type="";// 	支付通道
+    public String pay_price="";//	支付金额
+    public String pay_jsl="";// 	支付jsl
+    public String updatetime="";// 	支付时间
+    public String contact_name="";// 	发件人
+    public String contact_tel="";// 	发件人手机号码
+    public String express="";// 	取件方式
+    public String province="";// 	省
+    public String city="";// 	市
+    public String address="";// 	详细地址
+    public String pickup_time="";// 取件时间
+    public String pay_sn="";
+    public int id;//订单id 重要！！！  不等同于订单编号
 
     public String getF_name() {
         return f_name;
@@ -256,9 +256,9 @@ public class OrderDetailResponseBean {
     }
 
     public class ServiceCateEntry{
-        private String c_name;
-        private String total;
-        private String price;
+        private String c_name="";
+        private String total="";
+        private String price="";
 
         public String getC_name() {
             return c_name;

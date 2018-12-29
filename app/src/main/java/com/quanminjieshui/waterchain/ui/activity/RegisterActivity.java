@@ -30,6 +30,7 @@ import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.contract.model.RegisterModel;
 import com.quanminjieshui.waterchain.contract.presenter.RegisterPresenter;
 import com.quanminjieshui.waterchain.contract.view.RegisterViewImpl;
+import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import java.util.Map;
@@ -240,7 +241,9 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @Override
     public void onRegisterSuccess() {
+        SPUtil.insert(this,SPUtil.IS_LOGIN,true);
         startActivity(new Intent(RegisterActivity.this, AuthActivity.class));
+        finish();
     }
 
     @Override

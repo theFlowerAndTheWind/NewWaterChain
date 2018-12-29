@@ -16,6 +16,7 @@ import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.contract.model.LoginModel;
 import com.quanminjieshui.waterchain.contract.presenter.LoginPresenter;
 import com.quanminjieshui.waterchain.contract.view.LoginViewImpl;
+import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 
@@ -25,6 +26,7 @@ import butterknife.BindDrawable;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by WanghongHe on 2018/12/3 11:53.
@@ -139,6 +141,7 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     public void onLoginSuccess() {
         ToastUtils.showCustomToast("登录成功");
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        EventBus.getDefault().post(new SelectFragmentEvent("我的"));
 //        startActivity(new Intent(LoginActivity.this, TestActivity.class));//调试接口使用
 
         finish();

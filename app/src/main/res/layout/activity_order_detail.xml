@@ -21,9 +21,6 @@
             <include layout="@layout/module_recycle_item_order_lists" />
 
 
-            <include layout="@layout/module_include_divider" />
-
-
             <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:id="@+id/xrv"
                 android:layout_width="match_parent"

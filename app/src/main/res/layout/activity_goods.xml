@@ -16,8 +16,8 @@
             android:layout_height="match_parent"
             android:visibility="visible" />
 
-        <include layout="@layout/module_no_data"
-            android:visibility="gone"/>
+        <include layout="@layout/module_include_no_data"
+            />
     </FrameLayout>
 
 </LinearLayout>

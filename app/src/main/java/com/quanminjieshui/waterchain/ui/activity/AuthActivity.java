@@ -46,6 +46,7 @@ import com.quanminjieshui.waterchain.contract.presenter.PicturePresenter;
 import com.quanminjieshui.waterchain.contract.view.AuthViewImpl;
 import com.quanminjieshui.waterchain.contract.view.PictureViewImpl;
 import com.quanminjieshui.waterchain.event.PictureEvent;
+import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.adapter.SpinnerAdapter;
 import com.quanminjieshui.waterchain.ui.widget.PicturePopupWindow;
 import com.quanminjieshui.waterchain.utils.GsonUtil;
@@ -158,7 +159,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     private String bossIdImgStrB = "";//企业法人身份证反面字符串
     private String personalIdImgStrA = "";//个人身份证正面
     private String personalIdImgStrB = "";//个人身份证反面
-    private String licenseImgStr="";//营业执照扫描件
+    private String licenseImgStr = "";//营业执照扫描件
     private String nationalityName;
     private String provinceName;
     private String cityName;
@@ -169,10 +170,10 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     private ArrayList<ProvinceBean> cities;//从json文件解析而来的provinceBean list
     private ArrayList<String> provinceStr;
     private HashMap<String, ArrayList<String>> cityMap;
-    private AdapterView.OnItemSelectedListener onCityItemSelectedListener=new AdapterView.OnItemSelectedListener() {
+    private AdapterView.OnItemSelectedListener onCityItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            cityName=cityMap.get(provinceName).get(position);
+            cityName = cityMap.get(provinceName).get(position);
         }
 
         @Override
@@ -180,6 +181,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
 
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,13 +204,13 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     }
 
     private void initAdapter() {
-        nationalityAdapter=new SpinnerAdapter(this,android.R.layout.simple_spinner_item,nationalityStr);
+        nationalityAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item, nationalityStr);
         nationalityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);// 设置下拉风格
         sp_nationality.setAdapter(nationalityAdapter); // 将adapter 添加到spinner中
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                nationalityName=nationalityStr.get(position);
+                nationalityName = nationalityStr.get(position);
             }
 
             @Override
@@ -223,7 +225,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                provinceName=provinceStr.get(position);
+                provinceName = provinceStr.get(position);
                 ArrayList<String> cityStr = cityMap.get(provinceName);
                 if (cityStr != null) {
                     cityAdapter = new SpinnerAdapter(AuthActivity.this, android.R.layout.simple_spinner_item, cityStr);
@@ -244,7 +246,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
 
         String[] stringArray = getResources().getStringArray(R.array.nationality);
         List<String> strings = Arrays.asList(stringArray);
-        nationalityStr=new ArrayList<String>(strings);
+        nationalityStr = new ArrayList<String>(strings);
 
         Observable.create(new ObservableOnSubscribe<ArrayList<ProvinceBean>>() {
             @Override
@@ -258,21 +260,21 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                     @Override
                     public void accept(ArrayList<ProvinceBean> provinceBeans) throws Exception {
                         cities = provinceBeans;
-                        provinceStr=new ArrayList<>();
-                        cityMap=new HashMap<String,ArrayList<String>>();
+                        provinceStr = new ArrayList<>();
+                        cityMap = new HashMap<String, ArrayList<String>>();
                         for (ProvinceBean provinceBean : cities) {
                             String p = provinceBean.getP();
-                            ArrayList<CityBean>c=provinceBean.getC();
+                            ArrayList<CityBean> c = provinceBean.getC();
                             provinceStr.add(p);
                             ArrayList<String> cities = cityMap.get(p);
                             if (cities == null) {
                                 cities = new ArrayList<String>();
                                 cityMap.put(p, cities);
                             }
-                            if(c==null){
+                            if (c == null) {
 //                                LogUtils.e("tag","c为空"+p);
                                 cities.add("国外");
-                            }else{
+                            } else {
 //                                LogUtils.e("tag","c不为空"+c.size());
                                 for (CityBean cityBean : provinceBean.getC()) {
                                     cities.add(cityBean.getN());
@@ -297,8 +299,8 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     }
 
     @OnClick({R.id.btn_company, R.id.btn_personal, R.id.left_ll, R.id.btn_next, R.id.tv_standing_off,
-            R.id.btn_upload_boss_id_img_a, R.id.btn_upload_boss_id_img_b,
-            R.id.btn_upload_p_id_img_a, R.id.btn_upload_p_id_img_b,R.id.btn_license_img})
+            R.id.btn_upload_boss_id_img_a, R.id.btn_upload_boss_id_img_b, R.id.btn_upload_p_id_img_a,
+            R.id.btn_upload_p_id_img_b, R.id.btn_license_img})
     public void onClick(View view) {
         int id = view.getId();
 
@@ -330,7 +332,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
             case R.id.btn_next:
                 BaseBean params;
                 if (user_type) {
-                    params=new CompanyAuthReqParams();
+                    params = new CompanyAuthReqParams();
                     ((CompanyAuthReqParams) params).setProvince(provinceName);
                     ((CompanyAuthReqParams) params).setCity(cityName);
                     ((CompanyAuthReqParams) params).setCompany_name(edt_company_name.getText().toString());
@@ -343,14 +345,8 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                     ((CompanyAuthReqParams) params).setCompany_other_name(edt_company_other_name.getText().toString());
                     ((CompanyAuthReqParams) params).setCompany_other_tel(edt_company_other_tel.getText().toString());
 
-//                    params = new CompanyAuthReqParams(
-//                            "山西", "大同",
-//                            "公司名称", "123456789", "company_license_img",
-//                            "老板", "18329257177",
-//                            "id_img_a", "id_img_b",
-//                            "合伙人", "18329257178");
                 } else {
-                    params=new PersonalAuthReqParams();
+                    params = new PersonalAuthReqParams();
                     ((PersonalAuthReqParams) params).setNationality(nationalityName);
                     ((PersonalAuthReqParams) params).setProvince(provinceName);
                     ((PersonalAuthReqParams) params).setCity(cityName);
@@ -358,14 +354,14 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                     ((PersonalAuthReqParams) params).setId_no(edt_id_no.getText().toString());
                     ((PersonalAuthReqParams) params).setId_img_a(personalIdImgStrA);
                     ((PersonalAuthReqParams) params).setId_img_b(personalIdImgStrB);
-//                    params = new PersonalAuthReqParams("中国", "山西", "大同",
-//                            "节水链",
-//                            "14062119900101", "id_img_a", "id_img_b");
+
                 }
                 authPresenter.auth(this, user_type, params);
                 break;
             case R.id.tv_standing_off:
                 startActivity(new Intent(AuthActivity.this, MainActivity.class));
+//                EventBus.getDefault().post(new SelectFragmentEvent(SelectFragmentEvent.titles[0]));
+                finish();
                 break;
             case R.id.btn_upload_boss_id_img_a:
                 view_no = PicturePresenter.VIEW_NO[1];
@@ -392,6 +388,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                 onViewClicked();
                 showPopupView();
                 break;
+
             default:
                 break;
         }
@@ -529,9 +526,9 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
         } else if (view_no == PicturePresenter.VIEW_NO[4]) {
             btn_upload_p_id_img_b.setBackground(bitmapDrawable);
             personalIdImgStrB = imgStr;
-        }else if(view_no==PicturePresenter.VIEW_NO[5]){
+        } else if (view_no == PicturePresenter.VIEW_NO[5]) {
             btn_license_img.setBackground(bitmapDrawable);
-            licenseImgStr=imgStr;
+            licenseImgStr = imgStr;
         }
     }
 

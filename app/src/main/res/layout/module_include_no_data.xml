@@ -4,7 +4,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relative_hint"
     android:layout_width="match_parent"
-    android:layout_height="720px">
+    android:layout_height="720px"
+    android:visibility="gone">
 
 
     <ImageView

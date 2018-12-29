@@ -74,9 +74,6 @@ public class UserConfirmActivity extends BaseActivity implements AuthDetailViewI
 
         switch (id) {
             case R.id.img_title_left:
-                goBack(view);
-                finish();
-                break;
             case R.id.left_ll:
                 goBack(view);
                 finish();

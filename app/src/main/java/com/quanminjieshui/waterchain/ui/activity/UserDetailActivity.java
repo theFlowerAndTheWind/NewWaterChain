@@ -14,12 +14,14 @@ import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.contract.model.UserDetailModel;
 import com.quanminjieshui.waterchain.contract.presenter.UserDetailPresenter;
 import com.quanminjieshui.waterchain.contract.view.UserDetailViewImpl;
+import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 public class UserDetailActivity extends BaseActivity implements UserDetailViewImpl, WarningFragment.OnWarningDialogClickedListener {
 
@@ -121,6 +123,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
 //            SPUtil.delete(this,SPUtil.IS_LOGIN);
 
             jump(MainActivity.class);
+//            EventBus.getDefault().post(new SelectFragmentEvent("我的"));
             finish();
         }
     }

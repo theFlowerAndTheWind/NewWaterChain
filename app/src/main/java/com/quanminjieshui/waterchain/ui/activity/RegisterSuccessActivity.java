@@ -18,10 +18,12 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * @ClassName: RegisterSuccessActivity
@@ -64,7 +66,9 @@ public class RegisterSuccessActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_register_success:
-                startActivity(new Intent(RegisterSuccessActivity.this,MainActivity.class));
+                startActivity(new Intent(RegisterSuccessActivity.this, MainActivity.class));
+//                EventBus.getDefault().post(new SelectFragmentEvent(SelectFragmentEvent.titles[4]));
+                finish();
                 break;
             case R.id.left_ll:
                 goBack(view);

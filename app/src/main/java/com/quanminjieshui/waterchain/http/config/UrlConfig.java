@@ -73,7 +73,29 @@ public class UrlConfig {
     public static final String FACTORY_LIST = "api/home/factory/factoryLists";
     //洗涤项目列表
     public static final String SERVICE_LIST = "api/home/common/serviceLists";
-    //洗涤企业详情
+    /**
+     * 洗涤企业详情
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "detail":{
+     *     │             "id":1,
+     *     │             "description":"<p>临沂东海胜洁清洁服务有限公司现有员六十余人，管理人员均从业多年并持有国家认可的中级以上洗涤技师资格证书，所有员工均经过正规的岗前培训方可上岗。 东海胜洁清洁服务有限公司是经国家相关部门批准注册的企业。专业从事床单、被罩、浴巾、毛巾、桌布、客车座套及商务办公、家庭住宅的窗帘、床罩、毛毯、工作服等布草的洗涤(干洗、水洗）、烘干、消毒、熨烫的清洁 洗涤一条龙服务公司 。公司成立几年来，为多家中小型宾馆以及各大酒店、公司等提服务。<\/p>",
+     *     │             "img":"https:\/\/www.quanminjieshui.com\/upload\/fac\/20181202\/e3e8abc9439e5d42286449533770f8ed.jpg"
+     *     │         },
+     *     │         "service_lists":[
+     *     │             {
+     *     │                 "s_name":"酒店餐厅布草",
+     *     │                 "img":"https:\/\/www.quanminjieshui.com\/upload\/admin\/20181211\/4aadf0b4a721ffa8bc2dbc298bfa3c27.jpg",
+     *     │                 "service_id":1,
+     *     │                 "description":"节水 95%，专业洗涤",
+     *     │                 "id":7
+     *     │             }
+     *     │         ]
+     *     │     }
+     *     │ }
+     */
     public static final String FACTORY_DETAIL = "api/home/factory/factoryDetail";
     //洗涤企业项目详情
     public static final String FACTORY_SERVICE = "api/home/factory/factoryService";

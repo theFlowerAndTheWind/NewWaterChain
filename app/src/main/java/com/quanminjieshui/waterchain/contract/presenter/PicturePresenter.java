@@ -162,15 +162,4 @@ public class PicturePresenter extends BasePresenter<PictureViewImpl> {
         }
     }
 
-//    public void onEventMainThread(PictureEvent event) {
-//        Uri uri = event.getUri();
-//        if (uri == null) {
-//            return;
-//        }
-//        String cropImagePath = FileUtil.getRealFilePathFromUri(mView.getActivity(), uri);
-//        Bitmap bitMap = BitmapFactory.decodeFile(cropImagePath);
-//        if (bitMap != null) {
-//            mView.showView(bitMap);
-//        }
-//    }
 }

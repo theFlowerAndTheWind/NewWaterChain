@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,10 +39,18 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
     TextView tvTitleCenter;
     @BindView(R.id.title_bar)
     RelativeLayout titleBar;
+
+    @BindView(R.id.container)
+    LinearLayout container;
     @BindView(R.id.tablayout)
     TabLayout tabLayout;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
+
+    @BindView(R.id.relative_hint)
+    RelativeLayout rlHint;
+    @BindView(R.id.tv_detail)
+    TextView tvDetail;
 
     private OrderListsPresenter orderListsPresenter;
 
@@ -108,13 +117,23 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
     @Override
     public void onOrderListSuccess(OrderListsResponseBean orderListBean) {
         if (orderListBean != null) {
-            if (orderListBean.getLists() != null) {
-                orders = orderListBean.getLists();
-                category();
+            final List<OrderListsResponseBean.OrderListEntity> lists = orderListBean.getLists();
+            if (lists != null && lists.size() == 0) {
+                container.setVisibility(View.GONE);
+                rlHint.setVisibility(View.VISIBLE);
+                tvDetail.setText("您还没有任何订单，赶快下单吧！");
+                return;
             } else {
-                orders = new ArrayList<>();
+                container.setVisibility(View.VISIBLE);
+                rlHint.setVisibility(View.GONE);
+                if (orderListBean.getLists() != null) {
+                    orders = orderListBean.getLists();
+                    category();
+                } else {
+                    orders = new ArrayList<>();
+                }
+                EventBus.getDefault().post(new OrderListsTabScrollEvent("全部", orders));
             }
-            EventBus.getDefault().post(new OrderListsTabScrollEvent("全部",orders));
         }
 
     }
@@ -170,22 +189,22 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
         int position = tab.getPosition();
         switch (position) {
             case 0:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent("全部",orders));
+                EventBus.getDefault().post(new OrderListsTabScrollEvent("全部", orders));
                 break;
             case 1:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent("待付款",unpaid));
+                EventBus.getDefault().post(new OrderListsTabScrollEvent("待付款", unpaid));
                 break;
             case 2:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[2],transporting));
+                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[2], transporting));
                 break;
             case 3:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[3],washing));
+                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[3], washing));
                 break;
             case 4:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[4],done));
+                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[4], done));
                 break;
             case 5:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[5],cancled));
+                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[5], cancled));
                 break;
         }
 

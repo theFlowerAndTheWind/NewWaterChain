@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/img_avatar"
-                android:text="133 **** 1234"
+                android:text="*** **** ****"
                 android:textColor="@color/text_black"
                 android:textSize="32px" />
 
