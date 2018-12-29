@@ -33,7 +33,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     private List<ServiceListResponseBean.serviceListEntity> list ;
 
-    private ServiceListAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
     public ServiceListAdapter(Context context, List<ServiceListResponseBean.serviceListEntity> list){
 

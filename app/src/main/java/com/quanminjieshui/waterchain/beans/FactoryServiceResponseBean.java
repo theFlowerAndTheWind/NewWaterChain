@@ -129,6 +129,7 @@ public class FactoryServiceResponseBean {
         String piece;
         String standard;
         int fscid;
+        int piceCount = 0;
 
         protected WashFatoryCageGory(Parcel in) {
             c_name = in.readString();
@@ -149,6 +150,14 @@ public class FactoryServiceResponseBean {
                 return new WashFatoryCageGory[size];
             }
         };
+
+        public int getPiceCount() {
+            return piceCount;
+        }
+
+        public void setPiceCount(int piceCount) {
+            this.piceCount = piceCount;
+        }
 
         public String getC_name() {
             return c_name;

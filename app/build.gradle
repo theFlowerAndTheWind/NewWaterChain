@@ -134,4 +134,5 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'//轮播图
     implementation 'com.jcodecraeer:xrecyclerview:1.5.9'//Xrecycleview
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'//折线图
+    implementation 'cc.fussen:cachelibrary:1.5.0'//数据缓存
 }

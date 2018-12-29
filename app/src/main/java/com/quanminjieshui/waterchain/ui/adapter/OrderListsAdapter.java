@@ -55,14 +55,14 @@ public class OrderListsAdapter extends RecyclerView.Adapter<OrderListsAdapter.Or
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
-                intent.putExtra("fid",entity.getFid());
+//                intent.putExtra("fid",entity.getFid());
                 intent.putExtra("id",entity.getId());
                 intent.setClass(context,OrderDetailActivity.class);
                 context.startActivity(intent);
             }
         });
         holder.tvFactoryName.setText(entity.getF_name());
-        GlidImageManager.getInstance().loadImageView(context,list.get(position).getImg(),holder.img,R.mipmap.default_img);
+        GlidImageManager.getInstance().loadImageView(context,list.get(position).getImg(),holder.img,R.drawable.ic_default_image);
         holder.tvService.setText(entity.getS_name());
         holder.tvTotalPrice.setText(entity.getTotal_price());
         holder.tvStatus.setText(entity.getStatus());

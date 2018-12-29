@@ -33,7 +33,7 @@ public class WashShopAdapter extends RecyclerView.Adapter<WashShopAdapter.Recycl
 
     private List<FactoryListResponseBean> list ;
 
-    private WashShopAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
     public WashShopAdapter(Context context, List<FactoryListResponseBean> list){
 
@@ -47,14 +47,14 @@ public class WashShopAdapter extends RecyclerView.Adapter<WashShopAdapter.Recycl
 
     @NonNull
     @Override
-    public WashShopAdapter.RecycleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecycleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_washshop_item,parent,false);
         AutoUtils.auto(view);
-        return new WashShopAdapter.RecycleHolder(view);
+        return new RecycleHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WashShopAdapter.RecycleHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecycleHolder holder, final int position) {
         GlidImageManager.getInstance().loadImageView(context,list.get(position).getLogo(),holder.serviceImg,R.mipmap.default_img);
         holder.serviceName.setText(TextUtils.isEmpty(list.get(position).getF_name()) ? "未知" :list.get(position).getF_name());
         holder.serviceScope.setText("服务范围："+(TextUtils.isEmpty(list.get(position).getService_scope()) ? "未知" :list.get(position).getService_scope()));
@@ -103,7 +103,7 @@ public class WashShopAdapter extends RecyclerView.Adapter<WashShopAdapter.Recycl
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(WashShopAdapter.OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
     }
 }

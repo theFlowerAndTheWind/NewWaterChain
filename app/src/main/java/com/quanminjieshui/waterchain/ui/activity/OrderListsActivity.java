@@ -200,4 +200,10 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        orderListsPresenter.detachView();
+    }
 }

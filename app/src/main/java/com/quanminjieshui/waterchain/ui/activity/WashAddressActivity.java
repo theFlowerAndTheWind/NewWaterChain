@@ -5,11 +5,11 @@ import android.os.Bundle;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 
 /**
- * Created by songxiaotao on 2018/12/21.
- * Class Note:洗涤服务详情--下单第一步
+ * Created by songxiaotao on 2018/12/29.
+ * Class Note:配送地址
  */
 
-public class WashServiceDetailActivity extends BaseActivity {
+public class WashAddressActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

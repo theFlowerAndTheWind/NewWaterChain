@@ -29,11 +29,9 @@ public class WashDetailListsAdapter extends RecyclerView.Adapter<WashDetailLists
 
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> list ;
 
-    private WashDetailListsAdapter.OnPlusClickListener plusListener;
+    private OnPlusClickListener plusListener;
 
-    private WashDetailListsAdapter.OnSubtractClickListener subtractListener;
-
-    private int piece = 0;
+    private OnSubtractClickListener subtractListener;
 
     public WashDetailListsAdapter(Context context, ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> list){
 
@@ -47,23 +45,25 @@ public class WashDetailListsAdapter extends RecyclerView.Adapter<WashDetailLists
 
     @NonNull
     @Override
-    public WashDetailListsAdapter.RecycleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecycleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.module_recycle_item_services_counter,parent,false);
         AutoUtils.auto(view);
-        return new WashDetailListsAdapter.RecycleHolder(view);
+        return new RecycleHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final WashDetailListsAdapter.RecycleHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecycleHolder holder, final int position) {
+        final int[] piece = {0};
         holder.serviceName.setText(list.get(position).getC_name());
 
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(plusListener!=null){
-                    ++piece;
-                    holder.counter.setText(String.valueOf(piece));
-                    plusListener.onItemPlusClick(piece,list.get(position).getC_name());
+                    ++piece[0];
+                    list.get(position).setPiceCount(piece[0]);
+                    holder.counter.setText(list.get(position).getPiceCount()+"");
+                    plusListener.onItemPlusClick(position);
                 }
             }
         });
@@ -71,12 +71,17 @@ public class WashDetailListsAdapter extends RecyclerView.Adapter<WashDetailLists
             @Override
             public void onClick(View view) {
                 if(subtractListener!=null){
-                    --piece;
-                    holder.counter.setText(String.valueOf(piece));
-                    subtractListener.onItemSubtractClick(piece,list.get(position).getC_name());
+                    --piece[0];
+                    if(piece[0] <0){
+                        ++piece[0];
+                    }
+                    list.get(position).setPiceCount(piece[0]);
+                    holder.counter.setText(list.get(position).getPiceCount()+"");
+                    subtractListener.onItemSubtractClick(position);
                 }
             }
         });
+
 
     }
 
@@ -103,18 +108,18 @@ public class WashDetailListsAdapter extends RecyclerView.Adapter<WashDetailLists
     }
 
     public interface OnPlusClickListener{
-        void onItemPlusClick(int piece,String type);
+        void onItemPlusClick(int position);
     }
 
-    public void setOnPlusClickListener(WashDetailListsAdapter.OnPlusClickListener plusListener){
+    public void setOnPlusClickListener(OnPlusClickListener plusListener){
         this.plusListener = plusListener;
     }
 
     public interface OnSubtractClickListener{
-        void onItemSubtractClick(int piece,String type);
+        void onItemSubtractClick(int position);
     }
 
-    public void setOnSubtractClickListener(WashDetailListsAdapter.OnSubtractClickListener subtractListener){
+    public void setOnSubtractClickListener(OnSubtractClickListener subtractListener){
         this.subtractListener = subtractListener;
     }
 

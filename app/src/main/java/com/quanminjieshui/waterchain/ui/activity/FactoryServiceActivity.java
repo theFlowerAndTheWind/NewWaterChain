@@ -96,6 +96,7 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
             case R.id.factoty_btn_order:
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
+                bundle.putInt("class",1);
                 bundle.putParcelable("WashFatoryDetail", washFatoryDetail);
                 bundle.putParcelableArrayList("WashFatoryCageGory",arrayList);
                 intent.putExtras(bundle);

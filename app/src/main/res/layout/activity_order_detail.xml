@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--其中tv_status需隐藏-->
+            <include layout="@layout/module_recycle_item_order_lists" />
+
+
+            <include layout="@layout/module_include_divider" />
+
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/xrv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <include layout="@layout/module_include_gray_space" />
+
+
+            <LinearLayout
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="订单编号"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_order_sn"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="订单状态"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_status1"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="下单时间"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_createtime"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+
+            <include
+                android:id="@+id/space1"
+                layout="@layout/module_include_gray_space" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_pay_cate"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="支付方式"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_pay_cate"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_pay_cate"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_pay_type"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="支付通道"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_pay_type"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_pay_type"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_pay_price"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="支付金额"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_pay_price"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_pay_price"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_pay_jsl"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="使用JSL"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_pay_jsl"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_pay_jsl"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_updatetime"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="支付时间"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_updatetime"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+
+            <include
+                android:id="@+id/space2"
+                layout="@layout/module_include_gray_space" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_contact_name"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="发件人"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_contact_name"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_contact_name"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_contact_tel"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="手机号码"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_contact_tel"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_contact_tel"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_address"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="详细地址"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_address"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_express"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="取件方式"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_express"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/divider_express"
+                layout="@layout/module_include_divider" />
+
+            <LinearLayout
+                android:id="@+id/ll_pickup_time"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/commit_btn_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="取件时间"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_edt" />
+
+                <TextView
+                    android:id="@+id/tv_pickup_time"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_edt" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_buttons"
+                style="@style/PaddinLeftRight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/space_gray"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_count_down"
+                    android:layout_width="match_parent"
+                    android:layout_height="167px"
+                    android:gravity="center"
+                    android:text="支付时间："
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_size_commit" />
+
+                <Button
+                    android:id="@+id/btn_pay"
+                    style="@style/style_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/commit_btn_height"
+                    android:text="立即支付" />
+
+                <Button
+                    android:id="@+id/btn_affirm"
+                    style="@style/style_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/commit_btn_height"
+                    android:layout_marginTop="40px"
+                    android:layout_marginBottom="40px"
+                    android:text="确认完成" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

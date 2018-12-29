@@ -33,7 +33,7 @@ public class FactoryListAdapter extends RecyclerView.Adapter<FactoryListAdapter.
 
     private List<FactoryDetailResponseBean.WashFatoryCageGory> list ;
 
-    private FactoryListAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
     public FactoryListAdapter(Context context, List<FactoryDetailResponseBean.WashFatoryCageGory> list){
 

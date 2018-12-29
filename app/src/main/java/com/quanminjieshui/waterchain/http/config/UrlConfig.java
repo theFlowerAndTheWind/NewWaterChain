@@ -172,7 +172,44 @@ public class UrlConfig {
      *     │ }
      */
     public static final String ORDER_LIST = "api/home/user/orderLists";
-    //订单详情
+    /**
+     * 订单详情
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "f_name":"洗涤工厂",
+     *     │         "fid":1,
+     *     │         "s_name":"餐具消毒类",
+     *     │         "img":"http:\/\/www.quanminjieshui.com\/upload\/admin\/20181211\/4aadf0b4a721ffa8bc2dbc298bfa3c27.jpg",
+     *     │         "total_price":"2.00000",
+     *     │         "service_cate":[
+     *     │             {
+     *     │                 "c_name":"方巾",
+     *     │                 "total":"1",
+     *     │                 "price":"2.00"
+     *     │             }
+     *     │         ],
+     *     │         "order_sn":"2018122757979754",
+     *     │         "status":"已取消",
+     *     │         "createtime":"2018-12-27 21:47:37",
+     *     │         "pay_cate":"全额支付",
+     *     │         "pay_type":"支付宝支付",
+     *     │         "pay_price":"2.00000",
+     *     │         "pay_jsl":"0.00000",
+     *     │         "contact_name":"傅基本",
+     *     │         "contact_tel":"15110067060",
+     *     │         "express":"洗涤企业配送",
+     *     │         "province":"湖北",
+     *     │         "city":"武汉",
+     *     │         "address":"湖北武汉雨花石",
+     *     │         "pickup_time":"2018-12-12",
+     *     │         "pay_sn":"",
+     *     │         "id":48
+     *     │     }
+     *     │ }
+     */
+
     public static final String ORDER_DETAIL = "api/home/user/orderDetail";
     //修改密码
     public static final String CHANGE_PASS = "api/home/user/changePass";

@@ -27,12 +27,12 @@
     <!--字体-->
 
     <!--titleBar中间文字-->
-    <dimen name="text_size_title_center">36px</dimen>
+    <dimen name="text_size_title_center">18sp</dimen>
     <!--edt及与其同级别控件文字-->
-    <dimen name="text_size_edt">28px</dimen>
+    <dimen name="text_size_edt">14sp</dimen>
     <!--btn下方蓝色hint提示文字-->
-    <dimen name="text_size_hint">28px</dimen>
+    <dimen name="text_size_hint">14sp</dimen>
     <!--页面下方commit功能大按钮-->
-    <dimen name="text_size_commit">36px</dimen>
+    <dimen name="text_size_commit">18sp</dimen>
 
 </resources>

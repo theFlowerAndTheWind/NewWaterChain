@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
@@ -60,62 +61,78 @@ public class TestActivity extends BaseActivity {
     @OnClick({R.id.btn_request})
     public void onClick(View v){
         HashMap<String,Object> params=new HashMap<>();
-//        params.put("id",1);
-
-
-//        RetrofitFactory.getInstance().createService()
-//                .orderList(RequestUtil.getRequestHashBody(params,false))
-//                .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
-//                .compose(ObservableTransformerUtils.<BaseEntity>io())
-//                .subscribe(new BaseObserver(TestActivity.this) {
-//
-//                    @Override
-//                    protected void onSuccess(Object o) throws Exception {
-//                    }
-//
-//                    @Override
-//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//
-//                    }
-//                });
+        params.put("id",48);
 
 
         RetrofitFactory.getInstance().createService()
-                .orderList(RequestUtil.getRequestHashBody(null,false))
-                .compose(TestActivity.this.<BaseEntity<OrderListsResponseBean>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<OrderListsResponseBean>>io())
-                .subscribe(new BaseObserver<OrderListsResponseBean>() {
+                .orderDetail(RequestUtil.getRequestHashBody(params,false))
+                .compose(TestActivity.this.<BaseEntity<OrderDetailResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<OrderDetailResponseBean>>io())
+                .subscribe(new BaseObserver<OrderDetailResponseBean>(TestActivity.this) {
 
-                    /**
-                     * 返回成功
-                     *
-                     * @param bean
-                     * @throws Exception
-                     */
                     @Override
-                    protected void onSuccess(OrderListsResponseBean bean) throws Exception {
-//                        LogUtils.e("tag",bean.get(0).getFid()+"\r\n"+list.get(0).getF_name());
-                        LogUtils.e("tag",bean.getLists().get(0).getFid()+"\r\n"+bean.getLists().get(0).getF_name());
-//                        callBack.success(list);
+                    protected void onSuccess(OrderDetailResponseBean bean) throws Exception {
+                        final OrderDetailResponseBean.ServiceCateEntry serviceCateEntry = bean.getService_cate().get(0);
+                        LogUtils.e("tag",serviceCateEntry.getC_name()+"  "+serviceCateEntry.getPrice()+"  "+serviceCateEntry.getTotal());
                     }
 
-                    /**
-                     * 返回失败
-                     *
-                     * @param e
-                     * @param isNetWorkError 是否是网络错误
-                     * @throws Exception
-                     */
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                    }
 
-                    @Override
-                    protected void onCodeError(String code, String msg) throws Exception {
                     }
                 });
 
 
+//        RetrofitFactory.getInstance().createService()
+//                .orderList(RequestUtil.getRequestHashBody(null,false))
+//                .compose(TestActivity.this.<BaseEntity<OrderListsResponseBean>>bindToLifecycle())
+//                .compose(ObservableTransformerUtils.<BaseEntity<OrderListsResponseBean>>io())
+//                .subscribe(new BaseObserver<OrderListsResponseBean>() {
+//
+//                    /**
+//                     * 返回成功
+//                     *
+//                     * @param bean
+//                     * @throws Exception
+//                     */
+//                    @Override
+//                    protected void onSuccess(OrderListsResponseBean bean) throws Exception {
+//                        LogUtils.e("tag",bean.getLists().get(0).getFid()+"\r\n"+bean.getLists().get(0).getF_name());
+//                        callBack.success(list);
+//                    }
+//
+//                    /**
+//                     * 返回失败
+//                     *
+//                     * @param e
+//                     * @param isNetWorkError 是否是网络错误
+//                     * @throws Exception
+//                     */
+//                    @Override
+//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+//                    }
+//
+//                    @Override
+//                    protected void onCodeError(String code, String msg) throws Exception {
+//                    }
+//                });
+
+
     }
+
+
+    class TradeDetailBean{
+        //以下所有字段具体名称是什么？？
+        private String c_name;
+        private int total;//int 还是 string？？先按int
+        private String  price;//1、int 还是 string还是float？？先按string   2、单价还是总价？？先按总价
+
+        public TradeDetailBean(String c_name, int total, String price) {
+            this.c_name = c_name;
+            this.total = total;
+            this.price = price;
+        }
+    }
+
 
 }

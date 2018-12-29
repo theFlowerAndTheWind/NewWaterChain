@@ -201,6 +201,6 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/module_divider" />
+    <include layout="@layout/module_include_divider" />
 
 </LinearLayout>

@@ -20,20 +20,20 @@ public class OrderDetailPresenter extends BasePresenter<OrderDetailViewImpl> {
         this.orderDetailModel = orderDetailModel;
     }
 
-    public void orderDetail(BaseActivity activity){
+    public void orderDetail(BaseActivity activity,int id){
         if(orderDetailModel == null){
             orderDetailModel = new OrderDetailModel();
         }
-        orderDetailModel.getOrderDetail(activity, new OrderDetailModel.OrderDetailCallBack() {
+        orderDetailModel.getOrderDetail(activity,id,new OrderDetailModel.OrderDetailCallBack() {
             @Override
-            public void success(OrderDetailResponseBean orderDetailBeans) {
+            public void onOrderDetailSuccess(OrderDetailResponseBean orderDetailBeans) {
                 if(mView!=null){
                     mView.onOrderDetailSuccess(orderDetailBeans);
                 }
             }
 
             @Override
-            public void failed(String msg) {
+            public void onOrderDetailFailed(String msg) {
                 if(mView!=null){
                     mView.onOrderDetailFailed(msg);
                 }

@@ -2,7 +2,6 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,11 +13,13 @@ import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
+import com.quanminjieshui.waterchain.beans.request.CreateOrderReqParams;
 import com.quanminjieshui.waterchain.contract.presenter.CreateOrderPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TotalPricePresenter;
 import com.quanminjieshui.waterchain.contract.view.CreateOrderViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TotalPriceViewImpl;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.Util;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.util.ArrayList;
@@ -45,6 +46,11 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     TextView tv_service_title;
     @BindView(R.id.tv_services_desc)
     TextView tv_serivces_desc;
+    @BindView(R.id.wash_detail_tv)
+    TextView wash_detail_tv;
+    @BindView(R.id.wash_detail_count)
+    TextView wash_detail_count;
+    private String [] trade_detail = {};
     private TotalPricePresenter totalPricePresenter;
     private CreateOrderPresenter createOrderPresenter;
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
@@ -64,16 +70,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
     private void initView() {
         tvTitleCenter.setText("确认下单");
-        if(getIntent()!= null){
-            FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail = getIntent().getParcelableExtra("WashFatoryDetail");
-            if(washFatoryDetail==null)return;
-            GlidImageManager.getInstance().loadImageView(this,washFatoryDetail.getImg(),service_img,R.mipmap.default_img);
-
-            washFatoryCageGory = getIntent().getParcelableArrayListExtra("WashFatoryCageGory");
-
-            tv_service_title.setText(washFatoryDetail.getS_name());
-            tv_serivces_desc.setText(washFatoryDetail.getDescription());
-        }
+        getData();
     }
 
     @Override
@@ -91,6 +88,13 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
             case R.id.order_detail:
                 break;
             case R.id.create_order:
+                CreateOrderReqParams bean = new CreateOrderReqParams();
+                bean.setCity("北京");
+                bean.setAddress("海淀区");
+                bean.setContact_name("何望红");
+                bean.setContact_tel("13718478437");
+//                bean.setExpress();
+                createOrderPresenter.createOrder(ConfirmOrderActivity.this,bean);
                 break;
             case R.id.wash_delivery_rl://配送信息
                 break;
@@ -110,6 +114,46 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     @Override
     public void onReNetRefreshData(int viewId) {
 
+    }
+
+    public void getData(){
+
+        if(getIntent()==null){
+            return;
+        }
+        switch (getIntent().getIntExtra("class",-1)){
+            case 1://FactoryServiceActivity
+                FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail = getIntent().getParcelableExtra("WashFatoryDetail");
+                if(washFatoryDetail==null)return;
+                GlidImageManager.getInstance().loadImageView(this,washFatoryDetail.getImg(),service_img,R.drawable.ic_default_image);
+
+                washFatoryCageGory = getIntent().getParcelableArrayListExtra("WashFatoryCageGory");
+
+                tv_service_title.setText(washFatoryDetail.getS_name());
+                tv_serivces_desc.setText(washFatoryDetail.getDescription());
+
+                break;
+            case 2://WashDemandActivity
+                trade_detail = getIntent().getStringArrayExtra("trade_detail");
+                if(!Util.isEmpty(trade_detail)){
+                    String type = "",trade_detail_tv = "";
+                    int pieceCount = 0,pieceItemCout = 0;
+                    String [] tradeData;
+                    for (String aTrade_detail : trade_detail) {
+                        tradeData = aTrade_detail.split("_");
+                        type = tradeData[0];
+                        pieceItemCout = Integer.parseInt(tradeData[1]);
+                        pieceCount += Integer.parseInt(tradeData[1]);
+                        trade_detail_tv += type + "*" + pieceItemCout + "  ";
+                    }
+                    wash_detail_tv.setText(trade_detail_tv);
+                    wash_detail_count.setText("共"+pieceCount+"件");
+                }
+                break;
+            case 3://WashAddressActivity
+                break;
+            default:break;
+        }
     }
 
     @Override

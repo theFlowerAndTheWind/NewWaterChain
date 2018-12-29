@@ -13,6 +13,8 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
+import java.util.HashMap;
+
 /**
  * Created by WanghongHe on 2018/12/12 15:26.
  * 订单详情
@@ -20,24 +22,24 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 
 public class OrderDetailModel {
 
-    public void getOrderDetail(BaseActivity activity, final OrderDetailCallBack callBack){
+    public void getOrderDetail(BaseActivity activity,int id, final OrderDetailCallBack callBack){
+        HashMap<String,Object>params=new HashMap<>();
+        params.put("id",id);
         RetrofitFactory.getInstance().createService()
-                .orderDetail(RequestUtil.getRequestHashBody(null,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(activity) {
+                .orderDetail(RequestUtil.getRequestHashBody(params,false))
+                .compose(activity.<BaseEntity<OrderDetailResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<OrderDetailResponseBean>>io())
+                .subscribe(new BaseObserver<OrderDetailResponseBean>(activity) {
 
                     /**
                      * 返回成功
                      *
-                     * @param o
+                     * @param orderDetailResponseBean
                      * @throws Exception
                      */
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        OrderDetailResponseBean orderDetailBeans = gson.fromJson((JsonElement) o,new TypeToken<OrderDetailResponseBean>() {}.getType());
-                        callBack.success(orderDetailBeans);
+                    protected void onSuccess(OrderDetailResponseBean orderDetailResponseBean) throws Exception {
+                        callBack.onOrderDetailSuccess(orderDetailResponseBean);
                     }
 
                     /**
@@ -52,26 +54,26 @@ public class OrderDetailModel {
                         if (e != null && e.getMessage() != null) {
                             if (isNetWorkError) {
                                 LogUtils.e(e.getMessage());
-                                callBack.failed(HttpConfig.ERROR_MSG);
+                                callBack.onOrderDetailFailed(HttpConfig.ERROR_MSG);
                             } else {
-                                callBack.failed(e.getMessage());
+                                callBack.onOrderDetailFailed(e.getMessage());
                             }
                         } else {
-                            callBack.failed("");
+                            callBack.onOrderDetailFailed("");
                         }
                     }
 
                     @Override
                     protected void onCodeError(String code, String msg) throws Exception {
                         super.onCodeError(code, msg);
-                        callBack.failed(msg);
+                        callBack.onOrderDetailFailed(msg);
                     }
                 });
     }
 
 
     public interface OrderDetailCallBack{
-        void success(OrderDetailResponseBean orderDetailBeans);
-        void failed(String msg);
+        void onOrderDetailSuccess(OrderDetailResponseBean orderDetailResponseBeans);
+        void onOrderDetailFailed(String msg);
     }
 }

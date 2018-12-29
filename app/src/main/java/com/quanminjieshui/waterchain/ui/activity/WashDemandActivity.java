@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,9 @@ public class WashDemandActivity extends BaseActivity {
     TextView tv_title_center;
     @BindView(R.id.tv_title_left)
     TextView tv_title_left;
+
+    private int fscID,pieceCount;
+    private String [] trade_detail;
     private WashDetailListsAdapter adapter;
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
     @Override
@@ -53,14 +57,17 @@ public class WashDemandActivity extends BaseActivity {
             wash_detail_list.setAdapter(adapter);
             adapter.setOnPlusClickListener(new WashDetailListsAdapter.OnPlusClickListener() {
                 @Override
-                public void onItemPlusClick(int piece, String type) {
+                public void onItemPlusClick(int position) {
+                    fscID = washFatoryCageGory.get(position).getFscid();
+                    pieceCount = washFatoryCageGory.get(position).getPiceCount();
 
                 }
             });
             adapter.setOnSubtractClickListener(new WashDetailListsAdapter.OnSubtractClickListener() {
                 @Override
-                public void onItemSubtractClick(int piece, String type) {
-
+                public void onItemSubtractClick(int position) {
+                    fscID = washFatoryCageGory.get(position).getFscid();
+                    pieceCount = washFatoryCageGory.get(position).getPiceCount();
                 }
             });
 
@@ -73,11 +80,24 @@ public class WashDemandActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.left_ll})
+    @OnClick({R.id.left_ll,R.id.btn_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.left_ll:
                 goBack(view);
+                break;
+            case R.id.btn_save:
+                trade_detail = new String[washFatoryCageGory.size()];
+                for(int i=0;i<washFatoryCageGory.size();i++){
+                    trade_detail[i] = washFatoryCageGory.get(i).getFscid()+"_"+washFatoryCageGory.get(i).getPiceCount();
+                }
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putInt("class",2);
+                bundle.putStringArray("trade_detail",trade_detail);
+                intent.setClass(WashDemandActivity.this,ConfirmOrderActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             default:break;
         }
