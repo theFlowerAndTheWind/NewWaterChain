@@ -52,12 +52,15 @@ public class SplashActivity extends BaseActivity {
         if (isFirstLaunch) {
             jump(GuideActivity.class);
         } else {
+            //强制登录
             boolean isLogin = (boolean) SPUtil.get(this, SPUtil.IS_LOGIN, false);
             if (isLogin) {
                 jump(MainActivity.class);
             } else {
                 jump(LoginActivity.class);
             }
+//            //不强制登录
+//            jump(MainActivity.class);
         }
         finish();
     }

@@ -16,6 +16,7 @@ import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.contract.model.LoginModel;
 import com.quanminjieshui.waterchain.contract.presenter.LoginPresenter;
 import com.quanminjieshui.waterchain.contract.view.LoginViewImpl;
+import com.quanminjieshui.waterchain.event.PersonalSelectedEvent;
 import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
@@ -56,6 +57,8 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     String keyMobile;
     @BindString(R.string.key_edt_name_pwd)
     String keyPwd;
+
+    private String target="main";//点击登录后目标页面biaozhi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,9 +143,14 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     @Override
     public void onLoginSuccess() {
         ToastUtils.showCustomToast("登录成功");
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        EventBus.getDefault().post(new SelectFragmentEvent("我的"));
+        if(target.equals("main")) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            EventBus.getDefault().post(new SelectFragmentEvent("我的"));
+            EventBus.getDefault().post(new PersonalSelectedEvent("user_login"));//头像右侧用户名（手机号）
 //        startActivity(new Intent(LoginActivity.this, TestActivity.class));//调试接口使用
+        }else if (target.equals("sth.")){//其他页面，比如下单前检查到用户未登录，登录后应跳回原页面
+
+        }
 
         finish();
     }

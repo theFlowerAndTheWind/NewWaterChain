@@ -3,6 +3,7 @@ package com.quanminjieshui.waterchain.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.ui.activity.AboutActivity;
+import com.quanminjieshui.waterchain.event.PersonalSelectedEvent;
 import com.quanminjieshui.waterchain.ui.activity.AboutListActivity;
-import com.quanminjieshui.waterchain.ui.activity.AuthActivity;
 import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
 import com.quanminjieshui.waterchain.ui.activity.GoodsActivity;
 import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
@@ -115,39 +115,39 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
         switch (v.getId()) {
 
             case R.id.relative_user_detail:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(UserDetailActivity.class);
                 break;
             case R.id.relative_account_detail:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(UserAssetActivity.class);
                 break;
             case R.id.relative_auth_detail:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(UserConfirmActivity.class);
                 break;
             case R.id.relative_trade_lists:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     showToast("nothing!");
                 break;
             case R.id.relative_order_lists:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(OrderListsActivity.class);
                 break;
             case R.id.relative_goods:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(GoodsActivity.class);
                 break;
             case R.id.relative_sys_msg:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(UserMessageActivity.class);
                 break;
             case R.id.relative_change_pass:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(ChangePassActivity.class);
                 break;
             case R.id.relative_about_us:
-                if(checkLoginStatus())
+                if (checkLoginStatus())
                     jump(AboutListActivity.class);
                 break;
             default:
@@ -156,31 +156,31 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
 
     }
 
-    private boolean checkLoginStatus(){
-        boolean isLogin= (boolean) SPUtil.get(getActivity(),SPUtil.IS_LOGIN,false);
-        if(!isLogin){
-            WarningFragment fragment=new WarningFragment("提示消息","您当前未登录，请登录","登录","取消","checkLoginStatus",this);
-            fragment.show(getActivity().getSupportFragmentManager(),"warning_fragment");
+    private boolean checkLoginStatus() {
+        boolean isLogin = (boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
+        if (!isLogin) {
+            WarningFragment fragment = new WarningFragment("提示消息", "您当前未登录，请登录", "登录", "取消", "checkLoginStatus", this);
+            fragment.show(getActivity().getSupportFragmentManager(), "warning_fragment");
         }
         return isLogin;
     }
 
-    private void jump(Class<?> cls){
-        startActivity(new Intent(getBaseActivity(),cls));
+    private void jump(Class<?> cls) {
+        startActivity(new Intent(getBaseActivity(), cls));
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_personal,container,false);
-        unbinder=ButterKnife.bind(this,rootView);
+        View rootView = inflater.inflate(R.layout.fragment_personal, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
 
         initView();
         return rootView;
     }
 
     private void initView() {
-        tvUserLogin.setText(SPUtil.get(getActivity(),SPUtil.USER_LOGIN,"*** **** ****")+"");
+        tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
     }
 
     @Override
@@ -191,7 +191,7 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
+        if (!hidden) {
 
         }
     }
@@ -213,7 +213,7 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
 
     @Override
     public void onPositiveClicked(String tag) {
-        if(tag.equals("checkLoginStatus")){
+        if (tag.equals("checkLoginStatus")) {
             jump(LoginActivity.class);
         }
     }
@@ -221,5 +221,11 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     @Override
     public void onNegativeClicked(String tag) {
 
+    }
+
+    public void onEventMainThread(PersonalSelectedEvent event) {
+        if (event != null && event.getUser_login().equals("user_login")) {
+                tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
+        }
     }
 }

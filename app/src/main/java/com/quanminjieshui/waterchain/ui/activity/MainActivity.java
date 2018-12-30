@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.ActivityManager;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.event.PersonalSelectedEvent;
+import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.fragment.FindFragment;
 import com.quanminjieshui.waterchain.ui.fragment.HomeFragment;
 import com.quanminjieshui.waterchain.ui.fragment.PersonalFragment;
@@ -28,6 +30,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 
 public class MainActivity extends BaseActivity {
@@ -70,9 +73,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setImmersionStatus(this,titleBar);
+        StatusBarUtil.setImmersionStatus(this, titleBar);
         ButterKnife.bind(this);
         initView();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
     }
 
     /**
@@ -82,7 +92,6 @@ public class MainActivity extends BaseActivity {
     public void initContentView() {
         setContentView(R.layout.activity_main);
     }
-
 
 
     /**
@@ -134,7 +143,7 @@ public class MainActivity extends BaseActivity {
         rb1.setChecked(true);
     }
 
-    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4,R.id.rb5})
+    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5})
     public void onClick(View view) {
         hideFragment();
         switch (view.getId()) {
@@ -193,7 +202,7 @@ public class MainActivity extends BaseActivity {
                 //by sxt
                 tv_title_center.setVisibility(View.VISIBLE);
                 img_title_center.setVisibility(View.GONE);
-                if(personalFragment != null){
+                if (personalFragment != null) {
                     fragmentManager.beginTransaction().show(personalFragment).commit();
                     return;
                 }
@@ -252,5 +261,115 @@ public class MainActivity extends BaseActivity {
         } else {
             ActivityManager.AppExit(mContext);
         }
+    }
+
+
+    /*****************by sxt****************/
+    public void onEventMainThread(SelectFragmentEvent event) {
+        if (event != null) {
+            String title = event.getTitle();
+            switch (title) {
+                case "首页":
+                    showHome();
+                    break;
+                case "洗涤":
+                    showWash();
+                    break;
+                case "交易":
+                    showTransaction();
+                    break;
+                case "发现":
+                    showFind();
+                    break;
+                case "我的":
+                    showPersonal();
+                    break;
+                default:
+                    showHome();
+                    break;
+            }
+        }
+    }
+
+
+    private void showHome() {
+        rb1.setChecked(true);
+        tv_title_center.setText("首页");
+        //by sxt
+        left_ll.setVisibility(View.GONE);
+        tv_title_center.setVisibility(View.GONE);
+        img_title_center.setVisibility(View.VISIBLE);
+        if (homeFragment != null) {
+            fragmentManager.beginTransaction().show(homeFragment).commit();
+        }
+
+    }
+
+    private void showWash() {
+        rb2.setChecked(true);
+        tv_title_center.setText("洗涤");
+        //by sxt
+        tv_title_center.setVisibility(View.VISIBLE);
+        img_title_center.setVisibility(View.GONE);
+        if (washFragment != null) {
+            fragmentManager.beginTransaction().show(washFragment).commit();
+            return;
+        }
+        washFragment = new WashFragment();
+        fragmentManager.beginTransaction().add(R.id.activity_main_ll, washFragment).commit();
+
+
+    }
+
+    private void showTransaction() {
+        rb3.setChecked(true);
+        tv_title_center.setText("交易");
+        //by sxt
+        tv_title_center.setVisibility(View.VISIBLE);
+        img_title_center.setVisibility(View.GONE);
+        if (transactionFragment != null) {
+            fragmentManager.beginTransaction().show(transactionFragment).commit();
+            return;
+        }
+        transactionFragment = new TransactionFragment();
+        fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commit();
+
+
+    }
+
+    private void showFind() {
+        rb4.setChecked(true);
+        tv_title_center.setText("发现");
+        //by sxt
+        tv_title_center.setVisibility(View.VISIBLE);
+        img_title_center.setVisibility(View.GONE);
+        if (findFragment != null) {
+            fragmentManager.beginTransaction().show(findFragment).commit();
+            return;
+        }
+        findFragment = new FindFragment();
+        fragmentManager.beginTransaction().add(R.id.activity_main_ll, findFragment).commit();
+
+
+    }
+
+    private void showPersonal() {
+        rb5.setChecked(true);
+        tv_title_center.setText("我的");
+        //by sxt
+        tv_title_center.setVisibility(View.VISIBLE);
+        img_title_center.setVisibility(View.GONE);
+        if (personalFragment != null) {
+            fragmentManager.beginTransaction().show(personalFragment).commit();
+            return;
+        }
+        personalFragment = new PersonalFragment();
+        fragmentManager.beginTransaction().add(R.id.activity_main_ll, personalFragment).commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

@@ -56,7 +56,9 @@ public class GuideActivity extends BaseActivity {
             @Override
             public void onClickEnterOrSkip() {
                 SPUtil.insert(GuideActivity.this,SPUtil.IS_FIRST_LAUNCH,false);
+//                //不强制登录
 //                startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                //强制登录
                 startActivity(new Intent(GuideActivity.this, LoginActivity.class));
                 finish();
             }
