@@ -5,9 +5,9 @@ package com.quanminjieshui.waterchain.http.config;
  */
 
 public class UrlConfig {
-
+    //登录
     /**
-     * 登录
+     *
      * {
      *      "code":1,
      *      "msg":"登录成功",
@@ -21,6 +21,7 @@ public class UrlConfig {
      * }
      */
     public final static String LOGIN = "/api/home/public/login";
+    //登录
     /**
      * 获取短信验证码
      * {
@@ -30,6 +31,7 @@ public class UrlConfig {
      *  }
      */
     public final static String SEND_VER_CODE = "api/home/common/sendVercode";
+    //登录
     /***
      * 注册
      *
@@ -50,9 +52,9 @@ public class UrlConfig {
     public static final String COMPANY_AUTH = "api/home/public/companyAuth";
     //身份认证-个人
     public static final String PERSONAL_AUTH = "api/home/public/PersonalAuth";
-
     //轮播图列表地址
     public static final String BANNER_LIST = "api/home/banner/bannerLists";
+    //洗涤企业列表
     /**
      * 洗涤企业列表
      *
@@ -73,6 +75,7 @@ public class UrlConfig {
     public static final String FACTORY_LIST = "api/home/factory/factoryLists";
     //洗涤项目列表
     public static final String SERVICE_LIST = "api/home/common/serviceLists";
+    //洗涤企业列表
     /**
      * 洗涤企业详情
      *     │ {
@@ -103,14 +106,341 @@ public class UrlConfig {
     public static final String TOTAL_PRICE = "api/home/factory/totalPrice";
     //创建订单
     public static final String CREATE_ORDER = "api/home/factory/addOrder";
-
-
-    //交易中心
+    //洗涤企业列表
+    /**
+     * 交易中心
+     *     无token
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"",
+     *     │     "data":{
+     *     │         "cur_price":"0.00342",
+     *     │         "price_limit":"--",
+     *     │         "price_limit_color":"",
+     *     │         "day_vol":"6829.73375",
+     *     │         "trade_status":"休息",
+     *     │         "trade_list":{
+     *     │             "buy":[
+     *     │                 {
+     *     │                     "total":"641.44527",
+     *     │                     "price":"0.00342",
+     *     │                     "name":"贡献1"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"26.70361",
+     *     │                     "price":"0.00340",
+     *     │                     "name":"贡献2"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"136.37764",
+     *     │                     "price":"0.00339",
+     *     │                     "name":"贡献3"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"1169.39638",
+     *     │                     "price":"0.00338",
+     *     │                     "name":"贡献4"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"2.72868",
+     *     │                     "price":"0.00337",
+     *     │                     "name":"贡献5"
+     *     │                 }
+     *     │             ],
+     *     │             "sell":[
+     *     │                 {
+     *     │                     "total":"141.20675",
+     *     │                     "price":"0.00316",
+     *     │                     "name":"获取1"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"618.71021",
+     *     │                     "price":"0.00321",
+     *     │                     "name":"获取2"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"944.27701",
+     *     │                     "price":"0.00322",
+     *     │                     "name":"获取3"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"311.60029",
+     *     │                     "price":"0.00324",
+     *     │                     "name":"获取4"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"357.13491",
+     *     │                     "price":"0.00335",
+     *     │                     "name":"获取5"
+     *     │                 }
+     *     │             ]
+     *     │         },
+     *     │         "trade_detail_list":[
+     *     │             {
+     *     │                 "id":3447,
+     *     │                 "add_time":"21:48:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00292",
+     *     │                 "total":"16.32278",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3449,
+     *     │                 "add_time":"21:49:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"3.30007",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3453,
+     *     │                 "add_time":"21:52:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"0.14069",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3455,
+     *     │                 "add_time":"21:52:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"9.30398",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3457,
+     *     │                 "add_time":"21:53:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"0.83569",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3459,
+     *     │                 "add_time":"21:54:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"102.59792",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3461,
+     *     │                 "add_time":"21:54:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"1.30924",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3463,
+     *     │                 "add_time":"21:54:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"30.08287",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3472,
+     *     │                 "add_time":"21:58:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00329",
+     *     │                 "total":"43.31933",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3474,
+     *     │                 "add_time":"21:58:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"4.88370",
+     *     │                 "type_name":"获取"
+     *     │             }
+     *     │         ],
+     *     │         "user_cur_trade":[
+     *     │
+     *     │         ],
+     *     │         "user_history_trade":[
+     *     │
+     *     │         ],
+     *     │         "user_account":{
+     *     │             "jsl":"0.00000",
+     *     │             "ds":"0.00000"
+     *     │         },
+     *     │         "line_chart":"0.00342",
+     *     │         "is_login":0
+     *     │     }
+     *     │ }
+     ***********************************************************************************************
+     *     带token
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"",
+     *     │     "data":{
+     *     │         "cur_price":"0.00342",
+     *     │         "price_limit":"--",
+     *     │         "price_limit_color":"",
+     *     │         "day_vol":"6599.96565",
+     *     │         "trade_status":"休息",
+     *     │         "trade_list":{
+     *     │             "buy":[
+     *     │                 {
+     *     │                     "total":"641.44527",
+     *     │                     "price":"0.00342",
+     *     │                     "name":"贡献1"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"26.70361",
+     *     │                     "price":"0.00340",
+     *     │                     "name":"贡献2"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"136.37764",
+     *     │                     "price":"0.00339",
+     *     │                     "name":"贡献3"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"1169.39638",
+     *     │                     "price":"0.00338",
+     *     │                     "name":"贡献4"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"2.72868",
+     *     │                     "price":"0.00337",
+     *     │                     "name":"贡献5"
+     *     │                 }
+     *     │             ],
+     *     │             "sell":[
+     *     │                 {
+     *     │                     "total":"141.20675",
+     *     │                     "price":"0.00316",
+     *     │                     "name":"获取1"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"618.71021",
+     *     │                     "price":"0.00321",
+     *     │                     "name":"获取2"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"944.27701",
+     *     │                     "price":"0.00322",
+     *     │                     "name":"获取3"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"311.60029",
+     *     │                     "price":"0.00324",
+     *     │                     "name":"获取4"
+     *     │                 },
+     *     │                 {
+     *     │                     "total":"357.13491",
+     *     │                     "price":"0.00335",
+     *     │                     "name":"获取5"
+     *     │                 }
+     *     │             ]
+     *     │         },
+     *     │         "trade_detail_list":[
+     *     │             {
+     *     │                 "id":3447,
+     *     │                 "add_time":"21:48:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00292",
+     *     │                 "total":"16.32278",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3449,
+     *     │                 "add_time":"21:49:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"3.30007",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3453,
+     *     │                 "add_time":"21:52:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"0.14069",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3455,
+     *     │                 "add_time":"21:52:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"9.30398",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3457,
+     *     │                 "add_time":"21:53:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"0.83569",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3459,
+     *     │                 "add_time":"21:54:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"102.59792",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3461,
+     *     │                 "add_time":"21:54:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"1.30924",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3463,
+     *     │                 "add_time":"21:54:02",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"30.08287",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3472,
+     *     │                 "add_time":"21:58:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00329",
+     *     │                 "total":"43.31933",
+     *     │                 "type_name":"获取"
+     *     │             },
+     *     │             {
+     *     │                 "id":3474,
+     *     │                 "add_time":"21:58:01",
+     *     │                 "action_type":1,
+     *     │                 "price":"0.00342",
+     *     │                 "total":"4.88370",
+     *     │                 "type_name":"获取"
+     *     │             }
+     *     │         ],
+     *     │         "user_cur_trade":[
+     *     │
+     *     │         ],
+     *     │         "user_history_trade":[
+     *     │
+     *     │         ],
+     *     │         "user_account":{
+     *     │             "jsl":"1222.00000",
+     *     │             "ds":"1532.00000"
+     *     │         },
+     *     │         "line_chart":"0.00342",
+     *     │         "is_login":1
+     *     │     }
+     *     │ }
+     *
+     */
     public static final String TRADE_CENTER = "api/home/trade/tradeCenter";
     //贡献节水指标
-    public static final String CHCEK_WATER = "api/home/trade/buy";
+    public static final String TRADE_BUY = "api/home/trade/buy";
     //获取节水指标
-    public static final String SELL_WATER = "api/home/trade/sell";
+    public static final String TRADE_SELL = "api/home/trade/sell";
     //用户撤单
     public static final String TRADE_CANCEL = "api/home/trade/cancel";
 
@@ -118,7 +448,7 @@ public class UrlConfig {
     public static final String INFO_LIST = "api/home/info/infoLists";
     //平台咨询详情
     public static final String INFO_DETAIL = "api/home/info/infoDetail";
-
+    //用户信息
     /**
      * 用户信息
      *      {
@@ -135,6 +465,7 @@ public class UrlConfig {
      *     │ }
      */
     public static final String USER_DETAIL = "api/home/user/userDetail";
+    //用户信息
     /**
      * 我的资产
      *
@@ -152,6 +483,7 @@ public class UrlConfig {
      *     │ }
      */
     public static final String USER_ACCOUNT = "api/home/user/accountDetail";
+    //用户身份证认证信息
     /**
      * 用户身份证认证信息
      *     │ {
@@ -172,6 +504,7 @@ public class UrlConfig {
     public static final String TRADE_LIST = "api/home/user/tradeLists";
     //交易明细
     public static final String TRADE_DETAIL = "api/home/user/tradeDetail";
+    //洗涤订单
     /**
      * 洗涤订单
      *
@@ -194,8 +527,9 @@ public class UrlConfig {
      *     │ }
      */
     public static final String ORDER_LIST = "api/home/user/orderLists";
+    //洗涤订单
     /**
-     * 订单详情
+     * 订单详情   需要传订单id  文档中未提示
      *     │ {
      *     │     "code":1,
      *     │     "msg":"操作成功",
@@ -231,10 +565,10 @@ public class UrlConfig {
      *     │     }
      *     │ }
      */
-
     public static final String ORDER_DETAIL = "api/home/user/orderDetail";
     //修改密码
     public static final String CHANGE_PASS = "api/home/user/changePass";
+    //洗涤订单
     /**
      * 我的-兑换记录
      *      实际请求：

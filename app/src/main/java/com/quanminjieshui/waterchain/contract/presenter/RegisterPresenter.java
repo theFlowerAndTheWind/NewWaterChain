@@ -11,6 +11,7 @@
 package com.quanminjieshui.waterchain.contract.presenter;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.RegisterModel;
 import com.quanminjieshui.waterchain.contract.view.RegisterViewImpl;
@@ -77,7 +78,7 @@ public class RegisterPresenter extends BasePresenter<RegisterViewImpl> {
             }
 
             @Override
-            public void onRegisterSuccess() {
+            public void onRegisterSuccess(RegisterResponseBean registerResponseBean) {
             }
 
             @Override
@@ -116,9 +117,9 @@ public class RegisterPresenter extends BasePresenter<RegisterViewImpl> {
             }
 
             @Override
-            public void onRegisterSuccess() {
+            public void onRegisterSuccess(RegisterResponseBean registerResponseBean) {
                 if (mView != null) {
-                    mView.onRegisterSuccess();
+                    mView.onRegisterSuccess(registerResponseBean);
                 }
             }
 

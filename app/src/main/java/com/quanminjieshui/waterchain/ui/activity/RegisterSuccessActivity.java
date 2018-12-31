@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.event.PersonalSelectedEvent;
 import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
@@ -69,7 +68,6 @@ public class RegisterSuccessActivity extends BaseActivity {
             case R.id.btn_register_success:
                 startActivity(new Intent(RegisterSuccessActivity.this, MainActivity.class));
                 EventBus.getDefault().post(new SelectFragmentEvent("我的"));
-                EventBus.getDefault().post(new PersonalSelectedEvent("user_login"));
                 finish();
                 break;
             case R.id.left_ll:

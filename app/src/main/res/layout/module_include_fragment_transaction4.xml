@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_gray_space" />
+
+    <LinearLayout
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout2"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="@dimen/commit_btn_height"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/primary_blue"
+            app:tabIndicatorHeight="4px"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/primary_blue"
+            app:tabTextAppearance="@style/style_tablayout"
+            app:tabTextColor="@color/text_black">
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今天" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="七日" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年份" />
+        </android.support.design.widget.TabLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10px"
+                android:text="收起"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_size_edt" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/down" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="386px"
+        android:layout_marginLeft="28px"
+        android:layout_marginTop="40px"
+        android:layout_marginRight="28px"
+        android:layout_marginBottom="40px" />
+
+    <include layout="@layout/module_include_gray_space"
+        android:id="@+id/gray_space_header_above"/>
+
+    <include layout="@layout/module_recycle_item_trade_list_header" />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrl_trade_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"/>
+</LinearLayout>

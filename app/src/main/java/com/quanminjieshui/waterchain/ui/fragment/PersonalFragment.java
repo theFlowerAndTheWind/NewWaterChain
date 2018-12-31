@@ -2,17 +2,14 @@ package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.event.PersonalSelectedEvent;
+import com.quanminjieshui.waterchain.event.LoginStatusChangedEvent;
 import com.quanminjieshui.waterchain.ui.activity.AboutListActivity;
 import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
 import com.quanminjieshui.waterchain.ui.activity.GoodsActivity;
@@ -106,6 +103,11 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     TextView tvVersion;
 
     private Unbinder unbinder;
+    /**
+     * 是否登录
+     * 记录当前是否登录，fargment切换后有登录、退出登录操作后，下次再显示时用该变量与本地SP所存结果比对，不一致时做刷新操作
+     */
+    private boolean isLogin=false;
 
     @OnClick({R.id.relative_user_detail, R.id.relative_account_detail, R.id.relative_auth_detail,
             R.id.relative_trade_lists, R.id.relative_order_lists, R.id.relative_goods,
@@ -169,6 +171,11 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
         startActivity(new Intent(getBaseActivity(), cls));
     }
 
+    private void jump(Class<?>cls,Intent intent){
+        intent.setClass(getActivity(),cls);
+        startActivity(intent);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -176,6 +183,7 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
         unbinder = ButterKnife.bind(this, rootView);
 
         initView();
+        isLogin= (boolean) SPUtil.get(getActivity(),SPUtil.IS_LOGIN,false);
         return rootView;
     }
 
@@ -183,10 +191,6 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
         tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -205,16 +209,16 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     public void onReNetRefreshData(int viewId) {
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
+
 
     @Override
     public void onPositiveClicked(String tag) {
         if (tag.equals("checkLoginStatus")) {
-            jump(LoginActivity.class);
+            Intent intent=new Intent();
+            intent.putExtra("target","main_personal");
+            jump(LoginActivity.class,intent);
+        }else if(tag.equals("sth.")){
+
         }
     }
 
@@ -222,10 +226,35 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     public void onNegativeClicked(String tag) {
 
     }
+//
+//    public void onEventMainThread(LogoutEvent event){
+//        if (event != null && event.getMsg().equals("logout_main_personal_refresh_nickname")) {
+//            tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
+//        }
+//    }
+//
+//    public void onEventMainThread(LoginEvent event) {
+//        if (event != null && event.getMsg().equals("login_success_main_personal_refresh_nickname")) {
+//                tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
+//
+//        }
+//    }
 
-    public void onEventMainThread(PersonalSelectedEvent event) {
-        if (event != null && event.getUser_login().equals("user_login")) {
-                tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
+    public void onEventMainThread(LoginStatusChangedEvent event){
+        if(event!=null&&event.getMsg().equals("login_status_changed_main_personal_refresh_nickname")){
+            isLogin= (boolean) SPUtil.get(getActivity(),SPUtil.IS_LOGIN,false);
+            tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
         }
+    }
+
+
+    public boolean getIsLogin(){
+        return this.isLogin;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

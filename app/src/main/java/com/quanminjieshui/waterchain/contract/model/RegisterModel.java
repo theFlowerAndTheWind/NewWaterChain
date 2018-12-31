@@ -164,7 +164,7 @@ public class RegisterModel {
                         SPUtil.insert(activity,SPUtil.UID,bean.getUid());
                         SPUtil.insert(activity,SPUtil.USER_LOGIN,bean.getUser_login());
                         SPUtil.insert(activity,SPUtil.TOKEN,bean.getToken());
-                        callback.onRegisterSuccess();
+                        callback.onRegisterSuccess(bean);
                     }
 
                     @Override
@@ -206,7 +206,7 @@ public class RegisterModel {
 
         void onGetSmsFailed(String msg);
 
-        void onRegisterSuccess();
+        void onRegisterSuccess(RegisterResponseBean registerResponseBean);
 
         void onRegisterFaild(String msg);
     }

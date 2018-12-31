@@ -16,13 +16,14 @@ import android.widget.TextView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.ActivityManager;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.event.PersonalSelectedEvent;
+import com.quanminjieshui.waterchain.event.LoginStatusChangedEvent;
 import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.fragment.FindFragment;
 import com.quanminjieshui.waterchain.ui.fragment.HomeFragment;
 import com.quanminjieshui.waterchain.ui.fragment.PersonalFragment;
 import com.quanminjieshui.waterchain.ui.fragment.TransactionFragment;
 import com.quanminjieshui.waterchain.ui.fragment.WashFragment;
+import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -155,6 +156,7 @@ public class MainActivity extends BaseActivity {
                 img_title_center.setVisibility(View.VISIBLE);
                 if (homeFragment != null) {
                     fragmentManager.beginTransaction().show(homeFragment).commit();
+
                 }
 
                 break;
@@ -172,17 +174,7 @@ public class MainActivity extends BaseActivity {
 
                 break;
             case R.id.rb3:
-                tv_title_center.setText("交易");
-                //by sxt
-                tv_title_center.setVisibility(View.VISIBLE);
-                img_title_center.setVisibility(View.GONE);
-                if (transactionFragment != null) {
-                    fragmentManager.beginTransaction().show(transactionFragment).commit();
-                    return;
-                }
-                transactionFragment = new TransactionFragment();
-                fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commit();
-
+                showTransaction();
                 break;
             case R.id.rb4:
                 tv_title_center.setText("发现");
@@ -198,17 +190,7 @@ public class MainActivity extends BaseActivity {
 
                 break;
             case R.id.rb5:
-                tv_title_center.setText("我的");
-                //by sxt
-                tv_title_center.setVisibility(View.VISIBLE);
-                img_title_center.setVisibility(View.GONE);
-                if (personalFragment != null) {
-                    fragmentManager.beginTransaction().show(personalFragment).commit();
-                    return;
-                }
-                personalFragment = new PersonalFragment();
-                fragmentManager.beginTransaction().add(R.id.activity_main_ll, personalFragment).commit();
-
+                showPersonal();
                 break;
             default:
                 break;
@@ -323,18 +305,23 @@ public class MainActivity extends BaseActivity {
 
     private void showTransaction() {
         rb3.setChecked(true);
-        tv_title_center.setText("交易");
+        tv_title_center.setText("交易中心");
         //by sxt
         tv_title_center.setVisibility(View.VISIBLE);
         img_title_center.setVisibility(View.GONE);
         if (transactionFragment != null) {
-            fragmentManager.beginTransaction().show(transactionFragment).commit();
+
+            boolean fragmentIsLogin = transactionFragment.getIsLogin();
+            boolean spIsLogin= (boolean) SPUtil.get(this,SPUtil.IS_LOGIN,false);
+            if(fragmentIsLogin!=spIsLogin){
+                EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_transaction_reconnect"));
+            }
+
+            fragmentManager.beginTransaction().show(transactionFragment).commit();//after event
             return;
         }
         transactionFragment = new TransactionFragment();
         fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commit();
-
-
     }
 
     private void showFind() {
@@ -360,7 +347,13 @@ public class MainActivity extends BaseActivity {
         tv_title_center.setVisibility(View.VISIBLE);
         img_title_center.setVisibility(View.GONE);
         if (personalFragment != null) {
-            fragmentManager.beginTransaction().show(personalFragment).commit();
+            boolean fragmentIsLogin = personalFragment.getIsLogin();
+            boolean spIsLogin= (boolean) SPUtil.get(this,SPUtil.IS_LOGIN,false);
+            if(fragmentIsLogin!=spIsLogin){
+                EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_personal_refresh_nickname"));
+            }
+
+            fragmentManager.beginTransaction().show(personalFragment).commit();//after event
             return;
         }
         personalFragment = new PersonalFragment();

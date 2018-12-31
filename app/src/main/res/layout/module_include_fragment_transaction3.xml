@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_cur_trade"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/layout_horizontal_padding"
+            android:paddingRight="@dimen/layout_horizontal_padding"
+            android:text="当前委托"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:id="@+id/tv_history_trade"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/layout_horizontal_padding"
+            android:paddingRight="@dimen/layout_horizontal_padding"
+            android:text="全部委托"
+            android:textColor="@color/primary_blue"
+            android:textSize="@dimen/text_size_edt" />
+    </RelativeLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xrv_cur_trade_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/tv_go_login"
+            android:layout_width="200px"
+            android:layout_height="@dimen/edt_height"
+            android:text="去登陆"
+            android:gravity="center"
+            android:layout_marginTop="181px"
+            android:layout_marginBottom="192px"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/text_size_edt"
+            android:textColor="@color/primary_blue"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="200px"
+            android:layout_height="@dimen/edt_height"
+            android:text="暂无记录"
+            android:gravity="center"
+            android:layout_marginTop="181px"
+            android:layout_marginBottom="192px"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/text_size_edt"
+            android:textColor="@color/text_gray"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

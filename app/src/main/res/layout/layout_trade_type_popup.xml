@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="40dp">
+
+    <TextView
+        android:id="@+id/tv_xj"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edt_height"
+        android:gravity="center"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:text="限价交易"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_size_edt"
+        android:background="@drawable/btn_blue_bg_selector"/>
+
+    <include layout="@layout/module_include_divider" />
+
+    <TextView
+        android:id="@+id/tv_sj"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edt_height"
+        android:gravity="center"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:text="市价交易"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_size_edt"
+        android:background="@drawable/btn_blue_bg_selector"/>
+
+</LinearLayout>

@@ -10,6 +10,7 @@
  */
 package com.quanminjieshui.waterchain.contract.view;
 
+import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.contract.IBaseViewImpl;
 
 import java.util.Map;
@@ -29,7 +30,7 @@ public interface RegisterViewImpl extends IBaseViewImpl {
 
     void onGetSmsFailed(String msg);
 
-    void onRegisterSuccess();
+    void onRegisterSuccess(RegisterResponseBean registerResponseBean);
 
     void onRegisterFaild(String msg);
 }

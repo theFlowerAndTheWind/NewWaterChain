@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.contract.model.RegisterModel;
 import com.quanminjieshui.waterchain.contract.presenter.RegisterPresenter;
 import com.quanminjieshui.waterchain.contract.view.RegisterViewImpl;
@@ -240,8 +241,10 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
     }
 
     @Override
-    public void onRegisterSuccess() {
+    public void onRegisterSuccess(RegisterResponseBean registerResponseBean) {
+        //一起操作
         SPUtil.insert(this,SPUtil.IS_LOGIN,true);
+        SPUtil.insert(this,SPUtil.TOKEN,registerResponseBean.getToken());
         startActivity(new Intent(RegisterActivity.this, AuthActivity.class));
         finish();
     }

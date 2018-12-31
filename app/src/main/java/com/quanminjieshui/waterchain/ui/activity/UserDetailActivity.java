@@ -14,7 +14,6 @@ import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.contract.model.UserDetailModel;
 import com.quanminjieshui.waterchain.contract.presenter.UserDetailPresenter;
 import com.quanminjieshui.waterchain.contract.view.UserDetailViewImpl;
-import com.quanminjieshui.waterchain.event.PersonalSelectedEvent;
 import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
 import com.quanminjieshui.waterchain.utils.SPUtil;
@@ -111,21 +110,25 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
     @Override
     public void onPositiveClicked(String tag) {
         if (tag.equals("logout")) {
+            //一起操作
+            //            SPUtil.delete(this,SPUtil.IS_LOGIN);
+            SPUtil.delete(this, SPUtil.TOKEN);
             SPUtil.insert(UserDetailActivity.this, SPUtil.IS_LOGIN, false);//更改用户登录状态为未登录
+
             SPUtil.delete(this, SPUtil.USER_LOGIN);
             SPUtil.delete(this, SPUtil.UID);
-            SPUtil.delete(this, SPUtil.TOKEN);
 
             SPUtil.delete(this, SPUtil.ID);
             SPUtil.delete(this, SPUtil.IS_BLOCKED);
             SPUtil.delete(this, SPUtil.USER_LOGIN);
             SPUtil.delete(this, SPUtil.USER_NICKNAME);
             SPUtil.delete(this, SPUtil.TOKEN);
-//            SPUtil.delete(this,SPUtil.IS_LOGIN);
+
 
             jump(MainActivity.class);
             EventBus.getDefault().post(new SelectFragmentEvent("我的"));//显示personalFragment
-            EventBus.getDefault().post(new PersonalSelectedEvent("user_login"));//头像右侧用户名（手机号）显示
+//            EventBus.getDefault().post(new LogoutEvent("logout_main_personal_refresh_nickname"));//头像右侧用户名显示
+//            EventBus.getDefault().post(new LogoutEvent("logout_main_transaction_reconnect"));//transaction重新请求刷新
             finish();
         }
     }
