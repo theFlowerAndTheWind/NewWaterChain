@@ -21,6 +21,7 @@
             android:id="@+id/service_img"
             android:src="@drawable/ic_default_image"
             android:layout_width="match_parent"
+            android:scaleType="centerCrop"
             android:layout_height="250px" />
         <TextView
             android:id="@+id/factory_service_title"

@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.quanminjieshui.waterchain.WaterChainApplication;
 import com.quanminjieshui.waterchain.beans.city.ProvinceBean;
 
+import org.json.JSONArray;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -62,6 +64,20 @@ public class GsonUtil {
         return arrayList;
     }
 
+    public static ArrayList<ProvinceBean> parseData(String jsonStr) {//Gson 解析
+        ArrayList<ProvinceBean> detail = new ArrayList<>();
+        try {
+            JSONArray data = new JSONArray(jsonStr);
+            Gson gson = new Gson();
+            for (int i = 0; i < data.length(); i++) {
+                ProvinceBean entity = gson.fromJson(data.optJSONObject(i).toString(), ProvinceBean.class);
+                detail.add(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return detail;
+    }
 
 
 }

@@ -13,7 +13,6 @@ import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
-import com.quanminjieshui.waterchain.beans.SmsResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -42,7 +41,7 @@ public interface APIService {
 
     //获取验证码
     @POST(UrlConfig.SEND_VER_CODE)
-    Observable<BaseEntity<SmsResponseBean>> getSms(@Body RequestBody requestBody);
+    Observable<BaseEntity> getSms(@Body RequestBody requestBody);
 
     //注册
     @POST(UrlConfig.REGISTER)

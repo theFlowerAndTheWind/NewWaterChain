@@ -118,7 +118,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        serviceList.addItemDecoration(new RecyclerViewDivider(getBaseActivity(),LinearLayoutManager.HORIZONTAL,1,getResources().getColor(R.color.item_line)));
         serviceList.setAdapter(serviceListAdapter);
-
+        serviceList.setPullRefreshEnabled(false);
         serviceList.setLoadingMoreEnabled(false);
         serviceList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
