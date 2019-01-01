@@ -60,12 +60,12 @@ public class ChangeInfoActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.img_title_left,R.id.tv_title_right})
+    @OnClick({R.id.left_ll,R.id.tv_title_right})
     public void onClick(View v) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         switch (v.getId()) {
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(v);
                 finish();
                 break;

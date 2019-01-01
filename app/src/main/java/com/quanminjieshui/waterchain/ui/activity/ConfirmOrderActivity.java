@@ -90,13 +90,13 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         setContentView(R.layout.activity_confirm_order);
     }
 
-    @OnClick({R.id.img_title_left,R.id.order_detail,R.id.create_order,R.id.wash_delivery_rl,R.id.wash_demand_rl,R.id.fullPayment,
+    @OnClick({R.id.left_ll,R.id.order_detail,R.id.create_order,R.id.wash_delivery_rl,R.id.wash_demand_rl,R.id.fullPayment,
             R.id.combinedPayment,R.id.pay_channel_wx_rl,R.id.pay_channel_zfb_rl})
     public void onClick(View v){
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         switch (v.getId()){
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(v);
                 finish();
                 break;
@@ -111,6 +111,8 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 bean.setContact_tel("13718478437");
 //                bean.setExpress();
                 createOrderPresenter.createOrder(ConfirmOrderActivity.this,bean);
+                // TODO: 2019/1/1 支付
+                startActivity(new Intent(ConfirmOrderActivity.this,PaySuceessActivity.class));
                 break;
             case R.id.wash_delivery_rl://配送信息
                 bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);

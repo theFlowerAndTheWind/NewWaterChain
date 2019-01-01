@@ -151,6 +151,8 @@
         <activity android:name=".ui.activity.ChangeInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.PaySuceessActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
