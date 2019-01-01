@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="发现"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/module_include_fragment_transaction1"
+            android:visibility="gone" />
+
+        <include layout="@layout/module_include_fragment_transaction2" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/module_include_fragment_transaction3" />
+
+            <Button
+                android:id="@+id/btn_unfold"
+                android:layout_width="90px"
+                android:layout_height="40px"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/layout_horizontal_margin"
+                android:layout_marginBottom="20px"
+                android:background="@drawable/btn_blue_bg_selector"
+                android:text="展开"
+                android:textSize="@dimen/text_size_edt"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <!--<include layout="@layout/module_include_fragment_transaction3" />-->
+
+        <include layout="@layout/module_include_fragment_transaction4" />
+
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/blue_border_bg_shape"-->
+            <!--fab:fab_size="mini"-->
+            <!--fab:fab_title="个人发布信息"-->
+            <!--/>-->
+    </LinearLayout>
+</ScrollView>

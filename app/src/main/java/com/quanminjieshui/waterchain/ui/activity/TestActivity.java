@@ -11,6 +11,7 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -45,25 +47,15 @@ import butterknife.OnClick;
  * @Version: 1.0
  */
 public class TestActivity extends BaseActivity {
-//    @BindView(R.id.btn_request)
+    //    @BindView(R.id.btn_request)
     Button btnRequest;
-//    @BindView(R.id.tv)
-    TextView tv;
-//    @BindView(R.id.btn)
-    Button btn;
-//    @BindView(R.id.ll)
-    LinearLayout ll;
 
-View[]views;
+    View[] views;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        btnRequest=findViewById(R.id.btn_request);
-        tv=findViewById(R.id.tv);
-        btn=findViewById(R.id.btn);
-        ll=findViewById(R.id.ll);
-        views=new View[]{btnRequest,tv,ll};
+        btnRequest = findViewById(R.id.btn_request);
     }
 
     @Override
@@ -76,33 +68,28 @@ View[]views;
 
     }
 
-    @OnClick({R.id.btn_request, R.id.btnshow, R.id.btngone})
+    @OnClick({R.id.btn_request})
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.btnshow:
-                showViews(views);
-                break;
-
-            case R.id.btngone:
-                goneViews(views);
-                break;
 
             case R.id.btn_request:
                 HashMap<String, Object> params = new HashMap<>();
-                params.put("id", 48);
-
-
+                Log.e("", "开始请求");
                 RetrofitFactory.getInstance().createService()
-                        .orderDetail(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity<OrderDetailResponseBean>>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity<OrderDetailResponseBean>>io())
-                        .subscribe(new BaseObserver<OrderDetailResponseBean>(TestActivity.this) {
+                        .tradeCenter(RequestUtil.getRequestHashBody(params, false))
+                        .compose(TestActivity.this.<BaseEntity<TradeCenterResponseBean>>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity<TradeCenterResponseBean>>io())
+                        .subscribe(new BaseObserver<TradeCenterResponseBean>(TestActivity.this) {
 
                             @Override
-                            protected void onSuccess(OrderDetailResponseBean bean) throws Exception {
-                                final OrderDetailResponseBean.ServiceCateEntry serviceCateEntry = bean.getService_cate().get(0);
-                                LogUtils.e("tag", serviceCateEntry.getC_name() + "  " + serviceCateEntry.getPrice() + "  " + serviceCateEntry.getTotal());
+                            protected void onSuccess(TradeCenterResponseBean bean) throws Exception {
+                                LogUtils.e("tag",
+                                        bean.getCur_price() + "\r\n"
+                                                + bean.getTrade_list().getBuy().get(0).getName() + "\r\n"
+                                                + bean.getTrade_detail_list().get(0).getAdd_time() + "\r\n"
+                                                + bean.getUser_account().getJsl()
+                                );
                             }
 
                             @Override
@@ -111,65 +98,7 @@ View[]views;
                             }
                         });
 
-
-//        RetrofitFactory.getInstance().createService()
-//                .orderList(RequestUtil.getRequestHashBody(null,false))
-//                .compose(TestActivity.this.<BaseEntity<OrderListsResponseBean>>bindToLifecycle())
-//                .compose(ObservableTransformerUtils.<BaseEntity<OrderListsResponseBean>>io())
-//                .subscribe(new BaseObserver<OrderListsResponseBean>() {
-//
-//                    /**
-//                     * 返回成功
-//                     *
-//                     * @param bean
-//                     * @throws Exception
-//                     */
-//                    @Override
-//                    protected void onSuccess(OrderListsResponseBean bean) throws Exception {
-//                        LogUtils.e("tag",bean.getLists().get(0).getFid()+"\r\n"+bean.getLists().get(0).getF_name());
-//                        callBack.success(list);
-//                    }
-//
-//                    /**
-//                     * 返回失败
-//                     *
-//                     * @param e
-//                     * @param isNetWorkError 是否是网络错误
-//                     * @throws Exception
-//                     */
-//                    @Override
-//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//                    }
-//
-//                    @Override
-//                    protected void onCodeError(String code, String msg) throws Exception {
-//                    }
-//                });
-
                 break;
-        }
-    }
-
-
-    private void showView(View view) {
-        view.setVisibility(View.VISIBLE);
-    }
-
-    private void showViews(View[] views) {
-        for (View view : views) {
-//            showView(view);
-            view.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void goneView(View view) {
-        view.setVisibility(View.GONE);
-    }
-
-    private void goneViews(View[] views) {
-        for (View view : views) {
-//            goneView(view);
-            view.setVisibility(View.GONE);
         }
     }
 

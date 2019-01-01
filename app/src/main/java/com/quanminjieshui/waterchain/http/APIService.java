@@ -3,6 +3,7 @@ package com.quanminjieshui.waterchain.http;
 import com.quanminjieshui.waterchain.beans.AccountDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
+import com.quanminjieshui.waterchain.beans.BuyResponseBean;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
@@ -12,8 +13,10 @@ import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
+import com.quanminjieshui.waterchain.beans.SellResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
@@ -77,7 +80,15 @@ public interface APIService {
 
     //交易中心
     @POST(UrlConfig.TRADE_CENTER)
-    Observable<BaseEntity> tradeCenter(@Body RequestBody requestBody);
+    Observable<BaseEntity<TradeCenterResponseBean>> tradeCenter(@Body RequestBody requestBody);
+
+    //贡献节水量
+    @POST(UrlConfig.TRADE_BUY)
+    Observable<BaseEntity<BuyResponseBean>> buy(@Body RequestBody requestBody);
+
+    //获取节水量
+    @POST(UrlConfig.TRADE_SELL)
+    Observable<BaseEntity<SellResponseBean>> sell(@Body RequestBody requestBody);
 
     //个人中心
     @POST(UrlConfig.TRADE_LIST)
@@ -130,8 +141,9 @@ public interface APIService {
     //创建订单
     @POST(UrlConfig.CREATE_ORDER)
     Observable<BaseEntity<CreateOrderResponseBean>> createOrder(@Body RequestBody requestBody);
+
     //我的兑换
     @POST(UrlConfig.GOODS)
-    Observable<BaseEntity<List<GoodsResposeBean>>>goods(@Body RequestBody requestBody);
+    Observable<BaseEntity<List<GoodsResposeBean>>> goods(@Body RequestBody requestBody);
 }
 

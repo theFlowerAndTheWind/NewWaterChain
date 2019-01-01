@@ -360,7 +360,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                 break;
             case R.id.tv_standing_off:
                 startActivity(new Intent(AuthActivity.this, MainActivity.class));
-                EventBus.getDefault().post(new SelectFragmentEvent(SelectFragmentEvent.titles[0]));
+                EventBus.getDefault().post(new SelectFragmentEvent("首页"));
                 finish();
                 break;
             case R.id.btn_upload_boss_id_img_a:

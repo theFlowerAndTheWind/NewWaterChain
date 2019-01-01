@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/commit_btn_height"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/primary_blue"
+        app:tabIndicatorHeight="4px"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/primary_blue"
+        app:tabTextAppearance="@style/style_tablayout"
+        app:tabTextColor="@color/text_black">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="贡献节水" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取节水" />
+    </android.support.design.widget.TabLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <RelativeLayout
+        android:id="@+id/rl_trade_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_trade_type"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edt_height"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/layout_horizontal_margin"
+            android:layout_marginTop="50px"
+            android:layout_marginRight="30px"
+            android:gravity="center_vertical"
+            android:text="限价交易"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/text_size_edt" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_trade_type"
+            android:src="@drawable/ic_arrow_down" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:layout_marginRight="@dimen/layout_horizontal_margin">
+
+        <LinearLayout
+            android:id="@+id/ll_trade_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_border_bg_shape"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edt_price"
+                android:layout_width="0px"
+                android:layout_height="@dimen/edt_height"
+                android:layout_weight="1"
+                android:background="@color/trans"
+                android:hint="兑换价 JSL"
+                android:paddingLeft="@dimen/edt_padding_left"
+                android:textColorHint="@color/hit_color"
+                android:textSize="@dimen/text_size_edt"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/edt_padding_left"
+                android:text="节水指标"
+                android:textColor="@color/hit_color"
+                android:textSize="@dimen/text_size_edt" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_highest"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/edt_padding_left"
+            android:text="以市场最优价贡献"
+            android:textColor="@color/hit_color"
+            android:textSize="@dimen/text_size_edt"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_user_account"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edt_height"
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="30px"
+        android:layout_marginBottom="30px"
+        android:gravity="center_vertical"
+        android:text="可用 784.500 节水指标"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_size_edt" />
+
+    <LinearLayout
+        android:id="@+id/rl_trade_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:layout_marginRight="@dimen/layout_horizontal_margin"
+        android:background="@drawable/gray_border_bg_shape"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edt_total"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/trans"
+            android:hint="兑换量"
+            android:minHeight="@dimen/edt_height"
+            android:paddingLeft="@dimen/edt_padding_left"
+            android:textColorHint="@color/hit_color"
+            android:textSize="@dimen/text_size_edt"
+            android:inputType="numberDecimal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/edt_padding_left"
+            android:text="JSL"
+            android:textColor="@color/hit_color"
+            android:textSize="@dimen/text_size_edt" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edt_height"
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="30px"
+        android:layout_marginBottom="30px"
+        android:gravity="center_vertical"
+        android:text="交易手续费：0.5%"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text_size_edt" />
+    <!--接口文档中 贡献对应为buy  获取对应为sell-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:layout_marginRight="@dimen/layout_horizontal_margin"
+        android:layout_marginBottom="@dimen/layout_horizontal_margin">
+
+        <Button
+            android:id="@+id/btn_buy"
+            style="@style/style_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commit_btn_height"
+            android:text="贡献节水指标" />
+
+        <Button
+            android:id="@+id/btn_sell"
+            style="@style/style_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commit_btn_height"
+            android:text="获取节水指标"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <include layout="@layout/module_include_gray_space" />
+
+
+</LinearLayout>

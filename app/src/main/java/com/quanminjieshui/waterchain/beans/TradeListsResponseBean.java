@@ -20,6 +20,8 @@ public class TradeListsResponseBean {
     }
 
     public class TradeListEntity {
+
+
         private String action_type;//交易类型     贡献|获得
         private String deal_total;//已成交量
         private String avg_price;//成交均价（单价）

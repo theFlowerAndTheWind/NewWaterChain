@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--1、交易中心 当前委托部分使用，使用时需提前隐藏已成交量、手续费。长按item显示
+2、历史委托页面（交易中心点击"全部委托"跳转）
+3、我的-全部委托页面（与历史委托为同一页面）-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/container">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,6 +35,7 @@
             android:textSize="@dimen/text_size_edt" />
 
         <TextView
+            android:id="@+id/tv_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv"
@@ -41,6 +46,7 @@
             android:textSize="@dimen/text_size_edt" />
 
         <TextView
+            android:id="@+id/tv_cancel_trade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_action_type"
@@ -98,7 +104,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_avg_price"
+                android:id="@+id/tv_price"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
