@@ -10,8 +10,8 @@ public class HttpConfig {
     //生成环境
 //    public static String BASE_URL = "https://www.jsl.com";
     //开发环境
-//    public static String BASE_URL = "http://jsl.sshsky.com";
-    public static String BASE_URL = "https://www.quanminjieshui.com";
+//    public static String BASE_URL = "https://jsl.sshsky.com";
+    public static String BASE_URL = "https://www.quanminjieshui.com";//香港服务器不稳定
 
 
     public static final String HEAD_TOKEN_KEY = "TOKEN";

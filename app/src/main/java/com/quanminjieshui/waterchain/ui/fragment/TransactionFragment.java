@@ -142,7 +142,6 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
         tradeCenterPresenter.attachView(this);
         tradeCenterPresenter.getTradeCenter(getBaseActivity());
 
-
         initView();
         return rootView;
     }

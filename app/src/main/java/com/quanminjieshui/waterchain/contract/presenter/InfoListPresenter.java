@@ -1,7 +1,7 @@
 package com.quanminjieshui.waterchain.contract.presenter;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.InfoListResponseBean;
+import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.InfoListModel;
 import com.quanminjieshui.waterchain.contract.view.InfoListViewImpl;
@@ -27,9 +27,9 @@ public class InfoListPresenter extends BasePresenter<InfoListViewImpl> {
         }
         infoListModel.getInfoList(activity, count, new InfoListModel.InfoListCallBack() {
             @Override
-            public void success(InfoListResponseBean infoListResponseBean) {
+            public void success(InfoListsResponseBean infoListsResponseBean) {
                 if(mView!=null){
-                    mView.infoListSuccess(infoListResponseBean);
+                    mView.infoListSuccess(infoListsResponseBean);
                 }
             }
 

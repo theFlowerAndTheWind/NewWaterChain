@@ -37,47 +37,29 @@ public class GoodsResposeBean {
         return order_sn;
     }
 
-    public void setOrder_sn(String order_sn) {
-        this.order_sn = order_sn;
-    }
 
     public String getG_name() {
         return g_name;
     }
 
-    public void setG_name(String g_name) {
-        this.g_name = g_name;
-    }
 
     public String getC_name() {
         return c_name;
     }
 
-    public void setC_name(String c_name) {
-        this.c_name = c_name;
-    }
 
     public String getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(String total_price) {
-        this.total_price = total_price;
-    }
 
     public String getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime;
-    }
 
     public String getStatus_view() {
         return status_view;
     }
 
-    public void setStatus_view(String status_view) {
-        this.status_view = status_view;
-    }
 }

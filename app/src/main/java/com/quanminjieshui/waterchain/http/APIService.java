@@ -9,6 +9,7 @@ import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsResposeBean;
+import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
@@ -91,6 +92,10 @@ public interface APIService {
     @POST(UrlConfig.TRADE_SELL)
     Observable<BaseEntity<SellResponseBean>> sell(@Body RequestBody requestBody);
 
+    //折线图
+    @POST(UrlConfig.TRADE_LINE)
+    Observable<BaseEntity> tradeLine(@Body RequestBody body);
+
     //个人中心
     @POST(UrlConfig.TRADE_LIST)
     Observable<BaseEntity> tradeList(@Body RequestBody requestBody);
@@ -113,7 +118,7 @@ public interface APIService {
 
     //平台咨询列表
     @POST(UrlConfig.INFO_LIST)
-    Observable<BaseEntity> infoList(@Body RequestBody requestBody);
+    Observable<BaseEntity<InfoListsResponseBean>> infoList(@Body RequestBody requestBody);
 
     //轮播列表
     @POST(UrlConfig.BANNER_LIST)

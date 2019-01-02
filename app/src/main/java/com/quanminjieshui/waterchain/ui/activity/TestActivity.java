@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
@@ -75,21 +76,17 @@ public class TestActivity extends BaseActivity {
 
             case R.id.btn_request:
                 HashMap<String, Object> params = new HashMap<>();
-                Log.e("", "开始请求");
+                params.put("type","week");
                 RetrofitFactory.getInstance().createService()
-                        .tradeCenter(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity<TradeCenterResponseBean>>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity<TradeCenterResponseBean>>io())
-                        .subscribe(new BaseObserver<TradeCenterResponseBean>(TestActivity.this) {
+                        .tradeLine(RequestUtil.getRequestHashBody(params, false))
+                        .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity>io())
+                        .subscribe(new BaseObserver(TestActivity.this) {
 
                             @Override
-                            protected void onSuccess(TradeCenterResponseBean bean) throws Exception {
-                                LogUtils.e("tag",
-                                        bean.getCur_price() + "\r\n"
-                                                + bean.getTrade_list().getBuy().get(0).getName() + "\r\n"
-                                                + bean.getTrade_detail_list().get(0).getAdd_time() + "\r\n"
-                                                + bean.getUser_account().getJsl()
-                                );
+                            protected void onSuccess(Object bean) throws Exception {
+//                                LogUtils.e("tag",
+//                                        bean.getLists().get(0).getContent());
                             }
 
                             @Override

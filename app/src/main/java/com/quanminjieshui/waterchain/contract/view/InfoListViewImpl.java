@@ -1,6 +1,6 @@
 package com.quanminjieshui.waterchain.contract.view;
 
-import com.quanminjieshui.waterchain.beans.InfoListResponseBean;
+import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.contract.IBaseViewImpl;
 
 /**
@@ -9,6 +9,6 @@ import com.quanminjieshui.waterchain.contract.IBaseViewImpl;
  */
 
 public interface InfoListViewImpl extends IBaseViewImpl {
-    void infoListSuccess(InfoListResponseBean infoListResponseBean);
+    void infoListSuccess(InfoListsResponseBean infoListResponseBean);
     void infoListFailed(String msg);
 }

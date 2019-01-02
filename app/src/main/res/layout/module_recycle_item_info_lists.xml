@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/container">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="294px"
+        android:layout_height="190px"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="40px"
+        android:layout_marginRight="35px"
+        android:layout_marginBottom="40px"
+        android:src="@mipmap/default_img" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42px"
+        android:layout_marginRight="@dimen/layout_horizontal_margin"
+        android:layout_toRightOf="@+id/img"
+        android:text="节水链交易中心重磅登场"
+        android:textColor="@color/text_black"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="21px"
+        android:layout_marginRight="40px"
+        android:layout_toRightOf="@+id/img"
+        android:maxLines="3"
+        android:text="项目获得部位认可项目获得部位认可项目获得部位认可"
+        android:textColor="@color/text_gray"
+        android:textSize="10sp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:layout_below="@id/img"
+        android:background="@color/divider_gray" />
+
+    <TextView
+        android:id="@+id/tv_publishtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/divider"
+        android:layout_marginTop="30px"
+        android:layout_marginBottom="40px"
+        android:layout_toRightOf="@+id/img"
+        android:text="2019-01-01 00:00:00"
+        android:textColor="@color/text_gray"
+        android:textSize="10sp" />
+
+
+</RelativeLayout>

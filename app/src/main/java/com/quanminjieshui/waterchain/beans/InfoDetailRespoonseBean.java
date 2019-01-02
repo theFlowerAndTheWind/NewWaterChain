@@ -14,23 +14,14 @@ public class InfoDetailRespoonseBean {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getPublishtime() {
         return publishtime;
     }
 
-    public void setPublishtime(String publishtime) {
-        this.publishtime = publishtime;
-    }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
 }

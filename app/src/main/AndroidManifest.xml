@@ -32,8 +32,8 @@
             android:value="1280" />
 
         <meta-data
-            android:value="CHANNEL_VALUE"
-            android:name="CHANNEL"/>
+            android:name="CHANNEL"
+            android:value="CHANNEL_VALUE" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -66,13 +66,7 @@
 
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+            android:screenOrientation="portrait" />
 
 
         <activity
@@ -92,55 +86,69 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.FindPassActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.ChangePassActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ChangePassActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UserDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EnterpriseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.OrderListsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.OrderListsActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.OrderDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.OrderDetailActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.FactoryServiceActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.FactoryServiceActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AboutListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.AboutActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UserAssetActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UserConfirmActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UserMessageActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.GoodsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GoodsActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImagePickerThemeFullScreen" />
-        <activity android:name=".ui.activity.ConfirmOrderActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.WashDemandActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.WashDemandActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.InfoDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.GoodsListsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

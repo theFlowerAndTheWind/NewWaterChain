@@ -12,47 +12,29 @@ public class LoginResponseBean {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getIs_blocked() {
         return is_blocked;
     }
 
-    public void setIs_blocked(int is_blocked) {
-        this.is_blocked = is_blocked;
-    }
 
     public String getUser_login() {
         return user_login;
     }
 
-    public void setUser_login(String user_login) {
-        this.user_login = user_login;
-    }
 
     public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
     public String getUser_nickname() {
         return user_nickname;
     }
 
-    public void setUser_nickname(String user_nickname) {
-        this.user_nickname = user_nickname;
-    }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

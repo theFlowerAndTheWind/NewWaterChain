@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.InfoListResponseBean;
+import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -27,15 +27,13 @@ public class InfoListModel {
         params.put("count",count);
         RetrofitFactory.getInstance().createService()
                 .infoList(RequestUtil.getRequestHashBody(params,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver() {
+                .compose(activity.<BaseEntity<InfoListsResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<InfoListsResponseBean>>io())
+                .subscribe(new BaseObserver<InfoListsResponseBean>() {
 
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        InfoListResponseBean infoListBean = gson.fromJson((JsonElement) o,new TypeToken<InfoListResponseBean>() {}.getType());
-                        callBack.success(infoListBean);
+                    protected void onSuccess(InfoListsResponseBean infoListsResponseBean) throws Exception {
+                        callBack.success(infoListsResponseBean);
                     }
 
                     @Override
@@ -62,7 +60,7 @@ public class InfoListModel {
     }
 
     public interface InfoListCallBack{
-        void success(InfoListResponseBean infoListResponseBean);
+        void success(InfoListsResponseBean infoListResponseBean);
         void failed(String msg);
     }
 }

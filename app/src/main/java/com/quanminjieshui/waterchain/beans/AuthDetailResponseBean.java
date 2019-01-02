@@ -18,47 +18,29 @@ public class AuthDetailResponseBean {
         return user_status;
     }
 
-    public void setUser_status(String user_status) {
-        this.user_status = user_status;
-    }
 
     public String getUser_name() {
         return user_name;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
-    }
 
     public String getId_no() {
         return id_no;
     }
 
-    public void setId_no(String id_no) {
-        this.id_no = id_no;
-    }
 
     public String getCompany_name() {
         return company_name;
     }
 
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
-    }
 
     public String getCompany_license_no() {
         return company_license_no;
     }
 
-    public void setCompany_license_no(String company_license_no) {
-        this.company_license_no = company_license_no;
-    }
 
     public int getUser_type() {
         return user_type;
     }
 
-    public void setUser_type(int user_type) {
-        this.user_type = user_type;
-    }
 }

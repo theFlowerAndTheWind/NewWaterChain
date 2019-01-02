@@ -443,8 +443,40 @@ public class UrlConfig {
     public static final String TRADE_SELL = "api/home/trade/sell";
     //用户撤单
     public static final String TRADE_CANCEL = "api/home/trade/cancel";
-
+    //折线图
+    public static final String TRADE_LINE="api/home/trade/tradeLine";
     //平台资讯列表
+    /**
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "lists":[
+     *     │             {
+     *     │                 "id":4,
+     *     │                 "title":"12月24日节水资讯",
+     *     │                 "img":"https:\/\/www.quanminjieshui.com\/upload\/admin\/20181214\/61865c5afa8cb1be3faf5d81647e2ca5.jpg",
+     *     │                 "publishtime":"2018-12-27",
+     *     │                 "content":"12月14日节水资讯"
+     *     │             },
+     *     │             {
+     *     │                 "id":5,
+     *     │                 "title":"12月25日节水资讯",
+     *     │                 "img":"https:\/\/www.quanminjieshui.com\/upload\/admin\/20181214\/4db2ce83bfac13ae1fdfc1476a23a305.jpg",
+     *     │                 "publishtime":"2018-12-27",
+     *     │                 "content":"12月24日节水资讯"
+     *     │             },
+     *     │             {
+     *     │                 "id":6,
+     *     │                 "title":"12月26日节水资讯",
+     *     │                 "img":"https:\/\/www.quanminjieshui.com\/upload\/admin\/20181227\/13771579cbe4a5b1fe32284e2c5769c1.jpg",
+     *     │                 "publishtime":"2018-12-27",
+     *     │                 "content":"12月24日节水资讯"
+     *     │             }
+     *     │         ]
+     *     │     }
+     *     │ }
+     */
     public static final String INFO_LIST = "api/home/info/infoLists";
     //平台咨询详情
     public static final String INFO_DETAIL = "api/home/info/infoDetail";

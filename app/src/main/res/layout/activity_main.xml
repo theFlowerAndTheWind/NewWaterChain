@@ -10,9 +10,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <include
-            android:id="@+id/title_bar"
             layout="@layout/module_include_title_bar"
-            android:layout_height="130px"
+            android:layout_height="100px"
             android:layout_width="match_parent"/>
 
 
