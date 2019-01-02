@@ -147,9 +147,9 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
     public void onLoginSuccess() {
         ToastUtils.showCustomToast("登录成功");
         if(target.equals("main")){//若需求为强制登录，用户第一次登录
-//            jump(MainActivity.class);
-//            EventBus.getDefault().post(new SelectFragmentEvent("首页"));
-            jump(TestActivity.class);
+            jump(MainActivity.class);
+            EventBus.getDefault().post(new SelectFragmentEvent("首页"));
+//            jump(TestActivity.class);
         }else if (target.equals("main_personal")) {//从"我的"跳过来，登录成功后跳回"我的"
             jump(MainActivity.class);
             EventBus.getDefault().post(new SelectFragmentEvent("我的"));
