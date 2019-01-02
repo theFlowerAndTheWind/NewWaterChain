@@ -32,7 +32,7 @@
         android:background="@color/divider_gray" />
 
     <RelativeLayout
-        android:id="@+id/rl1"
+        android:id="@+id/deliveryTypeRl1"
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commit_btn_height">
@@ -46,7 +46,7 @@
             android:text="配送方式" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:src="@drawable/ic_go_to" />
 
         <TextView
-            android:id="@+id/tv11"
+            android:id="@+id/deliveryType_tv11"
             style="@style/style_txt_distribution_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         android:background="@color/divider_gray" />
 
     <RelativeLayout
-        android:id="@+id/rl2"
+        android:id="@+id/name_rl2"
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commit_btn_height">
@@ -86,7 +86,7 @@
             android:text="联系人姓名" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/tv22"
+            android:id="@+id/name_tv2"
             style="@style/style_txt_distribution_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
         android:background="@color/divider_gray" />
 
     <RelativeLayout
-        android:id="@+id/rl3"
+        android:id="@+id/phone_rl3"
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commit_btn_height">
@@ -127,7 +127,7 @@
             android:text="手机号码" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -136,14 +136,14 @@
             android:src="@drawable/ic_go_to" />
 
         <TextView
-            android:id="@+id/tv33"
+            android:id="@+id/phone_tv3"
             style="@style/style_txt_distribution_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn3"
             android:gravity="center"
-            android:text="123 456 1234" />
+            android:text="18866668888" />
 
     </RelativeLayout>
 
@@ -153,7 +153,7 @@
         android:background="@color/divider_gray" />
 
     <RelativeLayout
-        android:id="@+id/rl4"
+        android:id="@+id/area_rl4"
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commit_btn_height">
@@ -167,7 +167,7 @@
             android:text="所在地区" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             android:src="@drawable/ic_go_to" />
 
         <TextView
-            android:id="@+id/tv44"
+            android:id="@+id/tvRegion"
             style="@style/style_txt_distribution_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
         android:background="@color/divider_gray" />
 
     <RelativeLayout
-        android:id="@+id/r5"
+        android:id="@+id/address_rl5"
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commit_btn_height">
@@ -207,7 +207,7 @@
             android:text="详细地址" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
             android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/tv55"
+            android:id="@+id/address_tv5"
             style="@style/style_txt_distribution_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -234,7 +234,7 @@
         android:background="@color/divider_gray" />
 
     <RelativeLayout
-        android:id="@+id/re6"
+        android:id="@+id/time_re6"
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commit_btn_height">
@@ -245,10 +245,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="配送方式" />
+            android:text="物流上门时间" />
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -258,14 +258,14 @@
             android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/tv66"
+            android:id="@+id/deliveryTime_tv66"
             style="@style/style_txt_distribution_info_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn6"
             android:gravity="center"
-            android:text="洗涤企业配送" />
+            android:text="2019-01-01" />
 
     </RelativeLayout>
     <View

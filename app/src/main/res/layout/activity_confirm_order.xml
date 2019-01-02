@@ -269,6 +269,7 @@
                     android:background="@color/divider_gray" />
 
                 <RelativeLayout
+                    android:id="@+id/fullPayment"
                     style="@style/MarginLeftRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -288,6 +289,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:visibility="gone"
                         android:src="@drawable/ic_pay_cate_choice" />
 
                 </RelativeLayout>
@@ -298,6 +300,7 @@
                     android:background="@color/divider_gray" />
 
                 <RelativeLayout
+                    android:id="@+id/combinedPayment"
                     style="@style/PaddinLeftRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -334,6 +337,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:visibility="gone"
                         android:src="@drawable/ic_pay_cate_choice" />
 
                 </RelativeLayout>
@@ -363,6 +367,7 @@
                     android:background="@color/divider_gray" />
 
                 <RelativeLayout
+                    android:id="@+id/pay_channel_wx_rl"
                     style="@style/MarginLeftRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -386,6 +391,8 @@
                         android:text="微信支付"
                         android:textColor="@color/text_black" />
                     <ImageView
+                        android:id="@+id/payChannel_wx"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -400,6 +407,7 @@
                     android:background="@color/divider_gray" />
 
                 <RelativeLayout
+                    android:id="@+id/pay_channel_zfb_rl"
                     style="@style/MarginLeftRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -423,6 +431,8 @@
                         android:text="支付宝支付"
                         android:textColor="@color/text_black" />
                     <ImageView
+                        android:id="@+id/payChannel_zfb"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

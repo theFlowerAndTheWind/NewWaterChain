@@ -13,14 +13,10 @@ package com.quanminjieshui.waterchain.contract.model;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.WaterChainApplication;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
-import com.quanminjieshui.waterchain.beans.SmsResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -76,12 +72,12 @@ public class RegisterModel {
         params.put("user_login", mobile);
         RetrofitFactory.getInstance().createService()
                 .getSms(RequestUtil.getRequestHashBody(params, false))
-                .compose(activity.<BaseEntity<SmsResponseBean>>bindToLifecycle())//绑定activity生命周期，防止内存溢出
-                .compose(ObservableTransformerUtils.<BaseEntity<SmsResponseBean>>io())//选择线程
-                .subscribe(new BaseObserver<SmsResponseBean>(activity) {
+                .compose(activity.<BaseEntity>bindToLifecycle())//绑定activity生命周期，防止内存溢出
+                .compose(ObservableTransformerUtils.<BaseEntity>io())//选择线程
+                .subscribe(new BaseObserver(activity) {
+
                     @Override
-                    protected void onSuccess(SmsResponseBean bean) throws Exception {
-                        verCode=bean.getCode();
+                    protected void onSuccess(Object o) throws Exception {
                         callback.onGetSmsSuccess();
                     }
 

@@ -10,8 +10,8 @@ public class FactoryListResponseBean {
     int id;
     String f_name;
     String logo;
-    String service_scope;//服务范围 TODO 接口未返回
-    String bussiness_scope;//业务范围 TODO 接口未返回
+    String service_area;//服务范围
+    String service_lists;//业务范围
 
     public int getId() {
         return id;
@@ -37,19 +37,19 @@ public class FactoryListResponseBean {
         this.logo = logo;
     }
 
-    public String getService_scope() {
-        return service_scope;
+    public String getService_area() {
+        return service_area;
     }
 
-    public void setService_scope(String service_scope) {
-        this.service_scope = service_scope;
+    public void setService_area(String service_area) {
+        this.service_area = service_area;
     }
 
-    public String getBussiness_scope() {
-        return bussiness_scope;
+    public String getService_lists() {
+        return service_lists;
     }
 
-    public void setBussiness_scope(String bussiness_scope) {
-        this.bussiness_scope = bussiness_scope;
+    public void setService_lists(String service_lists) {
+        this.service_lists = service_lists;
     }
 }

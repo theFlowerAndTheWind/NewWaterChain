@@ -18,6 +18,7 @@ import com.quanminjieshui.waterchain.contract.presenter.CreateOrderPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TotalPricePresenter;
 import com.quanminjieshui.waterchain.contract.view.CreateOrderViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TotalPriceViewImpl;
+import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.Util;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
@@ -50,11 +51,21 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     TextView wash_detail_tv;
     @BindView(R.id.wash_detail_count)
     TextView wash_detail_count;
+    @BindView(R.id.img_pay_cate_1)
+    ImageView fullPayImg;
+    @BindView(R.id.img_pay_cate_2)
+    ImageView combinedPayImg;
+    @BindView(R.id.payChannel_wx)
+    ImageView wxPayImg;
+    @BindView(R.id.payChannel_zfb)
+    ImageView zfbPayImg;
+
+    private AlertChainDialog alertChainDialog;
     private String [] trade_detail = {};
     private TotalPricePresenter totalPricePresenter;
     private CreateOrderPresenter createOrderPresenter;
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
-
+    private String payType = "",payChannel = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +81,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
     private void initView() {
         tvTitleCenter.setText("确认下单");
+        alertChainDialog = new AlertChainDialog(this);
         getData();
     }
 
@@ -78,14 +90,18 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         setContentView(R.layout.activity_confirm_order);
     }
 
-    @OnClick({R.id.img_title_left,R.id.order_detail,R.id.create_order,R.id.wash_delivery_rl,R.id.wash_demand_rl})
+    @OnClick({R.id.left_ll,R.id.order_detail,R.id.create_order,R.id.wash_delivery_rl,R.id.wash_demand_rl,R.id.fullPayment,
+            R.id.combinedPayment,R.id.pay_channel_wx_rl,R.id.pay_channel_zfb_rl})
     public void onClick(View v){
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
         switch (v.getId()){
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(v);
                 finish();
                 break;
             case R.id.order_detail:
+
                 break;
             case R.id.create_order:
                 CreateOrderReqParams bean = new CreateOrderReqParams();
@@ -95,18 +111,53 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 bean.setContact_tel("13718478437");
 //                bean.setExpress();
                 createOrderPresenter.createOrder(ConfirmOrderActivity.this,bean);
+                // TODO: 2019/1/1 支付
+                startActivity(new Intent(ConfirmOrderActivity.this,PaySuceessActivity.class));
                 break;
             case R.id.wash_delivery_rl://配送信息
+                bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
+                intent.putExtras(bundle);
+                intent.setClass(ConfirmOrderActivity.this,DistributionInfoActivity.class);
+                startActivity(intent);
+
                 break;
             case R.id.wash_demand_rl://洗涤需求
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
                 intent.putExtras(bundle);
                 intent.setClass(ConfirmOrderActivity.this,WashDemandActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.combinedPayment://组合支付
+                if(alertChainDialog!=null){
+                    alertChainDialog.builder().setCancelable(false);
+                    alertChainDialog.setTitle("组合支付")
+                            .setMsg("组合支付，JSL按前一交易日的收盘价的1.5倍计算")
+                            .setPositiveButton("确定", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    fullPayImg.setVisibility(View.GONE);
+                                    combinedPayImg.setVisibility(View.VISIBLE);
+                                    payType = "combined";
+                                }
+                            }).show();
 
+                }
+                break;
+            case R.id.fullPayment://全额支付
+                fullPayImg.setVisibility(View.VISIBLE);
+                combinedPayImg.setVisibility(View.GONE);
+                payType = "full";
+                break;
+            case R.id.pay_channel_wx_rl:
+                wxPayImg.setVisibility(View.VISIBLE);
+                zfbPayImg.setVisibility(View.GONE);
+                payChannel = "wx";
+                break;
+            case R.id.pay_channel_zfb_rl:
+                wxPayImg.setVisibility(View.GONE);
+                zfbPayImg.setVisibility(View.VISIBLE);
+                payChannel = "zfb";
+                break;
             default:break;
         }
     }

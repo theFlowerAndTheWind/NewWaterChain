@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,6 +32,8 @@ import com.quanminjieshui.waterchain.contract.presenter.RegisterPresenter;
 import com.quanminjieshui.waterchain.contract.view.RegisterViewImpl;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.Util;
 
 import java.util.Map;
 
@@ -91,34 +92,14 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
     @BindString(R.string.key_checkbox_agreement)
     String keyAgreement;
 
-
+    private CountDownTimer TimeCount;
     private String mobile;
     private String sms;
     private String pwd;
     private String confirm;
     private String invitation;
-    private boolean isChecked = true;
+    private boolean isChecked = true,runningCode = false;
     private RegisterPresenter presenter;
-
-    private class TimeCount extends CountDownTimer {
-        public TimeCount(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void onFinish() {//计时完毕时触发
-            tv_get_sms.setText("发送验证码");
-            tv_get_sms.setEnabled(true);
-            tv_get_sms.setBackground(getDrawable(R.drawable.blue_border_bg_shape));
-            tv_get_sms.setTextColor(getResources().getColor(R.color.primary_blue));
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {//计时过程显示
-            tv_get_sms.setText(String.valueOf(millisUntilFinished / 1000));
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,10 +136,13 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
         int id = view.getId();
         switch (id) {
             case R.id.tv_get_sms:
-                new TimeCount(61000, 1000).start();
+
                 mobile = edt_mobile.getText().toString();
                 presenter.verify(mobile);
-                presenter.getSms(this, mobile);
+                if(!Util.isFastDoubleClick()){
+                    presenter.getSms(this, mobile);
+                }
+
                 break;
 //            case R.id.cb_agreement:
 //                break;
@@ -230,14 +214,40 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onGetSmsSuccess() {
-        tv_get_sms.setEnabled(false);
-        tv_get_sms.setBackground(getDrawable(R.drawable.blue_bg_shape));
-        tv_get_sms.setTextColor(getResources().getColor(R.color.white));
+        ToastUtils.showCustomToast("验证码已发送至您手机，请注意查收");
+
+        TimeCount = new CountDownTimer(60 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                runningCode = true;
+
+                tv_get_sms.setBackground(getDrawable(R.drawable.blue_bg_shape));
+                tv_get_sms.setTextColor(getResources().getColor(R.color.white));
+                tv_get_sms.setText(String.valueOf(millisUntilFinished / 1000));
+                tv_get_sms.setEnabled(false);
+            }
+
+            @Override
+            public void onFinish() {
+                runningCode = false;
+                tv_get_sms.setText("发送验证码");
+                tv_get_sms.setBackground(getDrawable(R.drawable.blue_border_bg_shape));
+                tv_get_sms.setTextColor(getResources().getColor(R.color.primary_blue));
+                tv_get_sms.setEnabled(true);
+            }
+        };
+        if (runningCode) {
+            return;
+        } else {
+            TimeCount.start();
+        }
+
+
     }
 
     @Override
     public void onGetSmsFailed(String msg) {
-        showToast(msg);
+        ToastUtils.showCustomToast(msg);
     }
 
     @Override

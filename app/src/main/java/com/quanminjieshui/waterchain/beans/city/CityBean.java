@@ -12,6 +12,8 @@
  */
 package com.quanminjieshui.waterchain.beans.city;
 
+import java.util.ArrayList;
+
 /**
  *
  * @ProjectName: NewWaterChain
@@ -27,7 +29,7 @@ package com.quanminjieshui.waterchain.beans.city;
  */
 public class CityBean {
     private String n;
-    private Object a;
+    private ArrayList<Area> a;
 
     public String getN() {
         return n;
@@ -37,11 +39,23 @@ public class CityBean {
         this.n = n;
     }
 
-    public Object getA() {
+    public ArrayList<Area> getA() {
         return a;
     }
 
-    public void setA(Object a) {
+    public void setA(ArrayList<Area> a) {
         this.a = a;
+    }
+
+    public class Area{
+        private String s;
+
+        public String getS() {
+            return s;
+        }
+
+        public void setS(String s) {
+            this.s = s;
+        }
     }
 }

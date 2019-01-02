@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_title_bar" />
+
+    <ImageView
+        android:layout_marginTop="100px"
+        android:layout_marginBottom="40px"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/wait"/>
+
+    <RelativeLayout
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/view_space_title_bar_bottom">
+
+        <LinearLayout
+            android:id="@+id/pay_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您已成功支付订单："/>
+            <TextView
+                android:id="@+id/order_type_str"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="宾馆酒店布草洗涤，"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_below="@+id/pay_desc"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请耐心等待我们上门取件"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginVertical="50px"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_viewOrder"
+                style="@style/style_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_agreement"
+                android:layout_marginTop="@dimen/view_space_bottom_btn_above"
+                android:background="@drawable/btn_blue_bg_selector"
+                android:text="查看订单" />
+
+            <TextView
+                android:id="@+id/tv_gohome"
+                style="@style/style_href"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_register"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20px"
+                android:padding="10px"
+                android:text="返回首页" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -12,7 +12,8 @@
             android:id="@+id/service_img"
             android:layout_marginRight="20px"
             android:layout_marginLeft="20px"
-            android:src="@drawable/splash_bg"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_image"
             android:layout_width="match_parent"
             android:layout_height="250px" >
         </ImageView>
@@ -47,28 +48,62 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_service_scope"
-                    android:gravity="center|left"
-                    android:layout_weight="1"
-                    android:singleLine="true"
-                    android:layout_marginRight="20px"
-                    android:layout_below="@+id/tv_order_title"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="30px"
-                    android:layout_height="match_parent"
-                    android:text="服务范围："/>
-                <TextView
-                    android:id="@+id/tv_bussiness_scope"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:singleLine="true"
-                    android:layout_marginRight="20px"
-                    android:layout_below="@+id/tv_order_title"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:gravity="center|left"
+                        android:singleLine="true"
+                        android:layout_marginRight="20px"
+                        android:layout_below="@+id/tv_order_title"
+                        android:layout_width="wrap_content"
+                        android:textSize="30px"
+                        android:layout_height="match_parent"
+                        android:text="服务范围："/>
+
+                    <TextView
+                        android:id="@+id/tv_service_scope"
+                        android:gravity="center|left"
+                        android:singleLine="true"
+                        android:layout_marginRight="20px"
+                        android:layout_below="@+id/tv_order_title"
+                        android:layout_width="match_parent"
+                        android:textSize="30px"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="30px"
-                    android:layout_height="match_parent"
-                    android:text="业务范围："/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_marginRight="20px"
+                        android:layout_below="@+id/tv_order_title"
+                        android:layout_width="wrap_content"
+                        android:textSize="30px"
+                        android:layout_height="match_parent"
+                        android:text="业务范围："/>
+                    <TextView
+                        android:id="@+id/tv_bussiness_scope"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:layout_marginRight="20px"
+                        android:layout_below="@+id/tv_order_title"
+                        android:layout_width="match_parent"
+                        android:textSize="30px"
+                        android:layout_height="match_parent"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <Button

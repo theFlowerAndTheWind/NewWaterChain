@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.support.multidex.MultiDex;
 
 import com.quanminjieshui.waterchain.utils.NetworkStateReceiver;
+import com.quanminjieshui.waterchain.utils.datacache.XCCacheManager;
 
 /**
  * Created by WanghongHe on 2018/12/3 11:26.
@@ -29,6 +30,17 @@ public class WaterChainApplication extends Application {
 
         //初始化网络receiver
         registerReceiver();
+
+        //初始化并配置缓存策略
+        cacheStrategy();
+    }
+
+
+    /**
+     * MEMORY_FIRST = 1000 MEMORY_ONLY = 2000 DISK_ONLY = 3000
+     */
+    private void cacheStrategy() {
+        XCCacheManager.getInstance(application,1000).init(application);
     }
 
     private void registerReceiver() {
