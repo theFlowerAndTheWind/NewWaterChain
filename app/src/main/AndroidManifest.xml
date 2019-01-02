@@ -154,6 +154,11 @@
         <activity android:name=".ui.activity.PaySuceessActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.activity.InfoDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.GoodsListsActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
