@@ -290,7 +290,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:visibility="gone"
-                        android:src="@drawable/ic_pay_cate_choice" />
+                        android:src="@drawable/check_mark_blue" />
 
                 </RelativeLayout>
 
@@ -338,7 +338,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:visibility="gone"
-                        android:src="@drawable/ic_pay_cate_choice" />
+                        android:src="@drawable/check_mark_blue" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -379,7 +379,7 @@
                         android:id="@+id/img_wx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_pay_cate_choice" />
+                        android:src="@drawable/wx" />
 
                     <TextView
                         android:layout_toRightOf="@+id/img_wx"
@@ -396,7 +396,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_pay_cate_choice" />
+                        android:src="@drawable/check_mark_blue" />
 
 
                 </RelativeLayout>
@@ -419,7 +419,7 @@
                         android:id="@+id/img_zfb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_pay_cate_choice" />
+                        android:src="@drawable/zfb" />
 
                     <TextView
                         android:layout_toRightOf="@+id/img_zfb"
@@ -436,7 +436,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_pay_cate_choice" />
+                        android:src="@drawable/check_mark_blue" />
 
 
                 </RelativeLayout>
@@ -480,6 +480,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/create_order_ll"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/commit_btn_height">
 

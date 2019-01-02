@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:paddingHorizontal="20px"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/price_desc_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20px"
+        android:textStyle="bold"
+        android:text="常见问题"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="常见问题"/>
-
+        android:layout_height="wrap_content"
+        android:text="Q：什么机器能保证你们的节水比例？"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10px"
+        android:text="A：我们具有国家认证的专利技术，已通过部委认证。"/>
 </LinearLayout>

@@ -2,7 +2,12 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -10,6 +15,7 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.CreateOrderListBean;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
@@ -19,11 +25,14 @@ import com.quanminjieshui.waterchain.contract.presenter.TotalPricePresenter;
 import com.quanminjieshui.waterchain.contract.view.CreateOrderViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TotalPriceViewImpl;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
+import com.quanminjieshui.waterchain.ui.widget.CreateOrderListPopupWindow;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 import com.quanminjieshui.waterchain.utils.Util;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,6 +68,8 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     ImageView wxPayImg;
     @BindView(R.id.payChannel_zfb)
     ImageView zfbPayImg;
+    @BindView(R.id.order_detail)
+    Button orderDetail;
 
     private AlertChainDialog alertChainDialog;
     private String [] trade_detail = {};
@@ -66,6 +77,10 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     private CreateOrderPresenter createOrderPresenter;
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
     private String payType = "",payChannel = "";
+    private CreateOrderListPopupWindow popupWindow;
+    private List<CreateOrderListBean> createOrderListBeans = new ArrayList<>();
+    // 声明平移动画
+    private TranslateAnimation animation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +98,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         tvTitleCenter.setText("确认下单");
         alertChainDialog = new AlertChainDialog(this);
         getData();
+        initPopupWindow();//初始化poppup
     }
 
     @Override
@@ -101,6 +117,18 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 finish();
                 break;
             case R.id.order_detail:
+                ToastUtils.showCustomToast("点击了popup");
+//                createOrderListBeans.add();
+                if (!popupWindow.isShowing()){
+                    int[] location = new int[2];
+                    orderDetail.getLocationOnScreen(location);
+                    popupWindow.showAtLocation(orderDetail, Gravity.LEFT | Gravity.BOTTOM, 0, -location[1]);
+
+                    popupWindow.showAsDropDown(orderDetail, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL,0,-location[1]);
+                    v.startAnimation(animation);
+
+                }
+
 
                 break;
             case R.id.create_order:
@@ -159,6 +187,15 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 payChannel = "zfb";
                 break;
             default:break;
+        }
+    }
+
+    private void initPopupWindow() {
+        if (popupWindow == null) {
+            popupWindow = new CreateOrderListPopupWindow(ConfirmOrderActivity.this, createOrderListBeans);
+            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+            animation.setInterpolator(new AccelerateInterpolator()); animation.setDuration(200);
         }
     }
 

@@ -3,10 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_gravity="center"
     android:background="@color/white"
+    android:layout_marginHorizontal="20px"
     android:splitMotionEvents="false">
 
+    <TextView
+        android:id="@+id/price_desc_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20px"
+        android:textStyle="bold"
+        android:text="价格体系"/>
+
     <RelativeLayout
+        android:gravity="center"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -53,4 +64,5 @@
             </LinearLayout>
         </HorizontalScrollView>
     </RelativeLayout>
+
 </LinearLayout>
