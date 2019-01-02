@@ -1,6 +1,10 @@
 package com.quanminjieshui.waterchain.http;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.quanminjieshui.waterchain.http.bean.BaseEntity;
+import com.quanminjieshui.waterchain.http.bean.StringNullAdapter;
 import com.quanminjieshui.waterchain.http.config.HttpConfig;
 import com.quanminjieshui.waterchain.http.utils.InterceptorUtil;
 
@@ -24,9 +28,10 @@ public class RetrofitFactory {
                 .writeTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
                 .addInterceptor(new InterceptorUtil())//添加对Header的统一处理
                 .build();
+
         Retrofit mRetrofit = new Retrofit.Builder()
                 .baseUrl(HttpConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())//添加gson转换器
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(BaseEntity.class,new StringNullAdapter()).create()))//添加gson转换器
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加rxjava转换器
                 .client(mOkHttpClient)
                 .build();
