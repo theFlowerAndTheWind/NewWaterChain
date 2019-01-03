@@ -141,7 +141,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
     @Override
     public void onUserDetailSuccess(UserDetailResponseBean userDetailResponseBean) {
         if (userDetailResponseBean != null) {
-            tvUserLogin.setText(userDetailResponseBean.getUser_login());
+            tvUserLogin.setText((String)SPUtil.get(this,SPUtil.USER_NICKNAME,"********"));
             tvCreateTime.setText(userDetailResponseBean.getCreate_time());
             tvUserLoginTel.setText(userDetailResponseBean.getUser_login());
             tvUserType.setText(userDetailResponseBean.getUser_type());

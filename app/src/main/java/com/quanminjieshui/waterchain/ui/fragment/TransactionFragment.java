@@ -1,11 +1,15 @@
+
 package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +25,20 @@ import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.BuyResponseBean;
 import com.quanminjieshui.waterchain.beans.SellResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
+import com.quanminjieshui.waterchain.contract.model.CancleTradeModel;
 import com.quanminjieshui.waterchain.contract.model.TradeCenterModel;
+import com.quanminjieshui.waterchain.contract.presenter.CancleTradePresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeCenterPresenter;
+import com.quanminjieshui.waterchain.contract.view.CancleTradeViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TradeCenterViewImpl;
 import com.quanminjieshui.waterchain.event.LoginStatusChangedEvent;
 import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
+import com.quanminjieshui.waterchain.ui.activity.TradeListsActivity;
 import com.quanminjieshui.waterchain.ui.adapter.BuySellTradeListAdapter;
 import com.quanminjieshui.waterchain.ui.adapter.CurrentTradeListsAdapter;
 import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
+import com.quanminjieshui.waterchain.utils.SPUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +53,11 @@ import butterknife.Unbinder;
  * Class Note:交易
  */
 
-public class TransactionFragment extends BaseFragment implements TradeCenterViewImpl, WarningFragment.OnWarningDialogClickedListener {
+public class TransactionFragment extends BaseFragment implements
+        TradeCenterViewImpl,
+        CancleTradeViewImpl,
+        WarningFragment.OnWarningDialogClickedListener,
+        CurrentTradeListsAdapter.OnCancleClickedListener {
 
     @BindView(R.id.tv_trade_status)
     TextView tvTradeStatus;
@@ -74,6 +88,8 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
 
     @BindView(R.id.tv_cur_trade)
     TextView tvCurTrade;
+    @BindView(R.id.tv_history_trade)
+    TextView tvHistoryTrade;
     @BindView(R.id.xrv_cur_trade_list)
     XRecyclerView xrvCurTradeList;
     @BindView(R.id.tv_go_login)
@@ -102,11 +118,11 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
     Unbinder unbinder;
 
     private TradeCenterPresenter tradeCenterPresenter;
+    private CancleTradePresenter cancleTradePresenter;
     private TradeCenterResponseBean.TradeListEntry trade_list;
     private List<TradeCenterResponseBean.BuySellEntity> buy;
     private List<TradeCenterResponseBean.BuySellEntity> sell;
-    private List<TradeCenterResponseBean.BuySellEntity> tempList = new ArrayList<>();
-    private List<TradeCenterResponseBean.TradeDetailEntity> trade_detail_list = new ArrayList<>();//PC端显示，移动端不显示
+    private List<TradeCenterResponseBean.TradeDetailEntity> trade_detail_list;//PC端显示，移动端不显示
     private List<TradeCenterResponseBean.UserCurrentTradeEntity> user_cur_trade;
     private List<Object> user_history_trade;
     private TradeCenterResponseBean.UserAccountEntity user_account;
@@ -122,12 +138,15 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
      * 记录当前是否登录，fargment切换后有登录、退出登录操作后，下次再显示时用该变量与本地SP所存结果比对，不一致时做刷新操作
      */
     private boolean isLogin = false;
+    private String user_login;//用户手机号，作用同isLogin
     private CurrentTradeListsAdapter currentTradeListsAdapter;
+    private List<TradeCenterResponseBean.UserCurrentTradeEntity> userCurrentTradeEntityList = new ArrayList<>();
 
     private String duration = "today";//today 取今天数据 week 近一周 year 一年
 
     private BuySellTradeListAdapter buySellTradeListAdapter;
-
+    private List<TradeCenterResponseBean.BuySellEntity> buySellEntityArrayList = new ArrayList<>();
+    private Handler handler = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -140,13 +159,17 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
         unbinder = ButterKnife.bind(this, rootView);
         tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
         tradeCenterPresenter.attachView(this);
+        cancleTradePresenter = new CancleTradePresenter(new CancleTradeModel());
+        cancleTradePresenter.attachView(this);
         tradeCenterPresenter.getTradeCenter(getBaseActivity());
+        showLoadingDialog();
 
         initView();
         return rootView;
     }
 
     private void initView() {
+        /*************************module2********************************/
         tabLayout1.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -177,14 +200,15 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-        /****************************************************************/
+        /*************************module3********************************/
+        xrvCurTradeList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        xrvCurTradeList.setLoadingMoreEnabled(false);
+        xrvCurTradeList.setPullRefreshEnabled(false);
+        xrvTradeList.setNestedScrollingEnabled(false);//禁止滑动
+        currentTradeListsAdapter = new CurrentTradeListsAdapter(getActivity(), userCurrentTradeEntityList, this);
+        xrvCurTradeList.setAdapter(currentTradeListsAdapter);
 
-
-//        currentTradeListsAdapter=new CurrentTradeListsAdapter(getActivity(),)
-//        xrvCurTradeList.setAdapter();
-
-
-        /****************************************************************/
+        /*************************module4*******************************/
         tabLayout2.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -210,17 +234,13 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
             }
         });
 
-        /****************************************************************/
-        buySellTradeListAdapter = new BuySellTradeListAdapter(getActivity(), tempList);
+        /*************************module4-trade_list*******************************/
+        buySellTradeListAdapter = new BuySellTradeListAdapter(getActivity(), buySellEntityArrayList);
         xrvTradeList.setLayoutManager(new LinearLayoutManager(getActivity()));
         xrvTradeList.setNestedScrollingEnabled(false);//禁止滑动
         xrvTradeList.setAdapter(buySellTradeListAdapter);
         xrvTradeList.setLoadingMoreEnabled(false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        xrvTradeList.setPullRefreshEnabled(false);
     }
 
     @Override
@@ -243,6 +263,8 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
 
     @Override
     public void onTradeCenterSuccess(TradeCenterResponseBean bean) {
+        dismissLoadingDialog();
+        //解析Bean   仅解析
         tradeCenterResponseBean = bean;
         if (tradeCenterResponseBean != null) {
             trade_list = tradeCenterResponseBean.getTrade_list();
@@ -261,8 +283,9 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
             } else if (is_login == 1) {
                 isLogin = true;
             }
+            user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "user_login");
         }
-        /************************************************************************************************/
+        /***********************************module1**********************************************/
         tvTradeStatus.setText(tradeCenterResponseBean.getTrade_status());
         tvCurPrice.setText(tradeCenterResponseBean.getCur_price());
 //        edtPrice.setHint(new StringBuilder("兑换价 ").append(tradeCenterResponseBean.getCur_price()));//需求不明白
@@ -284,39 +307,48 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
             else if (buyOrSell == 1)
                 tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getJsl()).append(" JSL"));
         }
-        /************************************************************************************************/
+        /*************************************module3*************************************************/
 
         if (is_login == 1) {
             tvGoLogin.setVisibility(View.GONE);
-            if (user_cur_trade != null && user_history_trade.size() > 0) {
+            if (user_cur_trade != null && user_cur_trade.size() > 0) {
                 xrvCurTradeList.setVisibility(View.VISIBLE);
                 tvNoData.setVisibility(View.GONE);
-                //todo
+                userCurrentTradeEntityList.clear();
+                if (user_cur_trade.size() > 2) {//仅显示两条
+                    userCurrentTradeEntityList.clear();
+                    userCurrentTradeEntityList.add(user_cur_trade.get(0));
+                    userCurrentTradeEntityList.add(user_cur_trade.get(1));
+                } else {
+                    userCurrentTradeEntityList.addAll(user_cur_trade);
+                }
+                currentTradeListsAdapter.notifyDataSetChanged();
 
             } else {
                 xrvCurTradeList.setVisibility(View.GONE);
                 tvNoData.setVisibility(View.VISIBLE);
+                tvGoLogin.setVisibility(View.GONE);
             }
-
         } else if (is_login == 0) {
             xrvCurTradeList.setVisibility(View.GONE);
             tvNoData.setVisibility(View.GONE);
             tvGoLogin.setVisibility(View.VISIBLE);
+            tvHistoryTrade.setVisibility(View.GONE);
         }
 
-        /************************************************************************************************/
+        /***************************************module4-chart***************************************************/
 
 
-        /************************************************************************************************/
+        /***************************************module4-trade_list****************************************************/
         if (trade_list != null) {
-            tempList.clear();
+            buySellEntityArrayList.clear();
             if (buy != null)
-                tempList.addAll(buy);
+                buySellEntityArrayList.addAll(buy);
 
             if (sell != null)
-                tempList.addAll(sell);
+                buySellEntityArrayList.addAll(sell);
 
-            if (tempList.size() > 0) {
+            if (buySellEntityArrayList.size() > 0) {
                 unfoldBottom();
                 buySellTradeListAdapter.notifyDataSetChanged();
                 xrvTradeList.refreshComplete();
@@ -330,27 +362,75 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
 
     @Override
     public void onTradeCenterFailed(String msg) {
-
+        ToastUtils.showCustomToast(msg);
     }
 
     @Override
-    public void onBuySuccess(BuyResponseBean buyResponseBean) {
-
+    public void onBuySuccess(Object o) {
+        cleanEdt();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+                if (tradeCenterPresenter == null) {
+                    tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
+                }
+                tradeCenterPresenter.getTradeCenter(getBaseActivity());
+            }
+        }, 500);
     }
 
     @Override
     public void onBuyFailed(String msg) {
-
+        cleanEdt();
+        dismissLoadingDialog();
+        ToastUtils.showCustomToast(msg);
     }
 
     @Override
-    public void onSellSuccess(SellResponseBean sellResponseBean) {
-
+    public void onSellSuccess(Object o) {
+        cleanEdt();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+                if (tradeCenterPresenter == null) {
+                    tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
+                }
+                tradeCenterPresenter.getTradeCenter(getBaseActivity());
+            }
+        }, 500);// is 500 enough?
     }
 
     @Override
     public void onSellFailed(String msg) {
+        cleanEdt();
+        dismissLoadingDialog();
+        ToastUtils.showCustomToast(msg);
+    }
 
+    @Override
+    public void onCancle(int tid) {
+        cancleTradePresenter.cancle(getBaseActivity(), tid);
+//        showLoadingDialog();
+    }
+
+    @Override
+    public void onCancleSuccess() {
+//        dismissLoadingDialog();
+        //todo  显示浮层
+    }
+
+    @Override
+    public void onCancleFailed(String msg) {
+//        dismissLoadingDialog();
+        ToastUtils.showCustomToast(msg);
+    }
+
+
+    private void cleanEdt() {
+        edtTotal.setText("");
+        edtPrice.setText("");
     }
 
     @Override
@@ -367,8 +447,8 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
 
     }
 
-    @OnClick({R.id.rl_trade_type, R.id.btn_buy, R.id.btn_sell, R.id.tv_go_login, R.id.ll_fold
-            , R.id.btn_unfold})
+    @OnClick({R.id.rl_trade_type, R.id.btn_buy, R.id.btn_sell, R.id.tv_history_trade,
+            R.id.tv_go_login, R.id.ll_fold, R.id.btn_unfold})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -385,7 +465,8 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
                     } else if (visibility == View.GONE && visibility1 == View.VISIBLE) {
                         tradePrice = Float.valueOf(edtPrice.getText().toString());
                     }
-                    tradeCenterPresenter.buy(getBaseActivity(), tradeType, tradePrice, Float.valueOf(edtTotal.getText().toString()));
+                    tradeCenterPresenter.buy(getBaseActivity(), tradeType, Float.valueOf(edtTotal.getText().toString()), tradePrice);
+                    showLoadingDialog();
                     break;
                 }
             case R.id.btn_sell:
@@ -397,11 +478,14 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
                     } else if (visibility == View.GONE && visibility1 == View.VISIBLE) {
                         tradePrice = Float.valueOf(edtPrice.getText().toString());
                     }
-                    tradeCenterPresenter.sell(getBaseActivity(), tradeType, tradePrice, Float.valueOf(edtTotal.getText().toString()));
+                    tradeCenterPresenter.sell(getBaseActivity(), tradeType, Float.valueOf(edtTotal.getText().toString()), tradePrice);
+                    showLoadingDialog();
                     break;
                 }
             case R.id.tv_history_trade:
-                checkIsLogin();
+                if (checkIsLogin()) {
+                    jump(TradeListsActivity.class, null);
+                }
                 break;
             case R.id.tv_go_login:
                 jumpLogin();
@@ -488,17 +572,17 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
         xrvTradeList.setVisibility(View.GONE);
     }
 
-    private void unfoldBottom(){
+    private void unfoldBottom() {
         graySpaceHeaderAbove.setVisibility(View.VISIBLE);
         llListHeader.setVisibility(View.VISIBLE);
         xrvTradeList.setVisibility(View.VISIBLE);
     }
 
 
-
-    public boolean getIsLogin() {
-        return this.isLogin;
+    public String getIsLogin() {
+        return new StringBuilder().append(isLogin).append(user_login).toString();
     }
+
 //    public void onEventMainThread(LoginEvent event) {
 //        if (event != null && event.getMsg().equals("login_success_main_transaction_reconnect")) {
 //            if (tradeCenterPresenter == null) {
@@ -523,12 +607,17 @@ public class TransactionFragment extends BaseFragment implements TradeCenterView
                 tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
             }
             tradeCenterPresenter.getTradeCenter(getBaseActivity());
+            showLoadingDialog();
         }
     }
 
     @Override
     public void onDestroy() {
+        tradeCenterPresenter.detachView();
+        cancleTradePresenter.detachView();
         super.onDestroy();
         unbinder.unbind();
     }
+
+
 }

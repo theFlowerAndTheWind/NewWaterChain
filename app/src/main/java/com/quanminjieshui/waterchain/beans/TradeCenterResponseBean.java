@@ -142,7 +142,7 @@ public class TradeCenterResponseBean {
     /**
      * buy  sell共用，根据name前两个字区分
      */
-    public static class BuySellEntity extends Object{
+    public static class BuySellEntity extends Object {
         private String total;//贡献的数量	浮点型	float|2-4|5	贡献的数量
         private String price;//贡献的价格	浮点型(float)	float|2-4|5	贡献的价格
         private String name;//名称	字符串(string)		贡献1
@@ -228,98 +228,78 @@ public class TradeCenterResponseBean {
             this.type_name = type_name;
         }
     }
+//    └user_cur_trade	当前委托	数组(array)		当前委托
+//        └id	委托单id	数字(number)	number|2-4	委托单id
+//        └action_type	贡献还是获取	字符串(string)	number|1|12	获取 | 贡献
+//        └price	单价	浮点型(float)	float|2-4|5	报单价格， 市价单 --表示
+//        └old_total	委托量	浮点型(float)	float|2-4|5	报单数量
+//        └total	剩余可成交数量	浮点型(float)	float|2-4|5	剩余可成交数量
+//        └status	报单状态	字符串(string)		部分成交|全部成交|已撤销
+//        └add_time	报单时间	字符串(string)		报单时间
+//        └avg_price	成交均价	浮点型(float)	float|2-4|5	成交均价
+//        └fee	手续费	浮点型(float)	float|2-4|5	action_type1获取 2贡献 获取的时候 手续费单位为ds 贡献的时候 手续费单位为jsl
+//        └deal_total	实际成交	浮点型(float)	float|2-4|5	实际成交
 
     public class UserCurrentTradeEntity extends Object {
-        //以下字段为文档内容，实际返回数据并无提示
-        private String id;//委托单id
-        private String trading_type;//	报单类型	数字(number)	number|1|12	1限价单 2市价单
-        private String action_type;//	报单方向	字符串(string)	number|1|12	1 获取（卖单） 2 贡献（买单）
-        private String price;//	价格	浮点型(float)	float|2-4|5	报单价格， 市价单 --表示
-        private String old_total;//	报单数量	浮点型(float)	float|2-4|5	报单数量
-        private String total;//	剩余可成交数量	浮点型(float)	float|2-4|5	剩余可成交数量
-        private String status;//	报单状态	字符串(string)		部分成交|全部成交|已撤销
-        private String add_time;//	报单时间	字符串(string)		报单时间
-        private String avg_price;//	成交均价	浮点型(float)	float|2-4|5	成交均价
-        private String fee;//	手续费	浮点型(float)	float|2-4|5	action_type1获取 2贡献 获取的时候 手续费单位为ds 贡献的时候 手续费单位为jsl
+        private int id;
+        private String add_time;
+        private String price;
+        private String old_total;//委托量
+        private String total;
+        private String status;
+        private String action_type;
+        private String deal_total;//实际成交
+        private int more;
+        private int show_cancel;
+        private String fee;
+        private String price_avg;
 
-        public String getId() {
+        public int getId() {
             return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getTrading_type() {
-            return trading_type;
-        }
-
-        public void setTrading_type(String trading_type) {
-            this.trading_type = trading_type;
-        }
-
-        public String getAction_type() {
-            return action_type;
-        }
-
-        public void setAction_type(String action_type) {
-            this.action_type = action_type;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public String getOld_total() {
-            return old_total;
-        }
-
-        public void setOld_total(String old_total) {
-            this.old_total = old_total;
-        }
-
-        public String getTotal() {
-            return total;
-        }
-
-        public void setTotal(String total) {
-            this.total = total;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
         }
 
         public String getAdd_time() {
             return add_time;
         }
 
-        public void setAdd_time(String add_time) {
-            this.add_time = add_time;
+        public String getPrice() {
+            return price;
         }
 
-        public String getAvg_price() {
-            return avg_price;
+        public String getOld_total() {
+            return old_total;
         }
 
-        public void setAvg_price(String avg_price) {
-            this.avg_price = avg_price;
+        public String getTotal() {
+            return total;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public String getAction_type() {
+            return action_type;
+        }
+
+        public String getDeal_total() {
+            return deal_total;
+        }
+
+        public int getMore() {
+            return more;
+        }
+
+        public int getShow_cancel() {
+            return show_cancel;
         }
 
         public String getFee() {
             return fee;
         }
 
-        public void setFee(String fee) {
-            this.fee = fee;
+        public String getPrice_avg() {
+            return price_avg;
         }
     }
 

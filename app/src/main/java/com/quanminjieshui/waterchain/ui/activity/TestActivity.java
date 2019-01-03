@@ -76,9 +76,9 @@ public class TestActivity extends BaseActivity {
 
             case R.id.btn_request:
                 HashMap<String, Object> params = new HashMap<>();
-                params.put("type","week");
+                params.put("tid",7600);
                 RetrofitFactory.getInstance().createService()
-                        .tradeLine(RequestUtil.getRequestHashBody(params, false))
+                        .cancle(RequestUtil.getRequestHashBody(params, false))
                         .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
                         .compose(ObservableTransformerUtils.<BaseEntity>io())
                         .subscribe(new BaseObserver(TestActivity.this) {

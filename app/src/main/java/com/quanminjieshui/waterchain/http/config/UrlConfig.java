@@ -533,6 +533,86 @@ public class UrlConfig {
      */
     public static final String AUTH_DETAIL = "api/home/user/authDetail";
     //个人中心-全部委托
+    /**
+     * │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "lists":[
+     *     │             {
+     *     │                 "id":7034,
+     *     │                 "add_time":"2019-01-03 19:08",
+     *     │                 "price":"0.00000",
+     *     │                 "old_total":"6.43998",
+     *     │                 "total":"6.43998",
+     *     │                 "status":"等待成交",
+     *     │                 "action_type":"贡献",
+     *     │                 "deal_total":"0.00000",
+     *     │                 "more":0,
+     *     │                 "show_cancel":1,
+     *     │                 "fee":"0.00000JSL",
+     *     │                 "price_avg":"0.00000"
+     *     │             },
+     *     │             {
+     *     │                 "id":7027,
+     *     │                 "add_time":"2019-01-03 19:04",
+     *     │                 "price":"0.00000",
+     *     │                 "old_total":"122.35950",
+     *     │                 "total":"122.35950",
+     *     │                 "status":"等待成交",
+     *     │                 "action_type":"贡献",
+     *     │                 "deal_total":"0.00000",
+     *     │                 "more":0,
+     *     │                 "show_cancel":1,
+     *     │                 "fee":"0.00000JSL",
+     *     │                 "price_avg":"0.00000"
+     *     │             },
+     *     │             {
+     *     │                 "id":7024,
+     *     │                 "add_time":"2019-01-03 19:03",
+     *     │                 "price":"0.00349",
+     *     │                 "old_total":"51.51979",
+     *     │                 "total":"51.51979",
+     *     │                 "status":"等待成交",
+     *     │                 "action_type":"贡献",
+     *     │                 "deal_total":"0.00000",
+     *     │                 "more":0,
+     *     │                 "show_cancel":1,
+     *     │                 "fee":"0.00000JSL",
+     *     │                 "price_avg":"0.00000"
+     *     │             },
+     *     │             {
+     *     │                 "id":7018,
+     *     │                 "add_time":"2019-01-03 19:00",
+     *     │                 "price":"0.00000",
+     *     │                 "old_total":"131.90307",
+     *     │                 "total":"0.00000",
+     *     │                 "status":"全部成交",
+     *     │                 "action_type":"获取",
+     *     │                 "deal_total":"131.90307",
+     *     │                 "more":1,
+     *     │                 "show_cancel":0,
+     *     │                 "fee":"0.00255T",
+     *     │                 "price_avg":"0.00394"
+     *     │             },
+     *     │             {
+     *     │                 "id":7017,
+     *     │                 "add_time":"2019-01-03 18:59",
+     *     │                 "price":"0.00000",
+     *     │                 "old_total":"15.83471",
+     *     │                 "total":"0.00000",
+     *     │                 "status":"全部成交",
+     *     │                 "action_type":"获取",
+     *     │                 "deal_total":"15.83471",
+     *     │                 "more":1,
+     *     │                 "show_cancel":0,
+     *     │                 "fee":"0.00029T",
+     *     │                 "price_avg":"0.00406"
+     *     │             }
+     *     │         ]
+     *     │     }
+     *     │ }
+     */
     public static final String TRADE_LIST = "api/home/user/tradeLists";
     //交易明细
     public static final String TRADE_DETAIL = "api/home/user/tradeDetail";

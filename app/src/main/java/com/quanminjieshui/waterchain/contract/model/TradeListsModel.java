@@ -44,12 +44,12 @@ public class TradeListsModel {
 
         RetrofitFactory.getInstance().createService()
                 .tradeList(RequestUtil.getRequestHashBody(null,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(activity) {
+                .compose(activity.<BaseEntity<TradeListsResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<TradeListsResponseBean>>io())
+                .subscribe(new BaseObserver<TradeListsResponseBean>(activity) {
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        callback.onGetTradeListsSuccess(o);
+                    protected void onSuccess(TradeListsResponseBean tradeListsResponseBean) throws Exception {
+                        callback.onGetTradeListsSuccess(tradeListsResponseBean);
                     }
 
                     @Override
@@ -76,7 +76,7 @@ public class TradeListsModel {
 
 
     public interface TradeListsCallback{
-        void onGetTradeListsSuccess(Object o);//参数类型待确定
+        void onGetTradeListsSuccess(TradeListsResponseBean tradeListsResponseBean);
         void onGetTradeListsFailed(String msg);
     }
 

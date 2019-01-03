@@ -9,81 +9,88 @@ import java.util.List;
 
 public class TradeListsResponseBean {
 
-    public List<TradeListEntity> lists;
+    public List<TradeEntity> lists;
 
-    public List<TradeListEntity> getLists() {
+    public List<TradeEntity> getLists() {
         return lists;
     }
 
-    public void setLists(List<TradeListEntity> lists) {
-        this.lists = lists;
-    }
-
-    public class TradeListEntity {
-
-
-        private String action_type;//交易类型     贡献|获得
-        private String deal_total;//已成交量
-        private String avg_price;//成交均价（单价）
+    /**
+     * │             {
+     * │                 "id":7034,
+     * │                 "add_time":"2019-01-03 19:08",
+     * │                 "price":"0.00000",
+     * │                 "old_total":"6.43998",
+     * │                 "total":"6.43998",
+     * │                 "status":"等待成交",
+     * │                 "action_type":"贡献",
+     * │                 "deal_total":"0.00000",
+     * │                 "more":0,
+     * │                 "show_cancel":1,
+     * │                 "fee":"0.00000JSL",
+     * │                 "price_avg":"0.00000"
+     * │             },
+     */
+    public class TradeEntity {
+        private int id;
+        private String add_time;
+        private String price;
         private String old_total;//委托量
-        private String fee;//手续费
-        private String shiji;//实际成交
-        private List<TradeDetailResponseBean> details;
+        private String total;
+        private String status;
+        private String action_type;
+        private String deal_total;//实际成交
+        private int more;
+        private int show_cancel;
+        private String fee;
+        private String price_avg;
 
-        public String getAction_type() {
-            return action_type;
+        public int getId() {
+            return id;
         }
 
-        public void setAction_type(String action_type) {
-            this.action_type = action_type;
+        public String getAdd_time() {
+            return add_time;
         }
 
-        public String getDeal_total() {
-            return deal_total;
-        }
-
-        public void setDeal_total(String deal_total) {
-            this.deal_total = deal_total;
-        }
-
-        public String getAvg_price() {
-            return avg_price;
-        }
-
-        public void setAvg_price(String avg_price) {
-            this.avg_price = avg_price;
+        public String getPrice() {
+            return price;
         }
 
         public String getOld_total() {
             return old_total;
         }
 
-        public void setOld_total(String old_total) {
-            this.old_total = old_total;
+        public String getTotal() {
+            return total;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public String getAction_type() {
+            return action_type;
+        }
+
+        public String getDeal_total() {
+            return deal_total;
+        }
+
+        public int getMore() {
+            return more;
+        }
+
+        public int getShow_cancel() {
+            return show_cancel;
         }
 
         public String getFee() {
             return fee;
         }
 
-        public void setFee(String fee) {
-            this.fee = fee;
-        }
-
-        public String getShiji() {
-            return shiji;
-        }
-
-        public void setShiji(String shiji) {
-            this.shiji = shiji;
-        }
-
-        public List<TradeDetailResponseBean> getDetails() {
-            return details;
-        }
-
-        public void setDetails(List<TradeDetailResponseBean> details) {
-            this.details = details;
+        public String getPrice_avg() {
+            return price_avg;
         }
     }
 }

@@ -13,6 +13,7 @@
 package com.quanminjieshui.waterchain.contract.presenter;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.TradeListsModel;
 import com.quanminjieshui.waterchain.contract.view.TradeListsViewImpl;
@@ -39,15 +40,15 @@ public class TradeListsPresenter extends BasePresenter<TradeListsViewImpl> {
         this.tradeListsModel = tradeListsModel;
     }
 
-    public void getGoods(BaseActivity activity) {
+    public void getTradeLists(BaseActivity activity) {
         if (tradeListsModel == null) {
             tradeListsModel = new TradeListsModel();
         }
         tradeListsModel.getTradeLists(activity, new TradeListsModel.TradeListsCallback() {
             @Override
-            public void onGetTradeListsSuccess(Object o) {
+            public void onGetTradeListsSuccess(TradeListsResponseBean tradeListsResponseBean) {
                 if (mView != null) {
-                    mView.onGetTradeListsSuccess(o);
+                    mView.onGetTradeListsSuccess(tradeListsResponseBean);
                 }
             }
 

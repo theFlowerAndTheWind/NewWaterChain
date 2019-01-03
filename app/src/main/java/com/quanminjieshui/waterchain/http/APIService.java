@@ -18,6 +18,7 @@ import com.quanminjieshui.waterchain.beans.SellResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
@@ -83,9 +84,13 @@ public interface APIService {
     @POST(UrlConfig.TRADE_CENTER)
     Observable<BaseEntity<TradeCenterResponseBean>> tradeCenter(@Body RequestBody requestBody);
 
+    //用户撤单
+    @POST(UrlConfig.TRADE_CANCEL)
+    Observable<BaseEntity>cancle(@Body RequestBody body);
+
     //贡献节水量
     @POST(UrlConfig.TRADE_BUY)
-    Observable<BaseEntity<BuyResponseBean>> buy(@Body RequestBody requestBody);
+    Observable<BaseEntity> buy(@Body RequestBody requestBody);
 
     //获取节水量
     @POST(UrlConfig.TRADE_SELL)
@@ -97,7 +102,7 @@ public interface APIService {
 
     //个人中心
     @POST(UrlConfig.TRADE_LIST)
-    Observable<BaseEntity> tradeList(@Body RequestBody requestBody);
+    Observable<BaseEntity<TradeListsResponseBean>> tradeList(@Body RequestBody requestBody);
 
     //用户身份认证信息
     @POST(UrlConfig.AUTH_DETAIL)

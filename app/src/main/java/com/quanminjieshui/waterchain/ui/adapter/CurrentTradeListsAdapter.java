@@ -15,15 +15,14 @@ package com.quanminjieshui.waterchain.ui.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
-import com.quanminjieshui.waterchain.contract.presenter.TradeCenterPresenter;
+import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -46,70 +45,65 @@ import butterknife.ButterKnife;
  */
 public class CurrentTradeListsAdapter extends RecyclerView.Adapter<CurrentTradeListsAdapter.TradeHolder> {
 
+
     private Context context;
-    private List<TradeListsResponseBean.TradeListEntity> list;
-    private boolean isHide=false;//true->当前委托   false->全部委托
+    private List<TradeCenterResponseBean.UserCurrentTradeEntity> temp;
+    private List<TradeCenterResponseBean.UserCurrentTradeEntity> list;
+    private OnCancleClickedListener cancleListener;
 
-    public CurrentTradeListsAdapter(Context context, List<TradeListsResponseBean.TradeListEntity> list) {
+    public CurrentTradeListsAdapter(Context context, List<TradeCenterResponseBean.UserCurrentTradeEntity> list, OnCancleClickedListener cancleListener) {
         this.context = context;
         if (list == null) {
             this.list = new ArrayList<>();
         } else {
             this.list = list;
         }
-    }
-
-    public CurrentTradeListsAdapter(Context context, List<TradeListsResponseBean.TradeListEntity> list,boolean isHide) {
-        this.context = context;
-        if (list == null) {
-            this.list = new ArrayList<>();
-        } else {
-            this.list = list;
-        }
-        this.isHide=isHide;
+        this.cancleListener = cancleListener;
     }
 
     @NonNull
     @Override
     public TradeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.module_recycle_item_all_trade_lists, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.module_recycle_item_cur_trade_list, parent, false);
         AutoUtils.auto(view);
         return new TradeHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final TradeHolder holder, int position) {
-        final TradeListsResponseBean.TradeListEntity tradeListEntity = list.get(position);
-        String action_type = tradeListEntity.getAction_type().trim();
-        if (action_type.equals("贡献")) {
-            holder.tvActionType.setText("贡献");
-            holder.tvActionType.setTextColor(context.getResources().getColor(R.color.primary_red));
-        } else if (action_type.equals("获取")) {
-            holder.tvActionType.setText("获取");
-            holder.tvActionType.setTextColor(context.getResources().getColor(R.color.text_green));
-        }
-        holder.tvPrice.setText(tradeListEntity.getAvg_price());
-        holder.tvOldTotal.setText(tradeListEntity.getOld_total());
-        holder.tvShiji.setText(tradeListEntity.getShiji());
-        holder.tvDealTotal.setText(tradeListEntity.getDeal_total());
-        holder.tvFee.setText(tradeListEntity.getFee());
-        if(isHide){
-            holder.ll3.setVisibility(View.GONE);
-            holder.ll4.setVisibility(View.GONE);
-            holder.container.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int visibility = holder.container.getVisibility();
-                    if(visibility==View.VISIBLE){
-                        holder.ll3.setVisibility(View.GONE);
-                        holder.ll4.setVisibility(View.GONE);
-                    }else if(visibility==View.GONE){
-                        holder.ll3.setVisibility(View.VISIBLE);
-                        holder.ll4.setVisibility(View.VISIBLE);
+        final TradeCenterResponseBean.UserCurrentTradeEntity userCurrentTradeEntity = list.get(position);
+        if (userCurrentTradeEntity != null) {
+            String action_type = userCurrentTradeEntity.getAction_type().trim();
+            if (action_type.equals("贡献")) {
+                holder.tvActionType.setText("贡献");
+                holder.tvActionType.setTextColor(context.getResources().getColor(R.color.primary_red));
+            } else if (action_type.equals("获取")) {
+                holder.tvActionType.setText("获取");
+                holder.tvActionType.setTextColor(context.getResources().getColor(R.color.text_green));
+            }
+            holder.tvAddTime.setText(userCurrentTradeEntity.getAdd_time());
+            final String status = userCurrentTradeEntity.getStatus();
+            if (TextUtils.isEmpty(status)) {
+                //不处理
+            } else if (status.equals("部分成交") || status.equals("全部成交") || status.equals("已撤销")) {
+                holder.tvStatus.setBackground(context.getResources().getDrawable(R.drawable.gray_border_bg_shape));
+                holder.tvStatus.setEnabled(false);
+                holder.tvStatus.setText(status);
+                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.text_black));
+            } else if (status.equals("等待成交")) {//文档只给了上面三种选择,实际请求回来有这种
+                holder.tvStatus.setBackground(context.getResources().getDrawable(R.drawable.btn_blue_border_selector));
+                holder.tvStatus.setEnabled(true);
+                holder.tvStatus.setText("撤销");
+                holder.tvStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cancleListener.onCancle(userCurrentTradeEntity.getId());
                     }
-                    return true;
-                }
-            });
+                });
+            }
+            holder.tvPrice.setText(userCurrentTradeEntity.getPrice());
+            holder.tvOldTotal.setText(userCurrentTradeEntity.getOld_total());
+            holder.tvDealTotal.setText(userCurrentTradeEntity.getDeal_total());
         }
     }
 
@@ -119,28 +113,27 @@ public class CurrentTradeListsAdapter extends RecyclerView.Adapter<CurrentTradeL
     }
 
     class TradeHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.container)
-        LinearLayout container;
         @BindView(R.id.tv_action_type)
         TextView tvActionType;
+        @BindView(R.id.tv_add_time)
+        TextView tvAddTime;
+        @BindView(R.id.tv_status)
+        TextView tvStatus;
         @BindView(R.id.tv_price)
         TextView tvPrice;
         @BindView(R.id.tv_old_total)
         TextView tvOldTotal;
         @BindView(R.id.tv_deal_total)
         TextView tvDealTotal;
-        @BindView(R.id.tv_shiji)
-        TextView tvShiji;
-        @BindView(R.id.tv_fee)
-        TextView tvFee;
-        @BindView(R.id.ll3)
-        LinearLayout ll3;
-        @BindView(R.id.ll4)
-        LinearLayout ll4;
 
         public TradeHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
+
+    public interface OnCancleClickedListener {
+        void onCancle(int tid);
+    }
+
 }

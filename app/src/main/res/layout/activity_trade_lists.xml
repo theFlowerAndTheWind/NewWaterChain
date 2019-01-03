@@ -3,11 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/module_include_title_bar"/>
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xrv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
+    <include layout="@layout/module_include_title_bar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xrv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <include layout="@layout/module_include_no_data"
+            />
+    </FrameLayout>
 
 </LinearLayout>

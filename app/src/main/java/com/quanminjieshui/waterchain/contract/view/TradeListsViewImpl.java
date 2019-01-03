@@ -12,6 +12,7 @@
  */
 package com.quanminjieshui.waterchain.contract.view;
 
+import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.contract.IBaseViewImpl;
 
 /**
@@ -28,6 +29,6 @@ import com.quanminjieshui.waterchain.contract.IBaseViewImpl;
  * @Version: 1.0
  */
 public interface TradeListsViewImpl extends IBaseViewImpl {
-    void onGetTradeListsSuccess(Object o);//参数类型待确定
+    void onGetTradeListsSuccess(TradeListsResponseBean tradeListsResponseBean);
     void onGetTradeListsFailed(String msg);
 }

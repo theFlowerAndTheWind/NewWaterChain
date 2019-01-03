@@ -73,12 +73,12 @@ public class TradeCenterModel {
         }
         RetrofitFactory.getInstance().createService()
                 .buy(RequestUtil.getRequestHashBody(params, false))
-                .compose(activity.<BaseEntity<BuyResponseBean>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<BuyResponseBean>>io())
-                .subscribe(new BaseObserver<BuyResponseBean>() {
+                .compose(activity.<BaseEntity>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity>io())
+                .subscribe(new BaseObserver() {
                     @Override
-                    protected void onSuccess(BuyResponseBean buyResponseBean) throws Exception {
-                        callBack.onBuySuccess(buyResponseBean);
+                    protected void onSuccess(Object o) throws Exception {
+                        callBack.onBuySuccess(o);
                     }
 
                     @Override
@@ -154,11 +154,11 @@ public class TradeCenterModel {
 
         void onTradeCenterFailed(String msg);
 
-        void onBuySuccess(BuyResponseBean buyResponseBean);
+        void onBuySuccess(Object o);
 
         void onBuyFailed(String msg);
 
-        void onSellSuccess(SellResponseBean sellResponseBean);
+        void onSellSuccess(Object o);
 
         void onSellFailed(String msg);
     }

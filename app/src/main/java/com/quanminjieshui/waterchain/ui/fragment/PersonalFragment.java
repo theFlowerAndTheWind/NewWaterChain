@@ -35,70 +35,8 @@ import butterknife.Unbinder;
 public class PersonalFragment extends BaseFragment implements WarningFragment.OnWarningDialogClickedListener {
     @BindView(R.id.img_avatar)
     ImageView imgAvatar;
-    @BindView(R.id.tv_user_login)
-    TextView tvUserLogin;
-    //    @BindView(R.id.img_go_user_detail)
-//    ImageView imgGoUserDetail;
-//    @BindView(R.id.relative_user_detail)
-//    RelativeLayout relativeUserDetail;//
-//    @BindView(R.id.img1)
-//    ImageView img1;
-//    @BindView(R.id.tv_account_detail)
-//    TextView tvAccountDetail;
-//    @BindView(R.id.img_go_account_detail)
-//    ImageView imgGoAccountDetail;
-//    @BindView(R.id.relative_account_detail)
-//    RelativeLayout relativeAccountDetail;//
-//    @BindView(R.id.img2)
-//    ImageView img2;
-//    @BindView(R.id.tv_auth_detail)
-//    TextView tvAuthDetail;
-//    @BindView(R.id.img_go_auth_detail)
-//    ImageView imgGoAuthDetail;
-//    @BindView(R.id.relative_auth_detail)
-//    RelativeLayout relativeAuthDetail;//
-//    @BindView(R.id.img3)
-//    ImageView img3;
-//    @BindView(R.id.tv_trade_lists)
-//    TextView tvTradeLists;
-//    @BindView(R.id.img_go_trade_lists)
-//    ImageView imgGoTradeLists;
-//    @BindView(R.id.relative_trade_lists)
-//    RelativeLayout relativeTradeLists;//
-//    @BindView(R.id.img4)
-//    ImageView img4;
-//    @BindView(R.id.tv_order_lists)
-//    TextView tvOrderLists;
-//    @BindView(R.id.img_go_order_lists)
-//    ImageView imgGoOrderLists;
-//    @BindView(R.id.relative_order_lists)
-//    RelativeLayout relativeOrderLists;//
-//    @BindView(R.id.relative_goods)
-//    RelativeLayout relative_goods;
-//    @BindView(R.id.img6)
-//    ImageView img6;
-//    @BindView(R.id.tv_sys_msg)
-//    TextView tvSysMsg;
-//    @BindView(R.id.img_go_sys_msg)
-//    ImageView imgGoSysMsg;
-//    @BindView(R.id.relative_sys_msg)
-//    RelativeLayout relativeSysMsg;//
-//    @BindView(R.id.img7)
-//    ImageView img7;
-//    @BindView(R.id.tv_change_pass)
-//    TextView tvChangPass;
-//    @BindView(R.id.img_go_change_pass)
-//    ImageView imgGoChanggePass;
-//    @BindView(R.id.relative_change_pass)
-//    RelativeLayout relativeChangePass;//
-//    @BindView(R.id.img8)
-//    ImageView img8;
-//    @BindView(R.id.tv_about_us)
-//    TextView tvAboutUs;
-//    @BindView(R.id.img_go_about_us)
-//    ImageView imgGoAboutUs;
-//    @BindView(R.id.relative_about_us)
-//    RelativeLayout relativeAboutUs;//
+    @BindView(R.id.tv_nickname)
+    TextView tvNickname;
     @BindView(R.id.tv_version)
     TextView tvVersion;
 
@@ -108,6 +46,7 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
      * 记录当前是否登录，fargment切换后有登录、退出登录操作后，下次再显示时用该变量与本地SP所存结果比对，不一致时做刷新操作
      */
     private boolean isLogin=false;
+    private String user_login;//用户登录手机号，作用同isLogin
 
     @OnClick({R.id.relative_user_detail, R.id.relative_account_detail, R.id.relative_auth_detail,
             R.id.relative_trade_lists, R.id.relative_order_lists, R.id.relative_goods,
@@ -159,12 +98,12 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     }
 
     private boolean checkLoginStatus() {
-        boolean isLogin = (boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
-        if (!isLogin) {
+       boolean isLogin_ = (boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
+        if (!isLogin_) {
             WarningFragment fragment = new WarningFragment("提示消息", "您当前未登录，请登录", "登录", "取消", "checkLoginStatus", this);
             fragment.show(getActivity().getSupportFragmentManager(), "warning_fragment");
         }
-        return isLogin;
+        return isLogin_;
     }
 
     private void jump(Class<?> cls) {
@@ -184,11 +123,12 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
 
         initView();
         isLogin= (boolean) SPUtil.get(getActivity(),SPUtil.IS_LOGIN,false);
+        user_login=(String)SPUtil.get(getActivity(),SPUtil.USER_LOGIN,"user_login");
         return rootView;
     }
 
     private void initView() {
-        tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
+        tvNickname.setText((String)SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********"));
     }
 
 
@@ -243,13 +183,14 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     public void onEventMainThread(LoginStatusChangedEvent event){
         if(event!=null&&event.getMsg().equals("login_status_changed_main_personal_refresh_nickname")){
             isLogin= (boolean) SPUtil.get(getActivity(),SPUtil.IS_LOGIN,false);
-            tvUserLogin.setText(SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "*** **** ****") + "");
+            user_login=(String)SPUtil.get(getActivity(),SPUtil.USER_LOGIN,"user_login");
+            tvNickname.setText((String)SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********"));
         }
     }
 
 
-    public boolean getIsLogin(){
-        return this.isLogin;
+    public String getIsLogin(){
+        return new StringBuilder().append(isLogin).append(user_login).toString();
     }
 
     @Override

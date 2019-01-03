@@ -13,9 +13,9 @@ public interface TradeCenterViewImpl extends IBaseViewImpl {
     void onTradeCenterSuccess(TradeCenterResponseBean tradeCenterResponseBean);
     void onTradeCenterFailed(String msg);
 
-    void onBuySuccess(BuyResponseBean buyResponseBean);
+    void onBuySuccess(Object o);
     void onBuyFailed(String msg);
 
-    void onSellSuccess(SellResponseBean sellResponseBean);
+    void onSellSuccess(Object o);
     void onSellFailed(String msg);
 }

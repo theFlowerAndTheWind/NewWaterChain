@@ -46,7 +46,7 @@ public class TradeCenterPresenter extends BasePresenter<TradeCenterViewImpl> {
             }
 
             @Override
-            public void onBuySuccess(BuyResponseBean buyResponseBean) {
+            public void onBuySuccess(Object o) {
             }
 
             @Override
@@ -54,7 +54,7 @@ public class TradeCenterPresenter extends BasePresenter<TradeCenterViewImpl> {
             }
 
             @Override
-            public void onSellSuccess(SellResponseBean sellResponseBean) {
+            public void onSellSuccess(Object o) {
             }
 
             @Override
@@ -67,7 +67,7 @@ public class TradeCenterPresenter extends BasePresenter<TradeCenterViewImpl> {
         if (tradeCenterModel == null) {
             tradeCenterModel = new TradeCenterModel();
         }
-        tradeCenterModel.sell(activity, type, total, price, new TradeCenterModel.TradeCenterCallBack() {
+        tradeCenterModel.buy(activity, type, total, price, new TradeCenterModel.TradeCenterCallBack() {
 
             @Override
             public void onTradeCenterSuccess(TradeCenterResponseBean tradeCenterResponseBean) {
@@ -78,9 +78,9 @@ public class TradeCenterPresenter extends BasePresenter<TradeCenterViewImpl> {
             }
 
             @Override
-            public void onBuySuccess(BuyResponseBean buyResponseBean) {
+            public void onBuySuccess(Object o) {
                 if (mView != null) {
-                    mView.onBuySuccess(buyResponseBean);
+                    mView.onBuySuccess(o);
                 }
             }
 
@@ -92,7 +92,7 @@ public class TradeCenterPresenter extends BasePresenter<TradeCenterViewImpl> {
             }
 
             @Override
-            public void onSellSuccess(SellResponseBean sellResponseBean) {
+            public void onSellSuccess(Object o) {
             }
 
             @Override
@@ -118,7 +118,7 @@ public class TradeCenterPresenter extends BasePresenter<TradeCenterViewImpl> {
             }
 
             @Override
-            public void onBuySuccess(BuyResponseBean buyResponseBean) {
+            public void onBuySuccess(Object o) {
             }
 
             @Override
@@ -126,9 +126,9 @@ public class TradeCenterPresenter extends BasePresenter<TradeCenterViewImpl> {
             }
 
             @Override
-            public void onSellSuccess(SellResponseBean sellResponseBean) {
+            public void onSellSuccess(Object o) {
                 if (mView != null) {
-                    mView.onSellSuccess(sellResponseBean);
+                    mView.onSellSuccess(o);
                 }
             }
 
