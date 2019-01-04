@@ -1,10 +1,5 @@
 package com.quanminjieshui.waterchain.contract.model;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
@@ -15,7 +10,6 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,17 +43,7 @@ public class BannerListModel {
                      */
                     @Override
                     protected void onSuccess(BannerListResponseBean bannerListResponseBean) throws Exception {
-                        List<Object> list = new ArrayList<>();
-                        try {
-                            Gson gson = new Gson();
-                            JsonArray arry = new JsonParser().parse(bannerListResponseBean.getLists().toString()).getAsJsonArray();
-                            for (JsonElement jsonElement : arry) {
-                                list.add(gson.fromJson(jsonElement,new TypeToken<BannerListResponseBean.BannerListEntity>() {}.getType()));
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        callBack.success(list);
+                        callBack.success(bannerListResponseBean.getLists());
                     }
 
                     /**
@@ -95,7 +79,7 @@ public class BannerListModel {
     }
 
     public interface BannerListCallBack{
-        void success(List<Object> list);
+        void success(List<BannerListResponseBean.BannerListEntity> list);
         void failed(String msg);
     }
 }

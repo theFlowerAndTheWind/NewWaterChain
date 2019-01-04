@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_title_bar" />
+    <ProgressBar
+         android:id="@+id/progressBarLoading"
+         style="?android:attr/progressBarStyleHorizontal"
+         android:layout_width="match_parent"
+         android:layout_height="3dp" />
+    <com.quanminjieshui.waterchain.ui.widget.WaterChainWebview
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true" />
+</LinearLayout>
