@@ -2,7 +2,12 @@ package com.quanminjieshui.waterchain.ui.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.Display;
 import android.view.KeyboardShortcutGroup;
 import android.view.LayoutInflater;
@@ -89,7 +94,19 @@ public class AlertChainDialog extends Dialog {
         if ("".equals(msg)) {
             txt_msg.setText("内容");
         } else {
-            txt_msg.setText(msg);
+            if(msg.contains("您的订单在")){//特殊处理
+                SpannableString spannableString = new SpannableString(msg);
+                //设置颜色
+                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FFC42F18")), 5, msg.length()-16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                //设置字体，BOLD为粗体
+                spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 6, msg.length()-16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), msg.length()-16, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                txt_msg.setText(spannableString);
+            }else{
+                txt_msg.setText(msg);
+            }
         }
         return this;
     }

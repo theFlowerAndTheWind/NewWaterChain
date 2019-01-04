@@ -1,13 +1,20 @@
 package com.quanminjieshui.waterchain.ui.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -30,61 +37,26 @@ public class CreateOrderListPopupWindow extends PopupWindow{
     private XRecyclerView recyclerView;
     private TextView totalCost;
     private ImageView cancelImg;
-    private LayoutInflater mInflater;
-    private View mContentView;
     private List<CreateOrderListBean> arrayList;
     private CreateOrderListAdapter createOrderListAdapter;
+    private boolean isShowAniming;//show动画是否在执行中
+    private boolean isHideAniming;//hide动画是否在执行中
+    private LinearLayout llPopupRoot;
 
     public CreateOrderListPopupWindow(Context context, List<CreateOrderListBean> arrayList){
+        super(null, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         this.mContext = context;
         if(arrayList == null){
             this.arrayList = new ArrayList<>();
         }else{
             this.arrayList = arrayList;
         }
-        //打气筒
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        //打气
-        mContentView = mInflater.inflate(R.layout.popupwindow_creatorder_list, null);
-
-        //设置View
-        setContentView(mContentView);
-
-        //设置宽与高
-        setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-
-        setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-
-        /**
-         * 设置进出动画
-         */
-          setAnimationStyle(R.style.Popupwindow);
-
-        /**
-         * 设置背景只有设置了这个才可以点击外边和BACK消失
-         */
-        setBackgroundDrawable(new ColorDrawable());
-
-        /**
-         * 设置可以获取集点
-         */
-        setFocusable(true);
-
-        /**
-         * 设置点击外边可以消失
-         */
-        setOutsideTouchable(true);
-
-        /**
-         *设置可以触摸
-         */
+        //设置点击空白处消失
         setTouchable(true);
-
-        /**
-         * 设置点击外部可以消失
-         */
-
+        setFocusable(true);
+        setOutsideTouchable(true);
+        setClippingEnabled(false);
+//        setAnimationStyle(R.style.Popupwindow);
         setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -99,19 +71,23 @@ public class CreateOrderListPopupWindow extends PopupWindow{
                 return false;
             }
         });
+        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        int w = wm.getDefaultDisplay().getWidth();
+        int h = wm.getDefaultDisplay().getHeight();
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        bitmap.eraseColor(Color.parseColor("#88000000"));//填充颜色
+        setBackgroundDrawable(new BitmapDrawable(context.getResources(), bitmap));
 
-
-
-        /**
-         * 初始化View与监听器
-         */
         initView();
     }
-
     private void initView() {
-        recyclerView = mContentView.findViewById(R.id.cost_info_list);
-        totalCost = mContentView.findViewById(R.id.total_cost);
-        cancelImg = mContentView.findViewById(R.id.cancel);
+
+        View rootView = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_creatorder_list, null);
+        setContentView(rootView);
+        llPopupRoot = rootView.findViewById(R.id.create_order_ll);
+        recyclerView = rootView.findViewById(R.id.cost_info_list);
+        totalCost = rootView.findViewById(R.id.total_cost);
+        cancelImg = rootView.findViewById(R.id.cancel);
 
         cancelImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,5 +104,58 @@ public class CreateOrderListPopupWindow extends PopupWindow{
         recyclerView.setAdapter(createOrderListAdapter);
     }
 
+    @Override
+    public void showAtLocation(View parent, int gravity, int x, int y) {
+        super.showAtLocation(parent, gravity, x, y);
+        if (!isShowAniming) {
+            isShowAniming = true;
+            popupAnim(llPopupRoot, 0.0f, 1.0f, 300, true);
+        }
+    }
+
+    @Override
+    public void dismiss() {
+        if (!isHideAniming) {
+            isHideAniming = true;
+            popupAnim(llPopupRoot, 1.0f, 0.0f, 300, false);
+        }
+    }
+
+    /**
+     * popupWindow属性动画
+     *
+     * @param view     执行属性动画的view
+     * @param start    start值
+     * @param end      end值
+     * @param duration 动画持续时间
+     * @param flag     true代表show，false代表hide
+     */
+    private void popupAnim(final View view, float start, final float end, int duration, final
+    boolean flag) {
+        ValueAnimator va = ValueAnimator.ofFloat(start, end).setDuration(duration);
+        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                view.setPivotX(0);
+                view.setPivotY(view.getMeasuredHeight());
+                view.setTranslationY((1 - value) * view.getHeight());
+            }
+        });
+        va.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                if (!flag) {
+                    isHideAniming = false;
+                    CreateOrderListPopupWindow.super.dismiss();
+                } else {
+                    isShowAniming = false;
+                }
+            }
+        });
+        va.start();
+    }
 
 }
