@@ -15,7 +15,7 @@ public class StringNullAdapter implements JsonDeserializer<BaseEntity> {
         try {
         	JsonObject obj = json.getAsJsonObject();
         	JsonElement e=obj.get("data");
-        	if(!e.isJsonObject()&&"".equals(e.getAsString()))
+        	if(!(e.isJsonObject()||e.isJsonArray())&&"".equals(e.getAsString()))
             	obj.remove("data");
         	return new Gson().fromJson(obj, typeOfT);
         } catch (JsonParseException ignore) {
