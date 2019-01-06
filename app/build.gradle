@@ -100,9 +100,15 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
+    compile(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -118,7 +124,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'//图片框架picasso
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'//网络请求 retrofit+okhttp+rxjava+gson
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'//okhttp网络框架

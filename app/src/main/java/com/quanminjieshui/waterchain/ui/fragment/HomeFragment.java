@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -29,20 +28,21 @@ import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.ServiceListPresneter;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.ServiceListViewImpl;
 import com.quanminjieshui.waterchain.ui.activity.FactoryServiceActivity;
+import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
 import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.LogUtils;
-import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,6 +71,9 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     private BannerListPresenter bannerListPresenter;
     private ServiceListPresneter serviceListPresneter;
     private ServiceListAdapter serviceListAdapter;
+    ArrayList<String> imgList = new ArrayList<>();
+    ArrayList<String> nameList = new ArrayList<>();
+    ArrayList<String> imgUrlList = new ArrayList<>();
     private List<ServiceListResponseBean.serviceListEntity> listEntities = new ArrayList<>();
 
     @Override
@@ -101,17 +104,9 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-                Glide.with(getBaseActivity())
-                        .load(model)
-                        .placeholder(R.drawable.holder)
-                        .error(R.drawable.holder)
-                        .centerCrop()
-                        .dontAnimate()
-                        .into(itemView);
+                GlidImageManager.getInstance().loadImageView(getBaseActivity(),model,itemView,R.drawable.holder);
             }
         });
-
-        mContentBanner.setData(Arrays.asList("网络图片路径1", "网络图片路径2", "网络图片路径3"), Arrays.asList("提示文字1", "提示文字2", "提示文字3"));
 
         serviceListAdapter = new ServiceListAdapter(getBaseActivity(),listEntities);
         serviceList.setArrowImageView(R.drawable.iconfont_downgrey);
@@ -278,19 +273,17 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(bannerListPresenter!=null){
-            bannerListPresenter.getBannerList(getBaseActivity(),3,1);
-        }
-        if(serviceListPresneter!=null){
-            serviceListPresneter.getServiceList(getBaseActivity());
-        }
+        requestNetwork();
         mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
             @Override
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
-                ToastUtils.showCustomToast("点击了" + position);
+                Intent intent = new Intent();
+                intent.setClass(getBaseActivity(), WebViewActivity.class);
+                intent.putExtra("URL",imgUrlList.get(position));
+                intent.putExtra("title",nameList.get(position));
+                startActivity(intent);
             }
         });
-//        showLoadingDialog();
     }
 
 
@@ -299,19 +292,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser){
-            if(bannerListPresenter!=null){
-                bannerListPresenter.getBannerList(getBaseActivity(),3,1);
-            }
-            if(serviceListPresneter!=null){
-                serviceListPresneter.getServiceList(getBaseActivity());
-            }
-            mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
-                @Override
-                public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
-                    ToastUtils.showCustomToast("点击了" + position);
-                }
-            });
-//            showLoadingDialog();
+            requestNetwork();
         }
 
     }
@@ -321,20 +302,19 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(!hidden){
-            if(bannerListPresenter!=null){
-                bannerListPresenter.getBannerList(getBaseActivity(),3,1);
-            }
-            if(serviceListPresneter!=null){
-                serviceListPresneter.getServiceList(getBaseActivity());
-            }
-            mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
-                @Override
-                public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
-                    ToastUtils.showCustomToast("点击了" + position);
-                }
-            });
-//            showLoadingDialog();
+            requestNetwork();
         }
+    }
+
+    public void requestNetwork(){
+        if(bannerListPresenter!=null){
+            bannerListPresenter.getBannerList(getBaseActivity(),3,1);
+        }
+        if(serviceListPresneter!=null){
+            serviceListPresneter.getServiceList(getBaseActivity());
+        }
+
+        //showLoadingDialog();
     }
 
     @Override
@@ -387,9 +367,15 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     }
 
     @Override
-    public void onBannerListSuccess(List<Object> list) {
+    public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {
         dismissLoadingDialog();
-        LogUtils.d(list.toArray());
+
+        for(BannerListResponseBean.BannerListEntity listEntity :list){
+            imgList.add(listEntity.getImg());
+            nameList.add(listEntity.getName());
+            imgUrlList.add(listEntity.getUrl());
+            mContentBanner.setData(imgList, nameList);
+        }
 
     }
 

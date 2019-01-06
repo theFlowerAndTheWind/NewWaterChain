@@ -220,7 +220,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
 
 
         tvFactoryName.setText(f_name);
-        GlidImageManager.getInstance().loadImageUri(this, bean.getImg(), img, R.mipmap.default_img);
+        GlidImageManager.getInstance().loadImageView(this, bean.getImg(), img, R.mipmap.default_img);
         tvService.setText(bean.getS_name());
         tvTotalPrice.setText(bean.getTotal_price());
 

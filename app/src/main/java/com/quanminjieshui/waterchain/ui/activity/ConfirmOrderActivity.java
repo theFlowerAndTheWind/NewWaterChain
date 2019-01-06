@@ -2,10 +2,12 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,10 +29,11 @@ import com.quanminjieshui.waterchain.contract.view.TotalPriceViewImpl;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.ui.widget.CreateOrderListPopupWindow;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
-import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.TimeUtils;
 import com.quanminjieshui.waterchain.utils.Util;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,15 +75,21 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     Button orderDetail;
 
     private AlertChainDialog alertChainDialog;
+    private AlertChainDialog alertChainPayDialog;
     private String [] trade_detail = {};
     private TotalPricePresenter totalPricePresenter;
     private CreateOrderPresenter createOrderPresenter;
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
-    private String payType = "",payChannel = "";
+    private String payType = "",payChannel = "",countDown = "00分00秒";
     private CreateOrderListPopupWindow popupWindow;
     private List<CreateOrderListBean> createOrderListBeans = new ArrayList<>();
+    private CountDownTimer TimeCount;
+    private boolean isChecked = true,runningCode = false;
     // 声明平移动画
     private TranslateAnimation animation;
+
+    private MyTimeHandler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +105,9 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
     private void initView() {
         tvTitleCenter.setText("确认下单");
-        alertChainDialog = new AlertChainDialog(this);
+        initPayTimeDialog();
+
+        handler = new MyTimeHandler(this);
         getData();
         initPopupWindow();//初始化poppup
     }
@@ -108,28 +119,34 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
     @OnClick({R.id.left_ll,R.id.order_detail,R.id.create_order,R.id.wash_delivery_rl,R.id.wash_demand_rl,R.id.fullPayment,
             R.id.combinedPayment,R.id.pay_channel_wx_rl,R.id.pay_channel_zfb_rl})
-    public void onClick(View v){
+    public void onClick(final View v){
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         switch (v.getId()){
             case R.id.left_ll:
-                goBack(v);
-                finish();
+                if(alertChainPayDialog!=null){
+                    //dialog msg消息体比较特殊 请勿更改！！！
+                    alertChainPayDialog.builder().setCancelable(false);
+                    alertChainPayDialog.setTitle("确认离开支付页面").setMsg("您的订单在 "+countDown+" 后未支付将会被取消，请尽快支付。")
+                            .setNegativeButton("确认离开", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    TimeCount.cancel();
+                                    hideSoftKeyboard(ConfirmOrderActivity.this);
+                                    finish();
+                                }
+                            }).setPositiveButton("继续支付", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    }).show();
+                    countDownPayTime();
+                }
                 break;
             case R.id.order_detail:
-                ToastUtils.showCustomToast("点击了popup");
-//                createOrderListBeans.add();
-                if (!popupWindow.isShowing()){
-                    int[] location = new int[2];
-                    orderDetail.getLocationOnScreen(location);
-                    popupWindow.showAtLocation(orderDetail, Gravity.LEFT | Gravity.BOTTOM, 0, -location[1]);
-
-                    popupWindow.showAsDropDown(orderDetail, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL,0,-location[1]);
-                    v.startAnimation(animation);
-
-                }
-
-
+                View parent = LayoutInflater.from(ConfirmOrderActivity.this).inflate(R.layout.activity_confirm_order, null);
+                popupWindow.showAtLocation(parent, Gravity.BOTTOM | Gravity.LEFT, 0, 0);
                 break;
             case R.id.create_order:
                 CreateOrderReqParams bean = new CreateOrderReqParams();
@@ -139,6 +156,8 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 bean.setContact_tel("13718478437");
 //                bean.setExpress();
                 createOrderPresenter.createOrder(ConfirmOrderActivity.this,bean);
+
+
                 // TODO: 2019/1/1 支付
                 startActivity(new Intent(ConfirmOrderActivity.this,PaySuceessActivity.class));
                 break;
@@ -190,12 +209,66 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         }
     }
 
+    public static class MyTimeHandler extends Handler{
+
+        WeakReference<ConfirmOrderActivity> weakReference;
+
+        public MyTimeHandler(ConfirmOrderActivity activity){
+            weakReference = new WeakReference<ConfirmOrderActivity>(activity);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            final ConfirmOrderActivity activity = weakReference.get();
+            if(activity == null){return;}
+            switch (msg.what) {
+                case 1:
+                    if(activity.alertChainPayDialog.isShow()){
+                        activity.alertChainPayDialog.setMsg("您的订单在 "+activity.countDown+" 后未支付将会被取消，请尽快支付。");
+                        activity.handler.sendEmptyMessageDelayed(1,1000);
+
+                    }
+                    break;
+                default:break;
+            }
+        }
+    }
+
+    public void initPayTimeDialog(){
+        alertChainDialog = new AlertChainDialog(this);
+        alertChainPayDialog = new AlertChainDialog(this);
+    }
+
+    public void countDownPayTime(){
+        TimeCount = new CountDownTimer(30*60 * 1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                runningCode = true;
+                countDown = TimeUtils.getToMSTime((int) (millisUntilFinished / 1000));
+                handler.sendEmptyMessage(1);
+            }
+
+            @Override
+            public void onFinish() {
+                runningCode = false;
+                TimeCount.onFinish();
+                alertChainPayDialog.dismiss();
+            }
+
+        };
+
+        if (runningCode) {
+            return;
+        }else{
+            TimeCount.start();
+        }
+
+    }
+
     private void initPopupWindow() {
         if (popupWindow == null) {
             popupWindow = new CreateOrderListPopupWindow(ConfirmOrderActivity.this, createOrderListBeans);
-            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
-            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
-            animation.setInterpolator(new AccelerateInterpolator()); animation.setDuration(200);
         }
     }
 
