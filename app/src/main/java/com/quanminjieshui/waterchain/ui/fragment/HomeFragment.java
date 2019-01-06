@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -43,6 +44,7 @@ import com.quanminjieshui.waterchain.ui.activity.FactoryServiceActivity;
 import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
 import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
+import com.quanminjieshui.waterchain.ui.widget.Chart.ChartUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.TimeUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
@@ -94,6 +96,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         serviceListPresneter.attachView(this);
         tradeLinePresenter = new TradeLinePresenter();
         tradeLinePresenter.attachView(this);
+        requestNetwork();
     }
 
     @Override
@@ -103,10 +106,8 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
             ButterKnife.bind(this, rootView);
         }
         alertChainDialog = new AlertChainDialog(getBaseActivity());
-
         initList();
         initLineChart();
-        setLineChartData();
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -162,19 +163,21 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         lineChart.setDescription(description);//设置图表描述信息
         lineChart.setNoDataText("暂无数据");//没有数据时显示的文字
         lineChart.setNoDataTextColor(getResources().getColor(R.color.primary_blue));//没有数据时显示文字的颜色
-        lineChart.setDrawGridBackground(true);//chart 绘图区后面的背景矩形将绘制
+        lineChart.setDrawGridBackground(false);//chart 绘图区后面的背景矩形将绘制
         lineChart.setDrawBorders(false);//禁止绘制图表边框的线
         lineChart.setBackgroundColor(getResources().getColor(R.color.white));
         lineChart.setGridBackgroundColor(getResources().getColor(R.color.white));
-//        lineChart.setViewPortOffsets(20, 0, 20, 0);
-        lineChart.setDragEnabled(false);// 拖拽禁止
-        lineChart.setScaleEnabled(false);// 缩放禁止
+//        lineChart.setViewPortOffsets(20, 0, 20, 0);//强制设置view的显示区域
+        lineChart.setDragEnabled(true);// 拖拽禁止
+        lineChart.setScaleEnabled(true);// 缩放禁止
+        Legend l = lineChart.getLegend();//图例
+        l.setEnabled(false);   //是否使用 图例
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requestNetwork();
+
         mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
             @Override
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
@@ -220,7 +223,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
             serviceListPresneter.getServiceList(getBaseActivity());
         }
         if(tradeLinePresenter!=null){
-            tradeLinePresenter.getTradeLine(getBaseActivity(),"week");
+            tradeLinePresenter.getTradeLine(getBaseActivity(),"week");//首页需要展示当天的--暂时没有数据
         }
         //showLoadingDialog();
     }
@@ -271,10 +274,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         for(TradeLineResponseBean.ChartDataEntity tradeData:tradeDataList){
             Float x = Float.valueOf(TimeUtils.date2TimeStamp(tradeData.getTdate(),"yyyy-MM-dd HH:mm:ss"));
             values1.add(new Entry(x,tradeData.getPrice()));
+            // TODO: 2019/1/7 时间转换
         }
-//
-        //LineDataSet每一个对象就是一条连接线
-        LineDataSet lineDataSet;
+
+        LineDataSet lineDataSet;//LineDataSet每一个对象就是一条连接线
 
         //判断图表中原来是否有数据
         if (lineChart.getData() != null && lineChart.getData().getDataSetCount() > 0) {
@@ -289,17 +292,18 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
             lineDataSet = new LineDataSet(values1, "");
             lineDataSet.setColor(getResources().getColor(R.color.primary_blue));
             lineDataSet.setCircleColor(getResources().getColor(R.color.primary_blue));
+            lineDataSet.setDrawCircles(true);
             lineDataSet.setLineWidth(1f);//设置线宽
-            lineDataSet.setCircleRadius(2f);//设置焦点圆心的大小
+            lineDataSet.setCircleRadius(1f);//设置焦点圆心的大小
             lineDataSet.setCircleColor(getResources().getColor(R.color.primary_blue));
             lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);//点击后的高亮线的显示样式
             lineDataSet.setHighlightLineWidth(1f);//设置点击交点后显示高亮线宽
             lineDataSet.setHighlightEnabled(true);//是否禁用点击高亮线
             lineDataSet.setHighLightColor(getResources().getColor(R.color.actionsheet_gray));//设置点击交点后显示交高亮线的颜色
-            lineDataSet.setValueTextSize(9f);//设置显示值的文字大小
+            lineDataSet.setValueTextSize(0f);//设置显示值的文字大小 0则不展示
             lineDataSet.setDrawFilled(false);//设置禁用范围背景填充
 
-            //格式化显示数据
+            //格式化显示数据--精度
             final DecimalFormat mFormat = new DecimalFormat("###,###,##0");
             lineDataSet.setValueFormatter(new IValueFormatter() {
                 @Override
@@ -307,8 +311,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
                     return mFormat.format(value);
                 }
             });
-            if (Utils.getSDKInt() >= 18) {
-                // fill drawable only supported on api level 18 and above
+            if (Utils.getSDKInt() >= 18) {// fill drawable only supported on api level 18 and above
                 Drawable drawable = ContextCompat.getDrawable(getBaseActivity(), R.drawable.btn_red_bg_selector);
                 lineDataSet.setFillDrawable(drawable);//设置范围背景填充
             } else {
@@ -318,71 +321,40 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
             //保存LineDataSet集合
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(lineDataSet); // add the datasets
-            //创建LineData对象 属于LineChart折线图的数据集合
-            LineData data = new LineData(dataSets);
-            // 添加到图表中
-            lineChart.setData(data);
-            //绘制图表
-            lineChart.invalidate();
+            LineData data = new LineData(dataSets);//创建LineData对象 属于LineChart折线图的数据集合
+            lineChart.setData(data);// 添加到图表中
+            lineChart.invalidate();//绘制图表
 
             //获取此图表的x轴
-            IAxisValueFormatter formatter = new IAxisValueFormatter() {
-                @Override
-                public String getFormattedValue(float value, AxisBase axis) {
-//                ArrayList<Entry> values1 = new ArrayList<>();
-//                values1.add(new Entry(Float.parseFloat(tradeData.getTdate()),tradeData.getPrice()));
-                    String[] values = new String[50];
-                    for(int i=0;i<tradeDataList.size();i++){
-                        values[i] = tradeDataList.get(i).getTdate();
-
-                    }
-                    return values[(int) value+1];
-                }
-
-            };
             XAxis xAxis = lineChart.getXAxis();
-
-            xAxis.setEnabled(false);//设置轴启用或禁用 如果禁用以下的设置全部不生效
             xAxis.setDrawAxisLine(true);//是否绘制轴线
-            xAxis.setDrawGridLines(true);//设置x轴上每个点对应的线
+            xAxis.setDrawGridLines(false);//设置x轴上每个点对应的线
             xAxis.setDrawLabels(true);//绘制标签  指x轴上的对应数值
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
-            //xAxis.setTextSize(20f);//设置字体
-            //xAxis.setTextColor(Color.BLACK);//设置字体颜色
-            //设置竖线的显示样式为虚线
-            //lineLength控制虚线段的长度
-            //spaceLength控制线之间的空间
-            xAxis.enableGridDashedLine(10f, 5f, 0f);
-//        xAxis.setAxisMinimum(0f);//设置x轴的最小值
-//        xAxis.setAxisMaximum(10f);//设置最大值
+            xAxis.setTextColor(Color.BLACK);//设置字体颜色
+            xAxis.enableGridDashedLine(10f, 5f, 0f);//设置竖线的显示样式为虚线(lineLength控制虚线段的长度|spaceLength控制线之间的空间)
             xAxis.setAvoidFirstLastClipping(true);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
-            xAxis.setLabelRotationAngle(10f);//设置x轴标签的旋转角度
-//        设置x轴显示标签数量  还有一个重载方法第二个参数为布尔值强制设置数量 如果启用会导致绘制点出现偏差
-//        xAxis.setLabelCount(10);
-//        xAxis.setTextColor(Color.BLUE);//设置轴标签的颜色
-//        xAxis.setTextSize(24f);//设置轴标签的大小
-//        xAxis.setGridLineWidth(10f);//设置竖线大小
-//        xAxis.setGridColor(Color.RED);//设置竖线颜色
-//        xAxis.setAxisLineColor(Color.GREEN);//设置x轴线颜色
-//        xAxis.setAxisLineWidth(5f);//设置x轴线宽度
-//        xAxis.setValueFormatter();//格式化x轴标签显示字符
+            xAxis.setLabelRotationAngle(0f);//设置x轴标签的旋转角度
+            xAxis.setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    return ChartUtil.MilliseSecond2DateString((long) value,"today");
+                }
+            });
 
-            /**
-             * Y轴默认显示左右两个轴线
-             */
             //获取右边的轴线
             YAxis rightAxis=lineChart.getAxisRight();
-            //设置图表右边的y轴禁用
-            rightAxis.setEnabled(false);
-
-            //获取左边的轴线
-            YAxis leftAxis = lineChart.getAxisLeft();
-            //设置网格线为虚线效果
-            leftAxis.enableGridDashedLine(10f, 5f, 0f);
-            //是否绘制0所在的网格线
-            leftAxis.setDrawZeroLine(false);
-            //左边Y轴禁用
-//            leftAxis.setEnabled(false);
+            rightAxis.setEnabled(false);//设置图表右边的y轴禁用
+            YAxis leftAxis = lineChart.getAxisLeft();//获取左边的轴线
+            leftAxis.enableGridDashedLine(10f, 5f, 0f);//设置网格线为虚线效果
+            leftAxis.setDrawZeroLine(false);//是否绘制0所在的网格线
+            leftAxis.setDrawAxisLine(false);//是否绘制y轴线
+            leftAxis.setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    return String.valueOf(value)+"t";
+                }
+            });
         }
     }
 

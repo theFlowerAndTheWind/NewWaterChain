@@ -11,39 +11,27 @@
 
 package com.quanminjieshui.waterchain.ui.widget.Chart;
 
-import android.app.Dialog;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.util.Log;
-import android.util.TimeUtils;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.Utils;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
-import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.SimpleFormatter;
 
 /**
  * @ProjectName: NewWaterChain
@@ -493,8 +481,10 @@ public class ChartUtil {
         String pattern = "yyyy-MM-dd hh:mm";
 
         if (type.equals("today")) {
-            pattern = "yyyy-MM-dd hh:mm";
-        } else if (type.equals("week") || type.equals("year")) {
+            pattern = "hh:mm";
+        } else if (type.equals("week")) {
+            pattern = "MM-dd";
+        }else if(type.equals("year")){
             pattern = "yyyy-MM-dd";
         }
         Date date = new Date(millisecond / 1000);
