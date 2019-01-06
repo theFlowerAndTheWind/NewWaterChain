@@ -16,12 +16,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
@@ -30,15 +32,19 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.ServiceListPresneter;
+import com.quanminjieshui.waterchain.contract.presenter.TradeLinePresenter;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.ServiceListViewImpl;
+import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
 import com.quanminjieshui.waterchain.ui.activity.FactoryServiceActivity;
 import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
 import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.LogUtils;
+import com.quanminjieshui.waterchain.utils.TimeUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.text.DecimalFormat;
@@ -55,7 +61,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements BannerListViewImpl,ServiceListViewImpl {
+public class HomeFragment extends BaseFragment implements BannerListViewImpl,ServiceListViewImpl,TradeLineViewImpl {
 
 
     @BindView(R.id.banner_guide_content)
@@ -70,10 +76,13 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     private View rootView;
     private BannerListPresenter bannerListPresenter;
     private ServiceListPresneter serviceListPresneter;
+    private TradeLinePresenter tradeLinePresenter;
     private ServiceListAdapter serviceListAdapter;
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> nameList = new ArrayList<>();
     ArrayList<String> imgUrlList = new ArrayList<>();
+    List<TradeLineResponseBean.ChartDataEntity> tradeDataList = new ArrayList<>();
+    List<String> tradeXasix = new ArrayList<>();
     private List<ServiceListResponseBean.serviceListEntity> listEntities = new ArrayList<>();
 
     @Override
@@ -83,7 +92,8 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         bannerListPresenter.attachView(this);
         serviceListPresneter = new ServiceListPresneter();
         serviceListPresneter.attachView(this);
-
+        tradeLinePresenter = new TradeLinePresenter();
+        tradeLinePresenter.attachView(this);
     }
 
     @Override
@@ -96,6 +106,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
 
         initList();
         initLineChart();
+        setLineChartData();
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -145,129 +156,19 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     }
 
     public void initLineChart(){
-        //创建描述信息
-        Description description =new Description();
-        description.setText("测试图表");
-        description.setTextColor(Color.RED);
-        description.setTextSize(20);
+
+        Description description =new Description();//创建描述信息
+        description.setEnabled(false);//隐藏x轴描述信息
         lineChart.setDescription(description);//设置图表描述信息
-        lineChart.setNoDataText("没有数据熬");//没有数据时显示的文字
-        lineChart.setNoDataTextColor(Color.BLUE);//没有数据时显示文字的颜色
+        lineChart.setNoDataText("暂无数据");//没有数据时显示的文字
+        lineChart.setNoDataTextColor(getResources().getColor(R.color.primary_blue));//没有数据时显示文字的颜色
         lineChart.setDrawGridBackground(true);//chart 绘图区后面的背景矩形将绘制
         lineChart.setDrawBorders(false);//禁止绘制图表边框的线
         lineChart.setBackgroundColor(getResources().getColor(R.color.white));
         lineChart.setGridBackgroundColor(getResources().getColor(R.color.white));
-        //lineChart.setBorderColor(); //设置 chart 边框线的颜色。
-        //lineChart.setBorderWidth(); //设置 chart 边界线的宽度，单位 dp。
-        //lineChart.setLogEnabled(true);//打印日志
-        //lineChart.notifyDataSetChanged();//刷新数据
-        //lineChart.invalidate();//重绘
-
-        /**
-         * Entry 坐标点对象  构造函数 第一个参数为x点坐标 第二个为y点
-         */
-        ArrayList<Entry> values1 = new ArrayList<>();
-
-        values1.add(new Entry(4,10));
-        values1.add(new Entry(6,15));
-        values1.add(new Entry(9,20));
-        values1.add(new Entry(12,5));
-        values1.add(new Entry(15,30));
-
-        //LineDataSet每一个对象就是一条连接线
-        LineDataSet set1;
-        LineDataSet set2;
-
-        //判断图表中原来是否有数据
-        if (lineChart.getData() != null &&
-                lineChart.getData().getDataSetCount() > 0) {
-            //获取数据1
-            set1 = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
-            set1.setValues(values1);
-            //刷新数据
-            lineChart.getData().notifyDataChanged();
-            lineChart.notifyDataSetChanged();
-        } else {
-            //设置数据1  参数1：数据源 参数2：图例名称
-            set1 = new LineDataSet(values1, "测试数据1");
-            set1.setColor(Color.BLACK);
-            set1.setCircleColor(Color.BLACK);
-            set1.setLineWidth(1f);//设置线宽
-            set1.setCircleRadius(3f);//设置焦点圆心的大小
-            set1.enableDashedHighlightLine(10f, 5f, 0f);//点击后的高亮线的显示样式
-            set1.setHighlightLineWidth(2f);//设置点击交点后显示高亮线宽
-            set1.setHighlightEnabled(true);//是否禁用点击高亮线
-            set1.setHighLightColor(Color.RED);//设置点击交点后显示交高亮线的颜色
-            set1.setValueTextSize(9f);//设置显示值的文字大小
-            set1.setDrawFilled(false);//设置禁用范围背景填充
-
-            //格式化显示数据
-            final DecimalFormat mFormat = new DecimalFormat("###,###,##0");
-            set1.setValueFormatter(new IValueFormatter() {
-                @Override
-                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                    return mFormat.format(value);
-                }
-            });
-            if (Utils.getSDKInt() >= 18) {
-                // fill drawable only supported on api level 18 and above
-                Drawable drawable = ContextCompat.getDrawable(getBaseActivity(), R.drawable.btn_red_bg_selector);
-                set1.setFillDrawable(drawable);//设置范围背景填充
-            } else {
-                set1.setFillColor(Color.BLACK);
-            }
-
-            //保存LineDataSet集合
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1); // add the datasets
-            //创建LineData对象 属于LineChart折线图的数据集合
-            LineData data = new LineData(dataSets);
-            // 添加到图表中
-            lineChart.setData(data);
-            //绘制图表
-            lineChart.invalidate();
-
-            //获取此图表的x轴
-            XAxis xAxis = lineChart.getXAxis();
-            xAxis.setEnabled(false);//设置轴启用或禁用 如果禁用以下的设置全部不生效
-            xAxis.setDrawAxisLine(true);//是否绘制轴线
-            xAxis.setDrawGridLines(true);//设置x轴上每个点对应的线
-            xAxis.setDrawLabels(true);//绘制标签  指x轴上的对应数值
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
-            //xAxis.setTextSize(20f);//设置字体
-            //xAxis.setTextColor(Color.BLACK);//设置字体颜色
-            //设置竖线的显示样式为虚线
-            //lineLength控制虚线段的长度
-            //spaceLength控制线之间的空间
-            xAxis.enableGridDashedLine(10f, 10f, 0f);
-//        xAxis.setAxisMinimum(0f);//设置x轴的最小值
-//        xAxis.setAxisMaximum(10f);//设置最大值
-            xAxis.setAvoidFirstLastClipping(true);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
-            xAxis.setLabelRotationAngle(10f);//设置x轴标签的旋转角度
-//        设置x轴显示标签数量  还有一个重载方法第二个参数为布尔值强制设置数量 如果启用会导致绘制点出现偏差
-//        xAxis.setLabelCount(10);
-//        xAxis.setTextColor(Color.BLUE);//设置轴标签的颜色
-//        xAxis.setTextSize(24f);//设置轴标签的大小
-//        xAxis.setGridLineWidth(10f);//设置竖线大小
-//        xAxis.setGridColor(Color.RED);//设置竖线颜色
-//        xAxis.setAxisLineColor(Color.GREEN);//设置x轴线颜色
-//        xAxis.setAxisLineWidth(5f);//设置x轴线宽度
-//        xAxis.setValueFormatter();//格式化x轴标签显示字符
-
-            /**
-             * Y轴默认显示左右两个轴线
-             */
-            //获取右边的轴线
-            YAxis rightAxis=lineChart.getAxisRight();
-            //设置图表右边的y轴禁用
-            rightAxis.setEnabled(false);
-            //获取左边的轴线
-            YAxis leftAxis = lineChart.getAxisLeft();
-            //设置网格线为虚线效果
-            leftAxis.enableGridDashedLine(10f, 10f, 0f);
-            //是否绘制0所在的网格线
-            leftAxis.setDrawZeroLine(false);
-        }
+//        lineChart.setViewPortOffsets(20, 0, 20, 0);
+        lineChart.setDragEnabled(false);// 拖拽禁止
+        lineChart.setScaleEnabled(false);// 缩放禁止
     }
 
     @Override
@@ -306,6 +207,11 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         }
     }
 
+    @Override
+    public void onReNetRefreshData(int viewId) {
+        requestNetwork();
+    }
+
     public void requestNetwork(){
         if(bannerListPresenter!=null){
             bannerListPresenter.getBannerList(getBaseActivity(),3,1);
@@ -313,7 +219,9 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         if(serviceListPresneter!=null){
             serviceListPresneter.getServiceList(getBaseActivity());
         }
-
+        if(tradeLinePresenter!=null){
+            tradeLinePresenter.getTradeLine(getBaseActivity(),"week");
+        }
         //showLoadingDialog();
     }
 
@@ -332,17 +240,150 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         if(serviceListPresneter!=null){
             serviceListPresneter.detachView();
         }
+        if(tradeLinePresenter!=null){
+            tradeLinePresenter.detachView();
+        }
     }
 
     @Override
-    public void onReNetRefreshData(int viewId) {
-        if(bannerListPresenter!=null){
-            bannerListPresenter.getBannerList(getBaseActivity(),3,1);
+    public void onTradeLineSuccess(TradeLineResponseBean tradeLineResponseBean) {
+        tradeDataList = tradeLineResponseBean.getData();
+        tradeXasix = tradeLineResponseBean.getXasix();
+        LogUtils.d("tradeDataList",tradeDataList);
+        LogUtils.d("tradeXasix",tradeXasix);
+        setLineChartData();
+    }
+
+    @Override
+    public void onTradeLineFailed(String msg) {
+
+    }
+
+    /**
+     *  Entry 坐标点对象  构造函数 第一个参数为x点坐标 第二个为y点
+     * "price":"0.00392",
+     * "tdate":"2019-01-04 14:01:00"
+     */
+    public void setLineChartData(){
+
+
+        ArrayList<Entry> values1 = new ArrayList<>();
+        for(TradeLineResponseBean.ChartDataEntity tradeData:tradeDataList){
+            Float x = Float.valueOf(TimeUtils.date2TimeStamp(tradeData.getTdate(),"yyyy-MM-dd HH:mm:ss"));
+            values1.add(new Entry(x,tradeData.getPrice()));
         }
-        if(serviceListPresneter!=null){
-            serviceListPresneter.getServiceList(getBaseActivity());
+//
+        //LineDataSet每一个对象就是一条连接线
+        LineDataSet lineDataSet;
+
+        //判断图表中原来是否有数据
+        if (lineChart.getData() != null && lineChart.getData().getDataSetCount() > 0) {
+            //获取数据1
+            lineDataSet = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
+            lineDataSet.setValues(values1);
+            //刷新数据
+            lineChart.getData().notifyDataChanged();
+            lineChart.notifyDataSetChanged();
+        } else {
+            //设置数据1  参数1：数据源 参数2：图例名称
+            lineDataSet = new LineDataSet(values1, "");
+            lineDataSet.setColor(getResources().getColor(R.color.primary_blue));
+            lineDataSet.setCircleColor(getResources().getColor(R.color.primary_blue));
+            lineDataSet.setLineWidth(1f);//设置线宽
+            lineDataSet.setCircleRadius(2f);//设置焦点圆心的大小
+            lineDataSet.setCircleColor(getResources().getColor(R.color.primary_blue));
+            lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);//点击后的高亮线的显示样式
+            lineDataSet.setHighlightLineWidth(1f);//设置点击交点后显示高亮线宽
+            lineDataSet.setHighlightEnabled(true);//是否禁用点击高亮线
+            lineDataSet.setHighLightColor(getResources().getColor(R.color.actionsheet_gray));//设置点击交点后显示交高亮线的颜色
+            lineDataSet.setValueTextSize(9f);//设置显示值的文字大小
+            lineDataSet.setDrawFilled(false);//设置禁用范围背景填充
+
+            //格式化显示数据
+            final DecimalFormat mFormat = new DecimalFormat("###,###,##0");
+            lineDataSet.setValueFormatter(new IValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                    return mFormat.format(value);
+                }
+            });
+            if (Utils.getSDKInt() >= 18) {
+                // fill drawable only supported on api level 18 and above
+                Drawable drawable = ContextCompat.getDrawable(getBaseActivity(), R.drawable.btn_red_bg_selector);
+                lineDataSet.setFillDrawable(drawable);//设置范围背景填充
+            } else {
+                lineDataSet.setFillColor(Color.BLACK);
+            }
+
+            //保存LineDataSet集合
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(lineDataSet); // add the datasets
+            //创建LineData对象 属于LineChart折线图的数据集合
+            LineData data = new LineData(dataSets);
+            // 添加到图表中
+            lineChart.setData(data);
+            //绘制图表
+            lineChart.invalidate();
+
+            //获取此图表的x轴
+            IAxisValueFormatter formatter = new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+//                ArrayList<Entry> values1 = new ArrayList<>();
+//                values1.add(new Entry(Float.parseFloat(tradeData.getTdate()),tradeData.getPrice()));
+                    String[] values = new String[50];
+                    for(int i=0;i<tradeDataList.size();i++){
+                        values[i] = tradeDataList.get(i).getTdate();
+
+                    }
+                    return values[(int) value+1];
+                }
+
+            };
+            XAxis xAxis = lineChart.getXAxis();
+
+            xAxis.setEnabled(false);//设置轴启用或禁用 如果禁用以下的设置全部不生效
+            xAxis.setDrawAxisLine(true);//是否绘制轴线
+            xAxis.setDrawGridLines(true);//设置x轴上每个点对应的线
+            xAxis.setDrawLabels(true);//绘制标签  指x轴上的对应数值
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
+            //xAxis.setTextSize(20f);//设置字体
+            //xAxis.setTextColor(Color.BLACK);//设置字体颜色
+            //设置竖线的显示样式为虚线
+            //lineLength控制虚线段的长度
+            //spaceLength控制线之间的空间
+            xAxis.enableGridDashedLine(10f, 5f, 0f);
+//        xAxis.setAxisMinimum(0f);//设置x轴的最小值
+//        xAxis.setAxisMaximum(10f);//设置最大值
+            xAxis.setAvoidFirstLastClipping(true);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
+            xAxis.setLabelRotationAngle(10f);//设置x轴标签的旋转角度
+//        设置x轴显示标签数量  还有一个重载方法第二个参数为布尔值强制设置数量 如果启用会导致绘制点出现偏差
+//        xAxis.setLabelCount(10);
+//        xAxis.setTextColor(Color.BLUE);//设置轴标签的颜色
+//        xAxis.setTextSize(24f);//设置轴标签的大小
+//        xAxis.setGridLineWidth(10f);//设置竖线大小
+//        xAxis.setGridColor(Color.RED);//设置竖线颜色
+//        xAxis.setAxisLineColor(Color.GREEN);//设置x轴线颜色
+//        xAxis.setAxisLineWidth(5f);//设置x轴线宽度
+//        xAxis.setValueFormatter();//格式化x轴标签显示字符
+
+            /**
+             * Y轴默认显示左右两个轴线
+             */
+            //获取右边的轴线
+            YAxis rightAxis=lineChart.getAxisRight();
+            //设置图表右边的y轴禁用
+            rightAxis.setEnabled(false);
+
+            //获取左边的轴线
+            YAxis leftAxis = lineChart.getAxisLeft();
+            //设置网格线为虚线效果
+            leftAxis.enableGridDashedLine(10f, 5f, 0f);
+            //是否绘制0所在的网格线
+            leftAxis.setDrawZeroLine(false);
+            //左边Y轴禁用
+//            leftAxis.setEnabled(false);
         }
-        dismissLoadingDialog();
     }
 
     public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
@@ -369,7 +410,9 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     @Override
     public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {
         dismissLoadingDialog();
-
+        imgList.clear();
+        nameList.clear();
+        imgUrlList.clear();
         for(BannerListResponseBean.BannerListEntity listEntity :list){
             imgList.add(listEntity.getImg());
             nameList.add(listEntity.getName());
@@ -387,7 +430,6 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     @Override
     public void onServiceListSuccess(List<ServiceListResponseBean.serviceListEntity> serviceListEntities) {
         dismissLoadingDialog();
-        LogUtils.d("serviceListEntities；"+serviceListEntities.toArray());
         listEntities.clear();
         listEntities.addAll(serviceListEntities);
         serviceListAdapter.notifyDataSetChanged();

@@ -14,7 +14,6 @@ package com.quanminjieshui.waterchain.contract.presenter;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.contract.BasePresenter;
-import com.quanminjieshui.waterchain.contract.model.TradeCenterModel;
 import com.quanminjieshui.waterchain.contract.model.TradeLineModel;
 import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
 
@@ -31,7 +30,9 @@ import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
  * @Version: 1.0
  */
 public class TradeLinePresenter extends BasePresenter<TradeLineViewImpl> {
-    TradeLineModel tradeLineModel;
+    private TradeLineModel tradeLineModel;
+
+    public TradeLinePresenter(){}
 
     public TradeLinePresenter(TradeLineModel tradeLineModel) {
         this.tradeLineModel=tradeLineModel;

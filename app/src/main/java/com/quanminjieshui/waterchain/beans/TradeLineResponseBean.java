@@ -20,16 +20,24 @@ public class TradeLineResponseBean {
     }
 
    public static class ChartDataEntity{
-        private String price;
+        private Float price;
         private String tdate;
 
-        public String getPrice() {
-            return price;
-        }
+       public Float getPrice() {
+           return price;
+       }
 
-        public String getTdate() {
-            return tdate;
-        }
-    }
+       public void setPrice(Float price) {
+           this.price = price;
+       }
+
+       public String getTdate() {
+           return tdate;
+       }
+
+       public void setTdate(String tdate) {
+           this.tdate = tdate;
+       }
+   }
 
 }
