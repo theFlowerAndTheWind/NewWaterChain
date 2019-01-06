@@ -10,6 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开始请求"/>
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:layout_marginBottom="40px"
+        android:layout_height="220dp"
+        android:layout_centerInParent="true"/>
+
 
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import com.quanminjieshui.waterchain.beans.SellResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -98,7 +99,7 @@ public interface APIService {
 
     //折线图
     @POST(UrlConfig.TRADE_LINE)
-    Observable<BaseEntity> tradeLine(@Body RequestBody body);
+    Observable<BaseEntity<TradeLineResponseBean>> tradeLine(@Body RequestBody body);
 
     //个人中心
     @POST(UrlConfig.TRADE_LIST)

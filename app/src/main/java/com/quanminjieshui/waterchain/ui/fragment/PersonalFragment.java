@@ -88,7 +88,6 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
                     jump(ChangePassActivity.class);
                 break;
             case R.id.relative_about_us:
-                if (checkLoginStatus())
                     jump(AboutListActivity.class);
                 break;
             default:

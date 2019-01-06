@@ -2,6 +2,7 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,28 +22,50 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.MarkerView;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.BuyResponseBean;
 import com.quanminjieshui.waterchain.beans.SellResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.contract.model.CancleTradeModel;
 import com.quanminjieshui.waterchain.contract.model.TradeCenterModel;
+import com.quanminjieshui.waterchain.contract.model.TradeLineModel;
 import com.quanminjieshui.waterchain.contract.presenter.CancleTradePresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeCenterPresenter;
+import com.quanminjieshui.waterchain.contract.presenter.TradeLinePresenter;
 import com.quanminjieshui.waterchain.contract.view.CancleTradeViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TradeCenterViewImpl;
+import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
 import com.quanminjieshui.waterchain.event.LoginStatusChangedEvent;
 import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
 import com.quanminjieshui.waterchain.ui.activity.TradeListsActivity;
 import com.quanminjieshui.waterchain.ui.adapter.BuySellTradeListAdapter;
 import com.quanminjieshui.waterchain.ui.adapter.CurrentTradeListsAdapter;
+import com.quanminjieshui.waterchain.ui.widget.Chart.ChartUtil;
 import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +80,7 @@ import butterknife.Unbinder;
 public class TransactionFragment extends BaseFragment implements
         TradeCenterViewImpl,
         CancleTradeViewImpl,
+        TradeLineViewImpl,
         WarningFragment.OnWarningDialogClickedListener,
         CurrentTradeListsAdapter.OnCancleClickedListener {
 
@@ -119,6 +144,7 @@ public class TransactionFragment extends BaseFragment implements
 
     private TradeCenterPresenter tradeCenterPresenter;
     private CancleTradePresenter cancleTradePresenter;
+    private TradeLinePresenter tradeLinePresenter;
     private TradeCenterResponseBean.TradeListEntry trade_list;
     private List<TradeCenterResponseBean.BuySellEntity> buy;
     private List<TradeCenterResponseBean.BuySellEntity> sell;
@@ -130,6 +156,7 @@ public class TransactionFragment extends BaseFragment implements
     private int buyOrSell = 0;//0  buy       1 sell
     private int tradeType = 1;//1限价交易  2市价交易
     private Float tradePrice = 0.0f;//交易单价
+    private Float tradeTotal = 0.0f;//交易数量
     private int visibility;//tvHighest是否可见
     private int visibility1;//llTradePrice是否可见
     private int is_login = 0;//后台返回是否登录  0未登录    1已登录
@@ -142,7 +169,8 @@ public class TransactionFragment extends BaseFragment implements
     private CurrentTradeListsAdapter currentTradeListsAdapter;
     private List<TradeCenterResponseBean.UserCurrentTradeEntity> userCurrentTradeEntityList = new ArrayList<>();
 
-    private String duration = "today";//today 取今天数据 week 近一周 year 一年
+    private String tradeLineType = "today";//today 取今天数据 week 近一周 year 一年
+    private TradeLineResponseBean tradeLineResponseBean;
 
     private BuySellTradeListAdapter buySellTradeListAdapter;
     private List<TradeCenterResponseBean.BuySellEntity> buySellEntityArrayList = new ArrayList<>();
@@ -161,7 +189,11 @@ public class TransactionFragment extends BaseFragment implements
         tradeCenterPresenter.attachView(this);
         cancleTradePresenter = new CancleTradePresenter(new CancleTradeModel());
         cancleTradePresenter.attachView(this);
-        tradeCenterPresenter.getTradeCenter(getBaseActivity());
+        tradeLinePresenter = new TradeLinePresenter(new TradeLineModel());
+        tradeLinePresenter.attachView(this);
+        doTradeCenter();
+        doTradeLine(tradeLineType);
+
         showLoadingDialog();
 
         initView();
@@ -214,13 +246,13 @@ public class TransactionFragment extends BaseFragment implements
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
-                    duration = "today";
+                    tradeLineType = "today";
                 } else if (position == 1) {
-                    duration = "week";
+                    tradeLineType = "week";
                 } else if (position == 2) {
-                    duration = "year";
+                    tradeLineType = "year";
                 }
-                //todo
+                doTradeLine(tradeLineType);
             }
 
             @Override
@@ -263,100 +295,107 @@ public class TransactionFragment extends BaseFragment implements
 
     @Override
     public void onTradeCenterSuccess(TradeCenterResponseBean bean) {
-        dismissLoadingDialog();
         //解析Bean   仅解析
-        tradeCenterResponseBean = bean;
-        if (tradeCenterResponseBean != null) {
-            trade_list = tradeCenterResponseBean.getTrade_list();
-            if (trade_list != null) {
-                buy = trade_list.getBuy();
-                sell = trade_list.getSell();
-            }
-            trade_detail_list = tradeCenterResponseBean.getTrade_detail_list();
-            user_cur_trade = tradeCenterResponseBean.getUser_cur_trade();
-            user_history_trade = tradeCenterResponseBean.getUser_history_trade();
-            user_account = tradeCenterResponseBean.getUser_account();
-            is_login = tradeCenterResponseBean.getIs_login();
-            //该处应进行校验，本地sp值与后台返回is_login对比
-            if (is_login == 0) {
-                isLogin = false;
-            } else if (is_login == 1) {
-                isLogin = true;
-            }
-            user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "user_login");
-        }
-        /***********************************module1**********************************************/
-        tvTradeStatus.setText(tradeCenterResponseBean.getTrade_status());
-        tvCurPrice.setText(tradeCenterResponseBean.getCur_price());
-//        edtPrice.setHint(new StringBuilder("兑换价 ").append(tradeCenterResponseBean.getCur_price()));//需求不明白
-        String price_limit_color = tradeCenterResponseBean.getPrice_limit_color();
-        if (price_limit_color.equals("red")) {
-            tvPriceLimit.setTextColor(getResources().getColor(R.color.primary_red));
-            tvPriceLimit.setText(new StringBuilder("+").append(tradeCenterResponseBean.getPrice_limit()).toString());
-        } else if (price_limit_color.equals("green")) {
-            tvPriceLimit.setTextColor(getResources().getColor(R.color.text_green));
-            tvPriceLimit.setText(new StringBuilder("-").append(tradeCenterResponseBean.getPrice_limit()).toString());
-        } else {
-            tvPriceLimit.setTextColor(getResources().getColor(R.color.text_black));
-            tvPriceLimit.setText(tradeCenterResponseBean.getPrice_limit());
-        }
+        try {
 
-        if (user_account != null) {
-            if (buyOrSell == 0)
-                tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getDs()).append(" 节水指标"));
-            else if (buyOrSell == 1)
-                tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getJsl()).append(" JSL"));
-        }
-        /*************************************module3*************************************************/
 
-        if (is_login == 1) {
-            tvGoLogin.setVisibility(View.GONE);
-            if (user_cur_trade != null && user_cur_trade.size() > 0) {
-                xrvCurTradeList.setVisibility(View.VISIBLE);
-                tvNoData.setVisibility(View.GONE);
-                userCurrentTradeEntityList.clear();
-                if (user_cur_trade.size() > 2) {//仅显示两条
-                    userCurrentTradeEntityList.clear();
-                    userCurrentTradeEntityList.add(user_cur_trade.get(0));
-                    userCurrentTradeEntityList.add(user_cur_trade.get(1));
-                } else {
-                    userCurrentTradeEntityList.addAll(user_cur_trade);
+            tradeCenterResponseBean = bean;
+            if (tradeCenterResponseBean != null) {
+                trade_list = tradeCenterResponseBean.getTrade_list();
+                if (trade_list != null) {
+                    buy = trade_list.getBuy();
+                    sell = trade_list.getSell();
                 }
-                currentTradeListsAdapter.notifyDataSetChanged();
-
-            } else {
-                xrvCurTradeList.setVisibility(View.GONE);
-                tvNoData.setVisibility(View.VISIBLE);
-                tvGoLogin.setVisibility(View.GONE);
+                trade_detail_list = tradeCenterResponseBean.getTrade_detail_list();
+                user_cur_trade = tradeCenterResponseBean.getUser_cur_trade();
+                user_history_trade = tradeCenterResponseBean.getUser_history_trade();
+                user_account = tradeCenterResponseBean.getUser_account();
+                is_login = tradeCenterResponseBean.getIs_login();
+                //该处应进行校验，本地sp值与后台返回is_login对比
+                if (is_login == 0) {
+                    isLogin = false;
+                } else if (is_login == 1) {
+                    isLogin = true;
+                }
+                user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "user_login");
             }
-        } else if (is_login == 0) {
-            xrvCurTradeList.setVisibility(View.GONE);
-            tvNoData.setVisibility(View.GONE);
-            tvGoLogin.setVisibility(View.VISIBLE);
-            tvHistoryTrade.setVisibility(View.GONE);
-        }
+            /***********************************module1**********************************************/
+            tvTradeStatus.setText(tradeCenterResponseBean.getTrade_status());
+            tvCurPrice.setText(tradeCenterResponseBean.getCur_price());
+//        edtPrice.setHint(new StringBuilder("兑换价 ").append(tradeCenterResponseBean.getCur_price()));//需求不明白
+            String price_limit_color = tradeCenterResponseBean.getPrice_limit_color();
+            if (price_limit_color.equals("red")) {
+                tvPriceLimit.setTextColor(getResources().getColor(R.color.primary_red));
+                tvPriceLimit.setText(new StringBuilder("+").append(tradeCenterResponseBean.getPrice_limit()).toString());
+            } else if (price_limit_color.equals("green")) {
+                tvPriceLimit.setTextColor(getResources().getColor(R.color.text_green));
+                tvPriceLimit.setText(new StringBuilder("-").append(tradeCenterResponseBean.getPrice_limit()).toString());
+            } else {
+                tvPriceLimit.setTextColor(getResources().getColor(R.color.text_black));
+                tvPriceLimit.setText(tradeCenterResponseBean.getPrice_limit());
+            }
 
-        /***************************************module4-chart***************************************************/
+            if (user_account != null) {
+                if (buyOrSell == 0)
+                    tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getDs()).append(" 节水指标"));
+                else if (buyOrSell == 1)
+                    tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getJsl()).append(" JSL"));
+            }
+            /*************************************module3*************************************************/
+
+            if (is_login == 1) {
+                tvGoLogin.setVisibility(View.GONE);
+                if (user_cur_trade != null && user_cur_trade.size() > 0) {
+                    xrvCurTradeList.setVisibility(View.VISIBLE);
+                    tvNoData.setVisibility(View.GONE);
+                    userCurrentTradeEntityList.clear();
+                    if (user_cur_trade.size() > 2) {//仅显示两条
+                        userCurrentTradeEntityList.clear();
+                        userCurrentTradeEntityList.add(user_cur_trade.get(0));
+                        userCurrentTradeEntityList.add(user_cur_trade.get(1));
+                    } else {
+                        userCurrentTradeEntityList.addAll(user_cur_trade);
+                    }
+                    currentTradeListsAdapter.notifyDataSetChanged();
+
+                } else {
+                    xrvCurTradeList.setVisibility(View.GONE);
+                    tvNoData.setVisibility(View.VISIBLE);
+                    tvGoLogin.setVisibility(View.GONE);
+                }
+            } else if (is_login == 0) {
+                xrvCurTradeList.setVisibility(View.GONE);
+                tvNoData.setVisibility(View.GONE);
+                tvGoLogin.setVisibility(View.VISIBLE);
+                tvHistoryTrade.setVisibility(View.GONE);
+            }
+
+            /***************************************module4-chart***************************************************/
 
 
-        /***************************************module4-trade_list****************************************************/
-        if (trade_list != null) {
-            buySellEntityArrayList.clear();
-            if (buy != null)
-                buySellEntityArrayList.addAll(buy);
+            /***************************************module4-trade_list****************************************************/
+            if (trade_list != null) {
+                buySellEntityArrayList.clear();
+                if (buy != null)
+                    buySellEntityArrayList.addAll(buy);
 
-            if (sell != null)
-                buySellEntityArrayList.addAll(sell);
+                if (sell != null)
+                    buySellEntityArrayList.addAll(sell);
 
-            if (buySellEntityArrayList.size() > 0) {
-                unfoldBottom();
-                buySellTradeListAdapter.notifyDataSetChanged();
-                xrvTradeList.refreshComplete();
+                if (buySellEntityArrayList.size() > 0) {
+                    unfoldBottom();
+                    buySellTradeListAdapter.notifyDataSetChanged();
+                    xrvTradeList.refreshComplete();
+                } else {
+                    foldBottom();
+                }
             } else {
                 foldBottom();
             }
-        } else {
-            foldBottom();
+
+            dismissLoadingDialog();
+        } catch (Exception e) {
+            onTradeCenterFailed("请重新加载");
         }
     }
 
@@ -372,10 +411,7 @@ public class TransactionFragment extends BaseFragment implements
             @Override
             public void run() {
                 dismissLoadingDialog();
-                if (tradeCenterPresenter == null) {
-                    tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
-                }
-                tradeCenterPresenter.getTradeCenter(getBaseActivity());
+                doTradeCenter();
             }
         }, 500);
     }
@@ -394,10 +430,7 @@ public class TransactionFragment extends BaseFragment implements
             @Override
             public void run() {
                 dismissLoadingDialog();
-                if (tradeCenterPresenter == null) {
-                    tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
-                }
-                tradeCenterPresenter.getTradeCenter(getBaseActivity());
+                doTradeCenter();
             }
         }, 500);// is 500 enough?
     }
@@ -411,7 +444,7 @@ public class TransactionFragment extends BaseFragment implements
 
     @Override
     public void onCancle(int tid) {
-        cancleTradePresenter.cancle(getBaseActivity(), tid);
+        doCancle(tid);
 //        showLoadingDialog();
     }
 
@@ -425,6 +458,17 @@ public class TransactionFragment extends BaseFragment implements
     public void onCancleFailed(String msg) {
 //        dismissLoadingDialog();
         ToastUtils.showCustomToast(msg);
+    }
+
+    @Override
+    public void onTradeLineSuccess(TradeLineResponseBean tradeLineResponseBean) {
+        final List<Entry> datas = ChartUtil.getDatas(tradeLineResponseBean);
+        ChartUtil.initLineChart(lineChart,datas,tradeLineType);
+    }
+
+    @Override
+    public void onTradeLineFailed(String msg) {
+
     }
 
 
@@ -464,8 +508,10 @@ public class TransactionFragment extends BaseFragment implements
                         tradePrice = 0.0f;
                     } else if (visibility == View.GONE && visibility1 == View.VISIBLE) {
                         tradePrice = Float.valueOf(edtPrice.getText().toString());
+                        tradeTotal = Float.valueOf(edtTotal.getText().toString());
                     }
-                    tradeCenterPresenter.buy(getBaseActivity(), tradeType, Float.valueOf(edtTotal.getText().toString()), tradePrice);
+                    //todo
+                    doBuy(tradeType, tradeTotal, tradePrice);
                     showLoadingDialog();
                     break;
                 }
@@ -477,8 +523,10 @@ public class TransactionFragment extends BaseFragment implements
                         tradePrice = 0.0f;
                     } else if (visibility == View.GONE && visibility1 == View.VISIBLE) {
                         tradePrice = Float.valueOf(edtPrice.getText().toString());
+                        tradeTotal = Float.valueOf(edtTotal.getText().toString());
                     }
-                    tradeCenterPresenter.sell(getBaseActivity(), tradeType, Float.valueOf(edtTotal.getText().toString()), tradePrice);
+                    //todo
+                    doSell(tradeType, tradeTotal, tradePrice);
                     showLoadingDialog();
                     break;
                 }
@@ -491,12 +539,10 @@ public class TransactionFragment extends BaseFragment implements
                 jumpLogin();
                 break;
             case R.id.ll_fold:
-//                foldBottom();
                 containerBottom.setVisibility(View.GONE);
                 btnUnfold.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_unfold:
-//                unfoldBottom();
                 containerBottom.setVisibility(View.VISIBLE);
                 btnUnfold.setVisibility(View.GONE);
                 break;
@@ -578,35 +624,51 @@ public class TransactionFragment extends BaseFragment implements
         xrvTradeList.setVisibility(View.VISIBLE);
     }
 
+    private void doTradeCenter() {
+        if (tradeCenterPresenter == null) {
+            tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
+        }
+        tradeCenterPresenter.getTradeCenter(getBaseActivity());
+    }
+
+    private void doBuy(int type, float total, float price) {
+        if (tradeCenterPresenter == null) {
+            tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
+        }
+        tradeCenterPresenter.buy(getBaseActivity(), type, total, price);
+    }
+
+    private void doSell(int type, float total, float price) {
+        if (tradeCenterPresenter == null) {
+            tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
+        }
+        tradeCenterPresenter.sell(getBaseActivity(), type, total, price);
+    }
+
+    private void doCancle(int tid) {
+        if (cancleTradePresenter == null) {
+            cancleTradePresenter = new CancleTradePresenter(new CancleTradeModel());
+        }
+        cancleTradePresenter.cancle(getBaseActivity(), tid);
+    }
+
+    private void doTradeLine(String type) {
+        if (type.equals("today") || type.equals("week") || type.equals("year")) {
+            if (tradeLinePresenter == null) {
+                tradeLinePresenter = new TradeLinePresenter(new TradeLineModel());
+            }
+            tradeLinePresenter.getTradeLine(getBaseActivity(), type);
+        }
+    }
+
 
     public String getIsLogin() {
         return new StringBuilder().append(isLogin).append(user_login).toString();
     }
 
-//    public void onEventMainThread(LoginEvent event) {
-//        if (event != null && event.getMsg().equals("login_success_main_transaction_reconnect")) {
-//            if (tradeCenterPresenter == null) {
-//                tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
-//            }
-//            tradeCenterPresenter.getTradeCenter(getBaseActivity());
-//        }
-//    }
-//
-//    public void onEventMainThread(LogoutEvent event) {
-//        if (event != null && event.getMsg().equals("logout_main_transaction_reconnect")) {
-//            if (tradeCenterPresenter == null) {
-//                tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
-//            }
-//            tradeCenterPresenter.getTradeCenter(getBaseActivity());
-//        }
-//    }
-
     public void onEventMainThread(LoginStatusChangedEvent event) {
         if (event != null && event.getMsg().equals("login_status_changed_main_transaction_reconnect")) {
-            if (tradeCenterPresenter == null) {
-                tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
-            }
-            tradeCenterPresenter.getTradeCenter(getBaseActivity());
+            doTradeCenter();
             showLoadingDialog();
         }
     }
@@ -615,8 +677,8 @@ public class TransactionFragment extends BaseFragment implements
     public void onDestroy() {
         tradeCenterPresenter.detachView();
         cancleTradePresenter.detachView();
-        super.onDestroy();
         unbinder.unbind();
+        super.onDestroy();
     }
 
 

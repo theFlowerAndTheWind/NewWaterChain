@@ -35,16 +35,8 @@
                 android:textSize="@dimen/text_size_edt"
                 android:visibility="gone" />
         </RelativeLayout>
-        <!--<include layout="@layout/module_include_fragment_transaction3" />-->
 
         <include layout="@layout/module_include_fragment_transaction4" />
 
-        <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/blue_border_bg_shape"-->
-            <!--fab:fab_size="mini"-->
-            <!--fab:fab_title="个人发布信息"-->
-            <!--/>-->
     </LinearLayout>
 </ScrollView>

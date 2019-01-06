@@ -182,7 +182,6 @@ public class MainActivity extends BaseActivity {
 
                     String fragmentIsLogin = transactionFragment.getIsLogin();
                     String sp = getSp();
-                    boolean spIsLogin = (boolean) SPUtil.get(this, SPUtil.IS_LOGIN, false);
                     if (fragmentIsLogin.equals(sp)) {
                         EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_transaction_reconnect"));
                     }
@@ -365,8 +364,7 @@ public class MainActivity extends BaseActivity {
 
             String fragmentIsLogin = transactionFragment.getIsLogin();
             String sp = getSp();
-            boolean spIsLogin = (boolean) SPUtil.get(this, SPUtil.IS_LOGIN, false);
-            if (fragmentIsLogin.equals(sp)) {
+            if (!fragmentIsLogin.equals(sp)) {
                 EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_transaction_reconnect"));
             }
 
@@ -402,7 +400,7 @@ public class MainActivity extends BaseActivity {
         if (personalFragment != null) {
             String fragmentIsLogin = personalFragment.getIsLogin();
             String sp = getSp();
-            if (fragmentIsLogin.equals(sp)) {
+            if (!fragmentIsLogin.equals(sp)) {
                 EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_personal_refresh_nickname"));
             }
 

@@ -67,17 +67,39 @@
 
     <include layout="@layout/module_include_divider" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="386px"
-        android:layout_marginLeft="28px"
-        android:layout_marginTop="40px"
-        android:layout_marginRight="28px"
-        android:layout_marginBottom="40px" />
+        android:layout_height="wrap_content">
 
-    <include layout="@layout/module_include_gray_space"
-        android:id="@+id/gray_space_header_above"/>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="386px"
+            android:layout_marginLeft="28px"
+            android:layout_marginTop="40px"
+            android:layout_marginRight="28px"
+            android:layout_marginBottom="40px" />
+
+        <LinearLayout
+            android:id="@+id/ll_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressDrawable="@drawable/btn_normal_blue_bg_shape" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <include
+        android:id="@+id/gray_space_header_above"
+        layout="@layout/module_include_gray_space" />
 
     <include layout="@layout/module_recycle_item_trade_list_header" />
 
@@ -85,5 +107,5 @@
         android:id="@+id/xrl_trade_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
 </LinearLayout>
