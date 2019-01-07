@@ -46,7 +46,6 @@ import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.ui.widget.Chart.ChartUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
-import com.quanminjieshui.waterchain.utils.TimeUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.text.DecimalFormat;
@@ -254,9 +253,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         tradeDataList = tradeLineResponseBean.getData();
         tradeXasix = tradeLineResponseBean.getXasix();
         tradeLineBean = tradeLineResponseBean;
+        final List<Long> longXaxis = ChartUtil.getLongXaxis(tradeXasix);
 //        LogUtils.d("tradeDataList",tradeDataList);
 //        LogUtils.d("tradeXasix",tradeXasix);
-        setLineChartData();
+        setLineChartData(longXaxis);
     }
 
     @Override
@@ -269,14 +269,14 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
      * "price":"0.00392",
      * "tdate":"2019-01-04 14:01:00"
      */
-    public void setLineChartData(){
+    public void setLineChartData(List<Long> longXaxis){
 
 
         ArrayList<Entry> values1 = new ArrayList<>();
         for(TradeLineResponseBean.ChartDataEntity tradeData:tradeDataList){
             float x = Float.parseFloat(String.valueOf(ChartUtil.time2MilliseSecond(tradeData.getTdate())));
-//            float y = Float.parseFloat(tradeData.getPrice());
-            float y = tradeData.getPrice();
+            float y = Float.parseFloat(tradeData.getPrice());
+//            float y = tradeData.getPrice();
             values1.add(new Entry(x,y));
         }
 
@@ -339,6 +339,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
             xAxis.setAvoidFirstLastClipping(true);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
             xAxis.setLabelRotationAngle(0f);//设置x轴标签的旋转角度
             xAxis.setLabelCount(13,false);//x轴刻度数量 第二个为true则明确画出具体数量，但是可能导致不均匀
+            xAxis.setLabelCount(longXaxis.size(), false);
+            //设置X轴的值（最小值、最大值、然后会根据设置的刻度数量自动分配刻度显示）
+            xAxis.setAxisMinimum(ChartUtil.getXaxisMinimum(longXaxis));
+            xAxis.setAxisMaximum(ChartUtil.getXaxisMaximum(longXaxis, "today"));
             xAxis.setValueFormatter(new IAxisValueFormatter() {
                 @Override
                 public String getFormattedValue(float value, AxisBase axis) {

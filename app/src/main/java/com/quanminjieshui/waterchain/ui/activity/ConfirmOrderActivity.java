@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
@@ -124,25 +125,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         Bundle bundle = new Bundle();
         switch (v.getId()){
             case R.id.left_ll:
-                if(alertChainPayDialog!=null){
-                    //dialog msg消息体比较特殊 请勿更改！！！
-                    alertChainPayDialog.builder().setCancelable(false);
-                    alertChainPayDialog.setTitle("确认离开支付页面").setMsg("您的订单在 "+countDown+" 后未支付将会被取消，请尽快支付。")
-                            .setNegativeButton("确认离开", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    TimeCount.cancel();
-                                    hideSoftKeyboard(ConfirmOrderActivity.this);
-                                    finish();
-                                }
-                            }).setPositiveButton("继续支付", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    }).show();
-                    countDownPayTime();
-                }
+                exitPay();
                 break;
             case R.id.order_detail:
                 View parent = LayoutInflater.from(ConfirmOrderActivity.this).inflate(R.layout.activity_confirm_order, null);
@@ -206,6 +189,28 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 payChannel = "zfb";
                 break;
             default:break;
+        }
+    }
+
+    private void exitPay() {
+        if(alertChainPayDialog!=null){
+            //dialog msg消息体比较特殊 请勿更改！！！
+            alertChainPayDialog.builder().setCancelable(false);
+            alertChainPayDialog.setTitle("确认离开支付页面").setMsg("您的订单在 "+countDown+" 后未支付将会被取消，请尽快支付。")
+                    .setNegativeButton("确认离开", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            TimeCount.cancel();
+                            hideSoftKeyboard(ConfirmOrderActivity.this);
+                            finish();
+                        }
+                    }).setPositiveButton("继续支付", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            }).show();
+            countDownPayTime();
         }
     }
 
@@ -302,10 +307,12 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                     String [] tradeData;
                     for (String aTrade_detail : trade_detail) {
                         tradeData = aTrade_detail.split("_");
-                        type = tradeData[0];
+                        type = tradeData[2];
                         pieceItemCout = Integer.parseInt(tradeData[1]);
                         pieceCount += Integer.parseInt(tradeData[1]);
-                        trade_detail_tv += type + "*" + pieceItemCout + "  ";
+                        if(pieceItemCout>0){
+                            trade_detail_tv += type + "*" + pieceItemCout + "  ";
+                        }
                     }
                     wash_detail_tv.setText(trade_detail_tv);
                     wash_detail_count.setText("共"+pieceCount+"件");
@@ -315,6 +322,17 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 break;
             default:break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            exitPay();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
