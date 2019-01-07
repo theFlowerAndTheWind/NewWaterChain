@@ -18,6 +18,7 @@ import com.quanminjieshui.waterchain.beans.SellResponseBean;
 import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
+import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
@@ -79,7 +80,7 @@ public interface APIService {
 
     //成交明细
     @POST(UrlConfig.TRADE_DETAIL)
-    Observable<BaseEntity> tradeDetail(@Body RequestBody requestBody);
+    Observable<BaseEntity<TradeDetailResponseBean>> tradeDetail(@Body RequestBody requestBody);
 
     //交易中心
     @POST(UrlConfig.TRADE_CENTER)

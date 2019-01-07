@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/v_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_space_gray"
+        android:background="@color/space_gray"
+        android:visibility="visible" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:id="@+id/tv_add_time"
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layout_horizontal_margin"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_edt" />
+    </RelativeLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="成交价"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layout_horizontal_margin"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_edt" />
+    </RelativeLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="成交量"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:id="@+id/tv_total"
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layout_horizontal_margin"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_edt" />
+    </RelativeLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手续费"
+            android:textSize="@dimen/text_size_edt" />
+
+        <TextView
+            android:id="@+id/tv_fee"
+            style="@style/style_txt_confirm_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layout_horizontal_margin"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_edt" />
+    </RelativeLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+</LinearLayout>

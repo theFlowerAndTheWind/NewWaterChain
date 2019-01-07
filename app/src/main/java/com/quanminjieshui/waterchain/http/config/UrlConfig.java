@@ -779,6 +779,28 @@ public class UrlConfig {
      */
     public static final String TRADE_LIST = "api/home/user/tradeLists";
     //交易明细
+    /**
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "old_total":"147.64575",
+     *     │         "action_type":"贡献",
+     *     │         "uid":6,
+     *     │         "avg_price":"0.00346",
+     *     │         "deal_total":"0.51085",
+     *     │         "fee":"0.73822T",
+     *     │         "trade_detail":[
+     *     │             {
+     *     │                 "add_time":"2019-01-07 21:56:01",
+     *     │                 "price":"0.00346",
+     *     │                 "total":"147.64575",
+     *     │                 "fee":"0.73822T"
+     *     │             }
+     *     │         ]
+     *     │     }
+     *     │ }
+     */
     public static final String TRADE_DETAIL = "api/home/user/tradeDetail";
     //洗涤订单
     /**

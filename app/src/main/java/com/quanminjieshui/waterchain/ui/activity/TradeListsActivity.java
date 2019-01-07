@@ -30,11 +30,17 @@ import com.quanminjieshui.waterchain.contract.presenter.CancleTradePresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeListsPresenter;
 import com.quanminjieshui.waterchain.contract.view.CancleTradeViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TradeListsViewImpl;
+import com.quanminjieshui.waterchain.http.BaseObserver;
+import com.quanminjieshui.waterchain.http.RetrofitFactory;
+import com.quanminjieshui.waterchain.http.bean.BaseEntity;
+import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
+import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.ui.adapter.TradeListsAdapter;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -147,6 +153,10 @@ public class TradeListsActivity extends BaseActivity implements
         Intent intent = new Intent(this, TradeDetaiActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
+
+        HashMap<String,Object>params=new HashMap<>();
+        params.put("id",id);
+
     }
 
     @Override
