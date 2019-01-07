@@ -658,7 +658,7 @@ public class TransactionFragment extends BaseFragment implements
     }
 
     private void doTradeLine(String type) {
-        if (type.equals("today") || type.equals("week") || type.equals("year")) {
+        if (type.equals("today") || type.equals("week") || type.equals("month")|| type.equals("year")) {
             if (tradeLinePresenter == null) {
                 tradeLinePresenter = new TradeLinePresenter(new TradeLineModel());
             }
