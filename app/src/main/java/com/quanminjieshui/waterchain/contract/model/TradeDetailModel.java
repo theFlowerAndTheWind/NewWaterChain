@@ -28,20 +28,18 @@ public class TradeDetailModel {
         params.put("id",id);
         RetrofitFactory.getInstance().createService()
                 .tradeDetail(RequestUtil.getRequestHashBody(params,false))
-                .compose(activity.<BaseEntity>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity>io())
-                .subscribe(new BaseObserver(activity) {
+                .compose(activity.<BaseEntity<TradeDetailResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<TradeDetailResponseBean>>io())
+                .subscribe(new BaseObserver<TradeDetailResponseBean>(activity) {
 
                     /**
                      * 返回成功
                      *
-                     * @param o
+                     * @param tradeDetailBean
                      * @throws Exception
                      */
                     @Override
-                    protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        TradeDetailResponseBean tradeDetailBean = gson.fromJson((JsonElement) o,new TypeToken<OrderListsResponseBean>() {}.getType());
+                    protected void onSuccess(TradeDetailResponseBean tradeDetailBean) throws Exception {
                         callBack.success(tradeDetailBean);
                     }
 
