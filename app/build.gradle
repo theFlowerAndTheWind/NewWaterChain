@@ -108,7 +108,7 @@ android {
 }
 
 dependencies {
-    compile(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
+    implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'

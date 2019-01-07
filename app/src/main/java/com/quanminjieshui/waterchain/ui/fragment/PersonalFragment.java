@@ -15,6 +15,7 @@ import com.quanminjieshui.waterchain.ui.activity.ChangePassActivity;
 import com.quanminjieshui.waterchain.ui.activity.GoodsActivity;
 import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
 import com.quanminjieshui.waterchain.ui.activity.OrderListsActivity;
+import com.quanminjieshui.waterchain.ui.activity.TradeListsActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserAssetActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserConfirmActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
@@ -69,7 +70,7 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
                 break;
             case R.id.relative_trade_lists:
                 if (checkLoginStatus())
-                    showToast("nothing!");
+                    jump(TradeListsActivity.class);
                 break;
             case R.id.relative_order_lists:
                 if (checkLoginStatus())
