@@ -4,12 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
+    <EditText
+        android:id="@+id/edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btn_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开始请求"/>
+    <Button
+        android:id="@+id/btn_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示"/>
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"

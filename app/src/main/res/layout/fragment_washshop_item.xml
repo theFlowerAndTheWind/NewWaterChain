@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    style="@style/PaddinLeftRight">
 
 
     <FrameLayout
@@ -10,8 +11,6 @@
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/service_img"
-            android:layout_marginRight="20px"
-            android:layout_marginLeft="20px"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_default_image"
             android:layout_width="match_parent"
@@ -21,7 +20,6 @@
         <TextView
             android:id="@+id/tv_service_name"
             android:layout_marginTop="190px"
-            android:layout_marginHorizontal="20px"
             android:layout_width="match_parent"
             android:layout_height="60px"
             android:text="山东临沂节水洗涤厂"
@@ -34,8 +32,9 @@
 
     <LinearLayout
         style="@style/MatchWrap"
-        android:padding="20px"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="15px"
+        android:layout_marginBottom="15px">
 
         <LinearLayout
             android:layout_weight="1"
@@ -60,7 +59,7 @@
                         android:layout_marginRight="20px"
                         android:layout_below="@+id/tv_order_title"
                         android:layout_width="wrap_content"
-                        android:textSize="30px"
+                        android:textSize="11sp"
                         android:layout_height="match_parent"
                         android:text="服务范围："/>
 
@@ -71,7 +70,7 @@
                         android:layout_marginRight="20px"
                         android:layout_below="@+id/tv_order_title"
                         android:layout_width="match_parent"
-                        android:textSize="30px"
+                        android:textSize="11sp"
                         android:layout_height="match_parent"/>
                 </LinearLayout>
 
@@ -86,7 +85,7 @@
                         android:layout_marginRight="20px"
                         android:layout_below="@+id/tv_order_title"
                         android:layout_width="wrap_content"
-                        android:textSize="30px"
+                        android:textSize="11sp"
                         android:layout_height="match_parent"
                         android:text="业务范围："/>
                     <TextView
@@ -99,7 +98,7 @@
                         android:layout_marginRight="20px"
                         android:layout_below="@+id/tv_order_title"
                         android:layout_width="match_parent"
-                        android:textSize="30px"
+                        android:textSize="11sp"
                         android:layout_height="match_parent"/>
 
                 </LinearLayout>
@@ -111,8 +110,8 @@
                 style="@style/style_btn"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:textSize="30px"
-                android:layout_height="90px"
+                android:textSize="14sp"
+                android:layout_height="50px"
                 android:layout_gravity="left|center"
                 android:text="查看服务项目" />
         </LinearLayout>

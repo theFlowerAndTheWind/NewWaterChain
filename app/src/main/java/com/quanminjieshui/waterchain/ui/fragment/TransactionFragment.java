@@ -250,7 +250,7 @@ public class TransactionFragment extends BaseFragment implements
                 } else if (position == 1) {
                     tradeLineType = "week";
                 } else if (position == 2) {
-                    tradeLineType = "year";
+                    tradeLineType = "month";
                 }
                 doTradeLine(tradeLineType);
             }
@@ -462,8 +462,13 @@ public class TransactionFragment extends BaseFragment implements
 
     @Override
     public void onTradeLineSuccess(TradeLineResponseBean tradeLineResponseBean) {
-        final List<Entry> datas = ChartUtil.getDatas(tradeLineResponseBean);
-        ChartUtil.initLineChart(lineChart,datas,tradeLineType);
+        if (tradeLineResponseBean != null) {
+            final List<TradeLineResponseBean.ChartDataEntity> data = tradeLineResponseBean.getData();
+            final List<String> xaxis = tradeLineResponseBean.getXasix();
+            final List<Entry> entries = ChartUtil.getEntries(data);
+            final List<Long> longXaxis = ChartUtil.getLongXaxis(xaxis);
+            ChartUtil.initLineChart(lineChart, entries, longXaxis, tradeLineType);
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="洗涤业务"
         android:padding="20px"
+        android:paddingLeft="@dimen/layout_horizontal_padding"
         android:textStyle="bold"
         android:textSize="18sp"/>
 
