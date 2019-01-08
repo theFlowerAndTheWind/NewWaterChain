@@ -319,6 +319,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 }
                 break;
             case 3://WashAddressActivity
+
                 break;
             default:break;
         }
