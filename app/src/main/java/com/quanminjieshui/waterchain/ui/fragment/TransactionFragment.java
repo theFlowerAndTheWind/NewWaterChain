@@ -54,6 +54,7 @@ import com.quanminjieshui.waterchain.ui.adapter.BuySellTradeListAdapter;
 import com.quanminjieshui.waterchain.ui.adapter.CurrentTradeListsAdapter;
 import com.quanminjieshui.waterchain.ui.widget.Chart.ChartUtil;
 import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 
@@ -275,13 +276,7 @@ public class TransactionFragment extends BaseFragment implements
         xrvTradeList.setPullRefreshEnabled(false);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
 
-        }
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -493,7 +488,6 @@ public class TransactionFragment extends BaseFragment implements
 
     @Override
     public void onNegativeClicked(String tag) {
-
     }
 
     @OnClick({R.id.rl_trade_type, R.id.btn_buy, R.id.btn_sell, R.id.tv_history_trade,
@@ -663,6 +657,16 @@ public class TransactionFragment extends BaseFragment implements
                 tradeLinePresenter = new TradeLinePresenter(new TradeLineModel());
             }
             tradeLinePresenter.getTradeLine(getBaseActivity(), type);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogUtils.e("tag","***************"+hidden);
+        if (hidden) {//fragment被hide时保存
+            isLogin=(boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
+            user_login=(String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "token");
         }
     }
 

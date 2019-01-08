@@ -23,6 +23,7 @@ import com.quanminjieshui.waterchain.ui.fragment.HomeFragment;
 import com.quanminjieshui.waterchain.ui.fragment.PersonalFragment;
 import com.quanminjieshui.waterchain.ui.fragment.TransactionFragment;
 import com.quanminjieshui.waterchain.ui.fragment.WashFragment;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
@@ -182,7 +183,8 @@ public class MainActivity extends BaseActivity {
 
                     String fragmentIsLogin = transactionFragment.getIsLogin();
                     String sp = getSp();
-                    if (fragmentIsLogin.equals(sp)) {
+//                    LogUtils.e("tag",fragmentIsLogin+"******"+sp);
+                    if (!fragmentIsLogin.equals(sp)) {
                         EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_transaction_reconnect"));
                     }
 
@@ -214,7 +216,7 @@ public class MainActivity extends BaseActivity {
                 if (personalFragment != null) {
                     String fragmentIsLogin = personalFragment.getIsLogin();
                     String sp = getSp();
-                    if (fragmentIsLogin.equals(sp)) {
+                    if (!fragmentIsLogin.equals(sp)) {
                         EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_personal_refresh_nickname"));
                     }
 
