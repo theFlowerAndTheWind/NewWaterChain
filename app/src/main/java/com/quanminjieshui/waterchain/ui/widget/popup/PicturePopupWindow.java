@@ -10,7 +10,7 @@
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-package com.quanminjieshui.waterchain.ui.widget;
+package com.quanminjieshui.waterchain.ui.widget.popup;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

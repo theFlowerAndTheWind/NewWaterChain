@@ -44,9 +44,8 @@ import com.quanminjieshui.waterchain.ui.activity.FactoryServiceActivity;
 import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
 import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
-import com.quanminjieshui.waterchain.ui.widget.Chart.ChartUtil;
+import com.quanminjieshui.waterchain.ui.widget.chart.ChartUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
-import com.quanminjieshui.waterchain.utils.TimeUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.text.DecimalFormat;
