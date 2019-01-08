@@ -48,9 +48,8 @@ import com.quanminjieshui.waterchain.contract.view.PictureViewImpl;
 import com.quanminjieshui.waterchain.event.PictureEvent;
 import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.adapter.SpinnerAdapter;
-import com.quanminjieshui.waterchain.ui.widget.PicturePopupWindow;
+import com.quanminjieshui.waterchain.ui.widget.popup.PicturePopupWindow;
 import com.quanminjieshui.waterchain.utils.GsonUtil;
-import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.PictureFileUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 

@@ -13,14 +13,18 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
+import com.quanminjieshui.waterchain.beans.AdImgResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
+import com.quanminjieshui.waterchain.contract.model.AdImgModel;
 import com.quanminjieshui.waterchain.contract.model.BannerListModel;
 import com.quanminjieshui.waterchain.contract.model.InfoListModel;
+import com.quanminjieshui.waterchain.contract.presenter.AdImgPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.InfoListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.ServiceListPresneter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeLinePresenter;
+import com.quanminjieshui.waterchain.contract.view.AdImgViewImpl;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.InfoListViewImpl;
 import com.quanminjieshui.waterchain.ui.activity.GoodsActivity;
@@ -46,12 +50,19 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Class Note:
  */
 
-public class FindFragment extends BaseFragment implements InfoListViewImpl,BannerListViewImpl, XRecyclerView.LoadingListener, InfoListsAdapter.OnItemClickListener {
+public class FindFragment extends BaseFragment implements
+        InfoListViewImpl,
+        BannerListViewImpl,
+        AdImgViewImpl,
+        XRecyclerView.LoadingListener,
+        InfoListsAdapter.OnItemClickListener {
 
 
     Unbinder unbinder;
     @BindView(R.id.banner_guide_content)
     BGABanner mContentBanner;
+    @BindView(R.id.img_goods)
+    ImageView imgGoods;
     @BindView(R.id.xrv)
     XRecyclerView xrv;
     @BindView(R.id.tv_detail)
@@ -63,6 +74,7 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
     private InfoListsAdapter infoListsAdapter;
     private InfoListPresenter infoListPresenter;
     private BannerListPresenter bannerListPresenter;
+    private AdImgPresenter adImgPresenter;
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> nameList = new ArrayList<>();
     ArrayList<String> imgUrlList = new ArrayList<>();
@@ -72,20 +84,26 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
         super.onCreate(savedInstanceState);
         infoListPresenter = new InfoListPresenter(new InfoListModel());
         infoListPresenter.attachView(this);
-        bannerListPresenter=new BannerListPresenter(new BannerListModel());
+        bannerListPresenter = new BannerListPresenter(new BannerListModel());
         bannerListPresenter.attachView(this);
+        adImgPresenter = new AdImgPresenter(new AdImgModel());
+        adImgPresenter.attachView(this);
         requestNetwork();
     }
 
-    public void requestNetwork(){
-        if(infoListPresenter!=null){
-            infoListPresenter.getInfoList(getBaseActivity(),dataCounter);
+    public void requestNetwork() {
+        if (infoListPresenter != null) {
+            infoListPresenter.getInfoList(getBaseActivity(), dataCounter);
         }
-        if(bannerListPresenter!=null){
-            bannerListPresenter.getBannerList(getBaseActivity(),3,1);//TODO position=2时无数据，1临时使用
+        if (bannerListPresenter != null) {
+            bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);//TODO position=2时无数据，1临时使用
+        }
+        if (adImgPresenter != null) {
+            adImgPresenter.getAdImg(getBaseActivity(), "ad_goods");
         }
         //showLoadingDialog();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_find, container, false);
@@ -99,7 +117,7 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
         mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-                GlidImageManager.getInstance().loadImageView(getBaseActivity(),model,itemView,R.drawable.holder);
+                GlidImageManager.getInstance().loadImageView(getBaseActivity(), model, itemView, R.drawable.holder);
             }
         });
 
@@ -123,8 +141,8 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
                 Intent intent = new Intent();
                 intent.setClass(getBaseActivity(), WebViewActivity.class);
-                intent.putExtra("URL",imgUrlList.get(position));
-                intent.putExtra("title",nameList.get(position));
+                intent.putExtra("URL", imgUrlList.get(position));
+                intent.putExtra("title", nameList.get(position));
                 startActivity(intent);
             }
         });
@@ -196,16 +214,16 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
         }
     }
 
-    private void jump(Class<?> cls,Intent intent){
-        if(intent==null){
-            intent=new Intent();
+    private void jump(Class<?> cls, Intent intent) {
+        if (intent == null) {
+            intent = new Intent();
         }
-        intent.setClass(getActivity(),cls);
+        intent.setClass(getActivity(), cls);
         startActivity(intent);
     }
 
 
-    @OnClick({R.id.tv_detail,R.id.img_goods})
+    @OnClick({R.id.tv_detail, R.id.img_goods})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -217,7 +235,7 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
                 break;
 
             case R.id.img_goods:
-               jump(GoodsListsActivity.class,null);
+                jump(GoodsListsActivity.class, null);
             default:
                 break;
         }
@@ -226,9 +244,9 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
 
     @Override
     public void onItemClickListener(int id) {
-        Intent intent=new Intent();
-        intent.putExtra("id",id);
-        jump(InfoDetailActivity.class,intent);
+        Intent intent = new Intent();
+        intent.putExtra("id", id);
+        jump(InfoDetailActivity.class, intent);
 
     }
 
@@ -237,6 +255,7 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
         unbinder.unbind();
         infoListPresenter.detachView();
         bannerListPresenter.detachView();
+        adImgPresenter.detachView();
         super.onDestroy();
     }
 
@@ -245,7 +264,7 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
         imgList.clear();
         nameList.clear();
         imgUrlList.clear();
-        for(BannerListResponseBean.BannerListEntity listEntity :list){
+        for (BannerListResponseBean.BannerListEntity listEntity : list) {
             imgList.add(listEntity.getImg());
             nameList.add(listEntity.getName());
             imgUrlList.add(listEntity.getUrl());
@@ -256,5 +275,18 @@ public class FindFragment extends BaseFragment implements InfoListViewImpl,Banne
     @Override
     public void onBannerListFailed(String msg) {
 
+    }
+
+    @Override
+    public void onGetAdImgSuccess(AdImgResponseBean bean) {
+        if (bean != null) {
+
+            GlidImageManager.getInstance().loadImageView(getActivity(), bean.getImg(), imgGoods, R.mipmap.img_goods);
+        }
+    }
+
+    @Override
+    public void onGetAdImgFailed(String msg) {
+        ToastUtils.showCustomToast(msg);
     }
 }

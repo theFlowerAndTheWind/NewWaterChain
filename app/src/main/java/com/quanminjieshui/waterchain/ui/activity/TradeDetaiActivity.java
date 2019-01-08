@@ -135,6 +135,7 @@ public class TradeDetaiActivity extends BaseActivity implements TradeDetailViewI
     @Override
     protected void onDestroy() {
         unbinder.unbind();
+        tradeDetailPresenter.detachView();
         super.onDestroy();
     }
 

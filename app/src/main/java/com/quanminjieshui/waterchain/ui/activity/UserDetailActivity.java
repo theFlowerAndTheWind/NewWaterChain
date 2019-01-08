@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,15 +16,17 @@ import com.quanminjieshui.waterchain.contract.model.UserDetailModel;
 import com.quanminjieshui.waterchain.contract.presenter.UserDetailPresenter;
 import com.quanminjieshui.waterchain.contract.view.UserDetailViewImpl;
 import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
-import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
+import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
-public class UserDetailActivity extends BaseActivity implements UserDetailViewImpl, WarningFragment.OnWarningDialogClickedListener {
+public class UserDetailActivity extends BaseActivity implements UserDetailViewImpl {
 
     @BindView(R.id.title_bar)
     View titleBar;
@@ -51,6 +54,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
     Button btnLogout;
 
     private UserDetailPresenter userDetailPresenter;
+    private AlertChainDialog dialog;
 
     @OnClick({R.id.left_ll, R.id.tv_change_pass, R.id.tv_auth_status, R.id.btn_logout})
     public void onClick(View v) {
@@ -62,14 +66,51 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
                 break;
             case R.id.tv_change_pass:
                 jump(ChangePassActivity.class);
+                finish();
                 break;
 
             case R.id.tv_auth_status:
                 jump(AuthActivity.class);
+                finish();
                 break;
             case R.id.btn_logout:
-                WarningFragment fragment = new WarningFragment("提示消息", "确认退出当前账号", "确定", "取消", "logout", this);
-                fragment.show(getSupportFragmentManager(), "warning_fragment");
+
+                if (dialog == null) {
+                    dialog = new AlertChainDialog(this);
+                }
+                dialog.builder().setCancelable(true);
+                dialog.setTitle("提示消息")
+                        .setMsg("确认退出当前账号")
+                        .setPositiveButton("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //一起操作
+                                //            SPUtil.delete(this,SPUtil.IS_LOGIN);
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.TOKEN);
+                                SPUtil.insert(UserDetailActivity.this, SPUtil.IS_LOGIN, false);//更改用户登录状态为未登录
+
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.USER_LOGIN);
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.UID);
+
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.ID);
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.IS_BLOCKED);
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.USER_LOGIN);
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.USER_NICKNAME);
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.TOKEN);
+
+
+                                jump(MainActivity.class);
+                                EventBus.getDefault().post(new SelectFragmentEvent("我的"));//显示personalFragment
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .show();
                 break;
             default:
                 break;
@@ -84,11 +125,13 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
 
         userDetailPresenter = new UserDetailPresenter(new UserDetailModel());
         userDetailPresenter.attachView(this);
+        showLoadingDialog();
         userDetailPresenter.getUserDetail(this);
     }
 
     private void initView() {
         tvTitleCenter.setText("账户信息");
+
     }
 
     private void jump(Class<?> cls) {
@@ -108,40 +151,16 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
 
 
     @Override
-    public void onPositiveClicked(String tag) {
-        if (tag.equals("logout")) {
-            //一起操作
-            //            SPUtil.delete(this,SPUtil.IS_LOGIN);
-            SPUtil.delete(this, SPUtil.TOKEN);
-            SPUtil.insert(UserDetailActivity.this, SPUtil.IS_LOGIN, false);//更改用户登录状态为未登录
-
-            SPUtil.delete(this, SPUtil.USER_LOGIN);
-            SPUtil.delete(this, SPUtil.UID);
-
-            SPUtil.delete(this, SPUtil.ID);
-            SPUtil.delete(this, SPUtil.IS_BLOCKED);
-            SPUtil.delete(this, SPUtil.USER_LOGIN);
-            SPUtil.delete(this, SPUtil.USER_NICKNAME);
-            SPUtil.delete(this, SPUtil.TOKEN);
-
-
-            jump(MainActivity.class);
-            EventBus.getDefault().post(new SelectFragmentEvent("我的"));//显示personalFragment
-//            EventBus.getDefault().post(new LogoutEvent("logout_main_personal_refresh_nickname"));//头像右侧用户名显示
-//            EventBus.getDefault().post(new LogoutEvent("logout_main_transaction_reconnect"));//transaction重新请求刷新
-            finish();
-        }
-    }
-
-    @Override
-    public void onNegativeClicked(String tag) {
-
-    }
-
-    @Override
     public void onUserDetailSuccess(UserDetailResponseBean userDetailResponseBean) {
         if (userDetailResponseBean != null) {
-            tvUserLogin.setText((String)SPUtil.get(this,SPUtil.USER_NICKNAME,"********"));
+            final String avatar = userDetailResponseBean.getAvatar();
+            GlidImageManager.getInstance().loadCircleImg(this, avatar, imgAvatar, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round);
+
+            String user_nickname = (String) SPUtil.get(this, SPUtil.USER_NICKNAME, "********");
+            if (TextUtils.isEmpty(user_nickname)) {
+                user_nickname = "********";
+            }
+            tvUserLogin.setText(user_nickname);
             tvCreateTime.setText(userDetailResponseBean.getCreate_time());
             tvUserLoginTel.setText(userDetailResponseBean.getUser_login());
             tvUserType.setText(userDetailResponseBean.getUser_type());
@@ -156,11 +175,13 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
                 tvAuthStatus.setEnabled(false);
             }
         }
+        dismissLoadingDialog();
     }
 
     @Override
     public void onUserDetailFailed(String msg) {
-
+        dismissLoadingDialog();
+        ToastUtils.showCustomToast("msg");
     }
 
     @Override

@@ -9,10 +9,9 @@
  * 作者姓名 修改时间 版本号 描述
  */
 
-package com.quanminjieshui.waterchain.ui.widget.Chart;
+package com.quanminjieshui.waterchain.ui.widget.chart;
 
 import android.content.Context;
-import android.os.DropBoxManager;
 import android.text.format.DateFormat;
 import android.widget.TextView;
 

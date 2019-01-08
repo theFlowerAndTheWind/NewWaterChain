@@ -899,5 +899,19 @@ public class UrlConfig {
      *
      */
     public static final String GOODS="api/home/user/goods";
+    //获取广告位图片  ad_fac（洗涤业务页面顶部图片）|ad_goods（发现页兑换商场图片）
+    /**
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "img":"https:\/\/www.quanminjieshui.com\/upload\/admin\/20190108\/19116f04112a21a9d03b752902c5b504.jpg",
+     *     │         "name":"pic"
+     *     │     }
+     *     │ }
+     */
+    public static final String AD_IMG="api/home/common/getAdImg";
+
+
 
 }

@@ -9,21 +9,20 @@
  * 作者姓名 修改时间 版本号 描述
  */
 
-package com.quanminjieshui.waterchain.ui.widget.Chart;
+package com.quanminjieshui.waterchain.ui.widget.chart;
 
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 
 import java.text.ParseException;
@@ -32,10 +31,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ProjectName: NewWaterChain
@@ -216,12 +213,7 @@ public class ChartUtil {
         lineChart.setDrawBorders(false);
 
         //一个LineDataSet就是一条线
-        LineDataSet lineDataSet = new LineDataSet(entries, "");
-
-
-
-
-
+        LineDataSet lineDataSet = new LineDataSet(entries, null);
 
 
         //线颜色
@@ -256,7 +248,7 @@ public class ChartUtil {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
 
-                final String string = ChartUtil.MilliseSecond2DateString((long) value,tradeLineType);
+                final String string = ChartUtil.MilliseSecond2DateString((long) value, tradeLineType);
                 return string;
             }
         });
@@ -268,6 +260,16 @@ public class ChartUtil {
         //设置y轴坐标之间的最小间隔
         //不显示网格线
         yAxis.setDrawGridLines(false);
+
+        //隐藏描述
+        Description description = new Description();
+        description.setEnabled(false);
+        lineChart.setDescription(description);
+        //图例：得到Lengend
+        Legend legend = lineChart.getLegend();
+        //隐藏Lengend
+        legend.setEnabled(false);
+
 
         //设置数据
         lineChart.setData(data);
@@ -323,7 +325,7 @@ public class ChartUtil {
             pattern = "hh:mm";
         } else if (type.equals("week")) {
             pattern = "MM-dd";
-        } else if (type.equals("month")||type.equals("year")) {
+        } else if (type.equals("month") || type.equals("year")) {
             pattern = "yy-MM-dd";
         }
         Date date = new Date(millisecond);
@@ -351,6 +353,7 @@ public class ChartUtil {
 
     /**
      * x轴最大值  该值不作为label，不显示在x轴上
+     *
      * @param longXaxis
      * @param type
      * @return
@@ -370,7 +373,7 @@ public class ChartUtil {
                     return longXaxis.get(0) + 24 * 60 * 60 * 1000;//加一天
                 } else if (type.equals("month")) {
                     return longXaxis.get(0) + 31 * 24 * 60 * 60 * 1000;//加31天
-                }else{
+                } else {
                     return longXaxis.get(0) + 24 * 60 * 60 * 1000;//加一天
                 }
             } else {

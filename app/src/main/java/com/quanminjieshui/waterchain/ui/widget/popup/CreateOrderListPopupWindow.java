@@ -1,4 +1,4 @@
-package com.quanminjieshui.waterchain.ui.widget;
+package com.quanminjieshui.waterchain.ui.widget.popup;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

@@ -2,15 +2,11 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,20 +18,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.MarkerView;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
+
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.beans.BuyResponseBean;
-import com.quanminjieshui.waterchain.beans.SellResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.contract.model.CancleTradeModel;
@@ -52,20 +38,14 @@ import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
 import com.quanminjieshui.waterchain.ui.activity.TradeListsActivity;
 import com.quanminjieshui.waterchain.ui.adapter.BuySellTradeListAdapter;
 import com.quanminjieshui.waterchain.ui.adapter.CurrentTradeListsAdapter;
-import com.quanminjieshui.waterchain.ui.widget.Chart.ChartUtil;
-import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
+import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
+import com.quanminjieshui.waterchain.ui.widget.chart.ChartUtil;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,7 +61,6 @@ public class TransactionFragment extends BaseFragment implements
         TradeCenterViewImpl,
         CancleTradeViewImpl,
         TradeLineViewImpl,
-        WarningFragment.OnWarningDialogClickedListener,
         CurrentTradeListsAdapter.OnCancleClickedListener {
 
     @BindView(R.id.tv_trade_status)
@@ -175,6 +154,7 @@ public class TransactionFragment extends BaseFragment implements
     private BuySellTradeListAdapter buySellTradeListAdapter;
     private List<TradeCenterResponseBean.BuySellEntity> buySellEntityArrayList = new ArrayList<>();
     private Handler handler = new Handler();
+    private AlertChainDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -275,13 +255,6 @@ public class TransactionFragment extends BaseFragment implements
         xrvTradeList.setPullRefreshEnabled(false);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-
-        }
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -482,19 +455,6 @@ public class TransactionFragment extends BaseFragment implements
         edtPrice.setText("");
     }
 
-    @Override
-    public void onPositiveClicked(String tag) {
-        switch (tag) {
-            case "checkLoinBeforBuy":
-                jumpLogin();
-                break;
-        }
-    }
-
-    @Override
-    public void onNegativeClicked(String tag) {
-
-    }
 
     @OnClick({R.id.rl_trade_type, R.id.btn_buy, R.id.btn_sell, R.id.tv_history_trade,
             R.id.tv_go_login, R.id.ll_fold, R.id.btn_unfold})
@@ -518,8 +478,11 @@ public class TransactionFragment extends BaseFragment implements
                     //todo
                     doBuy(tradeType, tradeTotal, tradePrice);
                     showLoadingDialog();
-                    break;
+                }else{
+                    showAlertChainDialog();
                 }
+                break;
+
             case R.id.btn_sell:
                 if (checkIsLogin()) {
                     visibility = tvHighest.getVisibility();
@@ -533,11 +496,16 @@ public class TransactionFragment extends BaseFragment implements
                     //todo
                     doSell(tradeType, tradeTotal, tradePrice);
                     showLoadingDialog();
-                    break;
+
+                }else{
+                   showAlertChainDialog();
                 }
+                break;
             case R.id.tv_history_trade:
                 if (checkIsLogin()) {
                     jump(TradeListsActivity.class, null);
+                }else{
+                    showAlertChainDialog();
                 }
                 break;
             case R.id.tv_go_login:
@@ -591,9 +559,6 @@ public class TransactionFragment extends BaseFragment implements
 
     private boolean checkIsLogin() {
         if (is_login == 0) {
-//            showToast("您还未登录，请登录后继续操作");
-            WarningFragment fragment = new WarningFragment("提示消息", "您当前未登录，请登录后继续操作", "登录", "取消", "checkLoinBeforBuy", this);
-            fragment.show(getActivity().getSupportFragmentManager(), "warning_fragment");
             return false;
         } else if (is_login == 1) {
             return true;
@@ -601,6 +566,29 @@ public class TransactionFragment extends BaseFragment implements
             return false;
         }
     }
+
+    private void showAlertChainDialog(){
+        if (dialog == null) {
+            dialog = new AlertChainDialog(getActivity());
+        }
+        dialog.builder().setCancelable(true);
+        dialog.setTitle("提示消息")
+                .setMsg("您当前未登录，请登录后继续操作")
+                .setPositiveButton("登录", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        jumpLogin();
+                    }
+                })
+                .setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show();Log.e("tag","showshowshowshow");
+    }
+
 
     private void jump(Class<?> cls, Intent intent) {
         if (intent == null) {
@@ -658,11 +646,20 @@ public class TransactionFragment extends BaseFragment implements
     }
 
     private void doTradeLine(String type) {
-        if (type.equals("today") || type.equals("week") || type.equals("month")|| type.equals("year")) {
+        if (type.equals("today") || type.equals("week") || type.equals("month") || type.equals("year")) {
             if (tradeLinePresenter == null) {
                 tradeLinePresenter = new TradeLinePresenter(new TradeLineModel());
             }
             tradeLinePresenter.getTradeLine(getBaseActivity(), type);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {//fragment被hide时保存
+            isLogin = (boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
+            user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "token");
         }
     }
 
