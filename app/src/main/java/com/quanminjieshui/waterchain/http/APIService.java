@@ -1,6 +1,7 @@
 package com.quanminjieshui.waterchain.http;
 
 import com.quanminjieshui.waterchain.beans.AccountDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.AdImgResponseBean;
 import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.BuyResponseBean;
@@ -157,5 +158,8 @@ public interface APIService {
     //我的兑换
     @POST(UrlConfig.GOODS)
     Observable<BaseEntity<List<GoodsResposeBean>>> goods(@Body RequestBody requestBody);
+
+    @POST(UrlConfig.AD_IMG)
+    Observable<BaseEntity<AdImgResponseBean>>getAdImg(@Body RequestBody body);
 }
 

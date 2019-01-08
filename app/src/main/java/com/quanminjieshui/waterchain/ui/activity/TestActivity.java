@@ -97,16 +97,16 @@ public class TestActivity extends BaseActivity {
             case R.id.btn_request:
                 tradeLineType = edt.getText().toString();
                 HashMap<String, Object> params = new HashMap<>();
-                params.put("type", tradeLineType);
+                params.put("option_name", tradeLineType);
                 RetrofitFactory.getInstance().createService()
-                        .tradeLine(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity<TradeLineResponseBean>>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity<TradeLineResponseBean>>io())
-                        .subscribe(new BaseObserver<TradeLineResponseBean>(TestActivity.this) {
+                        .getAdImg(RequestUtil.getRequestHashBody(params, false))
+                        .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity>io())
+                        .subscribe(new BaseObserver(TestActivity.this) {
 
                             @Override
-                            protected void onSuccess(TradeLineResponseBean bean) throws Exception {
-                                tradeLineResponseBean = bean;
+                            protected void onSuccess(Object bean) throws Exception {
+
                             }
 
                             @Override

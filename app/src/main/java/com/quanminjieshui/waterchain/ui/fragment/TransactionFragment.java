@@ -657,7 +657,6 @@ public class TransactionFragment extends BaseFragment implements
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtils.e("tag", "***************" + hidden);
         if (hidden) {//fragment被hide时保存
             isLogin = (boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
             user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "token");
