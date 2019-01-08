@@ -54,8 +54,8 @@ android {
 
     //1、应用渠道的标识信息写入apk文件 2、将apk中的渠道信息传输到统计后台（清单文件中的channel）
     productFlavors {
-        oppo {} //OPPO应用商店
-//        vivo {} //VIVO应用商店
+//        oppo {} //OPPO应用商店
+        vivo {} //VIVO应用商店
 //        yyb {} //腾讯应用宝
 //        c360 {} //360
 //        xiaomi {} //小米应用商店

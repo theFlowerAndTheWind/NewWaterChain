@@ -27,6 +27,7 @@ import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserMessageActivity;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.SPUtil;
+import com.quanminjieshui.waterchain.utils.Util;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import butterknife.BindView;
@@ -174,11 +175,11 @@ public class PersonalFragment extends BaseFragment {
     private void initView() {
         String avatarUrl = (String) SPUtil.get(getActivity(), SPUtil.AVATAR, "");
         GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round);
-        String user_nickname = (String) SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********");
-        if (TextUtils.isEmpty(user_nickname)) {
-            user_nickname = "********";
+        String user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "********");
+        if (TextUtils.isEmpty(user_login)) {
+            user_login = "********";
         }
-        tvNickname.setText(user_nickname);
+        tvNickname.setText(Util.hide4Phone(user_login));
         tvVersion.setText(new StringBuilder("版本号：").append(getVersionName()).toString());
     }
 
@@ -205,11 +206,11 @@ public class PersonalFragment extends BaseFragment {
         if (event != null && event.getMsg().equals("login_status_changed_main_personal_refresh_nickname")) {
             isLogin = (boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
             user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "user_login");
-            String user_nickname = (String) SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********");
-            if (TextUtils.isEmpty(user_nickname)) {
-                user_nickname = "********";
+            String user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "********");
+            if (TextUtils.isEmpty(user_login)) {
+                user_login = "********";
             }
-            tvNickname.setText(user_nickname);
+            tvNickname.setText(Util.hide4Phone(user_login));
             String avatarUrl = (String) SPUtil.get(getActivity(), SPUtil.AVATAR, "");
             GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round);
         }
