@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.quanminjieshui.waterchain.ui.activity.UserDetailActivity;
 import com.quanminjieshui.waterchain.ui.activity.UserMessageActivity;
 import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
 import com.quanminjieshui.waterchain.utils.SPUtil;
+import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,7 +130,13 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
     }
 
     private void initView() {
-        tvNickname.setText((String)SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********"));
+        String avatarUrl= (String) SPUtil.get(getActivity(),SPUtil.AVATAR,"");
+        GlidImageManager.getInstance().loadCircleImg(getActivity(),avatarUrl,imgAvatar,R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round);
+        String user_nickname=(String)SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********");
+        if(TextUtils.isEmpty(user_nickname)){
+            user_nickname="********";
+        }
+        tvNickname.setText(user_nickname);
     }
 
 
@@ -184,7 +192,11 @@ public class PersonalFragment extends BaseFragment implements WarningFragment.On
         if(event!=null&&event.getMsg().equals("login_status_changed_main_personal_refresh_nickname")){
             isLogin= (boolean) SPUtil.get(getActivity(),SPUtil.IS_LOGIN,false);
             user_login=(String)SPUtil.get(getActivity(),SPUtil.USER_LOGIN,"user_login");
-            tvNickname.setText((String)SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********"));
+            String user_nickname=(String)SPUtil.get(getActivity(), SPUtil.USER_NICKNAME, "********");
+            if(TextUtils.isEmpty(user_nickname)){
+                user_nickname="********";
+            }
+            tvNickname.setText(user_nickname);
         }
     }
 

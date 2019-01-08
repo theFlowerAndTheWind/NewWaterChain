@@ -89,6 +89,7 @@ public class LoginModel {
                         SPUtil.insert(activity,SPUtil.IS_BLOCKED,bean.getIs_blocked());
                         SPUtil.insert(activity,SPUtil.USER_LOGIN,bean.getUser_login());
                         SPUtil.insert(activity,SPUtil.USER_NICKNAME,bean.getUser_nickname());
+                        SPUtil.insert(activity,SPUtil.AVATAR,bean.getAvatar());
                         //一起操作
                         SPUtil.insert(activity,SPUtil.TOKEN,bean.getToken());
                         SPUtil.insert(activity,SPUtil.IS_LOGIN,true);

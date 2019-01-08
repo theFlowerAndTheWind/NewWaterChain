@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.widget.WarningFragment;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -89,6 +91,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
 
     private void initView() {
         tvTitleCenter.setText("账户信息");
+
     }
 
     private void jump(Class<?> cls) {
@@ -141,7 +144,14 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
     @Override
     public void onUserDetailSuccess(UserDetailResponseBean userDetailResponseBean) {
         if (userDetailResponseBean != null) {
-            tvUserLogin.setText((String)SPUtil.get(this,SPUtil.USER_NICKNAME,"********"));
+            final String avatar = userDetailResponseBean.getAvatar();
+            GlidImageManager.getInstance().loadCircleImg(this,avatar,imgAvatar,R.mipmap.ic_launcher_round,R.mipmap.ic_launcher_round);
+
+            String user_nickname=(String)SPUtil.get(this,SPUtil.USER_NICKNAME,"********");
+            if(TextUtils.isEmpty(user_nickname)){
+                user_nickname="********";
+            }
+            tvUserLogin.setText(user_nickname);
             tvCreateTime.setText(userDetailResponseBean.getCreate_time());
             tvUserLoginTel.setText(userDetailResponseBean.getUser_login());
             tvUserType.setText(userDetailResponseBean.getUser_type());
