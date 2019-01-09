@@ -912,6 +912,11 @@ public class UrlConfig {
      */
     public static final String AD_IMG="api/home/common/getAdImg";
 
+    /**
+     * 获取H5链接    about(关于我们)|service(服务协议)|contract(合同条款)
+     */
+    public static final String GET_URL="api/home/common/getUrl";
+
 
 
 }

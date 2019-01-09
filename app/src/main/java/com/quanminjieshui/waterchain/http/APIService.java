@@ -9,6 +9,7 @@ import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
+import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsResposeBean;
 import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
@@ -161,5 +162,8 @@ public interface APIService {
 
     @POST(UrlConfig.AD_IMG)
     Observable<BaseEntity<AdImgResponseBean>>getAdImg(@Body RequestBody body);
+
+    @POST(UrlConfig.GET_URL)
+    Observable<BaseEntity<GetUrlResponseBean>>getUrl(@Body RequestBody body);
 }
 

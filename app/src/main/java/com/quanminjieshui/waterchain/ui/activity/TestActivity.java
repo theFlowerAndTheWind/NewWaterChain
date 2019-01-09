@@ -10,32 +10,24 @@
  */
 package com.quanminjieshui.waterchain.ui.activity;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
-import com.quanminjieshui.waterchain.ui.widget.chart.ChartUtil;
 
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.OnClick;
 
@@ -59,7 +51,8 @@ public class TestActivity extends BaseActivity {
     LineChart lineChart;
     View[] views;
     private TradeLineResponseBean tradeLineResponseBean;
-    private String tradeLineType = "today";
+    private String edtcontent = "";
+    private String url="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +63,7 @@ public class TestActivity extends BaseActivity {
         lineChart = (LineChart) findViewById(R.id.lineChart);
 
 
-//        String time="2019-01-07 15:12:00";
-//        final long l = ChartUtil.time2MilliseSecond(time);
-//        final String string = ChartUtil.long2String(l, "");
-//        LogUtils.e("tag",l+"  ********** "+string);
+
 
     }
 
@@ -95,18 +85,18 @@ public class TestActivity extends BaseActivity {
         switch (id) {
 
             case R.id.btn_request:
-                tradeLineType = edt.getText().toString();
+                edtcontent = edt.getText().toString();
                 HashMap<String, Object> params = new HashMap<>();
-                params.put("option_name", tradeLineType);
+                params.put("type", edtcontent);
                 RetrofitFactory.getInstance().createService()
-                        .getAdImg(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity>io())
-                        .subscribe(new BaseObserver(TestActivity.this) {
+                        .getUrl(RequestUtil.getRequestHashBody(params, false))
+                        .compose(TestActivity.this.<BaseEntity<GetUrlResponseBean>>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity<GetUrlResponseBean>>io())
+                        .subscribe(new BaseObserver<GetUrlResponseBean>(TestActivity.this) {
 
                             @Override
-                            protected void onSuccess(Object bean) throws Exception {
-
+                            protected void onSuccess(GetUrlResponseBean bean) throws Exception {
+                                url=bean.getUrl();
                             }
 
                             @Override
@@ -119,71 +109,14 @@ public class TestActivity extends BaseActivity {
                 break;
 
             case R.id.btn_show:
-                if (tradeLineResponseBean != null) {
-                    final List<TradeLineResponseBean.ChartDataEntity> data = tradeLineResponseBean.getData();
-                    final List<String> xaxis = tradeLineResponseBean.getXasix();
-                    final List<Entry> entries = ChartUtil.getEntries(data);
-                    final List<Long> longXaxis = ChartUtil.getLongXaxis(xaxis);
-                    initLineChart(entries, longXaxis);
-                }
+                Intent intent=new Intent(TestActivity.this,WebViewActivity.class);
+                intent.putExtra("URL",url);
+                startActivity(intent);
+
                 break;
         }
     }
 
-
-    private void initLineChart(List<Entry> entries, List<Long> longXaxis) {
-        //显示边界
-        lineChart.setDrawBorders(false);
-
-        //一个LineDataSet就是一条线
-        LineDataSet lineDataSet = new LineDataSet(entries, "");
-        //线颜色
-        lineDataSet.setColor(Color.parseColor("#3DAAFF"));
-        //线宽度
-        lineDataSet.setLineWidth(1.6f);
-        LineData data = new LineData(lineDataSet);
-        //无数据时显示的文字
-        lineChart.setNoDataText("暂无数据");
-        //折线图不显示数值
-        data.setDrawValues(false);
-        //得到X轴
-        XAxis xAxis = lineChart.getXAxis();
-        //设置X轴的位置（默认在上方)
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        //设置X轴坐标之间的最小间隔
-        xAxis.setGranularity(1f); // one hour
-        //设置X轴的刻度数量，第二个参数为true,将会画出明确数量（带有小数点），但是可能值导致不均匀，默认（6，false）
-        xAxis.setLabelCount(longXaxis.size(), false);
-        //设置X轴的值（最小值、最大值、然后会根据设置的刻度数量自动分配刻度显示）
-        xAxis.setAxisMinimum(ChartUtil.getXaxisMinimum(longXaxis));
-        xAxis.setAxisMaximum(ChartUtil.getXaxisMaximum(longXaxis, tradeLineType));
-        //不显示网格线
-        xAxis.setDrawGridLines(false);
-        // 标签倾斜
-        xAxis.setLabelRotationAngle(45);
-        //设置X轴值为字符串
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-
-                final String string = ChartUtil.MilliseSecond2DateString((long) value, tradeLineType);
-                return string;
-            }
-        });
-        //得到Y轴
-        YAxis yAxis = lineChart.getAxisLeft();
-        YAxis rightYAxis = lineChart.getAxisRight();
-        //设置Y轴是否显示
-        rightYAxis.setEnabled(false); //右侧Y轴不显示
-        //设置y轴坐标之间的最小间隔
-        //不显示网格线
-        yAxis.setDrawGridLines(false);
-
-        //设置数据
-        lineChart.setData(data);
-        //图标刷新
-        lineChart.invalidate();
-    }
 
 
 }
