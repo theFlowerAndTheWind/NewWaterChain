@@ -89,7 +89,7 @@ public class WashDemandActivity extends BaseActivity {
             case R.id.btn_save:
                 trade_detail = new String[washFatoryCageGory.size()];
                 for(int i=0;i<washFatoryCageGory.size();i++){
-                    trade_detail[i] = washFatoryCageGory.get(i).getFscid()+"_"+washFatoryCageGory.get(i).getPiceCount();
+                    trade_detail[i] = washFatoryCageGory.get(i).getFscid()+"_"+washFatoryCageGory.get(i).getPiceCount()+"_"+washFatoryCageGory.get(i).getC_name();
                 }
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();

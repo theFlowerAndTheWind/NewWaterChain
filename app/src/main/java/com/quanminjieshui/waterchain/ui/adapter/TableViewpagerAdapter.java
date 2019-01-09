@@ -31,6 +31,6 @@ public class TableViewpagerAdapter extends FragmentPagerAdapter {
     //ViewPager与TabLayout绑定后，这里获取到PageTitle就是Tab的Text
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        return titles[position];//
     }
 }

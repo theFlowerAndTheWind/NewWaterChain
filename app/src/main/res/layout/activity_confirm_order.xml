@@ -320,7 +320,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="90px"
                         android:layout_toRightOf="@+id/tv_pay_cate_2"
-                        android:src="@drawable/ic_warnning" />
+                        android:src="@mipmap/tip" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -211,4 +211,8 @@ public class Util {
         }
     }
 
+    public static String hide4Phone(String phone) {
+        String phoneNumber = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
+        return phoneNumber;
+    }
 }

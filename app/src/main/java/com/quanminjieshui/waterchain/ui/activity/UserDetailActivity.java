@@ -20,6 +20,7 @@ import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.Util;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import butterknife.BindView;
@@ -156,13 +157,13 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
             final String avatar = userDetailResponseBean.getAvatar();
             GlidImageManager.getInstance().loadCircleImg(this, avatar, imgAvatar, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round);
 
-            String user_nickname = (String) SPUtil.get(this, SPUtil.USER_NICKNAME, "********");
-            if (TextUtils.isEmpty(user_nickname)) {
-                user_nickname = "********";
+            String user_login = (String) SPUtil.get(this, SPUtil.USER_LOGIN, "********");
+            if (TextUtils.isEmpty(user_login)) {
+                user_login = "********";
             }
-            tvUserLogin.setText(user_nickname);
+            tvUserLogin.setText(Util.hide4Phone(user_login));
             tvCreateTime.setText(userDetailResponseBean.getCreate_time());
-            tvUserLoginTel.setText(userDetailResponseBean.getUser_login());
+            tvUserLoginTel.setText(Util.hide4Phone(userDetailResponseBean.getUser_login()));
             tvUserType.setText(userDetailResponseBean.getUser_type());
             int user_status = userDetailResponseBean.getUser_status();
             if (user_status == 0) {
