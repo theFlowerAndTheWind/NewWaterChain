@@ -642,7 +642,7 @@ public class UrlConfig {
      *     │ }
      */
     public static final String INFO_LIST = "api/home/info/infoLists";
-    //平台咨询详情
+    //平台咨讯详情
     public static final String INFO_DETAIL = "api/home/info/infoDetail";
     //用户信息
     /**

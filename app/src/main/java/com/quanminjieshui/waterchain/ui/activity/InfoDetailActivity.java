@@ -64,7 +64,7 @@ public class InfoDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        tvTitleCenter.setText("咨询详情");
+        tvTitleCenter.setText("咨讯详情");
         rlHint.setVisibility(View.VISIBLE);
         tvDetadil.setText("敬请期待！");
     }

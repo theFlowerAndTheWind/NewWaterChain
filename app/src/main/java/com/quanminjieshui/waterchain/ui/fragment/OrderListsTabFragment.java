@@ -12,7 +12,6 @@ import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.event.OrderListsTabScrollEvent;
 import com.quanminjieshui.waterchain.ui.adapter.OrderListsAdapter;
-import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +58,7 @@ public class OrderListsTabFragment extends BaseFragment {
         xrv.setLayoutManager(new LinearLayoutManager(getActivity()));
         xrv.setAdapter(orderListsAdapter);
         xrv.setLoadingMoreEnabled(false);
+        xrv.setPullRefreshEnabled(false);
     }
 
 
@@ -80,7 +80,6 @@ public class OrderListsTabFragment extends BaseFragment {
             this.datas.clear();
             this.datas.addAll(list);
             orderListsAdapter.notifyDataSetChanged();
-            xrv.refreshComplete();
         }
     }
 

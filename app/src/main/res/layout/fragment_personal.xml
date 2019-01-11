@@ -286,7 +286,7 @@
                 android:layout_centerVertical="true"
                 android:paddingLeft="26px"
                 android:layout_toRightOf="@+id/img7"
-                android:text="安全中心"/>
+                android:text="修改密码"/>
 
             <ImageView
                 android:id="@+id/img_go_change_pass"

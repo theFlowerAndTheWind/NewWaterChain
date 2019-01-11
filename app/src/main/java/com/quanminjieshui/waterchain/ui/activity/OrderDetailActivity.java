@@ -177,13 +177,13 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         xrv.setLoadingMoreEnabled(false);
     }
 
-    @OnClick({R.id.img_title_left, R.id.container})
+    @OnClick({R.id.left_ll, R.id.container})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.img_title_left:
-                goBack(view);
-//                finish();
+            case R.id.left_ll:
+//                goBack(view);
+                finish();
                 break;
             case R.id.container:
                 if (fid > 0) {
@@ -362,6 +362,11 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     protected void onDestroy() {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,7 +52,7 @@ public class OrderListsAdapter extends RecyclerView.Adapter<OrderListsAdapter.Or
     public void onBindViewHolder(@NonNull OrderListViewHolder holder, int position) {
         final OrderListsResponseBean.OrderListEntity entity = list.get(position);
         if(entity==null) return;
-        holder.rl1.setOnClickListener(new View.OnClickListener() {
+        holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
@@ -79,8 +80,8 @@ public class OrderListsAdapter extends RecyclerView.Adapter<OrderListsAdapter.Or
     }
 
     class OrderListViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.rl1)
-        RelativeLayout rl1;
+        @BindView(R.id.container)
+        LinearLayout container;
         @BindView(R.id.tv_factory_name)
         TextView tvFactoryName;
         @BindView(R.id.img)

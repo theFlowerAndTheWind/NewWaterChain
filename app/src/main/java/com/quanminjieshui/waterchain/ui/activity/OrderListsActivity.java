@@ -1,7 +1,9 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,13 +21,11 @@ import com.quanminjieshui.waterchain.contract.view.OrderListsViewImpl;
 import com.quanminjieshui.waterchain.event.OrderListsTabScrollEvent;
 import com.quanminjieshui.waterchain.ui.adapter.OrderListsViewpagerAdapter;
 import com.quanminjieshui.waterchain.ui.fragment.OrderListsTabFragment;
-import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,8 +33,8 @@ import de.greenrobot.event.EventBus;
 
 public class OrderListsActivity extends BaseActivity implements OrderListsViewImpl, TabLayout.OnTabSelectedListener {
 
-    @BindView(R.id.img_title_left)
-    ImageView imgTitleLeft;
+//    @BindView(R.id.img_title_left)
+//    ImageView imgTitleLeft;
     @BindView(R.id.tv_title_center)
     TextView tvTitleCenter;
     @BindView(R.id.title_bar)
@@ -53,25 +53,31 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
     TextView tvDetail;
 
     private OrderListsPresenter orderListsPresenter;
+    private String currentFragmen = "全部";
+    private List<OrderListsResponseBean.OrderListEntity> currentList = new ArrayList<>();
 
 
     public String[] titles = new String[]{"全部", "待付款", "取件中", "洗涤中", "已完成", "已取消"};
     private ArrayList<OrderListsTabFragment> fragments = new ArrayList<>();
     private OrderListsViewpagerAdapter adapter;
-    private List<OrderListsResponseBean.OrderListEntity> orders;
-    private Map<String, List<OrderListsResponseBean.OrderListEntity>> categoryOrders;
+    private List<OrderListsResponseBean.OrderListEntity> orders = new ArrayList<>();
     private List<OrderListsResponseBean.OrderListEntity> unpaid;//未付款
     private List<OrderListsResponseBean.OrderListEntity> transporting;//取件中
     private List<OrderListsResponseBean.OrderListEntity> washing;//洗涤中
     private List<OrderListsResponseBean.OrderListEntity> done;//已完成
     private List<OrderListsResponseBean.OrderListEntity> cancled;//已取消
+    /**
+     * 是否刷新标识  false:加载更多  数据累加    true：刷新  数据清零  累加
+     * 请求成功后必须将其置为false!!!
+     */
+    private boolean isRefresh = false;
 
 
-    @OnClick({R.id.img_title_left})
+    @OnClick({R.id.left_ll})
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.img_title_left:
+            case R.id.left_ll:
                 goBack(v);
                 finish();
                 break;
@@ -83,10 +89,19 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
         super.onCreate(savedInstanceState);
         orderListsPresenter = new OrderListsPresenter(new OrderListsModel());
         orderListsPresenter.attachView(this);
-        orderListsPresenter.getOrderList(this);
+//        doRequest(false);
         StatusBarUtil.setImmersionStatus(this, titleBar);
         initView();
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        doRequest(true);
+        initView();
+    }
+
+    FragmentManager supportFragmentManager;
 
     private void initView() {
         tvTitleCenter.setText("洗涤订单");
@@ -99,9 +114,14 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
             tabLayout.addTab(tabLayout.newTab());
         }
         tabLayout.setupWithViewPager(viewpager, false);
-
         adapter = new OrderListsViewpagerAdapter(getSupportFragmentManager(), fragments, titles);
         viewpager.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        doRequest(true);//用户修改订单状态后，需重新请求数据     放在oncreat中进行，页面跳转后空白问题
     }
 
     @Override
@@ -126,32 +146,30 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
             } else {
                 container.setVisibility(View.VISIBLE);
                 rlHint.setVisibility(View.GONE);
-                if (orderListBean.getLists() != null) {
-                    orders = orderListBean.getLists();
-                    category();
-                } else {
-                    orders = new ArrayList<>();
-                }
-                EventBus.getDefault().post(new OrderListsTabScrollEvent("全部", orders));
+
+                if (isRefresh) orders.clear();
+                orders.addAll(orderListBean.getLists());
+                category();
+                selectFragemnt();
+                isRefresh = false;
             }
         }
 
     }
 
     private void category() {
-        categoryOrders = new HashMap<String, List<OrderListsResponseBean.OrderListEntity>>();
-        unpaid = new ArrayList<>();
-        transporting = new ArrayList<>();
-        washing = new ArrayList<>();
-        done = new ArrayList<>();
-        cancled = new ArrayList<>();
-//        categoryOrders.put(titles[0],orders);
-//        categoryOrders.put(titles[1], unpaid);
-//        categoryOrders.put(titles[2], transporting);
-//        categoryOrders.put(titles[3], washing);
-//        categoryOrders.put(titles[4], done);
-//        categoryOrders.put(titles[5], cancled);
-
+        if (unpaid == null) unpaid = new ArrayList<>();
+        if (transporting == null) transporting = new ArrayList<>();
+        if (washing == null) washing = new ArrayList<>();
+        if (done == null) done = new ArrayList<>();
+        if (cancled == null) cancled = new ArrayList<>();
+        if (isRefresh) {
+            unpaid.clear();
+            transporting.clear();
+            washing.clear();
+            done.clear();
+            cancled.clear();
+        }
         for (OrderListsResponseBean.OrderListEntity entity : orders) {
             String status = entity.getStatus();
             if (!TextUtils.isEmpty(status)) {
@@ -178,10 +196,39 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
         }
     }
 
+    private void selectFragemnt() {
+        currentList.clear();
+        switch (currentFragmen) {
+            case "全部":
+                currentList.addAll(orders);
+                break;
+            case "待付款":
+                currentList.addAll(unpaid);
+                break;
+            case "取件中":
+                currentList.addAll(transporting);
+                break;
+            case "洗涤中":
+                currentList.addAll(washing);
+                break;
+            case "已完成":
+                currentList.addAll(done);
+                break;
+            case "已取消":
+                currentList.addAll(cancled);
+                break;
+            default:
+                currentList.addAll(orders);
+                break;
+        }
+        EventBus.getDefault().post(new OrderListsTabScrollEvent(currentFragmen, currentList));
+    }
+
 
     @Override
     public void onOrderListFailed(String msg) {
-
+        ToastUtils.showCustomToast(msg);
+        isRefresh = false;
     }
 
     @Override
@@ -189,25 +236,25 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
         int position = tab.getPosition();
         switch (position) {
             case 0:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent("全部", orders));
+                currentFragmen = "全部";
                 break;
             case 1:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent("待付款", unpaid));
+                currentFragmen = "待付款";
                 break;
             case 2:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[2], transporting));
+                currentFragmen = titles[2];
                 break;
             case 3:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[3], washing));
+                currentFragmen = titles[3];
                 break;
             case 4:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[4], done));
+                currentFragmen = titles[4];
                 break;
             case 5:
-                EventBus.getDefault().post(new OrderListsTabScrollEvent(titles[5], cancled));
+                currentFragmen = titles[5];
                 break;
         }
-
+        selectFragemnt();
     }
 
     @Override
@@ -220,9 +267,21 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
 
     }
 
+    private void doRequest(boolean isRefresh) {
+        this.isRefresh = isRefresh;
+        if (orderListsPresenter == null) {
+            orderListsPresenter = new OrderListsPresenter(new OrderListsModel());
+            orderListsPresenter.attachView(this);
+        }
+        orderListsPresenter.getOrderList(this);
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        orderListsPresenter.detachView();
+        if (orderListsPresenter != null) {
+            orderListsPresenter.detachView();
+        }
     }
 }
