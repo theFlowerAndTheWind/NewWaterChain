@@ -5,10 +5,11 @@
     android:background="@color/primary_blue">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:src="@mipmap/logo"/>
+        android:src="@mipmap/launcher"/>
 
     <TextView
         android:id="@+id/count_down_tv"
