@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WaterChain</string>
+    <string name="app_name">数字节水</string>
 
     <string name="hint_input_mobile">请输入您的手机号</string>
     <string name="hint_input_security_code">请输入验证码</string>

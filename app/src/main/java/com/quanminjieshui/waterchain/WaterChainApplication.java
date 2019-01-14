@@ -8,6 +8,7 @@ import android.support.multidex.MultiDex;
 
 import com.quanminjieshui.waterchain.utils.NetworkStateReceiver;
 import com.quanminjieshui.waterchain.utils.datacache.XCCacheManager;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by WanghongHe on 2018/12/3 11:26.
@@ -26,6 +27,18 @@ public class WaterChainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        /**
+         * 为了保证运营数据的准确性，建议不要在异步线程初始化Bugly。
+         *
+         *     第三个参数为SDK调试模式开关，调试模式的行为特性如下：
+         *
+         *         输出详细的Bugly SDK的Log；
+         *         每一条Crash都会被立即上报；
+         *         自定义日志将会在Logcat中输出。
+         *
+         *     建议在测试阶段建议设置成true，发布时设置为false。
+         */
+        CrashReport.initCrashReport(getApplicationContext(), "30a36d4566", true);//todo  正式发布
         application = this;
 
         //初始化网络receiver

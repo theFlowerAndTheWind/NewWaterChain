@@ -141,4 +141,5 @@ dependencies {
     implementation 'com.jcodecraeer:xrecyclerview:1.5.9'//Xrecycleview
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'//折线图
     implementation 'com.contrarywind:Android-PickerView:3.2.6'
+    implementation 'com.tencent.bugly:crashreport:latest.release'
 }

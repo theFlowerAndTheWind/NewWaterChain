@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+
 import com.quanminjieshui.waterchain.base.ActivityManager;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.ui.activity.LoginActivity;
 import com.quanminjieshui.waterchain.utils.LogUtils;
+import com.quanminjieshui.waterchain.utils.Util;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;
@@ -48,6 +50,11 @@ public abstract class BaseObserver<T> implements Observer<BaseEntity<T>> {
             }
         } else {
             try {
+                //by sxt
+                if (!Util.isEmpty(tBaseEntity.getData())) {
+                    onCodeError(tBaseEntity.getCode(), tBaseEntity.getData().toString());
+                    return;
+                }
 
                 onCodeError(tBaseEntity.getCode(), tBaseEntity.getMsg());
             } catch (Exception e) {
