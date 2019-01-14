@@ -93,3 +93,6 @@
 # can be remapped
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
