@@ -32,17 +32,17 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
-import com.quanminjieshui.waterchain.beans.ServiceListResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
-import com.quanminjieshui.waterchain.contract.presenter.ServiceListPresneter;
+import com.quanminjieshui.waterchain.contract.presenter.FactoryListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeLinePresenter;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
-import com.quanminjieshui.waterchain.contract.view.ServiceListViewImpl;
+import com.quanminjieshui.waterchain.contract.view.FactoryListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
-import com.quanminjieshui.waterchain.ui.activity.FactoryServiceActivity;
+import com.quanminjieshui.waterchain.ui.activity.EnterpriseActivity;
 import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
-import com.quanminjieshui.waterchain.ui.adapter.ServiceListAdapter;
+import com.quanminjieshui.waterchain.ui.adapter.FactoryListIndexAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.ui.widget.chart.ChartUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
@@ -62,7 +62,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements BannerListViewImpl,ServiceListViewImpl,TradeLineViewImpl {
+public class HomeFragment extends BaseFragment implements BannerListViewImpl,FactoryListViewImpl,TradeLineViewImpl {
 
 
     @BindView(R.id.banner_guide_content)
@@ -70,30 +70,30 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     @BindView(R.id.lineChart)
     LineChart lineChart;
     @BindView(R.id.rc_wash_list)
-    XRecyclerView serviceList;
+    XRecyclerView factoryList;
 
     private AlertChainDialog alertChainDialog;
     private Unbinder unbinder;
     private View rootView;
     private BannerListPresenter bannerListPresenter;
-    private ServiceListPresneter serviceListPresneter;
+    private FactoryListPresenter factoryListPresenter;
     private TradeLinePresenter tradeLinePresenter;
-    private ServiceListAdapter serviceListAdapter;
+    private FactoryListIndexAdapter factoryListAdapter;
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> nameList = new ArrayList<>();
     ArrayList<String> imgUrlList = new ArrayList<>();
     private TradeLineResponseBean tradeLineBean;
     List<TradeLineResponseBean.ChartDataEntity> tradeDataList = new ArrayList<>();
     List<String> tradeXasix = new ArrayList<>();
-    private List<ServiceListResponseBean.serviceListEntity> listEntities = new ArrayList<>();
+    private List<FactoryListResponseBean> listEntities = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bannerListPresenter = new BannerListPresenter();
         bannerListPresenter.attachView(this);
-        serviceListPresneter = new ServiceListPresneter();
-        serviceListPresneter.attachView(this);
+        factoryListPresenter = new FactoryListPresenter();
+        factoryListPresenter.attachView(this);
         tradeLinePresenter = new TradeLinePresenter();
         tradeLinePresenter.attachView(this);
         requestNetwork();
@@ -120,37 +120,43 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
             }
         });
 
-        serviceListAdapter = new ServiceListAdapter(getBaseActivity(),listEntities);
-        serviceList.setArrowImageView(R.drawable.iconfont_downgrey);
-        serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        serviceList.addItemDecoration(new RecyclerViewDivider(getBaseActivity(),LinearLayoutManager.HORIZONTAL,1,getResources().getColor(R.color.item_line)));
-        serviceList.setAdapter(serviceListAdapter);
-        serviceList.setPullRefreshEnabled(false);
-        serviceList.setLoadingMoreEnabled(false);
-        serviceList.setLoadingListener(new XRecyclerView.LoadingListener() {
+        factoryListAdapter = new FactoryListIndexAdapter(getBaseActivity(),listEntities);
+        factoryList.setArrowImageView(R.drawable.iconfont_downgrey);
+        factoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        factoryList.addItemDecoration(new RecyclerViewDivider(getBaseActivity(),LinearLayoutManager.HORIZONTAL,1,getResources().getColor(R.color.item_line)));
+        factoryList.setAdapter(factoryListAdapter);
+        factoryList.setPullRefreshEnabled(false);
+        factoryList.setLoadingMoreEnabled(false);
+        factoryList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                if (serviceListPresneter != null) {
-                    serviceListPresneter.getServiceList(getBaseActivity());
+                if (factoryListPresenter != null) {
+                    factoryListPresenter.getFactoryList(getBaseActivity(),0);
                 }
             }
 
             @Override
             public void onLoadMore() {
-                if (serviceListPresneter != null) {
-                    serviceListPresneter.getServiceList(getBaseActivity());
+                if (factoryListPresenter != null) {
+                    factoryListPresenter.getFactoryList(getBaseActivity(),0);
                 }
             }
         });
-        serviceListAdapter.setOnItemClickListener(new ServiceListAdapter.OnItemClickListener() {
+        factoryListAdapter.setOnItemClickListener(new FactoryListIndexAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putInt("fsid",listEntities.get(position).getId());
+                bundle.putInt("enterpriseId", listEntities.get(position).getId());
                 intent.putExtras(bundle);
-                intent.setClass(getBaseActivity(),FactoryServiceActivity.class);
+                intent.setClass(getBaseActivity(), EnterpriseActivity.class);
                 startActivity(intent);
+//                Intent intent = new Intent();
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("fsid",listEntities.get(position).getId());
+//                intent.putExtras(bundle);
+//                intent.setClass(getBaseActivity(),FactoryServiceActivity.class);
+//                startActivity(intent);
 
             }
         });
@@ -219,8 +225,9 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         if(bannerListPresenter!=null){
             bannerListPresenter.getBannerList(getBaseActivity(),3,1);
         }
-        if(serviceListPresneter!=null){
-            serviceListPresneter.getServiceList(getBaseActivity());
+        if(factoryListPresenter!=null){
+            factoryListPresenter.getFactoryList(getBaseActivity(),0);
+
         }
         if(tradeLinePresenter!=null){
             tradeLinePresenter.getTradeLine(getBaseActivity(),"today");
@@ -240,8 +247,8 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
         if(bannerListPresenter!=null){
             bannerListPresenter.detachView();
         }
-        if(serviceListPresneter!=null){
-            serviceListPresneter.detachView();
+        if(factoryListPresenter!=null){
+            factoryListPresenter.detachView();
         }
         if(tradeLinePresenter!=null){
             tradeLinePresenter.detachView();
@@ -413,19 +420,18 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Ser
     }
 
     @Override
-    public void onServiceListSuccess(List<ServiceListResponseBean.serviceListEntity> serviceListEntities) {
+    public void onFactoryListSuccess(List<FactoryListResponseBean> factoryListEntities) {
         dismissLoadingDialog();
         listEntities.clear();
-        listEntities.addAll(serviceListEntities);
-        serviceListAdapter.notifyDataSetChanged();
-        serviceList.refreshComplete();
-//        serviceList.loadMoreComplete();
+        listEntities.addAll(factoryListEntities);
+        factoryListAdapter.notifyDataSetChanged();
+        factoryList.refreshComplete();
+//        factoryList.loadMoreComplete();
     }
 
     @Override
-    public void onServiceListFailed(String msg) {
+    public void onFactoryListFailed(String msg) {
         dismissLoadingDialog();
-        LogUtils.d("serviceListEntities；"+msg);
-
+        LogUtils.d("factoryListEntities；"+msg);
     }
 }
