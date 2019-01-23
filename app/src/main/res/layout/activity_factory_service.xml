@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10px"
             android:layout_marginHorizontal="20px"
-            android:textSize="45px"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:text="酒店布草洗涤"/>
         <TextView

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="服务项目"
-        android:padding="20px"
+        android:padding="@dimen/layout_horizontal_padding"
         android:textStyle="bold"
         android:textSize="18sp"/>
 

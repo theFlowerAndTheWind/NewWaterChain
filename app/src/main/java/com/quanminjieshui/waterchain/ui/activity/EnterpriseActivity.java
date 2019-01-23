@@ -89,6 +89,7 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
     private void initList(){
         tv_title_center.setText("洗涤企业");
         tv_title_left.setText("返回");
+        tv_title_left.setVisibility(View.GONE);
         tv_title_left.setVisibility(View.VISIBLE);
         factoryListAdapter = new FactoryListAdapter(EnterpriseActivity.this,listEntities);
         enterpriseList.setArrowImageView(R.drawable.iconfont_downgrey);
