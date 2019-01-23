@@ -76,7 +76,7 @@
                 android:layout_height="@dimen/edt_height"
                 android:layout_weight="1"
                 android:background="@color/trans"
-                android:hint="兑换价 JSL"
+                android:hint="兑换价 水方"
                 android:paddingLeft="@dimen/edt_padding_left"
                 android:textColorHint="@color/hit_color"
                 android:textSize="@dimen/text_size_edt"
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="@dimen/edt_padding_left"
-            android:text="JSL"
+            android:text="水方"
             android:textColor="@color/hit_color"
             android:textSize="@dimen/text_size_edt" />
     </LinearLayout>

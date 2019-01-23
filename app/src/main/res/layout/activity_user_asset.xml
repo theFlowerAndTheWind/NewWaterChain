@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/style_txt_content"
-            android:text="总资产折合：2497.45 JSL ≈ 10492.35 T"/>
+            android:text="总资产折合：2497.45 水方 ≈ 10492.35 T"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JSL"
+                    android:text="水方"
                     android:textColor="@color/text_black"
                     android:textSize="32px"/>
 
@@ -77,7 +77,7 @@
                     android:layout_height="70px"
                     android:textSize="28px"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/btn_normal_blue_bg_shape"
+                    android:background="@drawable/btn_blue_bg_selector"
                     android:text="交易"/>
                 <Button
                     android:id="@+id/btn_jsl_zz"
@@ -86,7 +86,7 @@
                     android:textSize="28px"
                     android:layout_marginTop="30px"
                     android:textColor="@color/text_gray"
-                    android:background="@drawable/btn_bg_white_shape"
+                    android:background="@drawable/btn_pressed_white_bg_shape"
                     android:text="申请转账"/>
             </LinearLayout>
         </RelativeLayout>
@@ -137,7 +137,7 @@
                     android:layout_height="70px"
                     android:textSize="28px"
                     android:textColor="@android:color/white"
-                    android:background="@drawable/btn_normal_blue_bg_shape"
+                    android:background="@drawable/btn_blue_bg_selector"
                     android:text="交易"/>
 
 

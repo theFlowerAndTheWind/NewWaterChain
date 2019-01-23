@@ -23,7 +23,6 @@ import com.quanminjieshui.waterchain.ui.fragment.HomeFragment;
 import com.quanminjieshui.waterchain.ui.fragment.PersonalFragment;
 import com.quanminjieshui.waterchain.ui.fragment.TransactionFragment;
 import com.quanminjieshui.waterchain.ui.fragment.WashFragment;
-import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
@@ -232,7 +231,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void hideFragment() {
+    public void hideFragment() {
         if (homeFragment != null) {
             fragmentManager.beginTransaction().hide(homeFragment).commit();
         }
@@ -309,7 +308,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    private void showHome() {
+    public void showHome() {
         rb1.setChecked(true);
         tv_title_center.setText("首页");
         //by sxt
@@ -340,7 +339,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void showWash() {
+    public void showWash() {
         rb2.setChecked(true);
         tv_title_center.setText("洗涤");
         //by sxt
@@ -356,7 +355,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void showTransaction() {
+    public void showTransaction() {
         rb3.setChecked(true);
         tv_title_center.setText("交易中心");
         //by sxt
@@ -377,7 +376,7 @@ public class MainActivity extends BaseActivity {
         fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commitAllowingStateLoss();
     }
 
-    private void showFind() {
+    public void showFind() {
         rb4.setChecked(true);
         tv_title_center.setText("发现");
         //by sxt
@@ -393,7 +392,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void showPersonal() {
+    public void showPersonal() {
         rb5.setChecked(true);
         tv_title_center.setText("我的");
         //by sxt

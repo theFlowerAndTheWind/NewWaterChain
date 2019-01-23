@@ -29,18 +29,15 @@
             android:id="@+id/img_goods"
             android:layout_width="match_parent"
             android:layout_height="95dp"
-            android:layout_marginLeft="@dimen/layout_horizontal_margin"
-            android:layout_marginTop="@dimen/view_space_edt_vertical"
-            android:layout_marginRight="@dimen/layout_horizontal_margin"
-            android:layout_marginBottom="@dimen/view_space_edt_vertical"
-            android:scaleType="center"
+            android:layout_marginHorizontal="@dimen/layout_horizontal_margin"
+            android:layout_marginVertical="@dimen/view_space_edt_vertical"
+            android:scaleType="centerCrop"
             android:src="@mipmap/img_goods" />
 
         <TextView
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40px"
             android:layout_marginLeft="@dimen/layout_horizontal_margin"
             android:gravity="center_vertical"
             android:text="平台咨讯"

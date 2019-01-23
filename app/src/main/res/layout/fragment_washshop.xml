@@ -10,24 +10,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/img_ad"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/img_ad"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@mipmap/img_goods" />
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:text="全球领先的独家节水技术节省企业成本"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/text_size_edt" />-->
-        </LinearLayout>
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/img_goods" />
 
         <include
             android:id="@+id/wash_list"

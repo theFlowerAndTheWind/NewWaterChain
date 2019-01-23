@@ -126,8 +126,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
 
         userDetailPresenter = new UserDetailPresenter(new UserDetailModel());
         userDetailPresenter.attachView(this);
-        showLoadingDialog();
-        userDetailPresenter.getUserDetail(this);
+
     }
 
     private void initView() {
@@ -150,13 +149,18 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userDetailPresenter.getUserDetail(this);
+        showLoadingDialog();
+        String avatarUrl = (String) SPUtil.get(this, SPUtil.AVATAR, "");
+        GlidImageManager.getInstance().loadCircleImg(this, avatarUrl, imgAvatar, R.mipmap.logo3, R.mipmap.logo3);
+    }
 
     @Override
     public void onUserDetailSuccess(UserDetailResponseBean userDetailResponseBean) {
         if (userDetailResponseBean != null) {
-            final String avatar = userDetailResponseBean.getAvatar();
-            GlidImageManager.getInstance().loadCircleImg(this, avatar, imgAvatar, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round);
-
             String user_login = (String) SPUtil.get(this, SPUtil.USER_LOGIN, "********");
             if (TextUtils.isEmpty(user_login)) {
                 user_login = "********";

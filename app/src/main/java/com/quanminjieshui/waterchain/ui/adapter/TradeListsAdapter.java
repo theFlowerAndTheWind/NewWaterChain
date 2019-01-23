@@ -90,14 +90,15 @@ public class TradeListsAdapter extends RecyclerView.Adapter<TradeListsAdapter.Tr
                 if (TextUtils.isEmpty(status)) {
                     //不处理
                 } else if (status.equals("部分成交") || status.equals("全部成交") || status.equals("已撤销")) {
-                    holder.tvStatus.setBackground(context.getResources().getDrawable(R.drawable.gray_border_bg_shape));
+                    holder.tvStatus.setBackground(context.getResources().getDrawable(R.drawable.gray_border_bg_gray_shape));
                     holder.tvStatus.setEnabled(false);
                     holder.tvStatus.setText(status);
-                    holder.tvStatus.setTextColor(context.getResources().getColor(R.color.text_black));
+                    holder.tvStatus.setTextColor(context.getResources().getColor(R.color.text_gray));
                 } else if (status.equals("等待成交")) {//文档只给了上面三种选择,实际请求回来有这种
                     holder.tvStatus.setBackground(context.getResources().getDrawable(R.drawable.btn_blue_border_selector));
                     holder.tvStatus.setEnabled(true);
                     holder.tvStatus.setText("撤销");
+                    holder.tvStatus.setTextColor(context.getResources().getColor(R.color.primary_blue));
                     holder.tvStatus.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

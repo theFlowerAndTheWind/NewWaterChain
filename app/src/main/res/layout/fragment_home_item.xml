@@ -8,8 +8,6 @@
         style="@style/MatchWrap"
         android:paddingLeft="@dimen/layout_horizontal_padding"
         android:paddingRight="@dimen/layout_horizontal_padding"
-        android:layout_marginTop="@dimen/layout_horizontal_margin"
-        android:layout_marginBottom="@dimen/layout_horizontal_margin"
         android:orientation="horizontal">
 
         <ImageView
@@ -76,6 +74,7 @@
         android:layout_marginTop="20px"
         android:layout_width="match_parent"
         android:layout_height="2px"
+        android:visibility="gone"
         android:background="@color/divider_gray"/>
 
 </LinearLayout>

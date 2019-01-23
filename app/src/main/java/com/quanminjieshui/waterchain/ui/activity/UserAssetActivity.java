@@ -65,6 +65,14 @@ public class UserAssetActivity extends BaseActivity implements AccountDetailView
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (accountDetailPresenter != null) {
+            accountDetailPresenter.getAccountDetail(this);
+        }
+    }
+
     @OnClick({R.id.left_ll, R.id.img_title_left, R.id.btn_jsl_jy, R.id.btn_jsl_zz, R.id.btn_ds_jy})
     public void onClick(View view) {
         int id = view.getId();

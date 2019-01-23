@@ -80,8 +80,9 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
         if(getIntent()!= null){
             fsid = getIntent().getIntExtra("fsid",-1);
         }
-        serviceParsenter.getFactoryService(this,fsid);
-
+        fragments.add(new PriceSystemFragment());
+        fragments.add(new ProcessDescFragment());
+        fragments.add(new CommonProblemFragment());
 
 
     }
@@ -114,24 +115,21 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
 
     @Override
     public void onReNetRefreshData(int viewId) {
-
+        doRequest();
     }
 
     public List<FactoryServiceResponseBean.WashFatoryCageGory> getList(){
-
         return this.list;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    public void doRequest(){
         serviceParsenter.getFactoryService(this,fsid);
         showLoadingDialog();
     }
-
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        doRequest();
     }
 
     @Override
@@ -152,10 +150,11 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
         list.addAll(factoryServiceResponseBean.getCate_lists());
         arrayList.addAll(factoryServiceResponseBean.getCate_lists());
 
-        fragments.add(new PriceSystemFragment());
-        fragments.add(new ProcessDescFragment());
-        fragments.add(new CommonProblemFragment());
+        initViewpager();
+        adapter.notifyDataSetChanged();
+    }
 
+    public void initViewpager(){
         adapter = new TableViewpagerAdapter(getSupportFragmentManager(),fragments,titles);
         factoryViewpager.setAdapter(adapter);
         factoryViewpager.setCurrentItem(0);//默认选中第一项
@@ -209,11 +208,18 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
 
             }
         });
-
     }
-
     @Override
     public void onFactoryServiceFailed(String msg) {
         dismissLoadingDialog();
+        ToastUtils.showCustomToast(msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (serviceParsenter!=null){
+            serviceParsenter.detachView();
+        }
     }
 }

@@ -14,7 +14,7 @@
             style="@style/PaddinLeftRight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="51px"
+            android:paddingTop="40px"
             android:paddingBottom="40px">
 
             <ImageView

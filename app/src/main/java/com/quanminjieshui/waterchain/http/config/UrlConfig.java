@@ -919,6 +919,10 @@ public class UrlConfig {
      */
     public static final String GET_URL="api/home/common/getUrl";
 
+    /**
+     * 关于我们链接
+     */
+    public static final String ABOUT_US = "https://quanminjieshui.com/h5/user/about.html";
 
 
 }

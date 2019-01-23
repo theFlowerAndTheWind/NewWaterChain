@@ -28,14 +28,15 @@
             android:layout_alignBaseline="@+id/tv_action_type"
             android:layout_marginLeft="10px"
             android:layout_toRightOf="@+id/tv_action_type"
-            android:text="JSL/节水指标"
+            android:text="水方/节水指标"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_size_edt" />
 
 
         <TextView
             android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
+            android:layout_width="150px"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_action_type"
             android:layout_alignParentRight="true"
@@ -45,6 +46,7 @@
             android:paddingRight="30px"
             android:paddingBottom="5px"
             android:text="撤销"
+            android:textColor="@color/primary_blue"
             android:textSize="11sp" />
 
         <LinearLayout
@@ -67,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="left"
-                    android:text="单价"
+                    android:text="时间"
                     android:textColor="@color/text_gray"
                     android:textSize="24px" />
 
@@ -84,7 +86,7 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="委托量（JSL）"
+                    android:text="委托量（水方）"
                     android:textColor="@color/text_gray"
                     android:textSize="24px" />
 
@@ -140,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="left"
-                    android:text="实际成交（JSL）"
+                    android:text="实际成交（水方）"
                     android:textColor="@color/text_gray"
                     android:textSize="24px" />
 

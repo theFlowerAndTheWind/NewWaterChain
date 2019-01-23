@@ -1,6 +1,7 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -41,6 +43,7 @@ import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.FactoryListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
 import com.quanminjieshui.waterchain.ui.activity.EnterpriseActivity;
+import com.quanminjieshui.waterchain.ui.activity.MainActivity;
 import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
 import com.quanminjieshui.waterchain.ui.adapter.FactoryListIndexAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
@@ -54,6 +57,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -71,6 +75,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     LineChart lineChart;
     @BindView(R.id.rc_wash_list)
     XRecyclerView factoryList;
+    @BindView(R.id.tv_wash_damend)
+    TextView washDamend;
+    @BindView(R.id.tv_transaction_center)
+    TextView transactionCenter;
 
     private AlertChainDialog alertChainDialog;
     private Unbinder unbinder;
@@ -85,6 +93,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     private TradeLineResponseBean tradeLineBean;
     List<TradeLineResponseBean.ChartDataEntity> tradeDataList = new ArrayList<>();
     List<String> tradeXasix = new ArrayList<>();
+    MainActivity activity;
     private List<FactoryListResponseBean> listEntities = new ArrayList<>();
 
     @Override
@@ -110,6 +119,28 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
         initLineChart();
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof MainActivity){
+            this.activity = (MainActivity) activity;
+        }
+    }
+
+    @OnClick({R.id.tv_wash_damend,R.id.tv_transaction_center})
+    public void OnClick(View view){
+        activity.hideFragment();
+        switch (view.getId()){
+            case R.id.tv_wash_damend:
+                activity.showWash();
+                break;
+            case R.id.tv_transaction_center:
+                activity.showTransaction();
+                break;
+            default:break;
+        }
     }
 
     private void initList() {
@@ -409,7 +440,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
             imgList.add(listEntity.getImg());
             nameList.add(listEntity.getName());
             imgUrlList.add(listEntity.getUrl());
-            mContentBanner.setData(imgList, nameList);
+            mContentBanner.setData(imgList, null);
         }
 
     }

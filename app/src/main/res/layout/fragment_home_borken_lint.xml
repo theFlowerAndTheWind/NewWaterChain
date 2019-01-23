@@ -6,10 +6,12 @@
     android:background="@color/white">
 
     <TextView
+        android:id="@+id/tv_transaction_center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="交易中心"
-        android:padding="20px"
+        android:paddingVertical="20px"
+        android:paddingHorizontal="40px"
         android:textStyle="bold"
         android:textSize="18sp"/>
     <View
@@ -20,12 +22,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="10px"
+        android:paddingHorizontal="40px"
         android:orientation="horizontal">
 
         <TextView
             android:layout_weight="1"
-            android:text="1 JSL=3.245T"
+            android:text="1 水方=3.245T"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -46,8 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="500px"
         android:background="@color/white"
-        android:paddingRight="10px"
-        android:paddingLeft="10px"/>
+        android:paddingHorizontal="40px"/>
 </LinearLayout>
 
 

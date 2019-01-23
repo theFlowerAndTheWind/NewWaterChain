@@ -2,13 +2,12 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.http.config.UrlConfig;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
@@ -50,7 +49,12 @@ public class AboutListActivity extends BaseActivity{
 
         switch (id) {
             case R.id.btn_about:
-                startActivity(new Intent(this,AboutActivity.class));
+                Intent intent = new Intent();
+                intent.setClass(this, WebViewActivity.class);
+                intent.putExtra("URL", UrlConfig.ABOUT_US);
+                intent.putExtra("title","关于我们");
+                startActivity(intent);
+                //startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.img_title_left:
                 goBack(view);

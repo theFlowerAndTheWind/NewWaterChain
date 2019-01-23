@@ -63,6 +63,7 @@
             android:layout_below="@+id/linear_sms"
             android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hint_input_pwd"
+            android:inputType="textPassword"
             android:maxLength="20"
             android:maxLines="1" />
 
@@ -74,6 +75,7 @@
             android:layout_below="@+id/edt_pwd"
             android:layout_marginTop="@dimen/view_space_edt_vertical"
             android:hint="@string/hint_confirm_pwd"
+            android:inputType="textPassword"
             android:maxLength="20"
             android:maxLines="1" />
 

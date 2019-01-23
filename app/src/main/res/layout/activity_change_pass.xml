@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="原登录密码"
+            android:inputType="textPassword"
             android:layout_marginTop="40px"
             android:maxLength="20"
             android:maxLines="1"/>
@@ -33,6 +34,7 @@
             android:layout_height="@dimen/edt_height"
             android:layout_marginTop="30px"
             android:hint="设置新密码"
+            android:inputType="textPassword"
             android:maxLength="20"
             android:maxLines="1" />
 
@@ -42,6 +44,7 @@
             android:layout_marginTop="30px"
             android:layout_height="@dimen/edt_height"
             android:hint="确认新密码"
+            android:inputType="textPassword"
             style="@style/style_edt"
             android:maxLength="20"
             android:maxLines="1" />

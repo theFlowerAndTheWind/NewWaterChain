@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="JSL/节水指标"
+            android:text="水方/节水指标"
             android:textColor="@color/text_black"
             android:textSize="16sp" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_trade_status"
             android:layout_marginTop="27px"
-            android:text="JSL = "
+            android:text="水方 = "
             android:textColor="@color/text_gray"
             android:textSize="11sp" />
 

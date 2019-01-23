@@ -174,7 +174,7 @@ public class PersonalFragment extends BaseFragment {
 
     private void initView() {
         String avatarUrl = (String) SPUtil.get(getActivity(), SPUtil.AVATAR, "");
-        GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round);
+        GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.logo3, R.mipmap.logo3);
         String user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "********");
         if (TextUtils.isEmpty(user_login)) {
             user_login = "********";
@@ -188,17 +188,21 @@ public class PersonalFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-
+            initView();
         }
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            initView();
+        }
     }
 
     @Override
     public void onReNetRefreshData(int viewId) {
+        initView();
     }
 
 

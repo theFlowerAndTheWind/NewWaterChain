@@ -22,12 +22,9 @@ import com.quanminjieshui.waterchain.contract.model.InfoListModel;
 import com.quanminjieshui.waterchain.contract.presenter.AdImgPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.InfoListPresenter;
-import com.quanminjieshui.waterchain.contract.presenter.ServiceListPresneter;
-import com.quanminjieshui.waterchain.contract.presenter.TradeLinePresenter;
 import com.quanminjieshui.waterchain.contract.view.AdImgViewImpl;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.InfoListViewImpl;
-import com.quanminjieshui.waterchain.ui.activity.GoodsActivity;
 import com.quanminjieshui.waterchain.ui.activity.GoodsListsActivity;
 import com.quanminjieshui.waterchain.ui.activity.InfoDetailActivity;
 import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
@@ -268,7 +265,7 @@ public class FindFragment extends BaseFragment implements
             imgList.add(listEntity.getImg());
             nameList.add(listEntity.getName());
             imgUrlList.add(listEntity.getUrl());
-            mContentBanner.setData(imgList, nameList);
+            mContentBanner.setData(imgList, null);
         }
     }
 
