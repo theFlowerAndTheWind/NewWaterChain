@@ -45,7 +45,7 @@
                     android:id="@+id/tv_intr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="技术介绍"
+                    android:text="企业介绍"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_size_edt" />
 

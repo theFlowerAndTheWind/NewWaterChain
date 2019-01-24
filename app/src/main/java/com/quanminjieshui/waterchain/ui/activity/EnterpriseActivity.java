@@ -3,6 +3,7 @@ package com.quanminjieshui.waterchain.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -90,7 +91,6 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
         tv_title_center.setText("洗涤企业");
         tv_title_left.setText("返回");
         tv_title_left.setVisibility(View.GONE);
-        tv_title_left.setVisibility(View.VISIBLE);
         factoryListAdapter = new FactoryListAdapter(EnterpriseActivity.this,listEntities);
         enterpriseList.setArrowImageView(R.drawable.iconfont_downgrey);
         enterpriseList.setLayoutManager(new LinearLayoutManager(EnterpriseActivity.this));
@@ -147,7 +147,13 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
     public void onFactoryDetailSuccess(FactoryDetailResponseBean factoryDetailResponseBean) {
         dismissLoadingDialog();
         LogUtils.d("factoryDetailResponseBean；"+factoryDetailResponseBean);
-        enterpriseDetail.setText(factoryDetailResponseBean.getDetail().getDescription());
+        CharSequence charSequence;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            charSequence = Html.fromHtml(factoryDetailResponseBean.getDetail().getDescription(),Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            charSequence = Html.fromHtml(factoryDetailResponseBean.getDetail().getDescription());
+        }
+        enterpriseDetail.setText(charSequence);
         GlidImageManager.getInstance().loadImageView(EnterpriseActivity.this,factoryDetailResponseBean.getDetail().getLogo(),enterpriseImg,R.drawable.ic_default_image);
         listEntities.clear();
         listEntities.addAll(factoryDetailResponseBean.getService_lists());

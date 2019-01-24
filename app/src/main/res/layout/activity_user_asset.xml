@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/style_txt_content"
+            android:visibility="gone"
             android:text="总资产折合：2497.45 水方 ≈ 10492.35 T"/>
 
         <RelativeLayout

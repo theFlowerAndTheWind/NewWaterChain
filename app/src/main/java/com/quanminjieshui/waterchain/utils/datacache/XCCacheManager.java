@@ -39,9 +39,9 @@ public class XCCacheManager {
     /**
      * 初始化 DiskLruCache
      */
-    public void init(Context context) {
+    public void init() {
         mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        mDiskCache = new DiskCache(context);
+        mDiskCache = new DiskCache(this.applicationContext);
         mMemoryCache = new MemoryCache();
     }
 

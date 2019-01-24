@@ -19,7 +19,7 @@ public class WaterChainApplication extends Application {
     public final static String TAG = "WaterChainApplication";
     private static WaterChainApplication application;
     private NetworkStateReceiver networkStateReceiver;
-
+    public static XCCacheManager xcCacheManager;
     public static WaterChainApplication getInstance() {
         return application;
     }
@@ -53,7 +53,7 @@ public class WaterChainApplication extends Application {
      * MEMORY_FIRST = 1000 MEMORY_ONLY = 2000 DISK_ONLY = 3000
      */
     private void cacheStrategy() {
-        XCCacheManager.getInstance(application,1000).init(application);
+        XCCacheManager.getInstance(application,1000).init();
     }
 
     private void registerReceiver() {

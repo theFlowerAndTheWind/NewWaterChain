@@ -10,10 +10,12 @@ import com.quanminjieshui.waterchain.beans.AccountDetailResponseBean;
 import com.quanminjieshui.waterchain.contract.model.AccountDetailModel;
 import com.quanminjieshui.waterchain.contract.presenter.AccountDetailPresenter;
 import com.quanminjieshui.waterchain.contract.view.AccountDetailViewImpl;
+import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * @Author: fushizhe
@@ -86,10 +88,15 @@ public class UserAssetActivity extends BaseActivity implements AccountDetailView
                 goBack(view);
                 break;
 
-            case R.id.btn_jsl_jy:
-            case R.id.btn_jsl_zz:
-            case R.id.btn_ds_jy:
-                showToast("该功能暂未开启，请稍后使用！");
+            case R.id.btn_jsl_jy://跳转交易 TODO 切换了 但是没有显示页面
+                EventBus.getDefault().post(new SelectFragmentEvent("交易"));
+                finish();
+                break;
+            case R.id.btn_jsl_zz://弹窗
+
+            case R.id.btn_ds_jy://跳转交易
+                EventBus.getDefault().post(new SelectFragmentEvent("交易"));
+                finish();
                 break;
 
             default:
