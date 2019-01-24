@@ -110,8 +110,7 @@ public class RegisterModel {
         } else {
             verifyResult.put(context.getString(R.string.key_edt_name_mobile), false);
         }
-        if(!TextUtils.isEmpty(sms)&&sms.length()==4&&sms.equals("4444")){
-//        if(!TextUtils.isEmpty(sms)&&sms.length()==4&&sms.equals(verCode)){
+        if(!TextUtils.isEmpty(sms)&& AccountValidatorUtil.isVertifyCode(sms)){
             verifyResult.put(context.getString(R.string.key_edt_name_sms), true);
         } else {
             verifyResult.put(context.getString(R.string.key_edt_name_sms), false);

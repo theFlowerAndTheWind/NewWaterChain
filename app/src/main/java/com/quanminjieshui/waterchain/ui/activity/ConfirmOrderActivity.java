@@ -290,7 +290,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         switch (getIntent().getIntExtra("class",-1)){
             case 1://FactoryServiceActivity
                 FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail = getIntent().getParcelableExtra("WashFatoryDetail");
-                if(washFatoryDetail==null)return;
+                if(washFatoryDetail==null){return;}
                 GlidImageManager.getInstance().loadImageView(this,washFatoryDetail.getImg(),service_img,R.drawable.ic_default_image);
 
                 washFatoryCageGory = getIntent().getParcelableArrayListExtra("WashFatoryCageGory");
@@ -338,6 +338,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     @Override
     protected void onResume() {
         super.onResume();
+        getData();
     }
 
     @Override

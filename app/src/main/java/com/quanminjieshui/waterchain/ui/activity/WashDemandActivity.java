@@ -98,6 +98,7 @@ public class WashDemandActivity extends BaseActivity {
                 intent.setClass(WashDemandActivity.this,ConfirmOrderActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                finish();
                 break;
             default:break;
         }

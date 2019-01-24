@@ -58,6 +58,11 @@ public class AccountValidatorUtil {
     public static final String REGEX_IP_ADDR = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
 
     /**
+     * 正则表达式：验证码（6位）
+     */
+    public static final String REGEX_SMS = ("^\\d{6}$");
+
+    /**
      * 校验用户名
      *
      * @param username
@@ -85,6 +90,13 @@ public class AccountValidatorUtil {
      */
     public static boolean isMobile(String mobile) {
         return Pattern.matches(REGEX_MOBILE, mobile);
+    }
+
+    /**
+     * 验证验证码
+     */
+    public static boolean isVertifyCode(String checkcodes) {
+        return Pattern.matches(REGEX_SMS,checkcodes);
     }
 
     /**

@@ -30,6 +30,8 @@ import com.quanminjieshui.waterchain.beans.RegisterResponseBean;
 import com.quanminjieshui.waterchain.contract.model.RegisterModel;
 import com.quanminjieshui.waterchain.contract.presenter.RegisterPresenter;
 import com.quanminjieshui.waterchain.contract.view.RegisterViewImpl;
+import com.quanminjieshui.waterchain.http.config.HttpConfig;
+import com.quanminjieshui.waterchain.http.config.UrlConfig;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
@@ -98,9 +100,8 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
     private String pwd;
     private String confirm;
     private String invitation;
-    private boolean isChecked = true,runningCode = false;
+    private boolean isCheckedAgree = true,runningCode = false;
     private RegisterPresenter presenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +117,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
         cb_agreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isChecked = isChecked;
+                isCheckedAgree = isChecked;
             }
         });
     }
@@ -144,22 +145,24 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
                 }
 
                 break;
-//            case R.id.cb_agreement:
-//                break;
             case R.id.tv_agreement:
-                //todo startAct 2 agreement webView
+                Intent intent = new Intent();
+                intent.setClass(RegisterActivity.this, WebViewActivity.class);
+                intent.putExtra("URL", UrlConfig.PLATFORM_AGREEMENT);
+                intent.putExtra("title",R.string.agreement);
+                startActivity(intent);
                 break;
             case R.id.btn_register:
-                if (isChecked) {
+                if (isCheckedAgree) {
                     mobile = edt_mobile.getText().toString();
                     sms = edt_sms.getText().toString();
                     pwd = edt_pwd.getText().toString();
                     confirm = edt_confirm.getText().toString();
                     invitation = edt_invitation.getText().toString();
-                    presenter.verify(mobile, pwd, confirm, sms, invitation, isChecked);
-                    presenter.register(this, mobile, pwd, confirm, sms, invitation, isChecked);
+                    presenter.verify(mobile, pwd, confirm, sms, invitation, isCheckedAgree);
+                    presenter.register(this, mobile, pwd, confirm, sms, invitation, isCheckedAgree);
                 } else {
-                    showToast("请阅读并同意《节水链平台用书协议》");
+                    ToastUtils.showCustomToast("请阅读并同意《节水链平台用书协议》");
                 }
                 break;
             case R.id.tv_existing:
@@ -261,7 +264,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @Override
     public void onRegisterFaild(String msg) {
-        showToast(msg);
+        ToastUtils.showCustomToast(msg);
     }
 
     @Override

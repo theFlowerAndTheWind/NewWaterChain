@@ -924,5 +924,9 @@ public class UrlConfig {
      */
     public static final String ABOUT_US = "https://quanminjieshui.com/h5/user/about.html";
 
+    /**
+     * 注册平台服务协议 TODO
+     */
+    public static final String PLATFORM_AGREEMENT = "https://www.baidu.com";
 
 }
