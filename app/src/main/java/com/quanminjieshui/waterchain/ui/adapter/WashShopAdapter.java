@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
+import com.quanminjieshui.waterchain.beans.Factory;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -31,11 +31,11 @@ public class WashShopAdapter extends RecyclerView.Adapter<WashShopAdapter.Recycl
 
     private Context context;
 
-    private List<FactoryListResponseBean> list ;
+    private List<Factory> list ;
 
     private OnItemClickListener listener;
 
-    public WashShopAdapter(Context context, List<FactoryListResponseBean> list){
+    public WashShopAdapter(Context context, List<Factory> list){
 
         this.context = context;
         if(list == null){

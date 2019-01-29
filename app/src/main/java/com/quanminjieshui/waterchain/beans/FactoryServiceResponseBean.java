@@ -131,6 +131,13 @@ public class FactoryServiceResponseBean {
         int fscid;
         int piceCount = 0;
 
+        public WashFatoryCageGory(String c_name, String unit_price, String piece, String standard) {
+            this.c_name = c_name;
+            this.unit_price = unit_price;
+            this.piece = piece;
+            this.standard = standard;
+        }
+
         protected WashFatoryCageGory(Parcel in) {
             c_name = in.readString();
             unit_price = in.readString();

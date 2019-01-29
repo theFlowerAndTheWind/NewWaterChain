@@ -12,8 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
+import com.quanminjieshui.waterchain.beans.Factory;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -32,11 +31,11 @@ public class FactoryListIndexAdapter extends RecyclerView.Adapter<FactoryListInd
 
     private Context context;
 
-    private List<FactoryListResponseBean> list ;
+    private List<Factory> list ;
 
     private OnItemClickListener listener;
 
-    public FactoryListIndexAdapter(Context context, List<FactoryListResponseBean> list){
+    public FactoryListIndexAdapter(Context context, List<Factory> list){
 
         this.context = context;
         if(list == null){

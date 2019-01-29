@@ -1,9 +1,7 @@
 package com.quanminjieshui.waterchain.contract.view;
 
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.contract.IBaseViewImpl;
-
-import java.util.List;
 
 /**
  * Created by songxiaotao on 2018/12/20.
@@ -11,6 +9,6 @@ import java.util.List;
  */
 
 public interface FactoryListViewImpl extends IBaseViewImpl {
-    void onFactoryListSuccess(List<FactoryListResponseBean> factoryListEntities);
+    void onFactoryListSuccess(FactoryListResponse factoryListResponse);
     void onFactoryListFailed(String msg);
 }

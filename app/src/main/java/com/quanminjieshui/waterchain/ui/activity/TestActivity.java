@@ -19,10 +19,8 @@ import android.widget.EditText;
 import com.github.mikephil.charting.charts.LineChart;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
-import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
-import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -30,7 +28,6 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.OnClick;
 
@@ -94,13 +91,12 @@ public class TestActivity extends BaseActivity {
                 params.put("count", "10");
                 RetrofitFactory.getInstance().createService()
                         .factoryList(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity<List<FactoryListResponseBean>>>bindToLifecycle())
-                        .compose(TestActivity.this.<BaseEntity<List<FactoryListResponseBean>>>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity<List<FactoryListResponseBean>>>io())
-                        .subscribe(new BaseObserver<List<FactoryListResponseBean>>(TestActivity.this) {
+                        .compose(TestActivity.this.<BaseEntity<FactoryListResponse>>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity<FactoryListResponse>>io())
+                        .subscribe(new BaseObserver<FactoryListResponse>(TestActivity.this) {
 
                             @Override
-                            protected void onSuccess(List<FactoryListResponseBean> bean) throws Exception {
+                            protected void onSuccess(FactoryListResponse bean) throws Exception {
 //                                url=bean.getUrl();
                             }
 

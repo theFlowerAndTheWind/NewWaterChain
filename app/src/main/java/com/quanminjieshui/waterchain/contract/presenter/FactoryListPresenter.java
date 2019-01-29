@@ -1,12 +1,10 @@
 package com.quanminjieshui.waterchain.contract.presenter;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.FactoryListModel;
 import com.quanminjieshui.waterchain.contract.view.FactoryListViewImpl;
-
-import java.util.List;
 
 /**
  * Created by songxiaotao on 2018/12/20.
@@ -34,9 +32,9 @@ public class FactoryListPresenter extends BasePresenter<FactoryListViewImpl> {
         }
         factoryListModel.getFactoryList(activity, count, new FactoryListModel.FactoryListCallBack() {
             @Override
-            public void success(List<FactoryListResponseBean> factoryListEntities) {
+            public void success(FactoryListResponse factoryListResponse) {
                 if(mView!=null){
-                    mView.onFactoryListSuccess(factoryListEntities);
+                    mView.onFactoryListSuccess(factoryListResponse);
                 }
             }
 

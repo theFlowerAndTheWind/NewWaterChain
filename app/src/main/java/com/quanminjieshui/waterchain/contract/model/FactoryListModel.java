@@ -1,7 +1,7 @@
 package com.quanminjieshui.waterchain.contract.model;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -11,7 +11,6 @@ import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by songxiaotao on 2018/12/20.
@@ -25,12 +24,12 @@ public class FactoryListModel {
         params.put("count",count);
         RetrofitFactory.getInstance().createService()
                 .factoryList(RequestUtil.getRequestHashBody(params,false))
-                .compose(activity.<BaseEntity<List<FactoryListResponseBean>>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<List<FactoryListResponseBean>>>io())
-                .subscribe(new BaseObserver<List<FactoryListResponseBean>>(activity) {
+                .compose(activity.<BaseEntity<FactoryListResponse>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<FactoryListResponse>>io())
+                .subscribe(new BaseObserver<FactoryListResponse>(activity) {
                     @Override
-                    protected void onSuccess(List<FactoryListResponseBean> factoryListResponseBean) throws Exception {
-                        callBack.success(factoryListResponseBean);
+                    protected void onSuccess(FactoryListResponse factoryListResponse) throws Exception {
+                        callBack.success(factoryListResponse);
                     }
 
                     @Override
@@ -56,7 +55,7 @@ public class FactoryListModel {
     }
 
     public interface FactoryListCallBack{
-        void success(List<FactoryListResponseBean> factoryListEntities);
+        void success(FactoryListResponse factoryListResponse);
         void failed(String msg);
     }
 }

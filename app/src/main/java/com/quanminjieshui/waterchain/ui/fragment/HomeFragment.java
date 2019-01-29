@@ -3,14 +3,9 @@ package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,24 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.Utils;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
+import com.quanminjieshui.waterchain.beans.Factory;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.FactoryListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeLinePresenter;
@@ -44,14 +28,12 @@ import com.quanminjieshui.waterchain.contract.view.FactoryListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
 import com.quanminjieshui.waterchain.ui.activity.EnterpriseActivity;
 import com.quanminjieshui.waterchain.ui.activity.MainActivity;
-import com.quanminjieshui.waterchain.ui.activity.WebViewActivity;
 import com.quanminjieshui.waterchain.ui.adapter.FactoryListIndexAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.ui.widget.chart.ChartUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +48,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements BannerListViewImpl,FactoryListViewImpl,TradeLineViewImpl {
+public class HomeFragment extends BaseFragment implements BannerListViewImpl, FactoryListViewImpl, TradeLineViewImpl {
 
 
     @BindView(R.id.banner_guide_content)
@@ -91,7 +73,9 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     ArrayList<String> nameList = new ArrayList<>();
     ArrayList<String> imgUrlList = new ArrayList<>();
     MainActivity activity;
-    private List<FactoryListResponseBean> listEntities = new ArrayList<>();
+    private List<Factory> listEntities = new ArrayList<>();
+    private int count = 0;//factoryList计数
+    private boolean isRefresh = false;//是否刷新
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,22 +104,23 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof MainActivity){
+        if (activity instanceof MainActivity) {
             this.activity = (MainActivity) activity;
         }
     }
 
-    @OnClick({R.id.tv_wash_damend,R.id.tv_transaction_center})
-    public void OnClick(View view){
+    @OnClick({R.id.tv_wash_damend, R.id.tv_transaction_center})
+    public void OnClick(View view) {
         activity.hideFragment();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_wash_damend:
                 activity.showWash();
                 break;
             case R.id.tv_transaction_center:
                 activity.showTransaction();
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
@@ -143,11 +128,11 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
         mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-                GlidImageManager.getInstance().loadImageView(getBaseActivity(),model,itemView,R.drawable.holder);
+                GlidImageManager.getInstance().loadImageView(getBaseActivity(), model, itemView, R.drawable.holder);
             }
         });
 
-        factoryListAdapter = new FactoryListIndexAdapter(getBaseActivity(),listEntities);
+        factoryListAdapter = new FactoryListIndexAdapter(getBaseActivity(), listEntities);
         factoryList.setArrowImageView(R.drawable.iconfont_downgrey);
         factoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        factoryList.addItemDecoration(new RecyclerViewDivider(getBaseActivity(),LinearLayoutManager.HORIZONTAL,1,getResources().getColor(R.color.item_line)));
@@ -158,14 +143,16 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
             @Override
             public void onRefresh() {
                 if (factoryListPresenter != null) {
-                    factoryListPresenter.getFactoryList(getBaseActivity(),0);
+                    isRefresh = true;
+                    factoryListPresenter.getFactoryList(getBaseActivity(), count);
                 }
             }
 
             @Override
             public void onLoadMore() {
                 if (factoryListPresenter != null) {
-                    factoryListPresenter.getFactoryList(getBaseActivity(),0);
+                    isRefresh = false;
+                    factoryListPresenter.getFactoryList(getBaseActivity(), count);
                 }
             }
         });
@@ -200,11 +187,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     }
 
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
+        if (isVisibleToUser) {
             requestNetwork();
         }
 
@@ -214,7 +200,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
+        if (!hidden) {
             requestNetwork();
         }
     }
@@ -224,16 +210,16 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
         requestNetwork();
     }
 
-    public void requestNetwork(){
-        if(bannerListPresenter!=null){
-            bannerListPresenter.getBannerList(getBaseActivity(),3,1);
+    public void requestNetwork() {
+        if (bannerListPresenter != null) {
+            bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);
         }
-        if(factoryListPresenter!=null){
-            factoryListPresenter.getFactoryList(getBaseActivity(),0);
+        if (factoryListPresenter != null) {
+            factoryListPresenter.getFactoryList(getBaseActivity(), count);
 
         }
-        if(tradeLinePresenter!=null){
-            tradeLinePresenter.getTradeLine(getBaseActivity(),"today");
+        if (tradeLinePresenter != null) {
+            tradeLinePresenter.getTradeLine(getBaseActivity(), "today");
         }
         //showLoadingDialog();
     }
@@ -247,13 +233,13 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(bannerListPresenter!=null){
+        if (bannerListPresenter != null) {
             bannerListPresenter.detachView();
         }
-        if(factoryListPresenter!=null){
+        if (factoryListPresenter != null) {
             factoryListPresenter.detachView();
         }
-        if(tradeLinePresenter!=null){
+        if (tradeLinePresenter != null) {
             tradeLinePresenter.detachView();
         }
     }
@@ -281,7 +267,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
         imgList.clear();
         nameList.clear();
         imgUrlList.clear();
-        for(BannerListResponseBean.BannerListEntity listEntity :list){
+        for (BannerListResponseBean.BannerListEntity listEntity : list) {
             imgList.add(listEntity.getImg());
             nameList.add(listEntity.getName());
             imgUrlList.add(listEntity.getUrl());
@@ -296,18 +282,24 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     }
 
     @Override
-    public void onFactoryListSuccess(List<FactoryListResponseBean> factoryListEntities) {
+    public void onFactoryListSuccess(FactoryListResponse factoryListResponse) {
         dismissLoadingDialog();
-        listEntities.clear();
-        listEntities.addAll(factoryListEntities);
-        factoryListAdapter.notifyDataSetChanged();
-        factoryList.refreshComplete();
+        if (factoryListResponse != null) {
+            List<Factory> factoryListEntities = factoryListResponse.getLists();
+            if (isRefresh) listEntities.clear();
+            listEntities.addAll(factoryListEntities);
+            count = listEntities.size();
+            factoryListAdapter.notifyDataSetChanged();
+            factoryList.refreshComplete();
+        }
+        isRefresh = false;//每次请求后必须执行
 //        factoryList.loadMoreComplete();
     }
 
     @Override
     public void onFactoryListFailed(String msg) {
         dismissLoadingDialog();
-        LogUtils.d("factoryListEntities；"+msg);
+        isRefresh = false;//每次请求后必须执行
+        LogUtils.d("factoryListEntities；" + msg);
     }
 }

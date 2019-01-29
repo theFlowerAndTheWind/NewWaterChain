@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:text="技术介绍"
                 android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_edt" />
+                android:textSize="@dimen/text_size_edt"
+                android:layout_marginBottom="10px"/>
 
             <TextView
                 android:id="@+id/tv_intr_detail"
@@ -48,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容"
                 android:textColor="@color/text_gray"
+                android:lineSpacingExtra="5px"
                 android:textSize="11sp" />
 
         </LinearLayout>

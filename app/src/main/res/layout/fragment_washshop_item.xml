@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:textSize="11sp"
                         android:layout_height="match_parent"
-                        android:text="服务范围："/>
+                        android:text="服务范围:"/>
 
                     <TextView
                         android:id="@+id/tv_service_scope"
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:textSize="11sp"
                         android:layout_height="match_parent"
-                        android:text="业务范围："/>
+                        android:text="业务范围:"/>
                     <TextView
                         android:id="@+id/tv_bussiness_scope"
                         android:layout_weight="1"
@@ -111,7 +111,7 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:textSize="14sp"
-                android:layout_height="50px"
+                android:layout_height="70px"
                 android:layout_gravity="left|center"
                 android:text="查看服务项目" />
         </LinearLayout>

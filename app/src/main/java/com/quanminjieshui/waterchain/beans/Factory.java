@@ -5,7 +5,7 @@ package com.quanminjieshui.waterchain.beans;
  * Class Note:洗涤商城
  */
 
-public class FactoryListResponseBean {
+public class Factory {
 
     int id;
     String f_name;

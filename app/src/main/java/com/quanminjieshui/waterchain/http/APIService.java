@@ -6,7 +6,6 @@ import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsResposeBean;
@@ -24,6 +23,7 @@ import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.beans.UploadFileResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
 
@@ -141,7 +141,7 @@ public interface APIService {
 
     //洗涤商城企业列表
     @POST(UrlConfig.FACTORY_LIST)
-    Observable<BaseEntity<List<FactoryListResponseBean>>> factoryList(@Body RequestBody requestBody);
+    Observable<BaseEntity<FactoryListResponse>> factoryList(@Body RequestBody requestBody);
 
     //洗涤企业详情
     @POST(UrlConfig.FACTORY_DETAIL)

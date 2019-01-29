@@ -31,8 +31,8 @@
                 layout="@layout/fragment_enterprise_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20px"
-                android:layout_marginTop="20px" />
+                android:layout_marginBottom="@dimen/view_space_gray"
+                android:layout_marginTop="@dimen/view_space_gray" />
 
             <LinearLayout
                 style="@style/MyPadding"
@@ -47,7 +47,8 @@
                     android:layout_height="wrap_content"
                     android:text="企业介绍"
                     android:textColor="@color/text_black"
-                    android:textSize="@dimen/text_size_edt" />
+                    android:textSize="@dimen/text_size_edt"
+                    android:layout_marginBottom="10px"/>
 
                 <TextView
                     android:id="@+id/enterpriseDetail"
@@ -55,7 +56,8 @@
                     android:layout_height="wrap_content"
                     android:text="临沂东海胜洁清洁服务有限公司现有员六十余人，管理人员均从业多年并持有国家认可的中级以上洗涤技师资格证书，所有员工均经过正规的岗前培训方可上岗。本着视客户利益高于一切的服务宗旨不断赢得客户的依赖。现有水洗、干洗、平烫、烘干、运输、后勤等业务,能够有效的保障洗涤物品从运输→洗涤→消毒→平整→包装→配送等各个环节的高效率运行。独立的配送体系，专车免费取送货，为客户提供及时、快捷、稳定的优质服务。"
                     android:textColor="@color/text_gray"
-                    android:textSize="@dimen/text_size_edt" />
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="5px"/>
 
             </LinearLayout>
 

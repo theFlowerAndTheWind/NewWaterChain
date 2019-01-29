@@ -11,8 +11,7 @@
         android:text="洗涤企业"
         android:padding="20px"
         android:paddingLeft="@dimen/layout_horizontal_padding"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/factoryList"

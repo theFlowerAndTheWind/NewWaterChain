@@ -6,75 +6,75 @@
 
     <LinearLayout
         style="@style/MatchWrap"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/layout_horizontal_padding"
-        android:paddingRight="@dimen/layout_horizontal_padding"
-        android:orientation="horizontal">
+        android:paddingRight="@dimen/layout_horizontal_padding">
 
         <ImageView
             android:id="@+id/wash_img"
-            android:src="@drawable/ic_default_image"
-            android:scaleType="centerCrop"
-            android:layout_marginRight="35px"
             android:layout_width="294px"
-            android:layout_height="190px" />
+            android:layout_height="190px"
+            android:layout_marginRight="35px"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_image" />
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/tv_order_title"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:textColor="#333333"
-                    android:gravity="left|center_vertical"
-                    android:layout_alignParentTop="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="酒店步草洗涤"/>
+                    android:layout_alignParentTop="true"
+                    android:gravity="left|center_vertical"
+                    android:text="酒店步草洗涤"
+                    android:textColor="#333333"
+                    android:textSize="11sp" />
+
                 <TextView
                     android:id="@+id/tv_order_desc"
-                    android:gravity="center|left"
-                    android:layout_marginBottom="15px"
-                    android:layout_marginTop="15px"
-                    android:layout_below="@+id/tv_order_title"
                     android:layout_width="match_parent"
-                    android:textSize="9sp"
                     android:layout_height="match_parent"
-                    android:text="专业技术，节水95%,不用洗涤剂，不产生污染，已在深圳和山东江苏等地推广  "/>
+                    android:layout_below="@+id/tv_order_title"
+                    android:layout_marginTop="15px"
+                    android:gravity="left"
+                    android:text="专业技术，节水95%,不用洗涤剂，不产生污染，已在深圳和山东江苏等地推广  "
+                    android:textSize="9sp" />
             </RelativeLayout>
 
 
             <Button
                 android:id="@+id/btn_order"
-                style="@style/style_btn"
-                android:layout_marginRight="20px"
-                android:layout_weight="1"
+                android:background="@drawable/btn_blue_bg_selector"
                 android:layout_width="200px"
-                android:textSize="24px"
-                android:layout_height="wrap_content"
+                android:layout_height="120px"
+                android:textColor="@color/white"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="bottom|left"
-                android:text="立即下单" />
+                android:layout_marginRight="20px"
+                android:layout_weight="1"
+                android:text="立即下单"
+                android:textSize="11sp" />
         </LinearLayout>
 
     </LinearLayout>
-
     <View
         android:id="@+id/line"
-        android:layout_marginBottom="20px"
-        android:layout_marginTop="20px"
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:visibility="gone"
-        android:background="@color/divider_gray"/>
+        android:layout_marginTop="20px"
+        android:layout_marginBottom="20px"
+        android:background="@color/divider_gray"
+        android:visibility="gone" />
 
 </LinearLayout>

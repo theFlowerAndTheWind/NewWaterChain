@@ -4,15 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.AdImgResponseBean;
-import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
+import com.quanminjieshui.waterchain.beans.Factory;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.contract.model.AdImgModel;
 import com.quanminjieshui.waterchain.contract.presenter.AdImgPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.FactoryListPresenter;
@@ -43,6 +46,8 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
     ImageView imgAd;
     @BindView(R.id.factoryList)
     XRecyclerView factoryList;
+    @BindView(R.id.tv_intr_detail)
+    TextView tvIntrDetail;
 
     private FactoryListPresenter factoryListPresenter;
     private AdImgPresenter adImgPresenter;
@@ -50,7 +55,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
     private Unbinder unbinder;
     private View rootView;
     private WashShopAdapter washShopAdapter;
-    private List<FactoryListResponseBean> listEntities = new ArrayList<>();
+    private List<Factory> listEntities = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -154,12 +159,23 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
     }
 
     @Override
-    public void onFactoryListSuccess(List<FactoryListResponseBean> factoryListEntities) {
+    public void onFactoryListSuccess(FactoryListResponse factoryListResponse) {
         dismissLoadingDialog();
-        LogUtils.d("factoryListEntities；" + factoryListEntities.toArray());
-        listEntities.clear();
-        listEntities.addAll(factoryListEntities);
-        washShopAdapter.notifyDataSetChanged();
+        if(factoryListResponse!=null){
+            List<Factory> factoryListEntities = factoryListResponse.getLists();
+            String tech_desc = factoryListResponse.getTech_desc();
+//            LogUtils.d("factoryListEntities；" + factoryListEntities.toArray());
+            listEntities.clear();
+            listEntities.addAll(factoryListEntities);
+            washShopAdapter.notifyDataSetChanged();
+            CharSequence charSequence;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                charSequence = Html.fromHtml(tech_desc,Html.FROM_HTML_MODE_LEGACY);
+            } else {
+                charSequence = Html.fromHtml(tech_desc);
+            }
+            tvIntrDetail.setText(charSequence);
+        }
         factoryList.refreshComplete();
     }
 
@@ -169,6 +185,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
         LogUtils.d("factoryListEntities；" + msg);
 
     }
+
 
     @Override
     public void onDestroy() {
