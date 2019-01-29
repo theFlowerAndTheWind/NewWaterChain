@@ -7,10 +7,11 @@ package com.quanminjieshui.waterchain.http.config;
 public class HttpConfig {
 
     public static int HTTP_TIME = 30000;
-    //生成环境
+
 //    public static String BASE_URL = "https://www.jsl.com";
     //开发环境
 //    public static String BASE_URL = "https://jsl.sshsky.com";
+    //生产环境
     public static String BASE_URL = "https://www.quanminjieshui.com";//香港服务器不稳定
 
 

@@ -94,6 +94,9 @@ public class UserAssetActivity extends BaseActivity implements AccountDetailView
                 break;
             case R.id.btn_jsl_zz://弹窗
 
+                overridePendingTransition(R.anim.actionsheet_dialog_in, 0);
+                break;
+
             case R.id.btn_ds_jy://跳转交易
                 EventBus.getDefault().post(new SelectFragmentEvent("交易"));
                 finish();

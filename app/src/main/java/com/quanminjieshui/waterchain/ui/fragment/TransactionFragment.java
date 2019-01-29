@@ -2,6 +2,7 @@
 package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -47,6 +48,7 @@ import com.quanminjieshui.waterchain.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -83,6 +85,8 @@ public class TransactionFragment extends BaseFragment implements
     TextView tvHighest;
     @BindView(R.id.tv_user_account)
     TextView tvUserAccount;
+    @BindView(R.id.ll_trade_total)
+    LinearLayout llTradeTotal;
     @BindView(R.id.edt_total)
     EditText edtTotal;
     @BindView(R.id.btn_buy)
@@ -117,6 +121,11 @@ public class TransactionFragment extends BaseFragment implements
     LinearLayout llListHeader;
     @BindView(R.id.xrl_trade_list)
     XRecyclerView xrvTradeList;
+
+    @BindDrawable(R.drawable.gray_border_bg_shape)
+    Drawable grayBgShape;
+    @BindDrawable(R.drawable.red_border_illegal_bg_shape)
+    Drawable redBgShape;
 
 
     Unbinder unbinder;
@@ -172,7 +181,7 @@ public class TransactionFragment extends BaseFragment implements
         tradeLinePresenter = new TradeLinePresenter(new TradeLineModel());
         tradeLinePresenter.attachView(this);
         doTradeCenter();
-        doTradeLine(tradeLineType);
+        reqTradeLineData(tradeLineType);
 
         showLoadingDialog();
 
@@ -190,12 +199,14 @@ public class TransactionFragment extends BaseFragment implements
                     buyOrSell = 0;
                     btnBuy.setVisibility(View.VISIBLE);
                     btnSell.setVisibility(View.GONE);
+                    tvHighest.setText("已市场最优价贡献");
                     if (user_account != null && !TextUtils.isEmpty(user_account.getDs()))
                         tvUserAccount.setText(new StringBuilder("可用 ").append(tradeCenterResponseBean.getUser_account().getDs()).append(" 节水指标"));
                 } else if (position == 1) {
                     buyOrSell = 1;
                     btnBuy.setVisibility(View.GONE);
                     btnSell.setVisibility(View.VISIBLE);
+                    tvHighest.setText("已市场最优价获取");
                     if (user_account != null && !TextUtils.isEmpty(user_account.getJsl()))
                         tvUserAccount.setText(new StringBuilder("可用 ").append(tradeCenterResponseBean.getUser_account().getJsl()).append(" JSL"));
 
@@ -232,17 +243,15 @@ public class TransactionFragment extends BaseFragment implements
                 } else if (position == 2) {
                     tradeLineType = "month";
                 }
-                doTradeLine(tradeLineType);
+                reqTradeLineData(tradeLineType);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
@@ -374,11 +383,12 @@ public class TransactionFragment extends BaseFragment implements
 
     @Override
     public void onTradeCenterFailed(String msg) {
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg, 0);
     }
 
     @Override
     public void onBuySuccess(Object o) {
+        ToastUtils.showCustomToast("报单成功", 1);
         cleanEdt();
         handler.postDelayed(new Runnable() {
             @Override
@@ -393,11 +403,12 @@ public class TransactionFragment extends BaseFragment implements
     public void onBuyFailed(String msg) {
         cleanEdt();
         dismissLoadingDialog();
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg, 0);
     }
 
     @Override
     public void onSellSuccess(Object o) {
+        ToastUtils.showCustomToast("报单成功", 1);
         cleanEdt();
         handler.postDelayed(new Runnable() {
             @Override
@@ -412,7 +423,7 @@ public class TransactionFragment extends BaseFragment implements
     public void onSellFailed(String msg) {
         cleanEdt();
         dismissLoadingDialog();
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg, 0);
     }
 
     @Override
@@ -430,7 +441,7 @@ public class TransactionFragment extends BaseFragment implements
     @Override
     public void onCancleFailed(String msg) {
 //        dismissLoadingDialog();
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg, 0);
     }
 
     @Override
@@ -453,6 +464,8 @@ public class TransactionFragment extends BaseFragment implements
     private void cleanEdt() {
         edtTotal.setText("");
         edtPrice.setText("");
+        llTradePrice.setBackground(grayBgShape);
+        llTradeTotal.setBackground(grayBgShape);
     }
 
 
@@ -467,44 +480,29 @@ public class TransactionFragment extends BaseFragment implements
 
             case R.id.btn_buy:
                 if (checkIsLogin()) {
-                    visibility = tvHighest.getVisibility();
-                    visibility1 = llTradePrice.getVisibility();
-                    if (visibility == View.VISIBLE && visibility1 == View.GONE) {
-                        tradePrice = 0.0f;
-                    } else if (visibility == View.GONE && visibility1 == View.VISIBLE) {
-                        tradePrice = Float.valueOf(edtPrice.getText().toString());
-                        tradeTotal = Float.valueOf(edtTotal.getText().toString());
+                    if (setPriceTotalSucc()) {
+                        doBuy(tradeType, tradeTotal, tradePrice);
+                        showLoadingDialog();
                     }
-                    //todo
-                    doBuy(tradeType, tradeTotal, tradePrice);
-                    showLoadingDialog();
-                }else{
+                } else {
                     showAlertChainDialog();
                 }
                 break;
 
             case R.id.btn_sell:
                 if (checkIsLogin()) {
-                    visibility = tvHighest.getVisibility();
-                    visibility1 = llTradePrice.getVisibility();
-                    if (visibility == View.VISIBLE && visibility1 == View.GONE) {
-                        tradePrice = 0.0f;
-                    } else if (visibility == View.GONE && visibility1 == View.VISIBLE) {
-                        tradePrice = Float.valueOf(edtPrice.getText().toString());
-                        tradeTotal = Float.valueOf(edtTotal.getText().toString());
+                    if (setPriceTotalSucc()) {
+                        doSell(tradeType, tradeTotal, tradePrice);
+                        showLoadingDialog();
                     }
-                    //todo
-                    doSell(tradeType, tradeTotal, tradePrice);
-                    showLoadingDialog();
-
-                }else{
-                   showAlertChainDialog();
+                } else {
+                    showAlertChainDialog();
                 }
                 break;
             case R.id.tv_history_trade:
                 if (checkIsLogin()) {
                     jump(TradeListsActivity.class, null);
-                }else{
+                } else {
                     showAlertChainDialog();
                 }
                 break;
@@ -523,6 +521,45 @@ public class TransactionFragment extends BaseFragment implements
                 break;
         }
     }
+
+    /**
+     * 设置价格，数量
+     */
+    private boolean setPriceTotalSucc() {
+        boolean result=false;
+        //区分市价交易/限价交易决定price取值
+        if (tradeType == 2) {//市价交易
+            tradePrice = 0.0f;
+        } else if (tradeType == 1) {//限价交易
+            String priceStr = edtPrice.getText().toString();
+            if (!TextUtils.isEmpty(priceStr)) {
+                if (priceStr.endsWith(".")) {
+                    priceStr = priceStr + "0";
+                }
+                tradePrice = Float.valueOf(priceStr);
+                result= true;
+            } else {
+                llTradePrice.setBackground(redBgShape);
+                ToastUtils.showCustomToastMsg("请输入正确的数值", 150);
+                result= false;
+            }
+        }
+        //total取值
+        String totalStr = edtTotal.getText().toString();
+        if (!TextUtils.isEmpty(totalStr)) {
+            if (totalStr.endsWith(".")) {
+                totalStr = totalStr + "0";
+            }
+            tradeTotal = Float.valueOf(totalStr);
+            result= true;
+        } else {
+            llTradeTotal.setBackground(redBgShape);
+            ToastUtils.showCustomToastMsg("请输入正确的数值", 150);
+            result= false;
+        }
+        return result;
+    }
+
 
     private void showPopupWindown() {
         // 一个自定义的布局，作为显示的内容
@@ -548,6 +585,11 @@ public class TransactionFragment extends BaseFragment implements
                 tvTradeType.setText("市价交易");
                 llTradePrice.setVisibility(View.GONE);
                 tvHighest.setVisibility(View.VISIBLE);
+                if (buyOrSell == 0) {
+                    tvHighest.setText("已市场最优价贡献");
+                } else if (buyOrSell == 1) {
+                    tvHighest.setText("已市场最优价获取");
+                }
                 popupWindow.dismiss();
             }
         });
@@ -567,7 +609,7 @@ public class TransactionFragment extends BaseFragment implements
         }
     }
 
-    private void showAlertChainDialog(){
+    private void showAlertChainDialog() {
         if (dialog == null) {
             dialog = new AlertChainDialog(getActivity());
         }
@@ -586,7 +628,7 @@ public class TransactionFragment extends BaseFragment implements
 
                     }
                 })
-                .show();Log.e("tag","showshowshowshow");
+                .show();
     }
 
 
@@ -645,7 +687,7 @@ public class TransactionFragment extends BaseFragment implements
         cancleTradePresenter.cancle(getBaseActivity(), tid);
     }
 
-    private void doTradeLine(String type) {
+    private void reqTradeLineData(String type) {
         if (type.equals("today") || type.equals("week") || type.equals("month") || type.equals("year")) {
             if (tradeLinePresenter == null) {
                 tradeLinePresenter = new TradeLinePresenter(new TradeLineModel());

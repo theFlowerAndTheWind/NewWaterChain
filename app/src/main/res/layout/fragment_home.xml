@@ -27,7 +27,6 @@
             layout="@layout/fragment_home_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/view_space_gray"
             android:layout_marginTop="@dimen/view_space_gray" />
 
         <include
@@ -36,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/view_space_gray"
-            android:layout_marginBottom="20px" />
+            android:layout_marginTop="@dimen/view_space_gray" />
 
     </LinearLayout>
 

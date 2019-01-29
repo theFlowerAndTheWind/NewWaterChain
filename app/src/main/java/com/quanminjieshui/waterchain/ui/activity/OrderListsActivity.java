@@ -227,7 +227,7 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
 
     @Override
     public void onOrderListFailed(String msg) {
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
         isRefresh = false;
     }
 

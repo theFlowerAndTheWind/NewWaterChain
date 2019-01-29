@@ -166,7 +166,7 @@ public class TradeDetaiActivity extends BaseActivity implements TradeDetailViewI
     @Override
     public void onTradeDetailFailed(String msg) {
         dismissLoadingDialog();
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
 
     }
 }

@@ -44,6 +44,38 @@
                 android:text="立即认证" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_rejected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:background="@drawable/gray_bg_shape"
+            android:orientation="vertical"
+            android:padding="40px"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身份认证"
+                android:textColor="@color/text_black"
+                android:textSize="32px" />
+
+            <TextView
+                style="@style/style_txt_content_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="51px"
+                android:text="请如实填写您的身份信息，认证后方能参与交易" />
+
+            <TextView
+                style="@style/style_href"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37px"
+                android:visibility="invisible"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_ing"
@@ -78,8 +110,7 @@
             android:layout_marginTop="40px"
             android:background="@drawable/gray_bg_shape"
             android:orientation="vertical"
-            android:padding="40px"
-            android:visibility="gone">
+            android:padding="40px">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,14 +120,15 @@
                 android:textSize="32px" />
 
             <TextView
+                android:id="@+id/tv_user_name"
                 style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="45px"
+                android:layout_marginTop="35px"
                 android:text="***" />
 
             <TextView
-                android:id="@+id/tv_user_name"
+                android:id="@+id/tv_id_no"
                 style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,7 +136,6 @@
                 android:text="证件号码：110***********13" />
 
             <TextView
-                android:id="@+id/tv_id_no"
                 style="@style/style_txt_content_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -56,12 +56,14 @@
                 android:layout_marginRight="10px"
                 android:text="收起"
                 android:textColor="@color/text_gray"
-                android:textSize="@dimen/text_size_edt" />
+                android:textSize="@dimen/text_size_edt"
+                android:visibility="gone"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/down" />
+                android:src="@mipmap/down"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -76,9 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="386px"
-            android:layout_marginLeft="28px"
             android:layout_marginTop="40px"
-            android:layout_marginRight="28px"
             android:layout_marginBottom="40px" />
 
         <LinearLayout

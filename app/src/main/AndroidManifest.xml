@@ -58,14 +58,14 @@
             android:screenOrientation="behind" />
         <!-- alipay end -->
 
-        <activity android:name=".ui.activity.TestActivity" />
+        <activity android:name=".ui.activity.TestActivity" >
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
 
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
-        <!--</activity>-->
+        </activity>
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -179,6 +179,11 @@
         <activity
             android:name=".ui.activity.WebViewActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.TransferActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/dialogstyle" />
 
     </application>
 

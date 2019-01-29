@@ -174,7 +174,7 @@ public class TradeListsActivity extends BaseActivity implements
     @Override
     public void onCancleFailed(String msg) {
 //        dismissDialog();
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
     }
 
     @OnClick({R.id.tv_detail, R.id.left_ll})

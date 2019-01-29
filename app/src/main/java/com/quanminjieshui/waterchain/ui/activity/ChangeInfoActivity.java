@@ -75,7 +75,7 @@ public class ChangeInfoActivity extends BaseActivity {
                         case R.id.name_rl2:
                             String name = name_et.getText().toString();
                             if(TextUtils.isEmpty(name)){
-                                ToastUtils.showCustomToast("姓名不能为空");
+                                ToastUtils.showCustomToastMsg("姓名不能为空",150);
                                 return;
                             }
                             bundle.putString("name",name);
@@ -83,11 +83,11 @@ public class ChangeInfoActivity extends BaseActivity {
                         case R.id.phone_rl3:
                             String phone = phone_et.getText().toString();
                             if(TextUtils.isEmpty(phone)){
-                                ToastUtils.showCustomToast("手机号不能为空");
+                                ToastUtils.showCustomToastMsg("手机号不能为空",150);
                                 return;
                             }
                             if(!Util.isPhone(phone)){
-                                ToastUtils.showCustomToast("请输入正确的手机号");
+                                ToastUtils.showCustomToastMsg("请输入正确的手机号",150);
                                 return;
                             }
                             bundle.putString("phone",phone);
@@ -95,7 +95,7 @@ public class ChangeInfoActivity extends BaseActivity {
                         case R.id.address_rl5:
                             String address = address_et.getText().toString();
                             if(TextUtils.isEmpty(address)){
-                                ToastUtils.showCustomToast("详细地址不能为空");
+                                ToastUtils.showCustomToastMsg("详细地址不能为空",150);
                                 return;
 
                             }

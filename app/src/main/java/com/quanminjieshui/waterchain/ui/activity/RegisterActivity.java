@@ -162,7 +162,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
                     presenter.verify(mobile, pwd, confirm, sms, invitation, isCheckedAgree);
                     presenter.register(this, mobile, pwd, confirm, sms, invitation, isCheckedAgree);
                 } else {
-                    ToastUtils.showCustomToast("请阅读并同意《节水链平台用书协议》");
+                    ToastUtils.showCustomToastMsg("请阅读并同意《节水链平台用书协议》",150);
                 }
                 break;
             case R.id.tv_existing:
@@ -217,7 +217,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onGetSmsSuccess() {
-        ToastUtils.showCustomToast("验证码已发送至您手机，请注意查收");
+        ToastUtils.showCustomToast("验证码已发送至您手机，请注意查收",1);
 
         TimeCount = new CountDownTimer(60 * 1000, 1000) {
             @Override
@@ -250,7 +250,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @Override
     public void onGetSmsFailed(String msg) {
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
     }
 
     @Override
@@ -264,7 +264,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
 
     @Override
     public void onRegisterFaild(String msg) {
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
     }
 
     @Override

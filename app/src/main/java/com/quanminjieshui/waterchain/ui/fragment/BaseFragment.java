@@ -127,7 +127,7 @@ public abstract class BaseFragment extends BasePermissionFragment {
                 @Override
                 public void onClick(View v) {
                     if (!NetworkUtils.isConnected()) {
-                        ToastUtils.showCustomToast("没有获取到网络，请重试...");
+                        ToastUtils.showCustomToastMsg("没有获取到网络，请重试...",150);
                         return;
                     }
                     //切换到有网络页面

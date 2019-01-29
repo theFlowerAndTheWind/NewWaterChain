@@ -22,6 +22,7 @@ import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
+import com.quanminjieshui.waterchain.beans.UploadFileResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
@@ -29,9 +30,12 @@ import com.quanminjieshui.waterchain.http.config.UrlConfig;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * Created by WanghongHe on 2018/12/3 11:41.
@@ -166,5 +170,16 @@ public interface APIService {
 
     @POST(UrlConfig.GET_URL)
     Observable<BaseEntity<GetUrlResponseBean>>getUrl(@Body RequestBody body);
+
+    /**
+     * "token", token;
+     * "device_type", "android";
+     * "file",File
+     */
+    @Multipart
+    @POST(UrlConfig.UPLOAD)
+    Observable<BaseEntity<UploadFileResponseBean>>uploadFile(@Part("token") RequestBody token,
+                                                             @Part("device_type") RequestBody device_type,
+                                                             @Part MultipartBody.Part file);
 }
 

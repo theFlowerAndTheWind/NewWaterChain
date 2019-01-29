@@ -145,7 +145,7 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
 
     @Override
     public void onLoginSuccess() {
-        ToastUtils.showCustomToast("登录成功");
+        ToastUtils.showCustomToast("登录成功",1);
         if(target.equals("main")){//若需求为强制登录，用户第一次登录
             jump(MainActivity.class);
             EventBus.getDefault().post(new SelectFragmentEvent("首页"));
@@ -166,7 +166,7 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
 
     @Override
     public void onLoginFailed(String msg) {
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
     }
 
     private void jump(Class<?> cls) {

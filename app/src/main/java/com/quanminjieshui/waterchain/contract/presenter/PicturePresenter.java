@@ -1,6 +1,6 @@
 /**
- * @ProjectName: NewWaterChain
- * @Package: com.quanminjieshui.waterchain.contract.presenter
+ * @ProjectName: NewWaterIndex
+ * @Package: com.quanminjieshui.waterindex.contract.presenter
  * @ClassName: PicturePresenter
  * @Description: java类作用描述
  * @Author: sxt
@@ -22,17 +22,17 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+
 import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.PictureModel;
 import com.quanminjieshui.waterchain.contract.view.PictureViewImpl;
-import com.quanminjieshui.waterchain.utils.MD5Util;
 import com.quanminjieshui.waterchain.utils.PictureFileUtil;
 
 import java.io.File;
 
 /**
- * @ProjectName: NewWaterChain
- * @Package: com.quanminjieshui.waterchain.contract.presenter
+ * @ProjectName: NewWaterIndex
+ * @Package: com.quanminjieshui.waterindex.contract.presenter
  * @ClassName: PicturePresenter
  * @Description: 涉及图片选择相关控件操作的内容（头像，身份证照片等）
  * @Author: sxt
@@ -45,13 +45,13 @@ import java.io.File;
 public class PicturePresenter extends BasePresenter<PictureViewImpl> {
 
     //请求相机
-    private static final int REQUEST_CAMERA = 100;
+    public static final int REQUEST_CAMERA = 100;
     //请求相册
-    private static final int REQUEST_PHOTO = 101;
+    public static final int REQUEST_PHOTO = 101;
     //请求访问外部存储
-    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 103;
+    public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 103;
     //请求写入外部存储
-    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 104;
+    public static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 104;
 
     private File tempFile;
     /**
@@ -88,9 +88,11 @@ public class PicturePresenter extends BasePresenter<PictureViewImpl> {
 
     public void onCameraClicked() {
         //创建拍照存储的图片文件
-        tempFile = new File(PictureFileUtil.checkDirPath(Environment.getExternalStorageDirectory()
-                .getPath() + "/image/"), MD5Util.getMD5("waterchain_temp") + System
-                .currentTimeMillis() + ".jpg");
+        String dirPath = Environment.getExternalStorageDirectory().getPath() + File.separator + PictureFileUtil.PIC_DIR_NAME;
+        dirPath = PictureFileUtil.checkDirPath(dirPath);
+        String suffix = ".jpg";
+        tempFile = new File(dirPath,PictureFileUtil.PIC_NAME_PREFIX+System.currentTimeMillis()+suffix);
+
         //权限判断
         int writePermission=ContextCompat.checkSelfPermission(mView.getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int cameraPermission=ContextCompat.checkSelfPermission(mView.getActivity(), Manifest.permission.CAMERA);

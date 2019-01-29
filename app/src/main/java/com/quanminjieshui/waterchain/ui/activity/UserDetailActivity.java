@@ -186,7 +186,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
     @Override
     public void onUserDetailFailed(String msg) {
         dismissLoadingDialog();
-        ToastUtils.showCustomToast("msg");
+        ToastUtils.showCustomToast(msg,0);
     }
 
     @Override

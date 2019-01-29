@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.github.mikephil.charting.charts.LineChart;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.FactoryListResponseBean;
 import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderListsResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
@@ -29,6 +30,7 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.OnClick;
 
@@ -88,15 +90,17 @@ public class TestActivity extends BaseActivity {
             case R.id.btn_request:
                 edtcontent = edt.getText().toString();
                 HashMap<String, Object> params = new HashMap<>();
-                params.put("type", edtcontent);
+//                params.put("type", edtcontent);
+                params.put("count", "10");
                 RetrofitFactory.getInstance().createService()
-                        .orderList(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity<OrderListsResponseBean>>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity<OrderListsResponseBean>>io())
-                        .subscribe(new BaseObserver<OrderListsResponseBean>(TestActivity.this) {
+                        .factoryList(RequestUtil.getRequestHashBody(params, false))
+                        .compose(TestActivity.this.<BaseEntity<List<FactoryListResponseBean>>>bindToLifecycle())
+                        .compose(TestActivity.this.<BaseEntity<List<FactoryListResponseBean>>>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity<List<FactoryListResponseBean>>>io())
+                        .subscribe(new BaseObserver<List<FactoryListResponseBean>>(TestActivity.this) {
 
                             @Override
-                            protected void onSuccess(OrderListsResponseBean bean) throws Exception {
+                            protected void onSuccess(List<FactoryListResponseBean> bean) throws Exception {
 //                                url=bean.getUrl();
                             }
 

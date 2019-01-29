@@ -90,9 +90,6 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> nameList = new ArrayList<>();
     ArrayList<String> imgUrlList = new ArrayList<>();
-    private TradeLineResponseBean tradeLineBean;
-    List<TradeLineResponseBean.ChartDataEntity> tradeDataList = new ArrayList<>();
-    List<String> tradeXasix = new ArrayList<>();
     MainActivity activity;
     private List<FactoryListResponseBean> listEntities = new ArrayList<>();
 
@@ -116,7 +113,6 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
         }
         alertChainDialog = new AlertChainDialog(getBaseActivity());
         initList();
-        initLineChart();
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -182,49 +178,25 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
                 intent.putExtras(bundle);
                 intent.setClass(getBaseActivity(), EnterpriseActivity.class);
                 startActivity(intent);
-//                Intent intent = new Intent();
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("fsid",listEntities.get(position).getId());
-//                intent.putExtras(bundle);
-//                intent.setClass(getBaseActivity(),FactoryServiceActivity.class);
-//                startActivity(intent);
-
             }
         });
     }
 
-    public void initLineChart(){
-
-        Description description =new Description();//创建描述信息
-        description.setEnabled(false);//隐藏x轴描述信息
-        lineChart.setDescription(description);//设置图表描述信息
-        lineChart.setNoDataText("暂无数据");//没有数据时显示的文字
-        lineChart.setNoDataTextColor(getResources().getColor(R.color.primary_blue));//没有数据时显示文字的颜色
-        lineChart.setDrawGridBackground(false);//chart 绘图区后面的背景矩形将绘制
-        lineChart.setDrawBorders(false);//禁止绘制图表边框的线
-        lineChart.setBackgroundColor(getResources().getColor(R.color.white));
-        lineChart.setGridBackgroundColor(getResources().getColor(R.color.white));
-//        lineChart.setViewPortOffsets(20, 0, 20, 0);//强制设置view的显示区域
-        lineChart.setDragEnabled(true);// 拖拽禁止
-        lineChart.setScaleEnabled(true);// 缩放禁止
-        Legend l = lineChart.getLegend();//图例
-        l.setEnabled(false);   //是否使用 图例
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
-            @Override
-            public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
-                Intent intent = new Intent();
-                intent.setClass(getBaseActivity(), WebViewActivity.class);
-                intent.putExtra("URL",imgUrlList.get(position));
-                intent.putExtra("title",nameList.get(position));
-                startActivity(intent);
-            }
-        });
+//产品要求不跳转
+//        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+//            @Override
+//            public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+//                Intent intent = new Intent();
+//                intent.setClass(getBaseActivity(), WebViewActivity.class);
+//                intent.putExtra("URL",imgUrlList.get(position));
+//                intent.putExtra("title",nameList.get(position));
+//                startActivity(intent);
+//            }
+//        });
     }
 
 
@@ -288,13 +260,13 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
 
     @Override
     public void onTradeLineSuccess(TradeLineResponseBean tradeLineResponseBean) {
-        tradeDataList = tradeLineResponseBean.getData();
-        tradeXasix = tradeLineResponseBean.getXasix();
-        tradeLineBean = tradeLineResponseBean;
-        final List<Long> longXaxis = ChartUtil.getLongXaxis(tradeXasix);
-//        LogUtils.d("tradeDataList",tradeDataList);
-//        LogUtils.d("tradeXasix",tradeXasix);
-        setLineChartData(longXaxis);
+        if (tradeLineResponseBean != null) {
+            final List<TradeLineResponseBean.ChartDataEntity> data = tradeLineResponseBean.getData();
+            final List<String> xaxis = tradeLineResponseBean.getXasix();
+            final List<Entry> entries = ChartUtil.getEntries(data);
+            final List<Long> longXaxis = ChartUtil.getLongXaxis(xaxis);
+            ChartUtil.initLineChart(lineChart, entries, longXaxis, "today");
+        }
     }
 
     @Override
@@ -302,133 +274,6 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl,Fac
 
     }
 
-    /**
-     *  Entry 坐标点对象  构造函数 第一个参数为x点坐标 第二个为y点
-     * "price":"0.00392",
-     * "tdate":"2019-01-04 14:01:00"
-     */
-    public void setLineChartData(List<Long> longXaxis){
-
-
-        ArrayList<Entry> values1 = new ArrayList<>();
-        for(TradeLineResponseBean.ChartDataEntity tradeData:tradeDataList){
-            float x = Float.parseFloat(String.valueOf(ChartUtil.time2MilliseSecond(tradeData.getTdate())));
-            float y = Float.parseFloat(tradeData.getPrice());
-//            float y = tradeData.getPrice();
-            values1.add(new Entry(x,y));
-        }
-
-        LineDataSet lineDataSet;//LineDataSet每一个对象就是一条连接线
-
-        //判断图表中原来是否有数据
-        if (lineChart.getData() != null && lineChart.getData().getDataSetCount() > 0) {
-            //获取数据1
-            lineDataSet = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
-            lineDataSet.setValues(values1);
-            //刷新数据
-            lineChart.getData().notifyDataChanged();
-            lineChart.notifyDataSetChanged();
-        } else {
-            //设置数据1  参数1：数据源 参数2：图例名称
-            lineDataSet = new LineDataSet(values1, "");
-            lineDataSet.setColor(getResources().getColor(R.color.primary_blue));
-            lineDataSet.setCircleColor(getResources().getColor(R.color.primary_blue));
-            lineDataSet.setDrawCircles(true);
-            lineDataSet.setLineWidth(1f);//设置线宽
-            lineDataSet.setCircleRadius(1f);//设置焦点圆心的大小
-            lineDataSet.setCircleColor(getResources().getColor(R.color.primary_blue));
-            lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);//点击后的高亮线的显示样式
-            lineDataSet.setHighlightLineWidth(1f);//设置点击交点后显示高亮线宽
-            lineDataSet.setHighlightEnabled(true);//是否禁用点击高亮线
-            lineDataSet.setHighLightColor(getResources().getColor(R.color.actionsheet_gray));//设置点击交点后显示交高亮线的颜色
-            lineDataSet.setValueTextSize(0f);//设置显示值的文字大小 0则不展示
-            lineDataSet.setDrawFilled(false);//设置禁用范围背景填充
-
-            //格式化显示数据--精度
-            final DecimalFormat mFormat = new DecimalFormat("###,###,##0");
-            lineDataSet.setValueFormatter(new IValueFormatter() {
-                @Override
-                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                    return mFormat.format(value);
-                }
-            });
-            if (Utils.getSDKInt() >= 18) {// fill drawable only supported on api level 18 and above
-                Drawable drawable = ContextCompat.getDrawable(getBaseActivity(), R.drawable.btn_red_bg_selector);
-                lineDataSet.setFillDrawable(drawable);//设置范围背景填充
-            } else {
-                lineDataSet.setFillColor(Color.BLACK);
-            }
-
-            //保存LineDataSet集合
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(lineDataSet); // add the datasets
-            LineData data = new LineData(dataSets);//创建LineData对象 属于LineChart折线图的数据集合
-            lineChart.setData(data);// 添加到图表中
-            lineChart.invalidate();//绘制图表
-
-            //获取此图表的x轴
-            XAxis xAxis = lineChart.getXAxis();
-            xAxis.setDrawAxisLine(true);//是否绘制轴线
-            xAxis.setDrawGridLines(false);//设置x轴上每个点对应的线
-            xAxis.setDrawLabels(true);//绘制标签  指x轴上的对应数值
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);//设置x轴的显示位置
-            xAxis.setTextColor(Color.BLACK);//设置字体颜色
-            xAxis.enableGridDashedLine(10f, 5f, 0f);//设置竖线的显示样式为虚线(lineLength控制虚线段的长度|spaceLength控制线之间的空间)
-            xAxis.setAvoidFirstLastClipping(true);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
-            xAxis.setLabelRotationAngle(0f);//设置x轴标签的旋转角度
-            xAxis.setLabelCount(13,false);//x轴刻度数量 第二个为true则明确画出具体数量，但是可能导致不均匀
-            xAxis.setLabelCount(longXaxis.size(), false);
-            //设置X轴的值（最小值、最大值、然后会根据设置的刻度数量自动分配刻度显示）
-            xAxis.setAxisMinimum(ChartUtil.getXaxisMinimum(longXaxis));
-            xAxis.setAxisMaximum(ChartUtil.getXaxisMaximum(longXaxis, "today"));
-            xAxis.setValueFormatter(new IAxisValueFormatter() {
-                @Override
-                public String getFormattedValue(float value, AxisBase axis) {
-                    return ChartUtil.MilliseSecond2DateString((long) value,"today");
-                }
-            });
-
-            //获取右边的轴线
-            YAxis rightAxis=lineChart.getAxisRight();
-            rightAxis.setEnabled(false);//设置图表右边的y轴禁用
-            YAxis leftAxis = lineChart.getAxisLeft();//获取左边的轴线
-            leftAxis.enableGridDashedLine(10f, 5f, 0f);//设置网格线为虚线效果
-            leftAxis.setDrawZeroLine(false);//是否绘制0所在的网格线
-            leftAxis.setDrawAxisLine(false);//是否绘制y轴线
-            leftAxis.setValueFormatter(new IAxisValueFormatter() {
-                @Override
-                public String getFormattedValue(float value, AxisBase axis) {
-                    String y = String.valueOf(value);
-                    if(y.length()>6){
-                        return y.substring(0,6)+"t";
-                    }else{
-                        return y.substring(0,y.length())+"t";
-                    }
-                }
-            });
-        }
-    }
-
-    public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int space;
-
-        public SpaceItemDecoration(int space) {
-            this.space = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            outRect.left = space;
-            outRect.right = space;
-            outRect.bottom = space;
-            if (parent.getChildPosition(view) == 0) {
-                outRect.top = space;
-            }
-        }
-    }
 
     @Override
     public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {

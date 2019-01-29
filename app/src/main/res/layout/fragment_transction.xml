@@ -10,9 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/module_include_fragment_transaction1"
-            android:visibility="gone" />
+        <include layout="@layout/module_include_fragment_transaction1" />
 
         <include layout="@layout/module_include_fragment_transaction2" />
 

@@ -28,6 +28,8 @@ public class UserConfirmActivity extends BaseActivity implements AuthDetailViewI
 
     @BindView(R.id.ll_did_not)
     LinearLayout llDidNot;
+    @BindView(R.id.ll_rejected)
+    LinearLayout llRejected;
     @BindView(R.id.ll_ing)
     LinearLayout llIng;
     @BindView(R.id.ll_done)
@@ -91,33 +93,52 @@ public class UserConfirmActivity extends BaseActivity implements AuthDetailViewI
     private void selectLayout(AuthDetailResponseBean authDetailResponseBean) {
         if (authDetailResponseBean != null) {
             String user_status = authDetailResponseBean.getUser_status().trim();
-            if (user_status.equals("待认证") || user_status.equals("已驳回")) {
+            if (user_status.equals("待认证")) {
                 llDidNot.setVisibility(View.VISIBLE);
+                llRejected.setVisibility(View.GONE);
+                llIng.setVisibility(View.GONE);
+                llDone.setVisibility(View.GONE);
+            } else if (user_status.equals("已驳回")) {
+                llDidNot.setVisibility(View.GONE);
+                llRejected.setVisibility(View.VISIBLE);
                 llIng.setVisibility(View.GONE);
                 llDone.setVisibility(View.GONE);
             } else if (user_status.equals("待审核")) {
                 llDidNot.setVisibility(View.GONE);
+                llRejected.setVisibility(View.GONE);
                 llIng.setVisibility(View.VISIBLE);
                 llDone.setVisibility(View.GONE);
             } else if (user_status.equals("已通过")) {
                 llDidNot.setVisibility(View.GONE);
+
+                llRejected.setVisibility(View.GONE);
                 llIng.setVisibility(View.GONE);
                 llDone.setVisibility(View.VISIBLE);
                 int user_type = authDetailResponseBean.getUser_type();
                 if (user_type == 1) {//个人
                     tvUserName.setText(new StringBuilder().append("姓名：").append(authDetailResponseBean.getUser_name()).toString());
-                    String idNo=authDetailResponseBean.getId_no();
-                    String str1=idNo.substring(0,3);
-                    String str2="*************";
-                    String str3=idNo.substring(idNo.length()-2,idNo.length());
-                    tvIdNo.setText(new StringBuilder().append("证件号码：").append(str1).append(str2).append(str3).toString());
-                } else if (user_type == 2) { //企业
-                    tvUserName.setText(new StringBuilder().append("营业执照登记名称：").append(authDetailResponseBean.getUser_name()).toString());
-                    String idNo=authDetailResponseBean.getId_no();
-                    String str1=idNo.substring(0,3);
-                    String str2="**********";
-                    String str3=idNo.substring(idNo.length()-2,idNo.length());
-                    tvIdNo.setText(new StringBuilder().append("营业执照注册号").append(str1).append(str2).append(str3).toString());
+                    String idNo = authDetailResponseBean.getId_no();
+                    String idNoTxt = "证件号码：";
+                    tvIdNo.setText(idNoTxt);
+                    if (idNo.length() > 3) {
+                        String str1 = idNo.substring(0, 3);
+                        String str2 = "*************";
+                        String str3 = idNo.substring(idNo.length() - 2, idNo.length());
+                        idNoTxt = new StringBuilder(idNoTxt).append(str1).append(str2).append(str3).toString();
+                    }
+                    tvIdNo.setText(idNoTxt);
+                } else if (user_type == 0) { //企业
+                    tvUserName.setText(new StringBuilder().append("营业执照登记名称：").append(authDetailResponseBean.getCompany_name()).toString());
+                    String licenseNo = authDetailResponseBean.getCompany_license_no();
+                    String licenseNoTxt = "营业执照注册号:";
+                    if (licenseNo.length() > 3) {
+                        String str1 = licenseNo.substring(0, 3);
+                        String str2 = "**********";
+                        String str3 = licenseNo.substring(licenseNo.length() - 2, licenseNo.length());
+                        licenseNoTxt = new StringBuilder(licenseNoTxt).append(str1).append(str2).append(str3).toString();
+                    }
+                    tvIdNo.setText(licenseNoTxt);
+
                 }
             }
         }

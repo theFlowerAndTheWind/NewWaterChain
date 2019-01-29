@@ -49,9 +49,9 @@ public class SplashActivity extends BaseActivity {
     public void jumpGuidOrSplash() {
         boolean isFirstLaunch = (boolean) SPUtil.get(this, SPUtil.IS_FIRST_LAUNCH, true);
 
-        if (isFirstLaunch) {
-            jump(GuideActivity.class);
-        } else {
+//        if (isFirstLaunch) {
+//            jump(GuideActivity.class);
+//        } else {
             //强制登录
             boolean isLogin = (boolean) SPUtil.get(this, SPUtil.IS_LOGIN, false);
             if (isLogin) {
@@ -61,7 +61,7 @@ public class SplashActivity extends BaseActivity {
             }
 //            //不强制登录
 //            jump(MainActivity.class);
-        }
+//        }
         finish();
     }
 

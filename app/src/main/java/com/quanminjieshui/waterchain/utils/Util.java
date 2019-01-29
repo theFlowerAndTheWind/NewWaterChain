@@ -1,6 +1,8 @@
 package com.quanminjieshui.waterchain.utils;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.util.SimpleArrayMap;
 import android.util.LongSparseArray;
@@ -8,6 +10,8 @@ import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.util.SparseLongArray;
+
+import com.quanminjieshui.waterchain.WaterChainApplication;
 
 import java.lang.reflect.Array;
 import java.text.DateFormat;
@@ -214,5 +218,23 @@ public class Util {
     public static String hide4Phone(String phone) {
         String phoneNumber = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
         return phoneNumber;
+    }
+
+    /**
+     * get App versionName
+     *
+     * @return
+     */
+    public static String getVersionName() {
+        PackageManager packageManager = WaterChainApplication.getInstance().getPackageManager();
+        PackageInfo packageInfo;
+        String versionName = "";
+        try {
+            packageInfo = packageManager.getPackageInfo(WaterChainApplication.getInstance().getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 }

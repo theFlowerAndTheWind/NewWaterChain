@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="洗涤业务"
-        android:padding="20px"
+        android:paddingVertical="20px"
         android:paddingLeft="@dimen/layout_horizontal_padding"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/rc_wash_list"

@@ -195,7 +195,7 @@ public class WebViewActivity extends BaseActivity {
 
     public static void launch(final Context context, final String url, String title) {
         if (!NetworkUtils.isConnected()) {
-            ToastUtils.showCustomToast("网络无效");
+            ToastUtils.showCustomToastMsg("网络无效",150);
             return;
         }
         if (TextUtils.isEmpty(url)) {

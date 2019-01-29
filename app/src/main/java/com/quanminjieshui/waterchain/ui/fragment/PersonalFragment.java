@@ -148,7 +148,6 @@ public class PersonalFragment extends BaseFragment {
                     }
                 })
                 .show();
-        Log.e("tag", "showshowshowshow");
     }
 
     private void jump(Class<?> cls) {
@@ -180,7 +179,7 @@ public class PersonalFragment extends BaseFragment {
             user_login = "********";
         }
         tvNickname.setText(Util.hide4Phone(user_login));
-        tvVersion.setText(new StringBuilder("版本号：").append(getVersionName()).toString());
+        tvVersion.setText(new StringBuilder("版本号：").append(Util.getVersionName()).toString());
     }
 
 
@@ -223,24 +222,6 @@ public class PersonalFragment extends BaseFragment {
 
     public String getIsLogin() {
         return new StringBuilder().append(isLogin).append(user_login).toString();
-    }
-
-    /**
-     * get App versionName
-     *
-     * @return
-     */
-    public static String getVersionName() {
-        PackageManager packageManager = WaterChainApplication.getInstance().getPackageManager();
-        PackageInfo packageInfo;
-        String versionName = "";
-        try {
-            packageInfo = packageManager.getPackageInfo(WaterChainApplication.getInstance().getPackageName(), 0);
-            versionName = packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return versionName;
     }
 
     @Override

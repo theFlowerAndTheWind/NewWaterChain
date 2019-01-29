@@ -2,8 +2,8 @@
 <resources>
     <!--边距-->
 
-    <dimen name="layout_horizontal_padding">20px</dimen>
-    <dimen name="layout_horizontal_margin">20px</dimen>
+    <dimen name="layout_horizontal_padding">40px</dimen>
+    <dimen name="layout_horizontal_margin">40px</dimen>
     <!--titlebar下边框距离下方控件距离-->
     <dimen name="view_space_title_bar_bottom">40px</dimen>
     <!--控件间垂直距离-->

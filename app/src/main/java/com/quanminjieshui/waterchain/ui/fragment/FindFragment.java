@@ -133,16 +133,17 @@ public class FindFragment extends BaseFragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
-            @Override
-            public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
-                Intent intent = new Intent();
-                intent.setClass(getBaseActivity(), WebViewActivity.class);
-                intent.putExtra("URL", imgUrlList.get(position));
-                intent.putExtra("title", nameList.get(position));
-                startActivity(intent);
-            }
-        });
+        //产品要求不跳转
+//        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+//            @Override
+//            public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+//                Intent intent = new Intent();
+//                intent.setClass(getBaseActivity(), WebViewActivity.class);
+//                intent.putExtra("URL", imgUrlList.get(position));
+//                intent.putExtra("title", nameList.get(position));
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -189,7 +190,7 @@ public class FindFragment extends BaseFragment implements
 
     @Override
     public void infoListFailed(String msg) {
-        ToastUtils.showCustomToast("加载失败");
+        ToastUtils.showCustomToast("加载失败",0);
     }
 
     @Override
@@ -284,6 +285,6 @@ public class FindFragment extends BaseFragment implements
 
     @Override
     public void onGetAdImgFailed(String msg) {
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
     }
 }

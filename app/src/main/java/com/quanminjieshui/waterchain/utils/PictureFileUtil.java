@@ -1,6 +1,6 @@
 /**
- * @ProjectName: NewWaterChain
- * @Package: com.quanminjieshui.waterchain.utils
+ * @ProjectName: NewWaterIndex
+ * @Package: com.quanminjieshui.waterindex.utils
  * @ClassName: FileUtil
  * @Description: java类作用描述
  * @Author: sxt
@@ -34,8 +34,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @ProjectName: NewWaterChain
- * @Package: com.quanminjieshui.waterchain.utils
+ * @ProjectName: NewWaterIndex
+ * @Package: com.quanminjieshui.waterindex.utils
  * @ClassName: FileUtil
  * @Description: 读取文件工具类
  * @Author: sxt
@@ -46,9 +46,9 @@ import java.io.InputStream;
  * @Version: 1.0
  */
 public class PictureFileUtil {
-    private static final String TAG = "FileUtils";
+    private static final String TAG = "PictureFileUtil";
 
-    public static final String PIC_DIR_NAME = "waterchain";
+    public static final String PIC_DIR_NAME = "WaterChain";
     public static final String PIC_NAME_PREFIX = "waterchain_pic";
 
     /**
@@ -201,22 +201,17 @@ public class PictureFileUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                File appDir = new File(Environment.getExternalStorageDirectory(), PIC_DIR_NAME);
-                if (!appDir.exists()) {
-                    appDir.mkdir();
-                }
-                String saveFileName = PIC_NAME_PREFIX;
-                if (fileName.contains(".png") || fileName.contains(".gif")) {
-                    String fileFormat = fileName.substring(fileName.lastIndexOf("."));
-                    saveFileName = MD5Util.getMD5(PIC_NAME_PREFIX + fileName) + fileFormat;
-                } else {
-                    saveFileName = MD5Util.getMD5(PIC_NAME_PREFIX + fileName) + ".png";
-                }
-                saveFileName = saveFileName.substring(20);//取前20位作为SaveName
-                File savefile = new File(appDir, saveFileName);
                 try {
+                    String dirPath = Environment.getExternalStorageDirectory().getPath() + File.separator + PictureFileUtil.PIC_DIR_NAME;
+                    dirPath = PictureFileUtil.checkDirPath(dirPath);
+                    String suffix = ".jpg";
+                    if (("jpg,JPG,jpeg,JPEG,png,PNG").contains(fileName.substring(fileName.lastIndexOf(".")))) {
+                        suffix = fileName.substring(fileName.lastIndexOf("."));
+                    }
+                    File saveFile = new File(dirPath,PictureFileUtil.PIC_NAME_PREFIX+System.currentTimeMillis()+suffix);
+
                     InputStream is = new FileInputStream(file);
-                    FileOutputStream fos = new FileOutputStream(savefile);
+                    FileOutputStream fos = new FileOutputStream(saveFile);
                     byte[] buffer = new byte[1024 * 1024];//1M缓冲区
                     int count = 0;
                     while ((count = is.read(buffer)) > 0) {
@@ -232,9 +227,7 @@ public class PictureFileUtil {
                     saveResultCallback.onSavedFailed();
                     e.printStackTrace();
                 }
-                //保存图片后发送广播通知更新数据库
-                Uri uri = Uri.fromFile(savefile);
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+
             }
         }).start();
     }
@@ -315,6 +308,51 @@ public class PictureFileUtil {
             }
         }
         return imgStr;
+    }
+
+
+    public static File Uri2File(Uri uri,Context context) {
+        String path = null;
+        if ("file".equals(uri.getScheme())) {
+            path = uri.getEncodedPath();
+            if (path != null) {
+                path = Uri.decode(path);
+                ContentResolver cr = context.getContentResolver();
+                StringBuffer buff = new StringBuffer();
+                buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=").append("'" + path + "'").append(")");
+                Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA }, buff.toString(), null, null);
+                int index = 0;
+                int dataIdx = 0;
+                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+                    index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
+                    index = cur.getInt(index);
+                    dataIdx = cur.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    path = cur.getString(dataIdx);
+                }
+                cur.close();
+                if (index == 0) {
+                } else {
+                    Uri u = Uri.parse("content://media/external/images/media/" + index);
+                    LogUtils.e("temp uri is :" + u);
+                }
+            }
+            if (path != null) {
+                return new File(path);
+            }
+        } else if ("content".equals(uri.getScheme())) {
+            // 4.2.2以后
+            String[] proj = { MediaStore.Images.Media.DATA };
+            Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                path = cursor.getString(columnIndex);
+            }
+            cursor.close();
+            return new File(path);
+        } else {
+            //Log.i(TAG, "Uri Scheme:" + uri.getScheme());
+        }
+        return null;
     }
 
 }

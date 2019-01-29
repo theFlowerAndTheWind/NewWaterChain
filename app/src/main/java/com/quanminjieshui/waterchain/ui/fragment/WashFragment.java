@@ -191,6 +191,6 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
 
     @Override
     public void onGetAdImgFailed(String msg) {
-        ToastUtils.showCustomToast(msg);
+        ToastUtils.showCustomToast(msg,0);
     }
 }

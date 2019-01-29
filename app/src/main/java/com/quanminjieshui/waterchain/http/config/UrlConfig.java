@@ -929,4 +929,9 @@ public class UrlConfig {
      */
     public static final String PLATFORM_AGREEMENT = "https://www.baidu.com";
 
+    /**
+     * 文件上传
+     */
+    public static final String UPLOAD = "api/user/Upload/one";
+
 }

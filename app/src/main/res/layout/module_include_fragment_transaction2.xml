@@ -116,7 +116,7 @@
         android:textSize="@dimen/text_size_edt" />
 
     <LinearLayout
-        android:id="@+id/rl_trade_total"
+        android:id="@+id/ll_trade_total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layout_horizontal_margin"

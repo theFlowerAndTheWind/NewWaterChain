@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trans_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trans">
+
+
+    <LinearLayout
+        android:id="@+id/container"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/top_corners_shape"
+        android:orientation="vertical"
+        android:paddingTop="40px">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="申请转账到他人账户"
+                android:textSize="16sp"
+                android:textColor="@color/text_black"/>
+
+            <ImageView
+                android:id="@+id/img_cancle"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:padding="10px"
+                android:src="@mipmap/close1" />
+        </LinearLayout>
+
+
+        <EditText
+            style="@style/style_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
+            android:hint="收款人账号" />
+
+        <EditText
+            style="@style/style_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
+            android:hint="对方姓名" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_border_bg_shape"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/view_space_edt_vertical">
+
+            <EditText
+                android:layout_width="0px"
+                android:layout_height="@dimen/edt_height"
+                android:layout_weight="1"
+                android:background="@color/trans"
+                android:hint="转账数量"
+                android:inputType="numberDecimal"
+                android:paddingLeft="@dimen/edt_padding_left"
+                android:textColorHint="@color/hit_color"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/edt_padding_left"
+                android:text="可用 "
+                android:textColor="@color/hit_color"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/edt_padding_left"
+                android:textColor="@color/primary_blue"
+                android:textSize="@dimen/text_size_edt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/edt_padding_left"
+                android:text=" JSL"
+                android:textColor="@color/hit_color"
+                android:textSize="@dimen/text_size_edt" />
+        </LinearLayout>
+
+        <EditText
+            style="@style/style_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginTop="@dimen/view_space_edt_vertical"
+            android:hint="申请原因" />
+
+        <Button
+            style="@style/style_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commit_btn_height"
+            android:text="贡献节水指标"
+            android:layout_marginTop="60px"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textSize="14sp"
+            android:text="温馨提示"
+            android:layout_marginTop="40px"
+            android:layout_marginBottom="30px"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请根据实际需要，使用转账功能"
+            android:textColor="@color/text_black"
+            android:textSize="12sp"
+            android:layout_marginBottom="5px"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请务必确认转账安全，防止信息被篡改或泄露"
+            android:textColor="@color/text_black"
+            android:textSize="12sp"
+            android:layout_marginBottom="40px"/>
+    </LinearLayout>
+
+
+</FrameLayout>

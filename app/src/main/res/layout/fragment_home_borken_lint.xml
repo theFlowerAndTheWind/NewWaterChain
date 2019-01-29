@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:text="交易中心"
         android:padding="@dimen/layout_horizontal_padding"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -30,7 +29,8 @@
             android:gravity="left|center"
             android:paddingTop="@dimen/layout_horizontal_padding"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/tv_gain"
@@ -39,16 +39,20 @@
             android:textColor="@color/primary_red"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="涨幅+1.26%"/>
+            android:text="涨幅+1.26%"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
-        android:layout_height="500px"
-        android:background="@color/white"
-        android:paddingHorizontal="@dimen/layout_horizontal_padding"/>
+        android:layout_height="wrap_content"
+        android:minHeight="386px"
+        android:layout_marginLeft="28px"
+        android:layout_marginTop="40px"
+        android:layout_marginRight="28px"
+        android:layout_marginBottom="40px" />
 </LinearLayout>
 
 

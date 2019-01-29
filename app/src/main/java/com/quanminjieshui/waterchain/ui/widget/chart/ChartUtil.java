@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -230,6 +231,7 @@ public class ChartUtil {
         data.setDrawValues(false);
         //得到X轴
         XAxis xAxis = lineChart.getXAxis();
+        xAxis.setTextSize(8f);//设置文字大小
         //设置X轴的位置（默认在上方)
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         //设置X轴坐标之间的最小间隔
@@ -252,14 +254,31 @@ public class ChartUtil {
                 return string;
             }
         });
+
+        YAxis rightYAxis = lineChart.getAxisRight();
+        rightYAxis.setEnabled(false); //右侧Y轴不显示
+
         //得到Y轴
         YAxis yAxis = lineChart.getAxisLeft();
-        YAxis rightYAxis = lineChart.getAxisRight();
-        //设置Y轴是否显示
-        rightYAxis.setEnabled(false); //右侧Y轴不显示
-        //设置y轴坐标之间的最小间隔
+        yAxis.setTextSize(8f);//设置文字大小
         //不显示网格线
         yAxis.setDrawGridLines(false);
+        //设置y轴坐标之间的最小间隔
+        yAxis.setGranularity(0.00001f);
+        //设置y轴的刻度数量，第二个参数为true,将会画出明确数量（带有小数点），但是可能值导致不均匀，默认（6，false）
+//        yAxis.setLabelCount(6, false);
+        //设置y轴的值（最小值、最大值、然后会根据设置的刻度数量自动分配刻度显示）
+        yAxis.setAxisMinimum(0);
+        yAxis.setAxisMaximum(getMaxYValue(entries));
+        //不显示网格线
+        yAxis.setDrawGridLines(false);
+        //设置y轴值为字符串
+        yAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return String.format("%.5fT",value);
+            }
+        });
 
         //隐藏描述
         Description description = new Description();
@@ -270,7 +289,8 @@ public class ChartUtil {
         //隐藏Lengend
         legend.setEnabled(false);
 
-
+        lineChart.setDragEnabled(false);// 拖拽禁止
+        lineChart.setScaleEnabled(false);// 缩放禁止
         //设置数据
         lineChart.setData(data);
         //图标刷新
@@ -352,7 +372,7 @@ public class ChartUtil {
     }
 
     /**
-     * x轴最大值  该值不作为label，不显示在x轴上
+     * x轴最大值
      *
      * @param longXaxis
      * @param type
@@ -383,6 +403,8 @@ public class ChartUtil {
         return System.currentTimeMillis();
     }
 
+
+
     public static int getXaxisLabelCount(List<String> xaxis) {
         final List<Long> longXaxis = getLongXaxis(xaxis);
         return longXaxis.size();//
@@ -402,6 +424,17 @@ public class ChartUtil {
         }
         Collections.sort(longXaxis);
         return longXaxis;
+    }
+
+    private static float getMaxYValue(List<Entry> list){
+        float temp=-1;
+        for(Entry entry:list){
+            float y = entry.getY();
+            if(y>temp){
+                temp=y;
+            }
+        }
+        return temp;
     }
 
 }

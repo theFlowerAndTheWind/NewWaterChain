@@ -49,6 +49,9 @@ public class InterceptorUtil implements Interceptor {
         String url = request.url().toString();
         LogUtils.d(TAG, "url:  " + url);
         LogUtils.d(TAG, "method:  " + method);
+        if (requestData.length() > 5000) {
+            requestData = requestData.substring(0, 5000);
+        }
         LogUtils.d(TAG, "request---params" + format(requestData));
         ResponseBody responseBody = response.body();
         BufferedSource source = responseBody.source();
