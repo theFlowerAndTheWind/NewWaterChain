@@ -1,9 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/module_include_title_bar"/>
-    <include layout="@layout/module_include_no_data"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divider_gray">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/banner_guide_content"
+                style="@style/BannerDefaultStyle"
+                android:background="@color/white"
+                android:layout_marginBottom="10px"
+                app:banner_pageChangeDuration="1000"
+                app:banner_pointAutoPlayAble="false"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                app:banner_pointTopBottomMargin="15dp"
+                app:banner_transitionEffect="alpha" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:textSize="16sp"
+                        android:paddingTop="40px"
+                        android:paddingHorizontal="40px"
+                        android:text="热门活动"/>
+
+                    <com.jcodecraeer.xrecyclerview.XRecyclerView
+                        android:id="@+id/goodsLists_activity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10px"
+                        android:background="@color/white"
+                        android:visibility="visible"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:textSize="16sp"
+                        android:paddingTop="40px"
+                        android:paddingHorizontal="40px"
+                        android:text="热门商品"/>
+
+                    <com.jcodecraeer.xrecyclerview.XRecyclerView
+                        android:id="@+id/goodsLists_commodity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:visibility="visible"/>
+
+                </LinearLayout>
+
+                <include
+                    layout="@layout/module_include_no_data"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>
