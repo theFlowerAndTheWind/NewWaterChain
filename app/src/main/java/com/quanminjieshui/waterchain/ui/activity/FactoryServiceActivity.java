@@ -99,7 +99,7 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
                 Bundle bundle = new Bundle();
                 bundle.putInt("class",1);
                 bundle.putParcelable("WashFatoryDetail", washFatoryDetail);
-                bundle.putParcelableArrayList("WashFatoryCageGory",arrayList);
+                bundle.putParcelableArrayList("WashFatoryCageGoryList",arrayList);
                 intent.putExtras(bundle);
                 intent.setClass(FactoryServiceActivity.this,ConfirmOrderActivity.class);
                 startActivity(intent);

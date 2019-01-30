@@ -9,7 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,17 +136,20 @@
 
                     <TextView
                         android:id="@+id/wash_detail_tv"
-                        android:gravity="center_vertical"
                         style="@style/style_txt_confirm_order2"
+                        android:layout_width="400px"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
                         android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
                         android:text="选择洗涤需求" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
@@ -216,10 +220,51 @@
                     android:minHeight="@dimen/commit_btn_height"
                     android:text="配送信息" />
 
-                <View
+                <include layout="@layout/module_include_divider" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_trans_infos"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_width"
-                    android:background="@color/divider_gray" />
+                    android:layout_height="@dimen/commit_btn_height"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_receiver_name"
+                        style="@style/style_txt_confirm_order2"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="40px"
+                        android:gravity="center_vertical"
+                        android:text="张三" />
+
+                    <TextView
+                        android:id="@+id/tv_receiver_tel"
+                        style="@style/style_txt_confirm_order2"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="40px"
+                        android:layout_toRightOf="@+id/tv_receiver_name"
+                        android:gravity="center_vertical"
+                        android:text="12345671234" />
+
+                    <TextView
+                        android:id="@+id/tv_express"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginVertical="10px"
+                        android:layout_marginRight="40px"
+                        android:background="@color/tint_blue"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="20px"
+                        android:text="企业配送"
+                        android:textColor="@color/primary_blue" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_width"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/divider_gray" />
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/wash_delivery_rl"
@@ -229,8 +274,8 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:id="@+id/tv_info_txt"
                         style="@style/style_txt_confirm_order2"
-                        android:layout_centerVertical="true"
                         android:text="选择配送信息" />
 
                     <ImageButton
@@ -289,8 +334,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:visibility="gone"
-                        android:src="@drawable/check_mark_blue" />
+                        android:src="@drawable/check_mark_blue"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -319,6 +364,7 @@
                         android:layout_height="25px"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="90px"
+                        android:layout_marginRight="10px"
                         android:layout_toRightOf="@+id/tv_pay_cate_2"
                         android:src="@mipmap/tip" />
 
@@ -337,8 +383,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:visibility="gone"
-                        android:src="@drawable/check_mark_blue" />
+                        android:src="@drawable/check_mark_blue"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -377,26 +423,28 @@
 
                     <ImageView
                         android:id="@+id/img_wx"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/wx" />
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:src="@drawable/wx"
+                        android:layout_marginTop="5px"/>
 
                     <TextView
-                        android:layout_toRightOf="@+id/img_wx"
                         style="@style/style_txt_confirm_order2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="0px"
                         android:layout_marginLeft="15px"
+                        android:layout_toRightOf="@+id/img_wx"
+                        android:paddingLeft="0px"
                         android:text="微信支付"
                         android:textColor="@color/text_black" />
+
                     <ImageView
                         android:id="@+id/payChannel_wx"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/check_mark_blue" />
+                        android:src="@drawable/check_mark_blue"
+                        android:visibility="gone" />
 
 
                 </RelativeLayout>
@@ -417,26 +465,28 @@
 
                     <ImageView
                         android:id="@+id/img_zfb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/zfb" />
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:src="@drawable/zfb"
+                        android:layout_marginTop="5px"/>
 
                     <TextView
-                        android:layout_toRightOf="@+id/img_zfb"
                         style="@style/style_txt_confirm_order2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="0px"
                         android:layout_marginLeft="15px"
+                        android:layout_toRightOf="@+id/img_zfb"
+                        android:paddingLeft="0px"
                         android:text="支付宝支付"
                         android:textColor="@color/text_black" />
+
                     <ImageView
                         android:id="@+id/payChannel_zfb"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/check_mark_blue" />
+                        android:src="@drawable/check_mark_blue"
+                        android:visibility="gone" />
 
 
                 </RelativeLayout>
@@ -446,9 +496,9 @@
                 style="@style/PaddinLeftRight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="110px"
                 android:background="#F0EFF5"
                 android:gravity="center_vertical"
+                android:minHeight="110px"
                 android:orientation="horizontal">
 
                 <CheckBox
@@ -494,10 +544,10 @@
                     android:drawableRight="@drawable/ic_arrow_down"
                     android:text="￥0.00"
                     android:textColor="@color/actionsheet_red"
-                    android:textSize="@dimen/text_size_commit" />
+                    android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/create_order"
+                    android:id="@+id/btn_create_order"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

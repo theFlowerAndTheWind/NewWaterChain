@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.beans.CreateOrderListBean;
+import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
 import com.quanminjieshui.waterchain.ui.adapter.CreateOrderListAdapter;
 
 import java.util.ArrayList;
@@ -31,26 +32,31 @@ import java.util.List;
  * 下单列表
  */
 
-public class CreateOrderListPopupWindow extends PopupWindow{
+public class CreateOrderListPopupWindow extends PopupWindow {
 
     private Context mContext;
     private XRecyclerView recyclerView;
     private TextView totalCost;
     private ImageView cancelImg;
-    private List<CreateOrderListBean> arrayList;
+    private List<TotalPriceResponseBean.WashType> arrayList;
+    private String payPrice;
+    private String payJsl;
     private CreateOrderListAdapter createOrderListAdapter;
     private boolean isShowAniming;//show动画是否在执行中
     private boolean isHideAniming;//hide动画是否在执行中
     private LinearLayout llPopupRoot;
 
-    public CreateOrderListPopupWindow(Context context, List<CreateOrderListBean> arrayList){
+
+    public CreateOrderListPopupWindow(Context context, TotalPriceResponseBean totalPriceResponseBean) {
         super(null, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         this.mContext = context;
-        if(arrayList == null){
-            this.arrayList = new ArrayList<>();
-        }else{
-            this.arrayList = arrayList;
-        }
+        List<TotalPriceResponseBean.WashType> lists = totalPriceResponseBean.getLists();
+        payPrice = totalPriceResponseBean.getPay_price();
+        payJsl = totalPriceResponseBean.getPay_jsl();
+
+        this.arrayList = lists;
+
+
         //设置点击空白处消失
         setTouchable(true);
         setFocusable(true);
@@ -80,6 +86,7 @@ public class CreateOrderListPopupWindow extends PopupWindow{
 
         initView();
     }
+
     private void initView() {
 
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.popupwindow_creatorder_list, null);
@@ -100,8 +107,14 @@ public class CreateOrderListPopupWindow extends PopupWindow{
         recyclerView.setLoadingMoreEnabled(false);
         recyclerView.setPullRefreshEnabled(false);
         recyclerView.setLayoutManager(layoutManage);
-        createOrderListAdapter = new CreateOrderListAdapter(mContext,arrayList);
+        createOrderListAdapter = new CreateOrderListAdapter(mContext, arrayList);
         recyclerView.setAdapter(createOrderListAdapter);
+        String price = "¥ " + payPrice;
+        if (!TextUtils.isEmpty(payJsl) && Float.valueOf(payJsl) > 0) {
+            price = price + " + " + payJsl + " 水方";
+        }
+        totalCost.setText(price);
+
     }
 
     @Override

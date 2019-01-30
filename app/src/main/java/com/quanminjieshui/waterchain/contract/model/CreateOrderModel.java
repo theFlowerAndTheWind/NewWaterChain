@@ -11,6 +11,8 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
+import java.util.HashMap;
+
 /**
  * Created by songxiaotao on 2018/12/26.
  * Class Note:创建订单
@@ -18,8 +20,20 @@ import com.quanminjieshui.waterchain.utils.LogUtils;
 
 public class CreateOrderModel {
     public void createOrder(BaseActivity activity, CreateOrderReqParams params,final CreateOrderCallBack callBack){
+        HashMap<String,Object>map=new HashMap<>();
+        map.put("fsid",params.getFsid());
+        map.put("trade_detail",params.getTrade_detail());
+        map.put("express",params.getExpress());
+        map.put("contact_name",params.getContact_name());
+        map.put("contact_tel",params.getContact_tel());
+        map.put("province",params.getProvince());
+        map.put("city",params.getCity());
+        map.put("address",params.getAddress());
+        map.put("pay_cate",params.getPay_cate());
+        map.put("pickup_time",params.getPickup_time());
+        map.put("pay_type",params.getPickup_time());
         RetrofitFactory.getInstance().createService()
-                .createOrder(RequestUtil.getRequestBeanBody(params,false))
+                .createOrder(RequestUtil.getRequestBeanBody(params,true))
                 .compose(activity.<BaseEntity<CreateOrderResponseBean>>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity<CreateOrderResponseBean>>io())
                 .subscribe(new BaseObserver<CreateOrderResponseBean>(activity) {

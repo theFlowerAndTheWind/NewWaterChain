@@ -21,11 +21,11 @@ public class TotalPricePresenter extends BasePresenter<TotalPriceViewImpl> {
         this.totalPriceModel = totalPriceModel;
     }
 
-    public void getTotalPrice(BaseActivity activity, int pay_cate, int uid, String[] trade_detail){
+    public void getTotalPrice(BaseActivity activity, int pay_cate,  String trade_detail){
         if (totalPriceModel == null){
             totalPriceModel = new TotalPriceModel();
         }
-        totalPriceModel.getTotalPrice(activity, pay_cate, uid, trade_detail, new TotalPriceModel.TotalPriceCallBack() {
+        totalPriceModel.getTotalPrice(activity, pay_cate,  trade_detail, new TotalPriceModel.TotalPriceCallBack() {
             @Override
             public void success(TotalPriceResponseBean totalPriceResponseBean) {
                 if (mView!=null){

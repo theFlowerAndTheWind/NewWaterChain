@@ -45,13 +45,14 @@
                 android:layout_centerVertical="true"
                 android:text="床单" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_upload_img" />
+                android:padding="10px"
+                android:src="@mipmap/plus" />
 
             <TextView
                 android:id="@+id/tv_counter"
@@ -64,13 +65,14 @@
                 android:textColor="@color/text_black"
                 android:textSize="32px" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_subtract"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/tv_counter"
-                android:src="@drawable/ic_upload_img" />
+                android:src="@mipmap/minus"
+                android:padding="10px"/>
 
         </RelativeLayout>
     </FrameLayout>

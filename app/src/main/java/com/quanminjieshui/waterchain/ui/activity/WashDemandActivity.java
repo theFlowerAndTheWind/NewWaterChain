@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,9 +13,11 @@ import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.ui.adapter.WashDetailListsAdapter;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,26 +51,40 @@ public class WashDemandActivity extends BaseActivity {
         initView();
     }
 
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        washFatoryCageGory.clear();
+//        ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> extraList = getIntent().getParcelableArrayListExtra("washFatoryCageGory");
+//        washFatoryCageGory.addAll(extraList);
+//        adapter.notifyDataSetChanged();
+//    }
+
     private void initView() {
         tv_title_center.setText("洗涤需求");
         if(getIntent()!=null){
-            washFatoryCageGory = getIntent().getParcelableArrayListExtra("washFatoryCageGory");
-            adapter = new WashDetailListsAdapter(WashDemandActivity.this,washFatoryCageGory);
+            washFatoryCageGory.clear();
+            ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> extraList = getIntent().getParcelableArrayListExtra("washFatoryCageGory");
+            washFatoryCageGory.addAll(extraList);
+            for (FactoryServiceResponseBean.WashFatoryCageGory entry:washFatoryCageGory){
+                LogUtils.w(entry.getC_name()+"  ***demand receive--- "+entry.getPiceCount());
+            }
+            adapter = new WashDetailListsAdapter(WashDemandActivity.this, this.washFatoryCageGory);
             wash_detail_list.setLayoutManager(new LinearLayoutManager(WashDemandActivity.this));
             wash_detail_list.setAdapter(adapter);
             adapter.setOnPlusClickListener(new WashDetailListsAdapter.OnPlusClickListener() {
                 @Override
                 public void onItemPlusClick(int position) {
-                    fscID = washFatoryCageGory.get(position).getFscid();
-                    pieceCount = washFatoryCageGory.get(position).getPiceCount();
+                    fscID = WashDemandActivity.this.washFatoryCageGory.get(position).getFscid();
+                    pieceCount = WashDemandActivity.this.washFatoryCageGory.get(position).getPiceCount();
 
                 }
             });
             adapter.setOnSubtractClickListener(new WashDetailListsAdapter.OnSubtractClickListener() {
                 @Override
                 public void onItemSubtractClick(int position) {
-                    fscID = washFatoryCageGory.get(position).getFscid();
-                    pieceCount = washFatoryCageGory.get(position).getPiceCount();
+                    fscID = WashDemandActivity.this.washFatoryCageGory.get(position).getFscid();
+                    pieceCount = WashDemandActivity.this.washFatoryCageGory.get(position).getPiceCount();
                 }
             });
 
@@ -87,17 +104,19 @@ public class WashDemandActivity extends BaseActivity {
                 goBack(view);
                 break;
             case R.id.btn_save:
-                trade_detail = new String[washFatoryCageGory.size()];
-                for(int i=0;i<washFatoryCageGory.size();i++){
-                    trade_detail[i] = washFatoryCageGory.get(i).getFscid()+"_"+washFatoryCageGory.get(i).getPiceCount()+"_"+washFatoryCageGory.get(i).getC_name();
-                }
-                Intent intent = new Intent();
+                Intent intent = new Intent(WashDemandActivity.this,ConfirmOrderActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("class",2);
-                bundle.putStringArray("trade_detail",trade_detail);
-                intent.setClass(WashDemandActivity.this,ConfirmOrderActivity.class);
+                washFatoryCageGory.clear();
+                washFatoryCageGory.addAll(adapter.getList());
+                bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
+                for (FactoryServiceResponseBean.WashFatoryCageGory entry:washFatoryCageGory){
+                    LogUtils.w(entry.getC_name()+"  ***demand send--- "+entry.getPiceCount());
+                }
                 intent.putExtras(bundle);
                 startActivity(intent);
+                //by sxt
+                finish();
                 break;
             default:break;
         }

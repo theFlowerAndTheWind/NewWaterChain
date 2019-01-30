@@ -37,6 +37,8 @@ public class FactoryServiceResponseBean {
         String s_name;
         String description;
         int factory_id;
+        String province;
+        String city;
 
         protected WashFatoryDetail(Parcel in) {
             id = in.readInt();
@@ -45,6 +47,8 @@ public class FactoryServiceResponseBean {
             s_name = in.readString();
             description = in.readString();
             factory_id = in.readInt();
+            province=in.readString();
+            city=in.readString();
         }
 
         public static final Creator<WashFatoryDetail> CREATOR = new Creator<WashFatoryDetail>() {
@@ -107,6 +111,22 @@ public class FactoryServiceResponseBean {
             this.factory_id = factory_id;
         }
 
+        public String getProvince() {
+            return province;
+        }
+
+        public void setProvince(String province) {
+            this.province = province;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -120,6 +140,8 @@ public class FactoryServiceResponseBean {
             parcel.writeString(s_name);
             parcel.writeString(description);
             parcel.writeInt(factory_id);
+            parcel.writeString(province);
+            parcel.writeString(city);
         }
     }
 
@@ -144,6 +166,7 @@ public class FactoryServiceResponseBean {
             piece = in.readString();
             standard = in.readString();
             fscid = in.readInt();
+            piceCount=in.readInt();
         }
 
         public static final Creator<WashFatoryCageGory> CREATOR = new Creator<WashFatoryCageGory>() {
@@ -218,6 +241,7 @@ public class FactoryServiceResponseBean {
             parcel.writeString(piece);
             parcel.writeString(standard);
             parcel.writeInt(fscid);
+            parcel.writeInt(piceCount);
         }
     }
 }

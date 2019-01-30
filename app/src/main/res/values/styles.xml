@@ -152,7 +152,7 @@
     <style name="style_txt_confirm_order1">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">28px</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_black</item>
         <item name="android:paddingLeft">@dimen/layout_horizontal_padding</item>
     </style>
@@ -160,7 +160,7 @@
     <style name="style_txt_confirm_order2">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">32px</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/text_black</item>
         <item name="android:paddingLeft">20px</item>
     </style>

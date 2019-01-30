@@ -14,19 +14,20 @@
 
         <TextView
             style="@style/style_txt_confirm_order1"
-            android:textSize="32px"
             android:layout_centerVertical="true"
-            android:text="洗涤需求" />
+            android:text="洗涤需求"
+            android:textSize="14sp" />
 
         <TextView
-            android:layout_weight="1"
-            android:layout_marginLeft="30px"
             android:id="@+id/btn_go_services_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="为了您能顺利洗涤，请准确填写洗涤需求"/>
+            android:layout_marginLeft="30px"
+            android:layout_weight="1"
+            android:text="为了您能顺利洗涤，请准确填写洗涤需求"
+            android:textSize="11sp" />
 
     </LinearLayout>
 
@@ -38,14 +39,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/wash_detail_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_save"
         style="@style/style_btn"
-        android:layout_margin="40px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="40px"
         android:text="保存" />
 
 </LinearLayout>

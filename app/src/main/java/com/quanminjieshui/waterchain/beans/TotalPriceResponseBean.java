@@ -12,7 +12,12 @@ public class TotalPriceResponseBean {
     public List<WashType> lists; 	//洗涤类型信息 	数组(array) 		array( 0=>array( 'c_name'=>类型名称, 'unit_price'=>单价, 'total'=>数量) )
     public String pay_price; 	//需支付人民币 	字符串(string)
     public String pay_jsl; 	//需支付jsl 	字符串(string)
-    public String can_pay; 	//是否可以支付 	字符串(string) 		当支付类型为组合支付时，判断用户已有jsl是否足以支付。1是 0否
+    public int can_pay; 	//是否可以支付 	字符串(string) 		当支付类型为组合支付时，判断用户已有jsl是否足以支付。1是 0否
+    private int save_count;
+
+    public int getSave_count() {
+        return save_count;
+    }
 
     public String getTotal_price() {
         return total_price;
@@ -46,15 +51,39 @@ public class TotalPriceResponseBean {
         this.pay_jsl = pay_jsl;
     }
 
-    public String getCan_pay() {
+    public int getCan_pay() {
         return can_pay;
     }
 
-    public void setCan_pay(String can_pay) {
+    public void setCan_pay(int can_pay) {
         this.can_pay = can_pay;
     }
 
     public static class WashType{
+        private String id;
+        private String unit_price;
+        private String c_name;
+        private String total;
+        private String price;
 
+        public String getId() {
+            return id;
+        }
+
+        public String getUnit_price() {
+            return unit_price;
+        }
+
+        public String getC_name() {
+            return c_name;
+        }
+
+        public String getTotal() {
+            return total;
+        }
+
+        public String getPrice() {
+            return price;
+        }
     }
 }

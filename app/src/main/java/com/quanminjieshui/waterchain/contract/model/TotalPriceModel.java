@@ -18,11 +18,10 @@ import java.util.HashMap;
  */
 
 public class TotalPriceModel {
-    public void getTotalPrice(BaseActivity activity, int pay_cate, int uid, String[] trade_detail,final TotalPriceCallBack callBack){
+    public void getTotalPrice(BaseActivity activity, int pay_cate,  String trade_detail,final TotalPriceCallBack callBack){
 
         HashMap<String,Object> params = new HashMap<>();
         params.put("pay_cate",pay_cate);
-        params.put("uid",uid);
         params.put("trade_detail",trade_detail);
         RetrofitFactory.getInstance().createService()
                 .totalPrice(RequestUtil.getRequestHashBody(params,false))

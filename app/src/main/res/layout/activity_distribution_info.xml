@@ -273,6 +273,7 @@
         android:layout_height="@dimen/divider_width"
         android:background="@color/divider_gray" />
     <Button
+        android:id="@+id/btn_save"
         android:layout_marginLeft="@dimen/layout_horizontal_margin"
         android:layout_marginRight="@dimen/layout_horizontal_margin"
         android:layout_marginTop="@dimen/view_space_bottom_btn_above"

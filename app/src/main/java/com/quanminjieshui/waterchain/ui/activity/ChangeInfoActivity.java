@@ -40,7 +40,9 @@ public class ChangeInfoActivity extends BaseActivity {
     EditText phone_et;
     @BindView(R.id.change_address_et)
     EditText address_et;
-    private String nameStr,phoneStr,addressStr;
+    private String nameStr = "", phoneStr = "", addressStr = "";
+    private int jumpAction = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class ChangeInfoActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.left_ll,R.id.tv_title_right})
+    @OnClick({R.id.left_ll, R.id.tv_title_right})
     public void onClick(View v) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -70,43 +72,45 @@ public class ChangeInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_title_right:
-                if(!Util.isFastDoubleClick()){
-                    switch (getIntent().getIntExtra("jumpAction", -1)) {
+                if (!Util.isFastDoubleClick()) {
+
+                    bundle.putInt("jumpAction",jumpAction);
+                    switch (jumpAction) {
                         case R.id.name_rl2:
                             String name = name_et.getText().toString();
-                            if(TextUtils.isEmpty(name)){
-                                ToastUtils.showCustomToastMsg("姓名不能为空",150);
+                            if (TextUtils.isEmpty(name)) {
+                                ToastUtils.showCustomToastMsg("姓名不能为空", 150);
                                 return;
                             }
-                            bundle.putString("name",name);
+                            bundle.putString("name", name);
                             break;
                         case R.id.phone_rl3:
                             String phone = phone_et.getText().toString();
-                            if(TextUtils.isEmpty(phone)){
-                                ToastUtils.showCustomToastMsg("手机号不能为空",150);
+                            if (TextUtils.isEmpty(phone)) {
+                                ToastUtils.showCustomToastMsg("手机号不能为空", 150);
                                 return;
                             }
-                            if(!Util.isPhone(phone)){
-                                ToastUtils.showCustomToastMsg("请输入正确的手机号",150);
+                            if (!Util.isPhone(phone)) {
+                                ToastUtils.showCustomToastMsg("请输入正确的手机号", 150);
                                 return;
                             }
-                            bundle.putString("phone",phone);
+                            bundle.putString("phone", phone);
                             break;
                         case R.id.address_rl5:
                             String address = address_et.getText().toString();
-                            if(TextUtils.isEmpty(address)){
-                                ToastUtils.showCustomToastMsg("详细地址不能为空",150);
+                            if (TextUtils.isEmpty(address)) {
+                                ToastUtils.showCustomToastMsg("详细地址不能为空", 150);
                                 return;
 
                             }
-                            bundle.putString("address",address);
+                            bundle.putString("address", address);
                             break;
                         default:
                             break;
                     }
                     hideShowKeyboard();
                     intent.putExtras(bundle);
-                    intent.setClass(ChangeInfoActivity.this,DistributionInfoActivity.class);
+                    intent.setClass(ChangeInfoActivity.this, DistributionInfoActivity.class);
                     startActivity(intent);
 
                 }
@@ -117,30 +121,37 @@ public class ChangeInfoActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        initData(intent);
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        initData(intent);
+//    }
 
-    private void initData(Intent intent){
+    private void initData(Intent intent) {
         if (intent != null) {
-            switch (intent.getIntExtra("jumpAction", -1)) {
+            jumpAction = getIntent().getIntExtra("jumpAction", -1);
+            switch (jumpAction) {
                 case R.id.name_rl2:
                     nameStr = intent.getStringExtra("name");
                     name_et.setVisibility(View.VISIBLE);
+                    address_et.setVisibility(View.GONE);
+                    phone_et.setVisibility(View.GONE);
                     name_et.setText(nameStr);
                     tv_title_center.setText("联系人姓名");
                     break;
                 case R.id.phone_rl3:
                     phoneStr = intent.getStringExtra("phone");
                     phone_et.setVisibility(View.VISIBLE);
+                    name_et.setVisibility(View.GONE);
+                    address_et.setVisibility(View.GONE);
                     phone_et.setText(phoneStr);
                     tv_title_center.setText("手机号码");
                     break;
                 case R.id.address_rl5:
                     addressStr = intent.getStringExtra("address");
                     address_et.setVisibility(View.VISIBLE);
+                    phone_et.setVisibility(View.GONE);
+                    name_et.setVisibility(View.GONE);
                     address_et.setText(addressStr);
                     tv_title_center.setText("详细地址");
                     break;
@@ -149,6 +160,7 @@ public class ChangeInfoActivity extends BaseActivity {
             }
         }
     }
+
     private void initView() {
         tv_title_right.setText("确定");
         tv_title_right.setVisibility(View.VISIBLE);

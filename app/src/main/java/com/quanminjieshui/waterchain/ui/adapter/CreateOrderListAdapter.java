@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
-import com.quanminjieshui.waterchain.beans.CreateOrderListBean;
+import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -26,9 +26,9 @@ import butterknife.ButterKnife;
 public class CreateOrderListAdapter extends RecyclerView.Adapter<CreateOrderListAdapter.OrderListViewHolder>{
 
     private Context context;
-    private List<CreateOrderListBean> list;
+    private List<TotalPriceResponseBean.WashType> list;
 
-    public CreateOrderListAdapter(Context context, List<CreateOrderListBean> list) {
+    public CreateOrderListAdapter(Context context, List<TotalPriceResponseBean.WashType> list) {
         this.context = context;
         if (list == null) {
             this.list = new ArrayList<>();
@@ -47,17 +47,17 @@ public class CreateOrderListAdapter extends RecyclerView.Adapter<CreateOrderList
 
     @Override
     public void onBindViewHolder(@NonNull CreateOrderListAdapter.OrderListViewHolder holder, int position) {
-        final CreateOrderListBean entity = list.get(position);
+        final TotalPriceResponseBean.WashType entity = list.get(position);
         if(entity==null) return;
 
-        holder.costName.setText(entity.getCostName());
-        holder.costNumber.setText(entity.getCostNumber());
+        holder.costName.setText(entity.getC_name());
+        holder.costNumber.setText(new StringBuilder("+ ¥").append(entity.getUnit_price()).append(" X ").append(entity.getTotal()).toString());
 
-        if(position == list.size()-1){
-            holder.line.setVisibility(View.INVISIBLE);
-        }else{
-            holder.line.setVisibility(View.VISIBLE);
-        }
+//        if(position == list.size()-1){
+//            holder.line.setVisibility(View.INVISIBLE);
+//        }else{
+//            holder.line.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Override
@@ -74,8 +74,7 @@ public class CreateOrderListAdapter extends RecyclerView.Adapter<CreateOrderList
         TextView costName;
         @BindView(R.id.cost_number)
         TextView costNumber;
-        @BindView(R.id.line)
-        View line;
+
 
         public OrderListViewHolder(View itemView) {
             super(itemView);

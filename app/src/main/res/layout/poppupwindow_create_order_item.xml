@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/commit_btn_height"
     android:orientation="vertical">
 
     <LinearLayout
+        style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/cost_name"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="床单"/>
+            android:layout_marginLeft="20px"
+            android:layout_weight="1"
+            android:text="床单"
+            android:textColor="@color/text_black"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/cost_number"
-            android:layout_weight="1"
-            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+￥1.50*2"/>
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="+￥1.50*2" />
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_marginTop="20px"
-        android:background="@color/divider_gray"/>
+    <include layout="@layout/module_include_divider" />
 
 </LinearLayout>

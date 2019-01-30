@@ -7,60 +7,42 @@
     <include layout="@layout/module_include_title_bar" />
 
     <LinearLayout
+        style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30px"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/change_name_et"
-            android:layout_height="91px"
-            android:visibility="gone"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:gravity="start|center_vertical"
-            android:background="@null"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="40px"
-            android:paddingRight="40px"
-            android:singleLine="true"
+            android:layout_height="@dimen/edt_height"
             android:hint="收件人"
-            android:maxLength="30"
-            android:textSize="28px" />
+            android:maxLength="50"
+            android:singleLine="true"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/change_address_et"
-            android:layout_height="91px"
-            android:visibility="gone"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:gravity="start|center_vertical"
-            android:background="@null"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="40px"
-            android:paddingRight="40px"
-            android:singleLine="true"
+            android:layout_height="@dimen/edt_height"
             android:hint="详细地址"
-            android:maxLength="30"
-            android:textSize="28px" />
+            android:maxLength="100"
+            android:singleLine="true"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/change_phone_et"
+            style="@style/style_edt"
             android:layout_width="match_parent"
-            android:layout_height="91px"
-            android:visibility="gone"
-            android:gravity="start|center_vertical"
-            android:background="@null"
-            android:layout_centerVertical="true"
-            android:paddingLeft="40px"
-            android:paddingRight="40px"
-            android:layout_weight="0.3"
+            android:layout_height="@dimen/edt_height"
+            android:hint="11位手机号"
             android:inputType="phone"
             android:maxLength="11"
-            android:hint="11位手机号"
             android:singleLine="true"
-            android:textSize="28px" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 

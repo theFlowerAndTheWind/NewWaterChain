@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,7 +21,6 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.CreateOrderListBean;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.TotalPriceResponseBean;
@@ -29,14 +31,14 @@ import com.quanminjieshui.waterchain.contract.view.CreateOrderViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TotalPriceViewImpl;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.ui.widget.popup.CreateOrderListPopupWindow;
+import com.quanminjieshui.waterchain.utils.LogUtils;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.TimeUtils;
-import com.quanminjieshui.waterchain.utils.Util;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,7 +48,7 @@ import butterknife.OnClick;
  * Class Note:确认订单
  */
 
-public class ConfirmOrderActivity extends BaseActivity implements TotalPriceViewImpl,CreateOrderViewImpl{
+public class ConfirmOrderActivity extends BaseActivity implements TotalPriceViewImpl, CreateOrderViewImpl {
 
     @BindView(R.id.left_ll)
     LinearLayout left_ll;
@@ -74,18 +76,37 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     ImageView zfbPayImg;
     @BindView(R.id.order_detail)
     Button orderDetail;
+    @BindView(R.id.btn_create_order)
+    Button btnCreateOrder;
+    @BindView(R.id.cb_agreement)
+    CheckBox cbAgreement;
+    @BindView(R.id.rl_trans_infos)
+    RelativeLayout rlTransInfos;
+    @BindView(R.id.tv_receiver_name)
+    TextView tvReceiverName;
+    @BindView(R.id.tv_receiver_tel)
+    TextView tvReceiverTel;
+    @BindView(R.id.tv_express)
+    TextView tvExpress;
+    @BindView(R.id.tv_info_txt)
+    TextView tvInfoTxt;
 
     private AlertChainDialog alertChainDialog;
     private AlertChainDialog alertChainPayDialog;
-    private String [] trade_detail = {};
     private TotalPricePresenter totalPricePresenter;
     private CreateOrderPresenter createOrderPresenter;
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
-    private String payType = "",payChannel = "",countDown = "00分00秒";
+    private String payType = "1";//pay_type	支付渠道	字符串(string)1支付宝 2微信
+    private String countDown = "00分00秒";
+    private int payCate = 1;//支付类型   1全额支付   2组合支付
+    private String tradeDetailStr = "";
+    private int fsid = 0;
+    private int totalCount = 0;//洗涤物品总数
     private CreateOrderListPopupWindow popupWindow;
-    private List<CreateOrderListBean> createOrderListBeans = new ArrayList<>();
     private CountDownTimer TimeCount;
-    private boolean isChecked = true,runningCode = false;
+    private boolean isAgree = true, runningCode = false;
+    private int isCanPay = 0;
+    private CreateOrderReqParams params = new CreateOrderReqParams();
     // 声明平移动画
     private TranslateAnimation animation;
 
@@ -94,7 +115,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setImmersionStatus(this,titleBar);
+        StatusBarUtil.setImmersionStatus(this, titleBar);
 
         totalPricePresenter = new TotalPricePresenter();
         totalPricePresenter.attachView(this);
@@ -104,13 +125,45 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         initView();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getData(intent);
+
+    }
+
+
     private void initView() {
         tvTitleCenter.setText("确认下单");
         initPayTimeDialog();
-
         handler = new MyTimeHandler(this);
-        getData();
-        initPopupWindow();//初始化poppup
+        if (payType.equals("1")) {
+            wxPayImg.setVisibility(View.GONE);
+            zfbPayImg.setVisibility(View.VISIBLE);
+        } else if (payType.equals("2")) {
+            wxPayImg.setVisibility(View.VISIBLE);
+            zfbPayImg.setVisibility(View.GONE);
+        }
+        if (payCate == 1) {
+            fullPayImg.setVisibility(View.VISIBLE);
+            combinedPayImg.setVisibility(View.GONE);
+        } else if (payCate == 2) {
+            fullPayImg.setVisibility(View.GONE);
+            combinedPayImg.setVisibility(View.VISIBLE);
+        }
+        cbAgreement.setChecked(true);
+        cbAgreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isAgree = isChecked;
+                if (!isAgree) {
+                    btnCreateOrder.setEnabled(false);
+                } else if (isAgree && isCanPay == 1) {
+                    btnCreateOrder.setEnabled(true);
+                }
+            }
+        });
+        getData(getIntent());
     }
 
     @Override
@@ -118,85 +171,107 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         setContentView(R.layout.activity_confirm_order);
     }
 
-    @OnClick({R.id.left_ll,R.id.order_detail,R.id.create_order,R.id.wash_delivery_rl,R.id.wash_demand_rl,R.id.fullPayment,
-            R.id.combinedPayment,R.id.pay_channel_wx_rl,R.id.pay_channel_zfb_rl})
-    public void onClick(final View v){
+    @OnClick({R.id.left_ll, R.id.order_detail, R.id.btn_create_order, R.id.wash_delivery_rl, R.id.wash_demand_rl, R.id.fullPayment,
+            R.id.combinedPayment, R.id.pay_channel_wx_rl, R.id.pay_channel_zfb_rl})
+    public void onClick(View v) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.left_ll:
                 exitPay();
                 break;
             case R.id.order_detail:
-                View parent = LayoutInflater.from(ConfirmOrderActivity.this).inflate(R.layout.activity_confirm_order, null);
-                popupWindow.showAtLocation(parent, Gravity.BOTTOM | Gravity.LEFT, 0, 0);
+                if (totalCount > 0) {
+                    showPopupWindow();
+                } else {
+                    ToastUtils.showCustomToastMsg("请选择洗涤需求", 150);
+                }
                 break;
-            case R.id.create_order:
-                CreateOrderReqParams bean = new CreateOrderReqParams();
-                bean.setCity("北京");
-                bean.setAddress("海淀区");
-                bean.setContact_name("何望红");
-                bean.setContact_tel("13718478437");
-//                bean.setExpress();
-                createOrderPresenter.createOrder(ConfirmOrderActivity.this,bean);
+            case R.id.btn_create_order:
+                ToastUtils.showCustomToastMsg("createorder", 150);
+                if (payCate == 2 && isCanPay != 1) {
+                    ToastUtils.showCustomToastMsg("您的可用水方不足", 150);
+                    return;
+                }
+                if (!isAgree) {
+                    ToastUtils.showCustomToastMsg("请阅读并同意《节水链平台用户协议》", 150);
+                    return;
+                }
+                params.setFsid(fsid);
+                params.setTrade_detail(tradeDetailStr);
+                params.setPay_cate(payCate);
+                params.setPay_type(payType);
+
+                btnCreateOrder.setEnabled(true);
+                createOrderPresenter.createOrder(ConfirmOrderActivity.this, params);
 
 
                 // TODO: 2019/1/1 支付
-                startActivity(new Intent(ConfirmOrderActivity.this,PaySuceessActivity.class));
                 break;
             case R.id.wash_delivery_rl://配送信息
-                bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
+                bundle.putInt("jumpAction", R.id.wash_delivery_rl);
+                bundle.putParcelable("params", params);
                 intent.putExtras(bundle);
-                intent.setClass(ConfirmOrderActivity.this,DistributionInfoActivity.class);
+                intent.setClass(ConfirmOrderActivity.this, DistributionInfoActivity.class);
                 startActivity(intent);
 
                 break;
             case R.id.wash_demand_rl://洗涤需求
-                bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
+                bundle.putParcelableArrayList("washFatoryCageGory", washFatoryCageGory);
+                for (FactoryServiceResponseBean.WashFatoryCageGory entry : washFatoryCageGory) {
+                    LogUtils.e(entry.getC_name() + " ***confirm send---  " + entry.getPiceCount());
+                }
                 intent.putExtras(bundle);
-                intent.setClass(ConfirmOrderActivity.this,WashDemandActivity.class);
+                intent.setClass(ConfirmOrderActivity.this, WashDemandActivity.class);
                 startActivity(intent);
                 break;
             case R.id.combinedPayment://组合支付
-                if(alertChainDialog!=null){
+                fullPayImg.setVisibility(View.GONE);
+                combinedPayImg.setVisibility(View.VISIBLE);
+                payCate = 2;
+                if (alertChainDialog != null) {
                     alertChainDialog.builder().setCancelable(false);
                     alertChainDialog.setTitle("组合支付")
                             .setMsg("组合支付，JSL按前一交易日的收盘价的1.5倍计算")
                             .setPositiveButton("确定", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    fullPayImg.setVisibility(View.GONE);
-                                    combinedPayImg.setVisibility(View.VISIBLE);
-                                    payType = "combined";
                                 }
                             }).show();
 
+                }
+                if (totalCount > 0 && !TextUtils.isEmpty(tradeDetailStr)) {
+                    reqTotalPrice();
                 }
                 break;
             case R.id.fullPayment://全额支付
                 fullPayImg.setVisibility(View.VISIBLE);
                 combinedPayImg.setVisibility(View.GONE);
-                payType = "full";
+                payCate = 1;
+                if (totalCount > 0 && !TextUtils.isEmpty(tradeDetailStr)) {
+                    reqTotalPrice();
+                }
                 break;
             case R.id.pay_channel_wx_rl:
                 wxPayImg.setVisibility(View.VISIBLE);
                 zfbPayImg.setVisibility(View.GONE);
-                payChannel = "wx";
+                payType = "2";
                 break;
             case R.id.pay_channel_zfb_rl:
                 wxPayImg.setVisibility(View.GONE);
                 zfbPayImg.setVisibility(View.VISIBLE);
-                payChannel = "zfb";
+                payType = "1";
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
     private void exitPay() {
-        if(alertChainPayDialog!=null){
+        if (alertChainPayDialog != null) {
             //dialog msg消息体比较特殊 请勿更改！！！
             alertChainPayDialog.builder().setCancelable(false);
-            alertChainPayDialog.setTitle("确认离开支付页面").setMsg("您的订单在 "+countDown+" 后未支付将会被取消，请尽快支付。")
+            alertChainPayDialog.setTitle("确认离开支付页面").setMsg("您的订单在 " + countDown + " 后未支付将会被取消，请尽快支付。")
                     .setNegativeButton("确认离开", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -214,38 +289,42 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         }
     }
 
-    public static class MyTimeHandler extends Handler{
+    public static class MyTimeHandler extends Handler {
 
         WeakReference<ConfirmOrderActivity> weakReference;
 
-        public MyTimeHandler(ConfirmOrderActivity activity){
+        public MyTimeHandler(ConfirmOrderActivity activity) {
             weakReference = new WeakReference<ConfirmOrderActivity>(activity);
         }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             final ConfirmOrderActivity activity = weakReference.get();
-            if(activity == null){return;}
+            if (activity == null) {
+                return;
+            }
             switch (msg.what) {
                 case 1:
-                    if(activity.alertChainPayDialog.isShow()){
-                        activity.alertChainPayDialog.setMsg("您的订单在 "+activity.countDown+" 后未支付将会被取消，请尽快支付。");
-                        activity.handler.sendEmptyMessageDelayed(1,1000);
+                    if (activity.alertChainPayDialog.isShow()) {
+                        activity.alertChainPayDialog.setMsg("您的订单在 " + activity.countDown + " 后未支付将会被取消，请尽快支付。");
+                        activity.handler.sendEmptyMessageDelayed(1, 1000);
 
                     }
                     break;
-                default:break;
+                default:
+                    break;
             }
         }
     }
 
-    public void initPayTimeDialog(){
+    public void initPayTimeDialog() {
         alertChainDialog = new AlertChainDialog(this);
         alertChainPayDialog = new AlertChainDialog(this);
     }
 
-    public void countDownPayTime(){
-        TimeCount = new CountDownTimer(30*60 * 1000, 1000) {
+    public void countDownPayTime() {
+        TimeCount = new CountDownTimer(30 * 60 * 1000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -265,62 +344,117 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
         if (runningCode) {
             return;
-        }else{
+        } else {
             TimeCount.start();
         }
 
     }
 
-    private void initPopupWindow() {
+    private void initPopupWindow(TotalPriceResponseBean totalPriceResponseBean) {
         if (popupWindow == null) {
-            popupWindow = new CreateOrderListPopupWindow(ConfirmOrderActivity.this, createOrderListBeans);
+            popupWindow = new CreateOrderListPopupWindow(ConfirmOrderActivity.this, totalPriceResponseBean);
         }
     }
+
+    private void showPopupWindow() {
+        View parent = LayoutInflater.from(ConfirmOrderActivity.this).inflate(R.layout.activity_confirm_order, null);
+        popupWindow.showAtLocation(parent, Gravity.BOTTOM | Gravity.LEFT, 0, 0);
+    }
+
 
     @Override
     public void onReNetRefreshData(int viewId) {
 
     }
 
-    public void getData(){
+    public void getData(Intent intent) {
 
-        if(getIntent()==null){
+
+        if (intent == null) {
             return;
         }
-        switch (getIntent().getIntExtra("class",-1)){
+        switch (intent.getIntExtra("class", -1)) {
             case 1://FactoryServiceActivity
-                FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail = getIntent().getParcelableExtra("WashFatoryDetail");
-                if(washFatoryDetail==null){return;}
-                GlidImageManager.getInstance().loadImageView(this,washFatoryDetail.getImg(),service_img,R.drawable.ic_default_image);
+                FactoryServiceResponseBean.WashFatoryDetail washFatoryDetail = intent.getParcelableExtra("WashFatoryDetail");
+                if (washFatoryDetail == null) {
+                    return;
+                }
+                fsid = washFatoryDetail.getId();
+                GlidImageManager.getInstance().loadImageView(this, washFatoryDetail.getImg(), service_img, R.drawable.ic_default_image);
 
-                washFatoryCageGory = getIntent().getParcelableArrayListExtra("WashFatoryCageGory");
+                washFatoryCageGory = intent.getParcelableArrayListExtra("WashFatoryCageGoryList");
 
                 tv_service_title.setText(washFatoryDetail.getS_name());
                 tv_serivces_desc.setText(washFatoryDetail.getDescription());
 
                 break;
             case 2://WashDemandActivity
-                trade_detail = getIntent().getStringArrayExtra("trade_detail");
-                if(!Util.isEmpty(trade_detail)){
-                    String type = "",trade_detail_tv = "";
-                    int pieceCount = 0,pieceItemCout = 0;
-                    String [] tradeData;
-                    for (String aTrade_detail : trade_detail) {
-                        tradeData = aTrade_detail.split("_");
-                        type = tradeData[2];
-                        pieceItemCout = Integer.parseInt(tradeData[1]);
-                        pieceCount += Integer.parseInt(tradeData[1]);
-                        if(pieceItemCout>0){
-                            trade_detail_tv += type + "*" + pieceItemCout + "  ";
-                        }
-                    }
-                    wash_detail_tv.setText(trade_detail_tv);
-                    wash_detail_count.setText("共"+pieceCount+"件");
+                final ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> extraList = intent.getParcelableArrayListExtra("washFatoryCageGory");
+                tradeDetailStr = "";
+                totalCount = 0;
+                washFatoryCageGory.clear();
+                washFatoryCageGory.addAll(extraList);
+                for (FactoryServiceResponseBean.WashFatoryCageGory entry : washFatoryCageGory) {
+                    LogUtils.e(entry.getC_name() + "  ***confirm receive--- " + entry.getPiceCount());
                 }
+                String trade_detail_tv = "";
+                String fscid = "";
+                String c_name = "";
+                int piceCount = 0;
+                for (FactoryServiceResponseBean.WashFatoryCageGory entry : washFatoryCageGory) {
+                    c_name = entry.getC_name();
+                    fscid = entry.getFscid() + "";
+                    piceCount = entry.getPiceCount();
+                    if (piceCount > 0) {
+                        trade_detail_tv += c_name + "*" + piceCount + "  ";
+                        tradeDetailStr += fscid + "_" + piceCount + "||";
+                        totalCount += piceCount;
+                    }
+                }
+                if (tradeDetailStr.length() > 2)
+                    tradeDetailStr = tradeDetailStr.substring(0, tradeDetailStr.length() - 2);
+                if (totalCount > 0) {
+                    wash_detail_count.setText("共" + totalCount + "件");
+                    wash_detail_tv.setText(trade_detail_tv);
+                }
+                reqTotalPrice();
                 break;
             case 3://WashAddressActivity
+                CreateOrderReqParams extraParams = intent.getParcelableExtra("params");
+                if (extraParams != null) {
+                    String contact_name = extraParams.getContact_name();
+                    String contact_tel = extraParams.getContact_tel();
+                    int express = extraParams.getExpress();
+                    params.setExpress(express);
+                    params.setContact_name(contact_name);
+                    params.setContact_tel(contact_tel);
+                    params.setProvince(extraParams.getProvince());
+                    params.setCity(extraParams.getCity());
+                    params.setAddress(extraParams.getAddress());
+                    params.setPickup_time(extraParams.getPickup_time());
+                    if (TextUtils.isEmpty(contact_name) && TextUtils.isEmpty(contact_tel) && express != 1 && express != 2) {
+                        rlTransInfos.setVisibility(View.GONE);
+                    } else {
+                        rlTransInfos.setVisibility(View.VISIBLE);
+                        tvReceiverName.setText(contact_name);
+                        tvReceiverTel.setText(contact_tel);
+                        if (express == 1) {
+                            tvExpress.setText("企业配送");
+                        } else if (express == 2) {
+                            tvExpress.setText("自取");
+                        }
+                    }
+                    if (TextUtils.isEmpty(extraParams.getProvince())
+                            && TextUtils.isEmpty(extraParams.getCity())
+                            && TextUtils.isEmpty(extraParams.getAddress())) {
+
+                    } else {
+                        tvInfoTxt.setText(extraParams.getProvince() + extraParams.getCity() + extraParams.getAddress());
+                    }
+                }
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
@@ -336,39 +470,77 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        getData();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (totalPricePresenter!=null){
+        if (totalPricePresenter != null) {
             totalPricePresenter.detachView();
         }
-        if (createOrderPresenter!=null){
+        if (createOrderPresenter != null) {
             createOrderPresenter.detachView();
         }
     }
 
-    @Override
-    public void onTotalPriceSuccess(TotalPriceResponseBean totalPriceResponseBean) {
+    /**
+     * 洗涤需求填写后执行
+     * 若用户没有选择支付方式，选择支付方式后再次执行
+     */
+    private void reqTotalPrice() {
+        if (totalPricePresenter == null) {
+            totalPricePresenter = new TotalPricePresenter();
+            totalPricePresenter.attachView(this);
+        }
+        if (payCate == 1 || payCate == 2) {
+            if (totalCount > 0 && !TextUtils.isEmpty(tradeDetailStr)) {
+                totalPricePresenter.getTotalPrice(this, payCate, tradeDetailStr);
+                params.setPay_cate(payCate);
+                params.setTrade_detail(tradeDetailStr);
+                params.setFsid(fsid);
+                params.setPay_cate(payCate);
+            } else {
+                ToastUtils.showCustomToastMsg("您还没有选择洗涤需求", 150);
+            }
+        } else {
+            ToastUtils.showCustomToastMsg("请选择支付方式", 150);
+        }
+    }
 
+
+    @Override
+
+    public void onTotalPriceSuccess(TotalPriceResponseBean totalPriceResponseBean) {
+        if (totalPriceResponseBean != null) {
+            initPopupWindow(totalPriceResponseBean);
+            isCanPay = totalPriceResponseBean.getCan_pay();
+            String payPrice = totalPriceResponseBean.getPay_price();
+            String payJsl = totalPriceResponseBean.getPay_jsl();
+            String price = "¥" + payPrice;
+            if (!TextUtils.isEmpty(payJsl) && Float.valueOf(payJsl) > 0) {
+                price = price + "+" + payJsl + "水方";
+            }
+            orderDetail.setText(price);
+
+            if (payCate == 2 && isCanPay == 0) {
+                btnCreateOrder.setEnabled(false);
+            } else if (isCanPay == 1 && isAgree) {
+                btnCreateOrder.setEnabled(true);
+            }
+        }
     }
 
     @Override
     public void onTotalPriceFailed(String msg) {
-
+        ToastUtils.showCustomToastMsg(msg, 150);
     }
 
     @Override
     public void onCreateOrderSuccess(CreateOrderResponseBean createOrderResponseBean) {
+        ToastUtils.showCustomToast("创建订单成功", 1);
+        startActivity(new Intent(ConfirmOrderActivity.this, PaySuceessActivity.class));
 
     }
 
     @Override
     public void onCreateOrderFailed(String msg) {
-
+        ToastUtils.showCustomToast(msg, 0);
     }
 }

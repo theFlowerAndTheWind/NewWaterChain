@@ -104,7 +104,19 @@ public class UrlConfig {
     public static final String FACTORY_SERVICE = "api/home/factory/factoryService";
     //支付总金额
     public static final String TOTAL_PRICE = "api/home/factory/totalPrice";
-    //创建订单
+
+    /**
+     * 创建订单
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "oid":"162",
+     *     │         "orderStr":"app_id=2016092200573088&method=alipay.trade.app.pay&format=JSON&charset=UTF-8&sign_type=RSA2&version=1.0&return_url=https%3A%2F%2Fwww.quanminjieshui.com%2Fportal%2Fpay%2Ftbapi&notify_url=https%3A%2F%2Fwww.quanminjieshui.com%2Fportal%2Fpay%2Fnotify&timestamp=2019-01-30+21%3A09%3A10&sign=A%2BeVAtZwia4CUAPOArtjOvv8zbJVo%2BmPBMmlAz01Qj4GGwbo8%2FRDdGBreivVnEnV59YZkzLTtnnVTkRbhaXYeus1KIer4kuMN63orIH27cfc0kjXZT4ltADMQpXGZ5IM%2BD1f1NsJbtJdq7kjzT0RYEAPKE5kW9gFRnVjUVXb36nuDcvcr2XcpgJkIKGM3xVMXbbtM%2B%2BpG3AVGjNgqJVsrhN20JL%2B8PRiEXkxg7ZM6AzE9r6URwugg9%2FkQ8L4FV%2BFMrItyFlzx%2BGqt2sC0v0oNnwcgNnh0HUT3oNZOoMQH316veZmdqrJW1ieUKFwg7uPCLVzCbU%2FLOecJCcrMnqZgw%3D%3D&biz_content=%7B%22out_trade_no%22%3A%222019013054101495%22%2C%22total_amount%22%3A%222.00%22%2C%22subject%22%3A%22%5Cu6d17%5Cu6da4%5Cu8ba2%5Cu53552019013054101495%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%7D"
+     *     │     }
+     *     │ }
+     */
+
     public static final String CREATE_ORDER = "api/home/factory/addOrder";
     //洗涤企业列表
     /**

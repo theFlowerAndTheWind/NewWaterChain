@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.city.ProvinceBean;
+import com.quanminjieshui.waterchain.beans.request.CreateOrderReqParams;
 import com.quanminjieshui.waterchain.ui.view.ActionSheetDialog;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.GsonUtil;
@@ -64,7 +66,12 @@ public class DistributionInfoActivity extends BaseActivity {
     TextView deliveryType_tv11;
     @BindView(R.id.tvRegion)
     TextView tvRegion;
-    private String deliveryType,deliveryRegion,deliveryTime,nameStr,phoneStr,addressStr;
+    @BindView(R.id.btn_save)
+    Button btnSave;
+    private String deliveryType = "洗涤企业配送", deliveryRegion, deliveryTime;
+    private int deliveryTypeInt = 1;
+    private int jumpAction = -1;
+    private String nameStr = "", phoneStr = "", addressStr = "";
     private TimePickerView pvCustomTime;
     private ArrayList<String> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
@@ -72,6 +79,7 @@ public class DistributionInfoActivity extends BaseActivity {
 
     private AlertChainDialog alertChainDialog;
     private ActionSheetDialog actionSheetDialog;
+    private CreateOrderReqParams params = new CreateOrderReqParams();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,96 +92,169 @@ public class DistributionInfoActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        initDeliveryData(intent);
-
+        initIntentExtras(intent);
     }
 
     private void initView() {
         tv_title_center.setText("配送信息");
         alertChainDialog = new AlertChainDialog(this);
         actionSheetDialog = new ActionSheetDialog(this);
-
+        initIntentExtras(getIntent());
         initJsonData();
         initCustomTimePicker();
     }
 
-    private void initDeliveryData(Intent intent) {
-        if(intent!=null){
-            nameStr = intent.getStringExtra("name");
-            phoneStr = intent.getStringExtra("phone");
-            addressStr = intent.getStringExtra("address");
-            address.setText(TextUtils.isEmpty(addressStr) ? "某个详细地址" :addressStr);
-            name.setText(TextUtils.isEmpty(nameStr) ? "张三" :nameStr);
-            phone.setText(TextUtils.isEmpty(phoneStr) ? "18866668888" :phoneStr);
+    private void initIntentExtras(Intent intent) {
+        if (intent != null) {
+            jumpAction = intent.getIntExtra("jumpAction", -1);
+            switch (jumpAction) {
+                case R.id.name_rl2:
+                    nameStr = intent.getStringExtra("name");
+                    break;
+                case R.id.phone_rl3:
+                    phoneStr = intent.getStringExtra("phone");
+                    break;
+                case R.id.address_rl5:
+                    addressStr = intent.getStringExtra("address");
+                    break;
+                case R.id.wash_delivery_rl:
+                    CreateOrderReqParams extraParams = intent.getParcelableExtra("params");
+                    if (extraParams != null) {
+                        nameStr=extraParams.getContact_name();
+                        phoneStr=extraParams.getContact_tel();
+                        addressStr=extraParams.getAddress();
+                        deliveryRegion=extraParams.getProvince()+"_"+extraParams.getCity();
+                        deliveryTime=extraParams.getPickup_time();
+                        int express=extraParams.getExpress();
+                        if(express==1){
+                            deliveryType="企业配送";
+                        }else if(express==2){
+                            deliveryType="自取";
+                        }
+                        //
+                        params.setExpress(express);
+                        params.setContact_name(nameStr);
+                        params.setContact_tel(phoneStr);
+                        params.setProvince(extraParams.getProvince());
+                        params.setCity(extraParams.getCity());
+                        params.setAddress(addressStr);
+                        params.setPickup_time(deliveryTime);
+
+                        //
+//                        name.setText(nameStr);
+//                        phone.setText(phoneStr);
+//                        address.setText(addressStr);
+                        deliveryType_tv11.setText(deliveryType);
+                        tvRegion.setText(deliveryRegion);
+                        deliveryTime_tv66.setText(deliveryTime);
+                    }
+                    break;
+            }
+            name.setText(nameStr);
+            phone.setText(phoneStr);
+            address.setText(addressStr);
         }
     }
 
-    @OnClick({R.id.img_title_left,R.id.area_rl4,R.id.time_re6,R.id.deliveryTypeRl1,R.id.address_rl5,R.id.name_rl2,R.id.phone_rl3})
-    public void OnClick(View view){
+
+    private void initDeliveryData(Intent intent) {
+        if (intent != null) {
+            nameStr = intent.getStringExtra("name");
+            phoneStr = intent.getStringExtra("phone");
+            addressStr = intent.getStringExtra("address");
+            address.setText(TextUtils.isEmpty(addressStr) ? "" : addressStr);
+            name.setText(TextUtils.isEmpty(nameStr) ? "" : nameStr);
+            phone.setText(TextUtils.isEmpty(phoneStr) ? "" : phoneStr);
+        }
+    }
+
+    @OnClick({R.id.img_title_left, R.id.btn_save,
+            R.id.area_rl4, R.id.time_re6, R.id.deliveryTypeRl1, R.id.address_rl5, R.id.name_rl2, R.id.phone_rl3})
+    public void OnClick(View view) {
         Bundle bundle = new Bundle();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.img_title_left:
                 goBack(view);
                 finish();
                 break;
             case R.id.address_rl5:
-                if (!Util.isFastDoubleClick()){
-                    bundle.putInt("jumpAction",R.id.address_rl5);
+                if (!Util.isFastDoubleClick()) {
+                    bundle.putInt("jumpAction", R.id.address_rl5);
                     bundle.putString("address", String.valueOf(address.getText().equals("某个详细地址") ? "" : address.getText()));
-                    jumpActivity(bundle);
+                    jumpActivity(bundle, ChangeInfoActivity.class);
                 }
                 break;
             case R.id.name_rl2:
-                if (!Util.isFastDoubleClick()){
-                    bundle.putInt("jumpAction",R.id.name_rl2);
+                if (!Util.isFastDoubleClick()) {
+                    bundle.putInt("jumpAction", R.id.name_rl2);
                     bundle.putString("name", String.valueOf(name.getText().equals("张三") ? "" : name.getText()));
-                    jumpActivity(bundle);
+                    jumpActivity(bundle, ChangeInfoActivity.class);
                 }
                 break;
             case R.id.phone_rl3:
-                if (!Util.isFastDoubleClick()){
-                    bundle.putInt("jumpAction",R.id.phone_rl3);
-                    bundle.putString("phone", String.valueOf(phone.getText().equals("18866668888") ? "" :phone.getText()));
-                    jumpActivity(bundle);
+                if (!Util.isFastDoubleClick()) {
+                    bundle.putInt("jumpAction", R.id.phone_rl3);
+                    bundle.putString("phone", String.valueOf(phone.getText().equals("18866668888") ? "" : phone.getText()));
+                    jumpActivity(bundle, ChangeInfoActivity.class);
                 }
                 break;
             case R.id.area_rl4:
                 ShowPickerView();
                 break;
             case R.id.time_re6:
-                if(pvCustomTime!=null){
+                if (pvCustomTime != null) {
                     pvCustomTime.show();
                 }
                 break;
             case R.id.deliveryTypeRl1:
-                if(actionSheetDialog!=null){
+                if (actionSheetDialog != null) {
                     new ActionSheetDialog(DistributionInfoActivity.this)
                             .builder()
                             .setCancelable(false)
                             .setCanceledOnTouchOutside(false)
                             .addSheetItem("洗涤企业配送", ActionSheetDialog.SheetItemColor.Blue, new ActionSheetDialog.OnSheetItemClickListener() {
-                                @Override public void onClick(int which) {
+                                @Override
+                                public void onClick(int which) {
                                     deliveryType = "洗涤企业配送";
+                                    deliveryTypeInt = 1;
                                     deliveryType_tv11.setText(deliveryType);
                                 }
                             })
                             .addSheetItem("自取", ActionSheetDialog.SheetItemColor.Blue, new ActionSheetDialog.OnSheetItemClickListener() {
-                                @Override public void onClick(int which) {
+                                @Override
+                                public void onClick(int which) {
                                     deliveryType = "自取";
+                                    deliveryTypeInt = 2;
                                     deliveryType_tv11.setText(deliveryType);
                                 }
                             }).show();
 
                 }
                 break;
-            default:break;
+            case R.id.btn_save:
+                params.setExpress(deliveryTypeInt);
+                params.setContact_name(nameStr);
+                params.setContact_tel(phoneStr);
+                if (!TextUtils.isEmpty(deliveryRegion) && deliveryRegion.contains("_") && deliveryRegion.length() > 2) {
+                    String[] split = deliveryRegion.split("_");
+                    params.setProvince(split[0]);
+                    params.setCity(split[1]);
+                }
+                params.setAddress(addressStr);
+                params.setPickup_time(deliveryTime);
+                bundle.putInt("class", 3);
+                bundle.putParcelable("params", params);
+                jumpActivity(bundle, ConfirmOrderActivity.class);
+                break;
+            default:
+                break;
         }
     }
 
-    private void jumpActivity(Bundle bundle){
+    private void jumpActivity(Bundle bundle, Class<?> cls) {
         Intent intent = new Intent();
         intent.putExtras(bundle);
-        intent.setClass(DistributionInfoActivity.this,ChangeInfoActivity.class);
+        intent.setClass(DistributionInfoActivity.this, cls);
         startActivity(intent);
     }
 
@@ -196,7 +277,7 @@ public class DistributionInfoActivity extends BaseActivity {
                             ArrayList<String> ProvinceList = new ArrayList<>();//该省的城市列表（第二级）
                             if (provinces.get(i).getP().equals("国外")) {
                                 return;
-                            }else{
+                            } else {
                                 ProvinceList.add(provinces.get(i).getP());
                             }
 
@@ -204,7 +285,7 @@ public class DistributionInfoActivity extends BaseActivity {
                             ArrayList<ArrayList<String>> Province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
 
                             for (int j = 0; j < provinces.get(i).getC().size(); j++) {//遍历该省份的所有城市
-                                if(Util.isEmpty(provinces.get(i).getC().get(j).getN())){//直辖市没有
+                                if (Util.isEmpty(provinces.get(i).getC().get(j).getN())) {//直辖市没有
                                     return;
                                 }
                                 String CityName = provinces.get(i).getC().get(j).getN();
@@ -217,7 +298,7 @@ public class DistributionInfoActivity extends BaseActivity {
                                         || provinces.get(i).getC().get(j).getA().size() == 0) {
                                     City_AreaList.add("");
                                 } else {
-                                    for(int k = 0;k < provinces.get(i).getC().get(j).getA().size();k++){
+                                    for (int k = 0; k < provinces.get(i).getC().get(j).getA().size(); k++) {
                                         City_AreaList.add(provinces.get(i).getC().get(j).getA().get(k).getS());
                                     }
                                 }
@@ -254,10 +335,10 @@ public class DistributionInfoActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1)+" "+
-                        options2Items.get(options1).get(options2)+" "+
+                String tx = options1Items.get(options1) + "_" +
+                        options2Items.get(options1).get(options2) + "_" +
                         options3Items.get(options1).get(options2).get(options3);
-                LogUtils.d("选择的城市列表："+tx);
+                LogUtils.d("选择的城市列表：" + tx);
                 deliveryRegion = tx;
                 tvRegion.setText(deliveryRegion);
             }
@@ -284,7 +365,7 @@ public class DistributionInfoActivity extends BaseActivity {
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
                 deliveryTime = sf.format(date);
                 deliveryTime_tv66.setText(deliveryTime);
-                LogUtils.d("选择配送时间:"+deliveryTime);
+                LogUtils.d("选择配送时间:" + deliveryTime);
             }
         })
                 .setCancelText("取消")
@@ -301,8 +382,8 @@ public class DistributionInfoActivity extends BaseActivity {
                 .setSubmitColor(mContext.getResources().getColor(R.color.primary_dark_blue))
                 .setCancelColor(mContext.getResources().getColor(R.color.primary_dark_blue))
                 .setDate(selectedDate)
-                .setType(new boolean[]{true, true, true,false,false,false})
-                .setLabel("年", "月", "日","时","分","秒")
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("年", "月", "日", "时", "分", "秒")
                 .setLineSpacingMultiplier(1.6f)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build();
