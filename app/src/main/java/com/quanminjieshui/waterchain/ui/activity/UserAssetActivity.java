@@ -1,6 +1,8 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,6 +39,9 @@ public class UserAssetActivity extends BaseActivity implements AccountDetailView
     TextView tvDs;
     @BindView(R.id.tv_ds_freeze)
     TextView tvDsFreeze;
+
+    private float jsl = 0;
+    public static final String EXTRA_JSL="extra_jsl";
 
     private AccountDetailPresenter accountDetailPresenter;
 
@@ -89,18 +94,22 @@ public class UserAssetActivity extends BaseActivity implements AccountDetailView
                 break;
 
             case R.id.btn_jsl_jy://跳转交易 TODO 切换了 但是没有显示页面
-                EventBus.getDefault().post(new SelectFragmentEvent("交易"));
+//                EventBus.getDefault().post(new SelectFragmentEvent("交易"));
+//                finish();
+//                break;
+            case R.id.btn_ds_jy://跳转交易
+                startActivity(new Intent(this,MainActivity.class));
+                EventBus.getDefault().post(new SelectFragmentEvent("交易中心"));
                 finish();
                 break;
             case R.id.btn_jsl_zz://弹窗
-
+                Intent intent=new Intent(UserAssetActivity.this,MvJslActivity.class);
+                intent.putExtra(EXTRA_JSL,jsl);
+                startActivity(intent);
                 overridePendingTransition(R.anim.actionsheet_dialog_in, 0);
                 break;
 
-            case R.id.btn_ds_jy://跳转交易
-                EventBus.getDefault().post(new SelectFragmentEvent("交易"));
-                finish();
-                break;
+
 
             default:
                 break;
@@ -111,6 +120,16 @@ public class UserAssetActivity extends BaseActivity implements AccountDetailView
 
     @Override
     public void onAccountDetailSuccess(AccountDetailResponseBean accountDetailResponseBean) {
+        String jslStr = accountDetailResponseBean.getJsl();
+        try {
+            if (!TextUtils.isEmpty(jslStr)) {
+                jsl = Float.valueOf(jslStr);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsl=0;
+        }
+
         tvJsl.setText(new StringBuilder("可用：").append(accountDetailResponseBean.getJsl()).toString());
         tvJslFreeze.setText(new StringBuilder("冻结：").append(accountDetailResponseBean.getJsl_freeze()).toString());
         tvJslGyj.setText(new StringBuilder("公益金：").append(accountDetailResponseBean.getJsl_gyj()).toString());

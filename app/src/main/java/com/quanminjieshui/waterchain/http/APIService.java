@@ -197,6 +197,7 @@ public interface APIService {
     @POST(UrlConfig.GOODS_DETAIL)
     Observable<BaseEntity<List<GoodsDetailResponseBean>>> goodsDetail(@Body RequestBody body);
 
-
+    @POST(UrlConfig.MVJSL)
+    Observable<BaseEntity> mvJsl(@Body RequestBody body);
 }
 

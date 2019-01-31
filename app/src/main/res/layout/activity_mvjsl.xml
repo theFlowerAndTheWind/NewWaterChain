@@ -40,18 +40,22 @@
 
 
         <EditText
+            android:id="@+id/edt_user_login"
             style="@style/style_edt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edt_height"
             android:layout_marginTop="@dimen/view_space_edt_vertical"
-            android:hint="收款人账号" />
+            android:hint="收款人账号"
+            android:textColor="@color/text_black"/>
 
         <EditText
+            android:id="@+id/edt_user_name"
             style="@style/style_edt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edt_height"
             android:layout_marginTop="@dimen/view_space_edt_vertical"
-            android:hint="对方姓名" />
+            android:hint="对方姓名"
+            android:textColor="@color/text_black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,6 +65,7 @@
             android:layout_marginTop="@dimen/view_space_edt_vertical">
 
             <EditText
+                android:id="@+id/edt_total"
                 android:layout_width="0px"
                 android:layout_height="@dimen/edt_height"
                 android:layout_weight="1"
@@ -69,7 +74,8 @@
                 android:inputType="numberDecimal"
                 android:paddingLeft="@dimen/edt_padding_left"
                 android:textColorHint="@color/hit_color"
-                android:textSize="@dimen/text_size_edt" />
+                android:textSize="@dimen/text_size_edt"
+                android:textColor="@color/text_black"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,6 +86,7 @@
                 android:textSize="@dimen/text_size_edt" />
 
             <TextView
+                android:id="@+id/tv_have"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="@dimen/edt_padding_left"
@@ -96,17 +103,20 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/edt_reason"
             style="@style/style_edt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edt_height"
             android:layout_marginTop="@dimen/view_space_edt_vertical"
-            android:hint="申请原因" />
+            android:hint="申请原因"
+            android:textColor="@color/text_black"/>
 
         <Button
+            android:id="@+id/btn_commit"
             style="@style/style_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/commit_btn_height"
-            android:text="贡献节水指标"
+            android:text="提交申请"
             android:layout_marginTop="60px"/>
         <TextView
             android:layout_width="wrap_content"

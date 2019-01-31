@@ -955,4 +955,7 @@ public class UrlConfig {
      * 商品详情
      */
     public static final String GOODS_DETAIL = "api/home/goods/goodsDetail";
+
+
+    public static final String MVJSL="api/home/user/moveJsl";
 }

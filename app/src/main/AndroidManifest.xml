@@ -180,7 +180,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.TransferActivity"
+            android:name=".ui.activity.MvJslActivity"
             android:screenOrientation="portrait"
             android:theme="@style/dialogstyle" />
 

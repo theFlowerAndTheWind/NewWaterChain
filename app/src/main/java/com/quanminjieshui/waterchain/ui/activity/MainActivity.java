@@ -233,23 +233,23 @@ public class MainActivity extends BaseActivity {
 
     public void hideFragment() {
         if (homeFragment != null) {
-            fragmentManager.beginTransaction().hide(homeFragment).commit();
+            fragmentManager.beginTransaction().hide(homeFragment).commitAllowingStateLoss();
         }
 
         if (washFragment != null) {
-            fragmentManager.beginTransaction().hide(washFragment).commit();
+            fragmentManager.beginTransaction().hide(washFragment).commitAllowingStateLoss();
         }
 
         if (transactionFragment != null) {
-            fragmentManager.beginTransaction().hide(transactionFragment).commit();
+            fragmentManager.beginTransaction().hide(transactionFragment).commitAllowingStateLoss();
         }
 
         if (findFragment != null) {
-            fragmentManager.beginTransaction().hide(findFragment).commit();
+            fragmentManager.beginTransaction().hide(findFragment).commitAllowingStateLoss();
         }
 
         if (personalFragment != null) {
-            fragmentManager.beginTransaction().hide(personalFragment).commit();
+            fragmentManager.beginTransaction().hide(personalFragment).commitAllowingStateLoss();
         }
     }
 
@@ -291,7 +291,7 @@ public class MainActivity extends BaseActivity {
                 case "洗涤":
                     showWash();
                     break;
-                case "交易":
+                case "交易中心":
                     showTransaction();
                     break;
                 case "发现":
@@ -309,6 +309,7 @@ public class MainActivity extends BaseActivity {
 
 
     public void showHome() {
+        hideFragment();
         rb1.setChecked(true);
         tv_title_center.setText("首页");
         //by sxt
@@ -340,6 +341,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void showWash() {
+        hideFragment();
         rb2.setChecked(true);
         tv_title_center.setText("洗涤");
         //by sxt
@@ -356,6 +358,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void showTransaction() {
+        hideFragment();
         rb3.setChecked(true);
         tv_title_center.setText("交易中心");
         //by sxt
@@ -377,6 +380,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void showFind() {
+        hideFragment();
         rb4.setChecked(true);
         tv_title_center.setText("发现");
         //by sxt
@@ -393,6 +397,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void showPersonal() {
+        hideFragment();
         rb5.setChecked(true);
         tv_title_center.setText("我的");
         //by sxt

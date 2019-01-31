@@ -264,7 +264,6 @@ public class TransactionFragment extends BaseFragment implements
         xrvTradeList.setPullRefreshEnabled(false);
     }
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -273,7 +272,6 @@ public class TransactionFragment extends BaseFragment implements
     @Override
     public void onReNetRefreshData(int viewId) {
     }
-
 
     @Override
     public void onTradeCenterSuccess(TradeCenterResponseBean bean) {
@@ -702,9 +700,10 @@ public class TransactionFragment extends BaseFragment implements
         if (hidden) {//fragment被hide时保存
             isLogin = (boolean) SPUtil.get(getActivity(), SPUtil.IS_LOGIN, false);
             user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "token");
+        }else {
+            doTradeCenter();
         }
     }
-
 
     public String getIsLogin() {
         return new StringBuilder().append(isLogin).append(user_login).toString();

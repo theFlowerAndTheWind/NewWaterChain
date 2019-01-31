@@ -704,28 +704,6 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
         pvOptions.show();
     }
 
-//    /**
-//     * 省市县弹框
-//     */
-//    private void ShowPickerView() {
-//        OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-//                //返回的分别是三个级别的选中位置
-////                tvProvince.setText(options1Items.get(options1));
-////                provinceName=options1Items.get(options1);
-////                tvCity.setText(options2Items.get(options1).get(options2));
-////                cityName=options2Items.get(options1).get(options2);
-//            }
-//        }).setTitleText("城市选择")
-//                .setDividerColor(mContext.getResources().getColor(R.color.primary_dark_blue))
-//                .setTextColorCenter(mContext.getResources().getColor(R.color.primary_dark_blue)) //设置选中项文字颜色
-//                .setContentTextSize(20)
-//                .build();
-//        pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器
-//        pvOptions.show();
-//    }
-
     /**
      * 从assert文件夹中获取json数据
      */
