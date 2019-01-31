@@ -1,7 +1,7 @@
 package com.quanminjieshui.waterchain.contract.model;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.InfoDetailRespoonseBean;
+import com.quanminjieshui.waterchain.beans.GoodsDetailResponseBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -11,25 +11,25 @@ import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
- * Created by songxiaotao on 2018/12/13.
- * Class Note:平台咨讯详情
+ * Created by songxiaotao on 2019/1/31.
+ * Class Note:
  */
 
-public class InfoDetailModel {
-
-    public void getInfoDetail(BaseActivity activity, int id, final InfoDetailCallBack callBack){
+public class GoodsDetailModel {
+    public void getGoodsDetail(BaseActivity activity,int id,final GoodsDetailCallBack callBack){
         HashMap<String,Object> params = new HashMap<>();
         params.put("id",id);
         RetrofitFactory.getInstance().createService()
-                .infoDetail(RequestUtil.getRequestHashBody(params,false))
-                .compose(activity.<BaseEntity<InfoDetailRespoonseBean>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<InfoDetailRespoonseBean>>io())
-                .subscribe(new BaseObserver<InfoDetailRespoonseBean>(activity) {
+                .goodsDetail(RequestUtil.getRequestHashBody(params,false))
+                .compose(activity.<BaseEntity<List<GoodsDetailResponseBean>>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<List<GoodsDetailResponseBean>>>io())
+                .subscribe(new BaseObserver<List<GoodsDetailResponseBean>>(activity) {
                     @Override
-                    protected void onSuccess(InfoDetailRespoonseBean infoDetailRespoonseBeans) throws Exception {
-                        callBack.success(infoDetailRespoonseBeans);
+                    protected void onSuccess(List<GoodsDetailResponseBean> beans) throws Exception {
+                        callBack.success(beans);
                     }
 
                     @Override
@@ -54,8 +54,8 @@ public class InfoDetailModel {
                 });
     }
 
-    public interface InfoDetailCallBack{
-        void success(InfoDetailRespoonseBean infoDetailRespoonseBean);
+    public interface GoodsDetailCallBack{
+        void success(List<GoodsDetailResponseBean> beans);
         void failed(String msg);
     }
 }

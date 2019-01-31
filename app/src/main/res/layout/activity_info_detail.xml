@@ -4,6 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/module_include_title_bar"/>
-    <include layout="@layout/module_include_no_data"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/module_recycle_item_info_lists_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible"/>
+
+        <include
+            layout="@layout/module_include_no_data"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </LinearLayout>

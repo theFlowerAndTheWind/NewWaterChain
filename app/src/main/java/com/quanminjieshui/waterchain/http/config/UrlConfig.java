@@ -950,4 +950,9 @@ public class UrlConfig {
      * 商品列表--发现兑换商城
      */
     public static final String GOODS_lISTS = "api/home/goods/goodsLists";
+
+    /**
+     * 商品详情
+     */
+    public static final String GOODS_DETAIL = "api/home/goods/goodsDetail";
 }

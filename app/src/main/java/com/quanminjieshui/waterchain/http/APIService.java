@@ -9,8 +9,10 @@ import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
+import com.quanminjieshui.waterchain.beans.GoodsDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsListsResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsResposeBean;
+import com.quanminjieshui.waterchain.beans.InfoDetailRespoonseBean;
 import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
 import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
@@ -126,7 +128,7 @@ public interface APIService {
 
     //平台咨讯详情
     @POST(UrlConfig.INFO_DETAIL)
-    Observable<BaseEntity> infoDetail(@Body RequestBody requestBody);
+    Observable<BaseEntity<InfoDetailRespoonseBean>> infoDetail(@Body RequestBody requestBody);
 
     //平台咨询列表
     @POST(UrlConfig.INFO_LIST)
@@ -188,5 +190,13 @@ public interface APIService {
      */
     @POST(UrlConfig.GOODS_lISTS)
     Observable<BaseEntity<List<GoodsListsResponseBean>>> goodsLists(@Body RequestBody body);
+
+    /**
+     * 商品详情
+     */
+    @POST(UrlConfig.GOODS_DETAIL)
+    Observable<BaseEntity<List<GoodsDetailResponseBean>>> goodsDetail(@Body RequestBody body);
+
+
 }
 

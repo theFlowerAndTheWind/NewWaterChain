@@ -14,6 +14,7 @@ package com.quanminjieshui.waterchain.ui.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,13 @@ public class InfoListsAdapter extends RecyclerView.Adapter<InfoListsAdapter.Info
                 });
                 GlidImageManager.getInstance().loadImageView(context, infoEntity.getImg(), holder.img, R.mipmap.default_img);
                 holder.tvTitle.setText(infoEntity.getTitle());
-                holder.tvContent.setText(infoEntity.getContent());
+                CharSequence charSequence;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    charSequence = Html.fromHtml(infoEntity.getContent(),Html.FROM_HTML_MODE_LEGACY);
+                } else {
+                    charSequence = Html.fromHtml(infoEntity.getContent());
+                }
+                holder.tvContent.setText(charSequence);
                 holder.tvPublishtime.setText(infoEntity.getPublishtime());
             }
         }
