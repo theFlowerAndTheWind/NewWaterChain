@@ -6,8 +6,10 @@ import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.beans.FactoryServiceResponseBean;
 import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
+import com.quanminjieshui.waterchain.beans.GoodsListsResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsResposeBean;
 import com.quanminjieshui.waterchain.beans.InfoListsResponseBean;
 import com.quanminjieshui.waterchain.beans.LoginResponseBean;
@@ -23,7 +25,6 @@ import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.beans.UploadFileResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
-import com.quanminjieshui.waterchain.beans.FactoryListResponse;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
 
@@ -181,5 +182,11 @@ public interface APIService {
     Observable<BaseEntity<UploadFileResponseBean>>uploadFile(@Part("token") RequestBody token,
                                                              @Part("device_type") RequestBody device_type,
                                                              @Part MultipartBody.Part file);
+
+    /**
+     * 商品列表--兑换商城
+     */
+    @POST(UrlConfig.GOODS_lISTS)
+    Observable<BaseEntity<List<GoodsListsResponseBean>>> goodsLists(@Body RequestBody body);
 }
 

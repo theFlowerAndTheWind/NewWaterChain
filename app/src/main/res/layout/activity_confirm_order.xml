@@ -274,6 +274,11 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:layout_width="400px"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
                         android:id="@+id/tv_info_txt"
                         style="@style/style_txt_confirm_order2"
                         android:text="选择配送信息" />

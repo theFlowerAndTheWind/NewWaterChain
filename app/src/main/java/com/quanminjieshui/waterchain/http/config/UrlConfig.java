@@ -946,4 +946,8 @@ public class UrlConfig {
      */
     public static final String UPLOAD = "api/user/Upload/one";
 
+    /**
+     * 商品列表--发现兑换商城
+     */
+    public static final String GOODS_lISTS = "api/home/goods/goodsLists";
 }
