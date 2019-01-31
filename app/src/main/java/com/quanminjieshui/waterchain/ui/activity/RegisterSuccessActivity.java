@@ -67,7 +67,7 @@ public class RegisterSuccessActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_register_success:
                 startActivity(new Intent(RegisterSuccessActivity.this, MainActivity.class));
-                EventBus.getDefault().post(new SelectFragmentEvent("我的"));
+                EventBus.getDefault().post(new SelectFragmentEvent("首页"));
                 finish();
                 break;
             case R.id.left_ll:

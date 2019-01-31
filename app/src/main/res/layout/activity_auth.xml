@@ -57,20 +57,45 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <!--personal-->
-                <FrameLayout
-                    android:id="@+id/frame_nationality"
+
+                <LinearLayout
+                    android:id="@+id/ll_nationality"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edt_height"
                     android:background="@drawable/gray_border_bg_shape"
                     android:visibility="gone">
-
-                    <Spinner
-                        android:id="@+id/sp_nationality"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_nationality"
+                        android:layout_width="0px"
+                        android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:entries="@array/nationality"
-                        android:paddingLeft="10px" />
-                </FrameLayout>
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp"
+                        android:text="国籍"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="20px"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/down"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="15px"/>
+                </LinearLayout>
+                <!--<FrameLayout-->
+                    <!--android:id="@+id/frame_nationality"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/edt_height"-->
+                    <!--android:background="@drawable/gray_border_bg_shape"-->
+                    <!--android:visibility="gone">-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/sp_nationality"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:entries="@array/nationality"-->
+                        <!--android:paddingLeft="10px" />-->
+                <!--</FrameLayout>-->
 
                 <!--company  personal-->
                 <LinearLayout
@@ -79,38 +104,60 @@
                     android:layout_height="@dimen/edt_height"
                     android:layout_marginTop="@dimen/view_space_edt_vertical"
                     android:orientation="horizontal">
-
-                    <FrameLayout
+                    <LinearLayout
+                        android:id="@+id/ll_province"
+                        android:orientation="horizontal"
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/gray_border_bg_shape">
-
-                        <Spinner
-                            android:id="@+id/sp_province"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/tv_province"
+                            android:layout_width="0px"
+                            android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:entries="@array/province"
-                            android:paddingLeft="10px" />
-                    </FrameLayout>
+                            android:textColor="@color/text_black"
+                            android:textSize="14sp"
+                            android:text="所在省份"
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="20px"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/down"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="15px"/>
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="20px"
                         android:layout_height="match_parent" />
-
-                    <FrameLayout
+                    <LinearLayout
+                        android:id="@+id/ll_city"
+                        android:orientation="horizontal"
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/gray_border_bg_shape">
-
-                        <Spinner
-                            android:id="@+id/sp_city"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/tv_city"
+                            android:layout_width="0px"
+                            android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:entries="@array/city"
-                            android:paddingLeft="10px" />
-                    </FrameLayout>
+                            android:textColor="@color/text_black"
+                            android:textSize="14sp"
+                            android:text="所在城市"
+                            android:gravity="center_vertical|left"
+                            android:paddingLeft="20px"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/down"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="15px"/>
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <EditText

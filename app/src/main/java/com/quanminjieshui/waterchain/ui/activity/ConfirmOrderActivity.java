@@ -178,7 +178,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.left_ll:
-                exitPay();
+//                exitPay();
                 break;
             case R.id.order_detail:
                 if (totalCount > 0) {
