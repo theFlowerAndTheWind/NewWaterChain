@@ -143,6 +143,27 @@ public class GlidImageManager {
 
     }
 
+    public void loadCircleImg(final Context context, File file, final ImageView imageView,int placeholder,int errorImg) {
+        Glide.with(context)
+                .load(file)
+                .asBitmap()
+                .override(750,750)
+                .transform(new FitCenter(context),new GlideCircleTransform(context))
+                .placeholder(placeholder)
+                .error(errorImg)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(new BitmapImageViewTarget(imageView) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        imageView.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+
+    }
+
     public  static GlideUrl getGlideUrl(Context context,String imageUrl){
 
         GlideUrl glideUrl = new GlideUrl(imageUrl, new LazyHeaders.Builder()

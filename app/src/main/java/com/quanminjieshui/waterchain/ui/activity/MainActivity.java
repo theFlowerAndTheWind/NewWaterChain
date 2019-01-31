@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     @Override
     public void initContentView() {
         setContentView(R.layout.activity_main);
-        alertChainDialog=new AlertChainDialog(this);
+        alertChainDialog = new AlertChainDialog(this);
     }
 
 
@@ -286,7 +286,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
 
     public void exit() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
-            ToastUtils.showCustomToastMsg("再按一次退出程序",150);
+            ToastUtils.showCustomToastMsg("再按一次退出程序", 150);
             mExitTime = System.currentTimeMillis();
         } else {
             ActivityManager.AppExit(mContext);
@@ -455,31 +455,32 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
 
     @Override
     public void onAppUpdateSuccess(Object bean) {
-        if (bean instanceof AppUpdateResponseBean){
+        if (bean instanceof AppUpdateResponseBean) {
             String version = ((AppUpdateResponseBean) bean).getVer();
-            if (TextUtils.isEmpty(version)){
+            if (TextUtils.isEmpty(version)) {
                 isUpdate = false;
                 return;
-            }else {
+            } else {
                 String[] versionService = version.split(".");
                 String[] versionLocal = Util.versionName(this).split(".");
-                int service = Integer.parseInt(versionService[0]+versionService[1]+versionService[2]);
-                int local = Integer.parseInt(versionLocal[0]+versionLocal[1]+versionLocal[2]);
-                if(TextUtils.isEmpty(version) && service>local){
+                int service = Integer.parseInt(versionService[0] + versionService[1] + versionService[2]);
+                int local = Integer.parseInt(versionLocal[0] + versionLocal[1] + versionLocal[2]);
+                if (TextUtils.isEmpty(version) && service > local) {
                     isUpdate = true;
-                }else {
+                } else {
                     isUpdate = false;
                 }
             }
         }
-            if(alertChainDialog!=null){
+        if (isUpdate) {
+            if (alertChainDialog != null) {
                 alertChainDialog.builder().setCancelable(false);
                 alertChainDialog.setTitle("提示消息")
-                        .setMsg(isUpdate ? "有新版可供更新" :"当前已是最新版本")
+                        .setMsg(isUpdate ? "有新版可供更新" : "当前已是最新版本")
                         .setPositiveButton("确定", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if(isUpdate){
+                                if (isUpdate) {
                                     update();
                                 }
                             }
@@ -492,12 +493,13 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
                     }
                 }).show();
             }
+        }
     }
 
 
     @Override
     public void onAppUpdateFailed(String msg) {
-        ToastUtils.showCustomToast(msg,1);
+        ToastUtils.showCustomToast(msg, 1);
     }
 
     private void update() {

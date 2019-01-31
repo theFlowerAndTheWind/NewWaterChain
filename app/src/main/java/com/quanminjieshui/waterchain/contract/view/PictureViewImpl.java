@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.contract.view;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
@@ -72,6 +73,6 @@ public interface PictureViewImpl extends IBaseViewImpl {
      */
     void go2SystemCamera(File tempFile, int requestCode);
 
-    BaseActivity getActivity();
+    Activity getCtx();
 
 }

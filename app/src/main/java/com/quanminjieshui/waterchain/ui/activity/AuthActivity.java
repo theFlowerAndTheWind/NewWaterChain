@@ -546,7 +546,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
     }
 
     @Override
-    public BaseActivity getActivity() {
+    public Activity getCtx() {
         return AuthActivity.this;
     }
 

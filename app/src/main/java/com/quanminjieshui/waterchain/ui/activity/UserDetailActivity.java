@@ -98,6 +98,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
                                 SPUtil.delete(UserDetailActivity.this, SPUtil.USER_LOGIN);
                                 SPUtil.delete(UserDetailActivity.this, SPUtil.USER_NICKNAME);
                                 SPUtil.delete(UserDetailActivity.this, SPUtil.TOKEN);
+                                SPUtil.delete(UserDetailActivity.this, SPUtil.AVATAR);
 
 
                                 jump(MainActivity.class);

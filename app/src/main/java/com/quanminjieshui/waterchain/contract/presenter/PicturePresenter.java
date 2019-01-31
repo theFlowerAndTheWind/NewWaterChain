@@ -94,11 +94,11 @@ public class PicturePresenter extends BasePresenter<PictureViewImpl> {
         tempFile = new File(dirPath,PictureFileUtil.PIC_NAME_PREFIX+System.currentTimeMillis()+suffix);
 
         //权限判断
-        int writePermission=ContextCompat.checkSelfPermission(mView.getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int cameraPermission=ContextCompat.checkSelfPermission(mView.getActivity(), Manifest.permission.CAMERA);
+        int writePermission=ContextCompat.checkSelfPermission(mView.getCtx(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int cameraPermission=ContextCompat.checkSelfPermission(mView.getCtx(), Manifest.permission.CAMERA);
         if (writePermission != PackageManager.PERMISSION_GRANTED||cameraPermission!=PackageManager.PERMISSION_GRANTED) {
             //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(mView.getActivity(),
+            ActivityCompat.requestPermissions(mView.getCtx(),
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
                     WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
         } else {
@@ -112,10 +112,10 @@ public class PicturePresenter extends BasePresenter<PictureViewImpl> {
 
     public void onPhotoClicked() {
         //权限判断
-        if (ContextCompat.checkSelfPermission(mView.getActivity(), Manifest.permission
+        if (ContextCompat.checkSelfPermission(mView.getCtx(), Manifest.permission
                 .READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             //申请READ_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(mView.getActivity(), new String[]{Manifest
+            ActivityCompat.requestPermissions(mView.getCtx(), new String[]{Manifest
                             .permission.READ_EXTERNAL_STORAGE},
                     READ_EXTERNAL_STORAGE_REQUEST_CODE);
         } else {

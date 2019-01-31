@@ -208,5 +208,11 @@ public interface APIService {
      */
     @POST(UrlConfig.APP_VERSION)
     Observable<BaseEntity> appUpdate(@Body RequestBody requestBody);
+
+    /**
+     * 更改头像
+     */
+    @POST(UrlConfig.CHANGE_AVATAR)
+    Observable<BaseEntity> changeAvatar(@Body RequestBody requestBody);
 }
 
