@@ -60,7 +60,7 @@ public class OrderDetailResponseBean {
     public String pay_type="";// 	支付通道
     public String pay_price="";//	支付金额
     public String pay_jsl="";// 	支付jsl
-    public String updatetime="";// 	支付时间
+    public String updatetime="";// 	支付时间....
     public String contact_name="";// 	发件人
     public String contact_tel="";// 	发件人手机号码
     public String express="";// 	取件方式
@@ -70,6 +70,7 @@ public class OrderDetailResponseBean {
     public String pickup_time="";// 取件时间
     public String pay_sn="";
     public int id;//订单id 重要！！！  不等同于订单编号
+    private String orderStr;
 
     public String getF_name() {
         return f_name;

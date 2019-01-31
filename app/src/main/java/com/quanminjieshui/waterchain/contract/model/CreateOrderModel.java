@@ -33,7 +33,7 @@ public class CreateOrderModel {
         map.put("pickup_time",params.getPickup_time());
         map.put("pay_type",params.getPickup_time());
         RetrofitFactory.getInstance().createService()
-                .createOrder(RequestUtil.getRequestBeanBody(params,true))
+                .createOrder(RequestUtil.getRequestHashBody(map,false))
                 .compose(activity.<BaseEntity<CreateOrderResponseBean>>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity<CreateOrderResponseBean>>io())
                 .subscribe(new BaseObserver<CreateOrderResponseBean>(activity) {

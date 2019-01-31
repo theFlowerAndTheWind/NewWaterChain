@@ -3,6 +3,7 @@ package com.quanminjieshui.waterchain.ui.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,18 @@ public class OrderDetailServiceCateAdapter extends RecyclerView.Adapter<OrderDet
                     .append(entry.getC_name())
                     .append(" * ")
                     .append(entry.getTotal()).toString());
-            holder.tvPrice.setText(entry.getPrice());
+            String price=entry.getPrice();
+            float priceFlt=0;
+            try {
+                if(!TextUtils.isEmpty(price)){
+                    priceFlt=Float.valueOf(price);
+                    price=String.format("%.2f",priceFlt);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            holder.tvPrice.setText("¥ "+price);
         }
 
     }

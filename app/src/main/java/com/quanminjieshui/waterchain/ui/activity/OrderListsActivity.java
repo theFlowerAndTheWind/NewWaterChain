@@ -174,7 +174,10 @@ public class OrderListsActivity extends BaseActivity implements OrderListsViewIm
             String status = entity.getStatus();
             if (!TextUtils.isEmpty(status)) {
                 switch (status) {
-                    case "待付款":
+//                    case "待付款":
+//                        unpaid.add(entity);
+//                        break;
+                    case "未付款":
                         unpaid.add(entity);
                         break;
                     case "取件中":

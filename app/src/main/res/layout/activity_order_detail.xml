@@ -3,16 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <include layout="@layout/module_include_title_bar" />
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingBottom="130px">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -407,16 +409,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/space_gray"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_count_down"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/layout_horizontal_padding">
+                <LinearLayout
+                    android:id="@+id/ll_count_down"
                     android:layout_width="match_parent"
                     android:layout_height="167px"
-                    android:gravity="center"
-                    android:text="支付时间："
-                    android:textColor="@color/text_black"
-                    android:textSize="@dimen/text_size_commit" />
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="支付时间："
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tv_count_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/primary_red"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
 
                 <Button
                     android:id="@+id/btn_pay"
@@ -425,17 +441,32 @@
                     android:layout_height="@dimen/commit_btn_height"
                     android:text="立即支付" />
 
-                <Button
-                    android:id="@+id/btn_affirm"
-                    style="@style/style_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/commit_btn_height"
-                    android:layout_marginTop="40px"
-                    android:layout_marginBottom="40px"
-                    android:text="确认完成" />
+                <!--<Button-->
+                    <!--android:id="@+id/btn_affirm"-->
+                    <!--style="@style/style_btn"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/commit_btn_height"-->
+                    <!--android:layout_marginTop="40px"-->
+                    <!--android:layout_marginBottom="40px"-->
+                    <!--android:text="确认完成" />-->
 
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+    <!--<Button-->
+        <!--android:id="@+id/btn_pay"-->
+        <!--style="@style/style_btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/commit_btn_height"-->
+        <!--android:text="立即支付" />-->
+
+    <Button
+        android:id="@+id/btn_affirm"
+        style="@style/style_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:text="确认完成"
+        android:layout_gravity="bottom"/>
+</FrameLayout>
 </LinearLayout>
