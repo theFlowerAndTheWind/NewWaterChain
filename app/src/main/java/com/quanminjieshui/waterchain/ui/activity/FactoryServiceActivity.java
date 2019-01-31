@@ -135,13 +135,16 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
     @Override
     public void onFactoryServiceSuceess(FactoryServiceResponseBean factoryServiceResponseBean) {
         dismissLoadingDialog();
-        washFatoryDetail = factoryServiceResponseBean.getDetail();
-        s_name = washFatoryDetail.getS_name();
-        description = washFatoryDetail.getDescription();
-        img = washFatoryDetail.getImg();
-        service_id = washFatoryDetail.getService_id();
-        factory_id = washFatoryDetail.getFactory_id();
 
+        washFatoryDetail = factoryServiceResponseBean.getDetail();
+        if(washFatoryDetail!=null) {
+            s_name = washFatoryDetail.getS_name();
+            description = washFatoryDetail.getDescription();
+            img = washFatoryDetail.getImg();
+            service_id = washFatoryDetail.getService_id();
+            factory_id = washFatoryDetail.getFactory_id();
+        }
+        tvTitleCenter.setText(s_name);
         factory_service_title.setText(s_name);
         factory_service_des.setText(description);
         GlidImageManager.getInstance().loadImageView(this,img,service_img,R.drawable.ic_default_image);

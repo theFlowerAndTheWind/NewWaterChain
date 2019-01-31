@@ -26,7 +26,7 @@ public class PriceSysAdapter extends RecyclerView.Adapter<PriceSysAdapter.PriceH
     public PriceSysAdapter(Context context, LinkedList list) {
         this.context = context;
         this.list.addAll(list);
-        FactoryServiceResponseBean.WashFatoryCageGory bean = new FactoryServiceResponseBean.WashFatoryCageGory("类别", "单位", "规格", "单价（元）");
+        FactoryServiceResponseBean.WashFatoryCageGory bean = new FactoryServiceResponseBean.WashFatoryCageGory("类别", "单价（元）", "单位", "规格");
         this.list.addFirst(bean);
 
     }

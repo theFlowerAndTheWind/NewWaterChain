@@ -15,11 +15,13 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.OrderDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.request.CreateOrderReqParams;
 import com.quanminjieshui.waterchain.contract.model.OrderDetailModel;
 import com.quanminjieshui.waterchain.contract.presenter.OrderDetailPresenter;
 import com.quanminjieshui.waterchain.contract.view.OrderDetailViewImpl;
 import com.quanminjieshui.waterchain.ui.adapter.OrderDetailServiceCateAdapter;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.util.ArrayList;
@@ -118,8 +120,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
     LinearLayout llPickupTime;
 
 
-    @BindView(R.id.tv_count_down)
-    TextView tvCountDown;
+    @BindView(R.id.ll_count_down)
+    LinearLayout llCountDown;
+
 
 
     @BindView(R.id.btn_pay)
@@ -150,6 +153,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
     private List<OrderDetailResponseBean.ServiceCateEntry> serviceCateEntries = new ArrayList<>();
     private OrderDetailServiceCateAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,7 +181,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         xrv.setLoadingMoreEnabled(false);
     }
 
-    @OnClick({R.id.left_ll, R.id.container})
+    @OnClick({R.id.left_ll, R.id.container, R.id.btn_pay})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -192,6 +196,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
                     intent.putExtra("f_name", f_name);
                     startActivity(intent);
                 }
+                break;
+            case R.id.btn_pay:
+
                 break;
             default:
                 break;
@@ -214,31 +221,41 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
     public void onOrderDetailSuccess(OrderDetailResponseBean bean) {
         if (bean == null) return;
         fid = bean.getFid();
-        f_name=bean.getF_name();
+        f_name = bean.getF_name();
         status = bean.getStatus();
         pay_cate = bean.getPay_cate();
-
 
         tvFactoryName.setText(f_name);
         GlidImageManager.getInstance().loadImageView(this, bean.getImg(), img, R.mipmap.default_img);
         tvService.setText(bean.getS_name());
-        tvTotalPrice.setText(bean.getTotal_price());
+        String totalPrice = bean.getTotal_price();
+        float totalPriceFlt = 0;
+        try {
+            if (!TextUtils.isEmpty(totalPrice)) {
+                totalPriceFlt = Float.valueOf(totalPrice);
+                totalPrice = String.format("%.2f", totalPriceFlt);
+            }
+        } catch (Exception e) {
+
+        }
+        tvTotalPrice.setText("¥ " + totalPrice);
 
         serviceCateEntries.clear();
         serviceCateEntries.addAll(bean.getService_cate());
         adapter.notifyDataSetChanged();
         xrv.refreshComplete();
 
-        if (status.equals("取件中") || status.equals("洗涤中") || status.equals("已完成") || status.equals("已取消")) {
-            tvOrderSn.setText(bean.getOrder_sn());
-            tvStatus1.setText(status);
-            tvCreatetime.setText(bean.getCreatetime());
-            tvPayCate.setText(bean.getPay_cate());
+        tvOrderSn.setText(bean.getOrder_sn());
+        tvStatus1.setText(status);
+        tvCreatetime.setText(bean.getCreatetime());
+
+        if ("取件中,洗涤中,已完成,已取消".contains(status)) {
+
+            tvPayCate.setText(pay_cate);
             tvPayType.setText(bean.getPay_type());
             tvPayPrice.setText(bean.getPay_price());
             tvPayJsl.setText(bean.pay_jsl);
             tvUpdatetime.setText(bean.getUpdatetime());
-
 
             tvContactName.setText(bean.getContact_name());
             tvContactTel.setText(bean.getContact_tel());
@@ -246,24 +263,28 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
             tvExpress.setText(bean.getExpress());
 
         }
+        if (status.equals("取件中") || status.equals("洗涤中")) {
+            tvPickupTime.setText(bean.getPickup_time());
+        }
 
         if (!TextUtils.isEmpty(status)) {
             switch (status) {
-                case "待付款":
+                case "未付款":
                     showUnpaid();
                     break;
                 case "取件中":
+                    showTransportingOrWashing("取件中");
+                    break;
                 case "洗涤中":
-                    showTransportingOrWashing(true);
+                    showTransportingOrWashing("洗涤中");
                     break;
                 case "已完成":
-                    showDone(true);
+                    showDone();
                     break;
                 case "已取消":
-                    showCancled(false);
+                    showCancled();
                     break;
                 default:
-
                     break;
             }
         }
@@ -271,7 +292,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
 
     @Override
     public void onOrderDetailFailed(String msg) {
-
+        ToastUtils.showCustomToastMsg(msg, 150);
     }
 
     /**
@@ -284,7 +305,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         goneViews(views3);
         goneViews(views2);
         goneView(llPickupTime);
-        showView(tvCountDown);
+        showView(llCountDown);
         showView(btnPay);
         goneView(btnAffirm);
     }
@@ -292,9 +313,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
     /**
      * 取件中  洗涤中
      *
-     * @param flag 是否组合支付
      */
-    private void showTransportingOrWashing(boolean flag) {
+    private void showTransportingOrWashing( String status) {
         goneViews(views4);
         showView(space1);
         showViews(views1);
@@ -305,12 +325,16 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         }
         showViews(views2);
         showView(llPickupTime);
-        goneView(tvCountDown);
+        goneView(llCountDown);
         goneView(btnPay);
-        showView(btnAffirm);
+        if (status.equals("取件中")) {
+            goneView(btnAffirm);
+        } else if (status.equals("洗涤中")) {
+            showView(btnAffirm);
+        }
     }
 
-    private void showDone(boolean flag) {
+    private void showDone() {
         goneViews(views4);
         showView(space1);
         showViews(views1);
@@ -321,12 +345,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         }
         showViews(views2);
         showView(llPickupTime);
-        goneView(tvCountDown);
+        goneView(llCountDown);
         goneView(btnPay);
         goneView(btnAffirm);
     }
 
-    private void showCancled(boolean flag) {
+    private void showCancled() {
         goneViews(views4);
         showView(space1);
         showViews(views1);
@@ -337,9 +361,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         }
         showViews(views2);
         goneView(llPickupTime);
-        goneView(tvCountDown);
+        goneView(llCountDown);
         goneView(btnPay);
         goneView(btnAffirm);
+        goneView(llUpdatetime);//支付时间
     }
 
     private void showView(View view) {
@@ -362,6 +387,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         }
     }
 
+    private void initCreateOrderParams(OrderDetailResponseBean bean) {
+        //todo 微信支付宝支付
+        ToastUtils.showCustomToastMsg("微信支付宝支付", 150);
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -373,4 +404,5 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailView
         super.onDestroy();
         orderDetailPresenter.detachView();
     }
+
 }

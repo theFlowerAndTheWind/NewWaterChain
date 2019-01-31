@@ -134,7 +134,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
 
     private void initView() {
-        tvTitleCenter.setText("确认下单");
+        tvTitleCenter.setText("确认订单");
         initPayTimeDialog();
         handler = new MyTimeHandler(this);
         if (payType.equals("1")) {
@@ -188,7 +188,6 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 }
                 break;
             case R.id.btn_create_order:
-                ToastUtils.showCustomToastMsg("createorder", 150);
                 if (payCate == 2 && isCanPay != 1) {
                     ToastUtils.showCustomToastMsg("您的可用水方不足", 150);
                     return;
@@ -204,9 +203,6 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
                 btnCreateOrder.setEnabled(true);
                 createOrderPresenter.createOrder(ConfirmOrderActivity.this, params);
-
-
-                // TODO: 2019/1/1 支付
                 break;
             case R.id.wash_delivery_rl://配送信息
                 bundle.putInt("jumpAction", R.id.wash_delivery_rl);
@@ -463,7 +459,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
-            exitPay();
+//            exitPay();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -536,7 +532,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     public void onCreateOrderSuccess(CreateOrderResponseBean createOrderResponseBean) {
         ToastUtils.showCustomToast("创建订单成功", 1);
         startActivity(new Intent(ConfirmOrderActivity.this, PaySuceessActivity.class));
-
+        //todo 支付宝、微信支付
     }
 
     @Override
