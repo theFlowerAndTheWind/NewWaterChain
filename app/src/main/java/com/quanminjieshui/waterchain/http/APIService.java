@@ -197,7 +197,16 @@ public interface APIService {
     @POST(UrlConfig.GOODS_DETAIL)
     Observable<BaseEntity<List<GoodsDetailResponseBean>>> goodsDetail(@Body RequestBody body);
 
+    /**
+     * 申请转账
+     */
     @POST(UrlConfig.MVJSL)
     Observable<BaseEntity> mvJsl(@Body RequestBody body);
+
+    /**
+     * 版本更新检查
+     */
+    @POST(UrlConfig.APP_VERSION)
+    Observable<BaseEntity> appUpdate(@Body RequestBody requestBody);
 }
 

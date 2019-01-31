@@ -956,6 +956,14 @@ public class UrlConfig {
      */
     public static final String GOODS_DETAIL = "api/home/goods/goodsDetail";
 
-
+    /**
+     * 申请转账
+     */
     public static final String MVJSL="api/home/user/moveJsl";
+
+
+    /**
+     * 版本检查
+     */
+    public static final String APP_VERSION = "api/home/public/ver";
 }

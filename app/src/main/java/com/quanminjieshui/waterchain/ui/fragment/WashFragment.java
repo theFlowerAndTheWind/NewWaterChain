@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
@@ -83,14 +84,19 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        showLoadingDialog();
         if (factoryListPresenter != null) {
             factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-//            showLoadingDialog();
         }
         if (adImgPresenter != null) {
             adImgPresenter.getAdImg(getBaseActivity(), "ad_fac");
         }
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+            }
+        }, 800);
     }
 
     @Override
@@ -99,7 +105,6 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
         if (!hidden) {
             if (factoryListPresenter != null) {
                 factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-//                showLoadingDialog();
             }
         }
     }
@@ -109,7 +114,6 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
         super.setUserVisibleHint(isVisibleToUser);
         if (factoryListPresenter != null) {
             factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-//            showLoadingDialog();
         }
     }
 
@@ -117,7 +121,6 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
     public void onReNetRefreshData(int viewId) {
         if (factoryListPresenter != null) {
             factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-//            showLoadingDialog();
         }
     }
 
@@ -125,7 +128,6 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
         washShopAdapter = new WashShopAdapter(getBaseActivity(), listEntities);
         factoryList.setArrowImageView(R.drawable.iconfont_downgrey);
         factoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        factoryList.addItemDecoration(new RecyclerViewDivider(getBaseActivity(),LinearLayoutManager.HORIZONTAL,1,getResources().getColor(R.color.item_line)));
         factoryList.setAdapter(washShopAdapter);
 
         factoryList.setLoadingMoreEnabled(false);
@@ -160,17 +162,15 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
 
     @Override
     public void onFactoryListSuccess(FactoryListResponse factoryListResponse) {
-        dismissLoadingDialog();
-        if(factoryListResponse!=null){
+        if (factoryListResponse != null) {
             List<Factory> factoryListEntities = factoryListResponse.getLists();
             String tech_desc = factoryListResponse.getTech_desc();
-//            LogUtils.d("factoryListEntities；" + factoryListEntities.toArray());
             listEntities.clear();
             listEntities.addAll(factoryListEntities);
             washShopAdapter.notifyDataSetChanged();
             CharSequence charSequence;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                charSequence = Html.fromHtml(tech_desc,Html.FROM_HTML_MODE_LEGACY);
+                charSequence = Html.fromHtml(tech_desc, Html.FROM_HTML_MODE_LEGACY);
             } else {
                 charSequence = Html.fromHtml(tech_desc);
             }
@@ -181,9 +181,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
 
     @Override
     public void onFactoryListFailed(String msg) {
-        dismissLoadingDialog();
-        LogUtils.d("factoryListEntities；" + msg);
-
+        ToastUtils.showCustomToast(msg, 0);
     }
 
 
@@ -193,7 +191,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
         if (factoryListPresenter != null) {
             factoryListPresenter.detachView();
         }
-        if(adImgPresenter!=null){
+        if (adImgPresenter != null) {
             adImgPresenter.detachView();
         }
     }
@@ -208,6 +206,6 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
 
     @Override
     public void onGetAdImgFailed(String msg) {
-        ToastUtils.showCustomToast(msg,0);
+        ToastUtils.showCustomToast(msg, 0);
     }
 }

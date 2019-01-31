@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.ActivityManager;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.AppUpdateResponseBean;
+import com.quanminjieshui.waterchain.contract.presenter.AppUpdatePresenter;
+import com.quanminjieshui.waterchain.contract.view.AppUpdateViewImpl;
 import com.quanminjieshui.waterchain.event.LoginStatusChangedEvent;
 import com.quanminjieshui.waterchain.event.SelectFragmentEvent;
 import com.quanminjieshui.waterchain.ui.fragment.FindFragment;
@@ -23,9 +27,11 @@ import com.quanminjieshui.waterchain.ui.fragment.HomeFragment;
 import com.quanminjieshui.waterchain.ui.fragment.PersonalFragment;
 import com.quanminjieshui.waterchain.ui.fragment.TransactionFragment;
 import com.quanminjieshui.waterchain.ui.fragment.WashFragment;
+import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.SPUtil;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
+import com.quanminjieshui.waterchain.utils.Util;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import butterknife.BindView;
@@ -34,7 +40,7 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
 
     @BindView(R.id.title_bar)
     View titleBar;
@@ -71,11 +77,18 @@ public class MainActivity extends BaseActivity {
     RadioButton[] rb = new RadioButton[5];
     Drawable drawables[];
 
+    private AppUpdatePresenter appUpdatePresenter;
+    private boolean isUpdate = false;
+    private AlertChainDialog alertChainDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setImmersionStatus(this, titleBar);
         ButterKnife.bind(this);
+        appUpdatePresenter = new AppUpdatePresenter();
+        appUpdatePresenter.attachView(this);
+        checkAppVer();
         initView();
         EventBus.getDefault().register(this);
     }
@@ -92,6 +105,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initContentView() {
         setContentView(R.layout.activity_main);
+        alertChainDialog=new AlertChainDialog(this);
     }
 
 
@@ -427,6 +441,67 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
+        if (appUpdatePresenter != null) appUpdatePresenter.detachView();
         super.onDestroy();
     }
+
+    private void checkAppVer() {
+        if (appUpdatePresenter == null) {
+            appUpdatePresenter = new AppUpdatePresenter();
+            appUpdatePresenter.attachView(this);
+        }
+        appUpdatePresenter.appVersion(this, Util.versionName(this));
+    }
+
+    @Override
+    public void onAppUpdateSuccess(Object bean) {
+        if (bean instanceof AppUpdateResponseBean){
+            String version = ((AppUpdateResponseBean) bean).getVer();
+            if (TextUtils.isEmpty(version)){
+                isUpdate = false;
+                return;
+            }else {
+                String[] versionService = version.split(".");
+                String[] versionLocal = Util.versionName(this).split(".");
+                int service = Integer.parseInt(versionService[0]+versionService[1]+versionService[2]);
+                int local = Integer.parseInt(versionLocal[0]+versionLocal[1]+versionLocal[2]);
+                if(TextUtils.isEmpty(version) && service>local){
+                    isUpdate = true;
+                }else {
+                    isUpdate = false;
+                }
+            }
+        }
+            if(alertChainDialog!=null){
+                alertChainDialog.builder().setCancelable(false);
+                alertChainDialog.setTitle("提示消息")
+                        .setMsg(isUpdate ? "有新版可供更新" :"当前已是最新版本")
+                        .setPositiveButton("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(isUpdate){
+                                    update();
+                                }
+                            }
+
+
+                        }).setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }).show();
+            }
+    }
+
+
+    @Override
+    public void onAppUpdateFailed(String msg) {
+        ToastUtils.showCustomToast(msg,1);
+    }
+
+    private void update() {
+        //TODO 版本更新
+    }
+
 }

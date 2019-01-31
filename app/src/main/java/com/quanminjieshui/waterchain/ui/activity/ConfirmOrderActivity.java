@@ -172,13 +172,14 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     }
 
     @OnClick({R.id.left_ll, R.id.order_detail, R.id.btn_create_order, R.id.wash_delivery_rl, R.id.wash_demand_rl, R.id.fullPayment,
-            R.id.combinedPayment, R.id.pay_channel_wx_rl, R.id.pay_channel_zfb_rl})
+            R.id.combinedPayment, R.id.pay_channel_wx_rl, R.id.pay_channel_zfb_rl,R.id.tv_agreement})
     public void onClick(View v) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.left_ll:
 //                exitPay();
+                goBack(v);
                 break;
             case R.id.order_detail:
                 if (totalCount > 0) {
@@ -257,6 +258,14 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 wxPayImg.setVisibility(View.GONE);
                 zfbPayImg.setVisibility(View.VISIBLE);
                 payType = "1";
+                break;
+
+            case R.id.tv_agreement:
+                Intent i = new Intent(this, WebViewActivity.class);
+                i.setClass(this, WebViewActivity.class);
+                i.putExtra(WebViewActivity.WEBVIEW_ACT_TITLE,"协议");
+                i.putExtra(WebViewActivity.GET_URL_TYPE,"contract");
+                startActivity(i);
                 break;
             default:
                 break;
@@ -460,6 +469,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
 //            exitPay();
+            finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -538,5 +548,11 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     @Override
     public void onCreateOrderFailed(String msg) {
         ToastUtils.showCustomToast(msg, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

@@ -1,12 +1,10 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JsPromptResult;
@@ -19,14 +17,16 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.GetUrlResponseBean;
+import com.quanminjieshui.waterchain.contract.model.GetUrlModel;
+import com.quanminjieshui.waterchain.contract.presenter.GetUrlPresenter;
+import com.quanminjieshui.waterchain.contract.view.GetUrlViewImpl;
 import com.quanminjieshui.waterchain.ui.widget.WaterChainWebview;
 import com.quanminjieshui.waterchain.utils.AndroidBug5497Workaround;
 import com.quanminjieshui.waterchain.utils.InputMethodFix;
-import com.quanminjieshui.waterchain.utils.NetworkUtils;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
 
@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * Class Note:
  */
 
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity implements GetUrlViewImpl {
 
 
     @BindView(R.id.left_ll)
@@ -55,15 +55,29 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.content)
     LinearLayout rootLayout;
 
-    private static final String URL = "URL";
-    private Uri imageUri;
+    private String type;
+    private String title;
+//    private static final String URL = "URL";
+    public static final String GET_URL_TYPE = "get_url_type";
+    public static final String WEBVIEW_ACT_TITLE="webview_act_title";
+    private GetUrlPresenter getUrlPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setImmersionStatus(this,titleBar);
-        initData();
+        StatusBarUtil.setImmersionStatus(this, titleBar);
+        getIntentExtra();
+        getUrlPresenter = new GetUrlPresenter(new GetUrlModel());
+        getUrlPresenter.attachView(this);
+        getUrlPresenter.getUrl(this, type);
     }
+
+    private void getIntentExtra() {
+        Intent intent=getIntent();
+        if(intent!=null){
+        type = intent.getStringExtra(GET_URL_TYPE);
+        title=intent.getStringExtra(WEBVIEW_ACT_TITLE);
+    }}
 
     @Override
     public void initContentView() {
@@ -82,16 +96,14 @@ public class WebViewActivity extends BaseActivity {
             case R.id.left_ll:
                 goBack(v);
                 break;
-            default:break;
+            default:
+                break;
         }
 
     }
 
     protected void initData() {
 
-        loadUrl = getIntent().getStringExtra(URL);
-
-        String title = getIntent().getStringExtra("title");
         tvTitleCenter.setText(title);
 
         webView.setWebViewClient(new WebViewClient() {
@@ -128,7 +140,20 @@ public class WebViewActivity extends BaseActivity {
         AndroidBug5497Workaround.assistActivity(this);//解决webview中的输入框获得焦点后输入法盖住了输入框
     }
 
-    private class WebChromeClientProgress extends WebChromeClient{
+    @Override
+    public void onGetUrlSucc(GetUrlResponseBean getUrlResponseBean) {
+        if (getUrlResponseBean != null) {
+            loadUrl = getUrlResponseBean.getUrl();
+            initData();
+        }
+    }
+
+    @Override
+    public void onGetUrlFail(String msg) {
+        ToastUtils.showCustomToast(msg, 0);
+    }
+
+    private class WebChromeClientProgress extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int progress) {
             if (mLoadingProgress != null) {
@@ -189,27 +214,27 @@ public class WebViewActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    public static void launch(final Context context, final String url) {
-        launch(context, url, "");
-    }
-
-    public static void launch(final Context context, final String url, String title) {
-        if (!NetworkUtils.isConnected()) {
-            ToastUtils.showCustomToastMsg("网络无效",150);
-            return;
-        }
-        if (TextUtils.isEmpty(url)) {
-            Toast.makeText(context, "没有h5地址", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        goToWebViewActivity(context, url, title);
-    }
-
-    private static void goToWebViewActivity(Context context, String url, String title) {
-        final Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra(URL, url);
-        intent.putExtra("title", title);
-        context.startActivity(intent);
-    }
+//    public static void launch(final Context context, final String url) {
+//        launch(context, url, "");
+//    }
+//
+//    public static void launch(final Context context, final String url, String title) {
+//        if (!NetworkUtils.isConnected()) {
+//            ToastUtils.showCustomToastMsg("网络无效", 150);
+//            return;
+//        }
+//        if (TextUtils.isEmpty(url)) {
+//            Toast.makeText(context, "没有h5地址", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        goToWebViewActivity(context, url, title);
+//    }
+//
+//    private static void goToWebViewActivity(Context context, String url, String title) {
+//        final Intent intent = new Intent(context, WebViewActivity.class);
+//        intent.putExtra(URL, url);
+//        intent.putExtra("title", title);
+//        context.startActivity(intent);
+//    }
 
 }

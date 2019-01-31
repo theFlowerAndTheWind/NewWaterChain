@@ -237,4 +237,14 @@ public class Util {
         }
         return versionName;
     }
+
+    public static String versionName(Context context) { PackageManager manager = context.getPackageManager();
+        String name = null;
+        try { PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            name = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }

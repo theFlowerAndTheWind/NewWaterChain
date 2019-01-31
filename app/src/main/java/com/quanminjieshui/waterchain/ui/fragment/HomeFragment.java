@@ -4,6 +4,7 @@ package com.quanminjieshui.waterchain.ui.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import com.quanminjieshui.waterchain.ui.adapter.FactoryListIndexAdapter;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.ui.widget.chart.ChartUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 import com.quanminjieshui.waterchain.utils.image.GlidImageManager;
 
 import java.util.ArrayList;
@@ -86,7 +88,14 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
         factoryListPresenter.attachView(this);
         tradeLinePresenter = new TradeLinePresenter();
         tradeLinePresenter.attachView(this);
+        showLoadingDialog();
         requestNetwork();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+            }
+        },1000);
     }
 
     @Override
@@ -257,13 +266,12 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
 
     @Override
     public void onTradeLineFailed(String msg) {
-
+        ToastUtils.showCustomToast(msg,0);
     }
 
 
     @Override
     public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {
-        dismissLoadingDialog();
         imgList.clear();
         nameList.clear();
         imgUrlList.clear();
@@ -278,12 +286,11 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
 
     @Override
     public void onBannerListFailed(String msg) {
-        dismissLoadingDialog();
+        ToastUtils.showCustomToast(msg,0);
     }
 
     @Override
     public void onFactoryListSuccess(FactoryListResponse factoryListResponse) {
-        dismissLoadingDialog();
         if (factoryListResponse != null) {
             List<Factory> factoryListEntities = factoryListResponse.getLists();
             if (isRefresh) listEntities.clear();
@@ -293,13 +300,11 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
             factoryList.refreshComplete();
         }
         isRefresh = false;//每次请求后必须执行
-//        factoryList.loadMoreComplete();
     }
 
     @Override
     public void onFactoryListFailed(String msg) {
-        dismissLoadingDialog();
         isRefresh = false;//每次请求后必须执行
-        LogUtils.d("factoryListEntities；" + msg);
+        ToastUtils.showCustomToast(msg,0);
     }
 }

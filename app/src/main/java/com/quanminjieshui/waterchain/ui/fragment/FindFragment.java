@@ -2,6 +2,7 @@ package com.quanminjieshui.waterchain.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -85,7 +86,14 @@ public class FindFragment extends BaseFragment implements
         bannerListPresenter.attachView(this);
         adImgPresenter = new AdImgPresenter(new AdImgModel());
         adImgPresenter.attachView(this);
+        showLoadingDialog();
         requestNetwork();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+            }
+        },800);
     }
 
     public void requestNetwork() {
@@ -98,7 +106,6 @@ public class FindFragment extends BaseFragment implements
         if (adImgPresenter != null) {
             adImgPresenter.getAdImg(getBaseActivity(), "ad_goods");
         }
-        //showLoadingDialog();
     }
 
     @Override
