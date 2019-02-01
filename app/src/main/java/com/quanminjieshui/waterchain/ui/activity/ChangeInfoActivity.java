@@ -121,12 +121,6 @@ public class ChangeInfoActivity extends BaseActivity {
         }
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        initData(intent);
-//    }
-
     private void initData(Intent intent) {
         if (intent != null) {
             jumpAction = getIntent().getIntExtra("jumpAction", -1);
@@ -137,6 +131,7 @@ public class ChangeInfoActivity extends BaseActivity {
                     address_et.setVisibility(View.GONE);
                     phone_et.setVisibility(View.GONE);
                     name_et.setText(nameStr);
+                    name_et.setSelection(nameStr.length());
                     tv_title_center.setText("联系人姓名");
                     break;
                 case R.id.phone_rl3:
@@ -145,6 +140,7 @@ public class ChangeInfoActivity extends BaseActivity {
                     name_et.setVisibility(View.GONE);
                     address_et.setVisibility(View.GONE);
                     phone_et.setText(phoneStr);
+                    phone_et.setSelection(phoneStr.length());
                     tv_title_center.setText("手机号码");
                     break;
                 case R.id.address_rl5:
@@ -153,6 +149,7 @@ public class ChangeInfoActivity extends BaseActivity {
                     phone_et.setVisibility(View.GONE);
                     name_et.setVisibility(View.GONE);
                     address_et.setText(addressStr);
+                    address_et.setSelection(addressStr.length());
                     tv_title_center.setText("详细地址");
                     break;
                 default:

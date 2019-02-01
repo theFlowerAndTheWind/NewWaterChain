@@ -967,7 +967,17 @@ public class UrlConfig {
     public static final String CHANGE_AVATAR = "api/home/user/changeAvatar";
 
     /**
-     * 查看用户是否可以支付
+     * 查看用户是否可以支付--兑换商城
      */
     public static final String CHECK_USER_PAY = "api/home/goods/checkUserPay";
+
+    /**
+     * 创建订单--兑换商城
+     */
+    public static final String CREATE_ORDER_EXCHANGE = "api/home/goods/payOrder";
+
+    /**
+     * 获取用户地址--兑换商城
+     */
+    public static final String USER_ADDRESS = "api/home/goods/userAddress";
 }

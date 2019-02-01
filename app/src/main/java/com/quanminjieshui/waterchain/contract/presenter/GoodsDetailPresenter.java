@@ -6,8 +6,6 @@ import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.GoodsDetailModel;
 import com.quanminjieshui.waterchain.contract.view.GoodsDetailViewImpl;
 
-import java.util.List;
-
 /**
  * Created by songxiaotao on 2019/1/31.
  * Class Note:
@@ -28,7 +26,7 @@ public class GoodsDetailPresenter extends BasePresenter<GoodsDetailViewImpl> {
         }
         goodsDetailModel.getGoodsDetail(activity, id, new GoodsDetailModel.GoodsDetailCallBack() {
             @Override
-            public void success(List<GoodsDetailResponseBean> beans) {
+            public void success(GoodsDetailResponseBean beans) {
                 if (mView!=null){
                     mView.onGoodsDetailSuccess(beans);
                 }

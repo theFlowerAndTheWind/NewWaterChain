@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_title_bar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:id="@+id/goods_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/commit_btn_height">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/goods_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="466px"
+                    android:scaleType="centerCrop"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_default_image"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/layout_horizontal_padding"
+                    android:paddingRight="@dimen/layout_horizontal_padding"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/goods_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="40px"
+                        android:text="家用节水净水器"
+                        android:textColor="#ff333333"
+                        android:textSize="16sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingTop="20px"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/goods_demand_number"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="所需 JSL：190.00"
+                            android:textColor="#ff888888"
+                            android:textSize="11sp"/>
+                        <TextView
+                            android:id="@+id/goods_price"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="市场价 ¥ 299.00"
+                            android:textColor="#ff888888"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/goods_stock_number"
+                        android:paddingBottom="40px"
+                        android:paddingTop="10px"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="库存数量： 10 / 99"
+                        android:textColor="#ff888888"
+                        android:textSize="11sp"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10px"
+                    android:background="@color/divider_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/layout_horizontal_padding"
+                    android:paddingRight="@dimen/layout_horizontal_padding"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/goods_introduce"
+                        android:paddingTop="40px"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="商品介绍"
+                        android:textColor="#ff333333"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/goods_describe"
+                        android:paddingVertical="30px"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="临沂"
+                        android:textColor="#ff888888"
+                        android:textSize="11sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/goods_exchange"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="立即兑换"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:background="@drawable/btn_blue_bg_selector_noconer"/>
+        <include
+            layout="@layout/module_include_no_data"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

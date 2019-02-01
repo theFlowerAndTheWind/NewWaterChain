@@ -1,7 +1,7 @@
 package com.quanminjieshui.waterchain.contract.model;
 
 import com.quanminjieshui.waterchain.base.BaseActivity;
-import com.quanminjieshui.waterchain.beans.GoodsDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.request.CreateOrderExchangeReqBean;
 import com.quanminjieshui.waterchain.http.BaseObserver;
 import com.quanminjieshui.waterchain.http.RetrofitFactory;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
@@ -10,25 +10,21 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
-import java.util.HashMap;
-
 /**
- * Created by songxiaotao on 2019/1/31.
+ * Created by songxiaotao on 2019/2/2.
  * Class Note:
  */
 
-public class GoodsDetailModel {
-    public void getGoodsDetail(BaseActivity activity,int id,final GoodsDetailCallBack callBack){
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("id",id);
+public class CreateOrderExchangeModel {
+    public void createOrderExchange(BaseActivity activity, CreateOrderExchangeReqBean params, final CreateOrderExchangeCallBack callBack){
         RetrofitFactory.getInstance().createService()
-                .goodsDetail(RequestUtil.getRequestHashBody(params,false))
-                .compose(activity.<BaseEntity<GoodsDetailResponseBean>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<GoodsDetailResponseBean>>io())
-                .subscribe(new BaseObserver<GoodsDetailResponseBean>(activity) {
+                .createOrderExchange(RequestUtil.getRequestBeanBody(params,false))
+                .compose(activity.<BaseEntity>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity>io())
+                .subscribe(new BaseObserver(activity) {
                     @Override
-                    protected void onSuccess(GoodsDetailResponseBean beans) throws Exception {
-                        callBack.success(beans);
+                    protected void onSuccess(Object o) throws Exception {
+                        callBack.success(o);
                     }
 
                     @Override
@@ -53,8 +49,8 @@ public class GoodsDetailModel {
                 });
     }
 
-    public interface GoodsDetailCallBack{
-        void success(GoodsDetailResponseBean beans);
+    public interface CreateOrderExchangeCallBack{
+        void success(Object o);
         void failed(String msg);
     }
 }

@@ -11,6 +11,7 @@
 
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -107,7 +108,7 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         adapterActivity = new GoodsListsAdapter(this, goodsListActivity, new GoodsListsAdapter.GoodsListItemListener() {
             @Override
             public void onItemClickListener(int id) {
-
+                jumpActivity(id);
             }
         });
         goodsListsXRActivity.setArrowImageView(R.drawable.iconfont_downgrey);
@@ -133,7 +134,7 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         adapterCommodity = new GoodsListsAdapter(this, goodsListCommodity, new GoodsListsAdapter.GoodsListItemListener() {
             @Override
             public void onItemClickListener(int id) {
-
+                jumpActivity(id);
             }
         });
         goodsListsXRCommodity.setArrowImageView(R.drawable.iconfont_downgrey);
@@ -164,6 +165,14 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         setContentView(R.layout.activity_goods_lists);
     }
 
+    public void jumpActivity(int id){
+        Bundle bundle = new Bundle();
+        bundle.putInt("id",id);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        intent.setClass(GoodsListsActivity.this, GoodsDetailActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onReNetRefreshData(int viewId) {
         doBannerRequest();
@@ -193,7 +202,7 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     }
 
     /**
-     *
+     *兑换商品请求
      */
     public void doGoodsListRequest(int cateId){
         if (goodsListsPresenter!=null){
@@ -202,6 +211,9 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         }
     }
 
+    /**
+     * 兑换轮播请求
+     */
     public void doBannerRequest(){
         if (bannerListPresenter != null) {
             bannerListPresenter.getBannerList(this, 3, 1);//TODO position=2时无数据，1临时使用

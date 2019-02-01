@@ -7,14 +7,23 @@ package com.quanminjieshui.waterchain.beans;
 
 public class GoodsDetailResponseBean {
     int id; 	//商品id 	字符串(string) 	number|4
-    String cate_id; 	//商品类型 	字符串(string) 		1（实物商品）|2（活动）
+    int cate_id; 	//商品类型 	字符串(string) 		1（实物商品）|2（活动）
     String name; 	//商品名称 	字符串(string)
     String img; 	//商品图片 	字符串(string)
     String jsl; 	//水方价格 	字符串(string)
     String price; 	//市场价 	字符串(string)
     String description; 	//描述 	字符串(string)
-    String stock; 	//设定库存 	字符串(string)
-    String now_stock; 	//现有库存 	字符串(string)
+    int stock; 	//设定库存 	字符串(string)
+    int now_stock; 	//现有库存 	字符串(string)
+    String intro;
+    int status;
+    Long createtime;
+    Long updatetime;
+    int is_sort;
+    String status_view;
+    String cate;
+    int count;
+
 
     public int getId() {
         return id;
@@ -24,11 +33,11 @@ public class GoodsDetailResponseBean {
         this.id = id;
     }
 
-    public String getCate_id() {
+    public int getCate_id() {
         return cate_id;
     }
 
-    public void setCate_id(String cate_id) {
+    public void setCate_id(int cate_id) {
         this.cate_id = cate_id;
     }
 
@@ -72,19 +81,83 @@ public class GoodsDetailResponseBean {
         this.description = description;
     }
 
-    public String getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public String getNow_stock() {
+    public int getNow_stock() {
         return now_stock;
     }
 
-    public void setNow_stock(String now_stock) {
+    public void setNow_stock(int now_stock) {
         this.now_stock = now_stock;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Long getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Long createtime) {
+        this.createtime = createtime;
+    }
+
+    public Long getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Long updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public int getIs_sort() {
+        return is_sort;
+    }
+
+    public void setIs_sort(int is_sort) {
+        this.is_sort = is_sort;
+    }
+
+    public String getStatus_view() {
+        return status_view;
+    }
+
+    public void setStatus_view(String status_view) {
+        this.status_view = status_view;
+    }
+
+    public String getCate() {
+        return cate;
+    }
+
+    public void setCate(String cate) {
+        this.cate = cate;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

@@ -6,13 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
 import com.quanminjieshui.waterchain.beans.AppUpdateResponseBean;
 import com.quanminjieshui.waterchain.contract.presenter.AppUpdatePresenter;
 import com.quanminjieshui.waterchain.contract.view.AppUpdateViewImpl;
-import com.quanminjieshui.waterchain.http.config.UrlConfig;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
 import com.quanminjieshui.waterchain.utils.ToastUtils;
@@ -109,26 +107,24 @@ public class AboutListActivity extends BaseActivity implements AppUpdateViewImpl
             }
         }
         if (alertChainDialog != null) {
-            if (alertChainDialog != null) {
-                alertChainDialog.builder().setCancelable(false);
-                alertChainDialog.setTitle("提示消息")
-                        .setMsg(isUpdate ? "有新版可供更新" : "当前已是最新版本")
-                        .setPositiveButton("确定", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (isUpdate) {
-                                    update();
-                                }
+            alertChainDialog.builder().setCancelable(false);
+            alertChainDialog.setTitle("提示消息")
+                    .setMsg(isUpdate ? "有新版可供更新" : "当前已是最新版本")
+                    .setPositiveButton("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (isUpdate) {
+                                update();
                             }
+                        }
 
 
-                        }).setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                    }).setNegativeButton("取消", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                    }
-                }).show();
-            }
+                }
+            }).show();
         }
     }
 

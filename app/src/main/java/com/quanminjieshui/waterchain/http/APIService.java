@@ -27,6 +27,7 @@ import com.quanminjieshui.waterchain.beans.TradeDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeListsResponseBean;
 import com.quanminjieshui.waterchain.beans.UploadFileResponseBean;
+import com.quanminjieshui.waterchain.beans.UserAddressResponseBean;
 import com.quanminjieshui.waterchain.beans.UserDetailResponseBean;
 import com.quanminjieshui.waterchain.http.bean.BaseEntity;
 import com.quanminjieshui.waterchain.http.config.UrlConfig;
@@ -196,7 +197,7 @@ public interface APIService {
      * 商品详情
      */
     @POST(UrlConfig.GOODS_DETAIL)
-    Observable<BaseEntity<List<GoodsDetailResponseBean>>> goodsDetail(@Body RequestBody body);
+    Observable<BaseEntity<GoodsDetailResponseBean>> goodsDetail(@Body RequestBody body);
 
     /**
      * 申请转账
@@ -221,5 +222,17 @@ public interface APIService {
      */
     @POST(UrlConfig.CHECK_USER_PAY)
     Observable<BaseEntity<List<CheckUserPayResponseBean>>> checkUserPay(@Body RequestBody requestBody);
+
+    /**
+     * 创建订单--兑换商城
+     */
+    @POST(UrlConfig.CREATE_ORDER_EXCHANGE)
+    Observable<BaseEntity> createOrderExchange(@Body RequestBody requestBody);
+
+    /**
+     * 获取用户地址--兑换商城
+     */
+    @POST(UrlConfig.USER_ADDRESS)
+    Observable<BaseEntity<UserAddressResponseBean>> getUserAddress(@Body RequestBody requestBody);
 }
 
