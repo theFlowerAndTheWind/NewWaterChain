@@ -11,8 +11,6 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
-import java.util.List;
-
 /**
  * Created by songxiaotao on 2019/2/1.
  * Class Note:
@@ -24,11 +22,11 @@ public class CheckUserPayModel {
 
         RetrofitFactory.getInstance().createService()
                 .checkUserPay(RequestUtil.getRequestBeanBody(bean,false))
-                .compose(activity.<BaseEntity<List<CheckUserPayResponseBean>>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<List<CheckUserPayResponseBean>>>io())
-                .subscribe(new BaseObserver<List<CheckUserPayResponseBean>>(activity) {
+                .compose(activity.<BaseEntity<CheckUserPayResponseBean>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<CheckUserPayResponseBean>>io())
+                .subscribe(new BaseObserver<CheckUserPayResponseBean>(activity) {
                     @Override
-                    protected void onSuccess(List<CheckUserPayResponseBean> beans) throws Exception {
+                    protected void onSuccess(CheckUserPayResponseBean beans) throws Exception {
                         callBack.success(beans);
                     }
 
@@ -55,7 +53,7 @@ public class CheckUserPayModel {
     }
 
     public interface CheckUserPayCallBack{
-        void success(List<CheckUserPayResponseBean> beans);
+        void success(CheckUserPayResponseBean beans);
         void failed(String msg);
     }
 }

@@ -13,8 +13,12 @@ import android.widget.TextView;
 
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.base.BaseActivity;
+import com.quanminjieshui.waterchain.beans.CheckUserPayResponseBean;
 import com.quanminjieshui.waterchain.beans.GoodsDetailResponseBean;
+import com.quanminjieshui.waterchain.beans.request.CheckUserPayReqBean;
+import com.quanminjieshui.waterchain.contract.presenter.CheckUserPayPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.GoodsDetailPresenter;
+import com.quanminjieshui.waterchain.contract.view.CheckUserPayViewImpl;
 import com.quanminjieshui.waterchain.contract.view.GoodsDetailViewImpl;
 import com.quanminjieshui.waterchain.ui.view.AlertChainDialog;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
@@ -30,7 +34,7 @@ import butterknife.OnClick;
  * Class Note:商品详情
  */
 
-public class GoodsDetailActivity extends BaseActivity implements GoodsDetailViewImpl{
+public class GoodsDetailActivity extends BaseActivity implements GoodsDetailViewImpl,CheckUserPayViewImpl{
 
     @BindView(R.id.left_ll)
     LinearLayout leftLl;
@@ -61,13 +65,17 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     @BindView(R.id.goods_exchange)
     Button goodsExchange;
     private GoodsDetailPresenter detailPresenter;
+    private CheckUserPayPresenter checkUserPayPresenter;
     private AlertChainDialog alertChainDialog;
+    private int cateId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setImmersionStatus(this, titleBar);
         detailPresenter = new GoodsDetailPresenter();
         detailPresenter.attachView(this);
+        checkUserPayPresenter = new CheckUserPayPresenter();
+        checkUserPayPresenter.attachView(this);
         initView();
     }
 
@@ -87,27 +95,8 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
                 finish();
                 break;
             case R.id.goods_exchange:
-                String activityPrice = "198.00JSL";
-                String accountBalance = "298.00JSL";
-                String exchangeAfterBalance = "100.00JSL";
-                String message = "活动价格："+activityPrice+"\n账户余额："+accountBalance+"\n兑换后余额："+exchangeAfterBalance;
-                if (alertChainDialog!=null && !Util.isFastDoubleClick()){
-                    alertChainDialog.builder().setCancelable(false);
-                    alertChainDialog.setTitle("确认兑换该活动")
-                            .setMsg(message)
-                            .setPositiveButton("确定", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                }
-
-
-                            }).setNegativeButton("取消", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    }).show();
+                if (!Util.isFastDoubleClick()){
+                    doCheckUserPayRequest();
                 }
                 break;
             default:
@@ -136,6 +125,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
             tvGoodsPrice.setText("市场价 ¥ "+beans.getPrice());
             tvGoodsStockNumber.setText("库存数量："+beans.getNow_stock()+" / "+beans.getStock());
             tvGoodsIntroduce.setText("商品介绍");
+            cateId = beans.getCate_id();
             CharSequence charSequence;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 charSequence = Html.fromHtml(beans.getDescription(),Html.FROM_HTML_MODE_LEGACY);
@@ -160,17 +150,64 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        doRequest();
+    public void onCheckUserPaySuccess(CheckUserPayResponseBean beans) {
+        if (beans.getCan_order().equals("1")){
+            String activityPrice = beans.getPay_jsl()+"水方";
+            String accountBalance = beans.getUser_jsl()+"水方";
+            String exchangeAfterBalance = (Double.valueOf(beans.getUser_jsl())-Double.valueOf(beans.getPay_jsl()))+"水方";
+            String message = "活动价格："+activityPrice+"\n账户余额："+accountBalance+"\n兑换后余额："+exchangeAfterBalance;
+            if (alertChainDialog!=null){
+                alertChainDialog.builder().setCancelable(false);
+                alertChainDialog.setTitle("确认兑换该活动")
+                        .setMsg(message)
+                        .setPositiveButton("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                // TODO: 2019/2/2 兑换
+                            }
+
+
+                        }).setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                }).show();
+            }
+        }else{
+            ToastUtils.showCustomToast("不足支付，不可兑换并创建订单");
+        }
+
+        dismissLoadingDialog();
     }
 
-    private void doRequest() {
+    @Override
+    public void onCheckUserPayFailed(String msg) {
+        dismissLoadingDialog();
+        ToastUtils.showCustomToast(msg);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        doGoodsDetailRequest();
+    }
+
+    private void doGoodsDetailRequest() {
         if (getIntent()!=null){
             detailPresenter.getGoodsDetail(this,getIntent().getIntExtra("id",-1));
             showLoadingDialog();
         }
+    }
 
+    private void doCheckUserPayRequest(){
+        if (getIntent()!=null){
+            CheckUserPayReqBean bean = new CheckUserPayReqBean();
+            bean.setId(getIntent().getIntExtra("id",-1));
+            bean.setCount(cateId);//活动类商品传1 活动2
+            checkUserPayPresenter.checkUserPay(this,bean);
+            showLoadingDialog();
+        }
     }
 
     @Override
@@ -178,6 +215,9 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
         super.onDestroy();
         if (detailPresenter!=null){
             detailPresenter.detachView();
+        }
+        if (checkUserPayPresenter!=null){
+            checkUserPayPresenter.detachView();
         }
     }
 }

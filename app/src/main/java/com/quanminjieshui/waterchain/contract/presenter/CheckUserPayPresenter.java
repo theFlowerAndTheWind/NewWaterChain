@@ -7,8 +7,6 @@ import com.quanminjieshui.waterchain.contract.BasePresenter;
 import com.quanminjieshui.waterchain.contract.model.CheckUserPayModel;
 import com.quanminjieshui.waterchain.contract.view.CheckUserPayViewImpl;
 
-import java.util.List;
-
 /**
  * Created by songxiaotao on 2019/2/1.
  * Class Note:
@@ -30,7 +28,7 @@ public class CheckUserPayPresenter extends BasePresenter<CheckUserPayViewImpl> {
         }
         checkUserPayModel.checkUserPay(activity, bean, new CheckUserPayModel.CheckUserPayCallBack() {
             @Override
-            public void success(List<CheckUserPayResponseBean> beans) {
+            public void success(CheckUserPayResponseBean beans) {
                 if (mView!=null){
                     mView.onCheckUserPaySuccess(beans);
                 }

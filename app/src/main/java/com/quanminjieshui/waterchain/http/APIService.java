@@ -221,7 +221,7 @@ public interface APIService {
      * 检查用户是否可以支付
      */
     @POST(UrlConfig.CHECK_USER_PAY)
-    Observable<BaseEntity<List<CheckUserPayResponseBean>>> checkUserPay(@Body RequestBody requestBody);
+    Observable<BaseEntity<CheckUserPayResponseBean>> checkUserPay(@Body RequestBody requestBody);
 
     /**
      * 创建订单--兑换商城
