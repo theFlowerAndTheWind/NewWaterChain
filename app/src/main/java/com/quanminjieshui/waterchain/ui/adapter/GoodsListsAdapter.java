@@ -70,9 +70,9 @@ public class GoodsListsAdapter extends RecyclerView.Adapter<GoodsListsAdapter.Go
         });
         GlidImageManager.getInstance().loadImageView(context, list.get(position).getImg(), holder.img, R.mipmap.default_img);
         holder.tvTitle.setText(list.get(position).getName());
-        holder.tvContent.setText(list.get(position).getJsl()+" JCL");
+        holder.tvContent.setText(list.get(position).getJsl()+" 水方");
         holder.tvContent.setTextColor(context.getResources().getColor(R.color.primary_red));
-        holder.tvPublishtime.setText("市场价：￥"+list.get(position).getPrice());
+        holder.tvPublishtime.setText("市场价：¥ "+list.get(position).getPrice());
         if (position == list.size()-1){
             holder.divider.setVisibility(View.INVISIBLE);
         }else {

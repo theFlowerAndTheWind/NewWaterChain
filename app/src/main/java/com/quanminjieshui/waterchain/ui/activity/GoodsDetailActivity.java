@@ -132,7 +132,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
             gooodsContent.setVisibility(View.VISIBLE);
             goodsExchange.setVisibility(View.VISIBLE);
             tvGoodsTitle.setText(beans.getName());
-            tvGoodsDemandNumber.setText("所需 JSL："+beans.getJsl());
+            tvGoodsDemandNumber.setText("所需水方："+beans.getJsl());
             tvGoodsPrice.setText("市场价 ¥ "+beans.getPrice());
             tvGoodsStockNumber.setText("库存数量："+beans.getNow_stock()+" / "+beans.getStock());
             tvGoodsIntroduce.setText("商品介绍");
