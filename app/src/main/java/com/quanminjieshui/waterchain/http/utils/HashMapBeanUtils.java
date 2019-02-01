@@ -148,19 +148,24 @@ public class HashMapBeanUtils {
     }
 
 
+    /**
+     * bean实体类转换map
+     * @param ojt 实例bean
+     * @return map
+     */
     public static HashMap<String, Object> hashJavaBeanToMap(Object ojt) {
+        if (ojt == null){
+            return null;
+        }
         Class<?> cls = ojt.getClass();
-        Field[] field = cls.getDeclaredFields();
+        Field[] declaredFields = cls.getDeclaredFields();
 
         HashMap<String, Object> mapbean = new HashMap<String, Object>();
-        for(int i=0;i<field.length;i++){
-            Field f = field[i];
-            f.setAccessible(true);
+        for(Field field : declaredFields){
+            field.setAccessible(true);
             try {
-                mapbean.put(f.getName(), f.get(cls));
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+                mapbean.put(field.getName(), field.get(ojt));
+            } catch (IllegalArgumentException|IllegalAccessException e) {
                 e.printStackTrace();
             }
         }

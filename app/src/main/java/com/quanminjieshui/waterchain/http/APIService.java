@@ -4,6 +4,7 @@ import com.quanminjieshui.waterchain.beans.AccountDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.AdImgResponseBean;
 import com.quanminjieshui.waterchain.beans.AuthDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
+import com.quanminjieshui.waterchain.beans.CheckUserPayResponseBean;
 import com.quanminjieshui.waterchain.beans.CreateOrderResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryDetailResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponse;
@@ -214,5 +215,11 @@ public interface APIService {
      */
     @POST(UrlConfig.CHANGE_AVATAR)
     Observable<BaseEntity> changeAvatar(@Body RequestBody requestBody);
+
+    /**
+     * 检查用户是否可以支付
+     */
+    @POST(UrlConfig.CHECK_USER_PAY)
+    Observable<BaseEntity<List<CheckUserPayResponseBean>>> checkUserPay(@Body RequestBody requestBody);
 }
 

@@ -965,4 +965,9 @@ public class UrlConfig {
      * 改变头像
      */
     public static final String CHANGE_AVATAR = "api/home/user/changeAvatar";
+
+    /**
+     * 查看用户是否可以支付
+     */
+    public static final String CHECK_USER_PAY = "api/home/goods/checkUserPay";
 }
