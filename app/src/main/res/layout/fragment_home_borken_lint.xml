@@ -2,45 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_transaction_center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="交易中心"
         android:padding="@dimen/layout_horizontal_padding"
-        android:textSize="16sp"/>
+        android:text="交易中心"
+        android:textSize="16sp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/divider_gray"/>
+        android:background="@color/divider_gray" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingHorizontal="@dimen/layout_horizontal_padding"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/layout_horizontal_padding">
 
         <TextView
+            android:id="@+id/tv_cur_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1 水方=3.245T"
             android:gravity="left|center"
             android:paddingTop="@dimen/layout_horizontal_padding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"/>
+            android:text="1 水方=3.245T"
+            android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_gain"
-            android:layout_weight="1"
-            android:gravity="right|center"
-            android:textColor="@color/primary_red"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="涨幅+1.26%"
-            android:textSize="12sp"/>
+            android:gravity="right|center"
+            android:text="涨幅  "
+            android:textColor="@color/text_black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_price_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right|center"
+            android:text="+1.26%"
+            android:textColor="@color/primary_red"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -48,11 +58,11 @@
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="386px"
         android:layout_marginLeft="28px"
         android:layout_marginTop="40px"
         android:layout_marginRight="28px"
-        android:layout_marginBottom="40px" />
+        android:layout_marginBottom="40px"
+        android:minHeight="386px" />
 </LinearLayout>
 
 

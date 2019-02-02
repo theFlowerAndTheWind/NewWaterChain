@@ -19,13 +19,17 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.quanminjieshui.waterchain.R;
 import com.quanminjieshui.waterchain.beans.BannerListResponseBean;
 import com.quanminjieshui.waterchain.beans.Factory;
+import com.quanminjieshui.waterchain.beans.TradeCenterResponseBean;
 import com.quanminjieshui.waterchain.beans.TradeLineResponseBean;
 import com.quanminjieshui.waterchain.beans.FactoryListResponse;
+import com.quanminjieshui.waterchain.contract.model.TradeCenterModel;
 import com.quanminjieshui.waterchain.contract.presenter.BannerListPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.FactoryListPresenter;
+import com.quanminjieshui.waterchain.contract.presenter.TradeCenterPresenter;
 import com.quanminjieshui.waterchain.contract.presenter.TradeLinePresenter;
 import com.quanminjieshui.waterchain.contract.view.BannerListViewImpl;
 import com.quanminjieshui.waterchain.contract.view.FactoryListViewImpl;
+import com.quanminjieshui.waterchain.contract.view.TradeCenterViewImpl;
 import com.quanminjieshui.waterchain.contract.view.TradeLineViewImpl;
 import com.quanminjieshui.waterchain.ui.activity.EnterpriseActivity;
 import com.quanminjieshui.waterchain.ui.activity.MainActivity;
@@ -50,7 +54,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements BannerListViewImpl, FactoryListViewImpl, TradeLineViewImpl {
+public class HomeFragment extends BaseFragment implements BannerListViewImpl, FactoryListViewImpl, TradeLineViewImpl,TradeCenterViewImpl {
 
 
     @BindView(R.id.banner_guide_content)
@@ -63,6 +67,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
     TextView washDamend;
     @BindView(R.id.tv_transaction_center)
     TextView transactionCenter;
+    @BindView(R.id.tv_cur_price)
+    TextView tvCurPrice;
+    @BindView(R.id.tv_price_limit)
+    TextView tvPriceLimit;
 
     private AlertChainDialog alertChainDialog;
     private Unbinder unbinder;
@@ -70,6 +78,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
     private BannerListPresenter bannerListPresenter;
     private FactoryListPresenter factoryListPresenter;
     private TradeLinePresenter tradeLinePresenter;
+    private TradeCenterPresenter tradeCenterPresenter;//获取跌涨幅，当前市价
     private FactoryListIndexAdapter factoryListAdapter;
     ArrayList<String> imgList = new ArrayList<>();
     ArrayList<String> nameList = new ArrayList<>();
@@ -230,6 +239,11 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
         if (tradeLinePresenter != null) {
             tradeLinePresenter.getTradeLine(getBaseActivity(), "today");
         }
+        if(tradeCenterPresenter==null){
+            tradeCenterPresenter=new TradeCenterPresenter(new TradeCenterModel());
+            tradeCenterPresenter.attachView(this);
+        }
+        tradeCenterPresenter.getTradeCenter(getBaseActivity());
         //showLoadingDialog();
     }
 
@@ -251,6 +265,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
         if (tradeLinePresenter != null) {
             tradeLinePresenter.detachView();
         }
+        if(tradeCenterPresenter!=null)tradeCenterPresenter.detachView();
     }
 
     @Override
@@ -306,5 +321,48 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
     public void onFactoryListFailed(String msg) {
         isRefresh = false;//每次请求后必须执行
         ToastUtils.showCustomToast(msg,0);
+    }
+
+
+
+
+
+    @Override
+    public void onTradeCenterSuccess(TradeCenterResponseBean tradeCenterResponseBean) {
+        if(tradeCenterResponseBean!=null){
+            tvCurPrice.setText(new StringBuilder("1 水方 = ").append(tradeCenterResponseBean.getCur_price()).append("节水指标").toString());
+            String price_limit_color = tradeCenterResponseBean.getPrice_limit_color();
+            if (price_limit_color.equals("red")) {
+                tvPriceLimit.setTextColor(getResources().getColor(R.color.primary_red));
+                tvPriceLimit.setText(new StringBuilder("+").append(tradeCenterResponseBean.getPrice_limit()).toString());
+            } else if (price_limit_color.equals("green")) {
+                tvPriceLimit.setTextColor(getResources().getColor(R.color.text_green));
+                tvPriceLimit.setText(new StringBuilder("-").append(tradeCenterResponseBean.getPrice_limit()).toString());
+            } else {
+                tvPriceLimit.setTextColor(getResources().getColor(R.color.text_black));
+                tvPriceLimit.setText(tradeCenterResponseBean.getPrice_limit());
+            }
+        }
+    }
+
+    @Override
+    public void onTradeCenterFailed(String msg) {
+
+    }
+
+    @Override
+    public void onBuySuccess(Object o) {
+    }
+
+    @Override
+    public void onBuyFailed(String msg) {
+    }
+
+    @Override
+    public void onSellSuccess(Object o) {
+    }
+
+    @Override
+    public void onSellFailed(String msg) {
     }
 }

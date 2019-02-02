@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_trade_status"
             android:layout_marginTop="27px"
-            android:text="水方 = "
+            android:text="1 水方 = "
             android:textColor="@color/text_gray"
             android:textSize="11sp" />
 
