@@ -143,18 +143,18 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
         rb[3] = rb4;
         rb[4] = rb5;
 
-        for (int i = 0; i < rb.length; i++) {
-            //挨着给每个RadioButton加入drawable限制边距以控制显示大小
-            drawables = rb[i].getCompoundDrawables();
-            //获取drawables，2/5表示图片要缩小的比例
-            Rect r = new Rect(0, 0, drawables[1].getMinimumWidth() * 2 / 3, drawables[1].getMinimumHeight() * 2 / 3);
-            //定义一个Rect边界
-            drawables[1].setBounds(r);
-            //给每一个RadioButton设置图片大小
-            rb[i].setCompoundDrawables(null, drawables[1], null, null);
-//            rb[i].setTextSize(Util.px2sp(this,24,1334));
-            AutoUtils.auto(rb[i]);
-        }
+//        for (int i = 0; i < rb.length; i++) {
+//            //挨着给每个RadioButton加入drawable限制边距以控制显示大小
+//            drawables = rb[i].getCompoundDrawables();
+//            //获取drawables，2/5表示图片要缩小的比例
+//            Rect r = new Rect(0, 0, drawables[1].getMinimumWidth() * 2 / 3, drawables[1].getMinimumHeight() * 2 / 3);
+//            //定义一个Rect边界
+//            drawables[1].setBounds(r);
+//            //给每一个RadioButton设置图片大小
+//            rb[i].setCompoundDrawables(null, drawables[1], null, null);
+////            rb[i].setTextSize(Util.px2sp(this,24,1334));
+//            AutoUtils.auto(rb[i]);
+//        }
         rb1.setChecked(true);
     }
 

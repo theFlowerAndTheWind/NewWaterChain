@@ -55,12 +55,12 @@
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:drawableTop="@drawable/homepage_rb1_icon"
-                    android:drawablePadding="10px"
+                    android:drawablePadding="5px"
                     android:paddingBottom="10px"
                     android:paddingTop="17px"
                     android:textColor="@color/homepage_rb_color"
                     android:text="首页"
-                    android:textSize="22px"
+                    android:textSize="10sp"
                     android:gravity="center"
                     android:layout_weight="1"/>
 
@@ -69,13 +69,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:button="@null"
-                    android:drawablePadding="10px"
+                    android:drawablePadding="5px"
                     android:paddingBottom="10px"
                     android:paddingTop="17px"
                     android:drawableTop="@drawable/homepage_rb2_icon"
                     android:textColor="@color/homepage_rb_color"
                     android:text="洗涤"
-                    android:textSize="22px"
+                    android:textSize="10sp"
                     android:gravity="center"
                     android:layout_weight="1"/>
 
@@ -87,11 +87,11 @@
                     android:button="@null"
                     android:drawableTop="@drawable/homepage_rb3_icon"
                     android:textColor="@color/homepage_rb_color"
-                    android:drawablePadding="10px"
+                    android:drawablePadding="5px"
                     android:paddingBottom="10px"
                     android:paddingTop="17px"
                     android:text="交易"
-                    android:textSize="22px"
+                    android:textSize="10sp"
                     android:gravity="center"
                     android:layout_weight="1"/>
 
@@ -101,13 +101,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:button="@null"
-                    android:drawablePadding="10px"
+                    android:drawablePadding="5px"
                     android:paddingBottom="10px"
                     android:paddingTop="17px"
                     android:drawableTop="@drawable/homepage_rb4_icon"
                     android:textColor="@color/homepage_rb_color"
                     android:text="发现"
-                    android:textSize="22px"
+                    android:textSize="10sp"
                     android:gravity="center"
                     android:layout_weight="1"/>
 
@@ -116,13 +116,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:button="@null"
-                    android:drawablePadding="10px"
+                    android:drawablePadding="5px"
                     android:paddingBottom="10px"
                     android:paddingTop="17px"
                     android:drawableTop="@drawable/homepage_rb5_icon"
                     android:textColor="@color/homepage_rb_color"
                     android:text="我的"
-                    android:textSize="22px"
+                    android:textSize="10sp"
                     android:gravity="center"
                     android:layout_weight="1"/>
             </RadioGroup>
