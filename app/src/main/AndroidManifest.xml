@@ -185,6 +185,8 @@
             android:theme="@style/dialogstyle" />
         <activity android:name=".ui.activity.GoodsDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.ConfirmGoodsOrderActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

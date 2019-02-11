@@ -7,7 +7,7 @@
     <FrameLayout
         style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
-        android:layout_height="88px">
+        android:layout_height="@dimen/commit_btn_height">
         <!--adapter中position==0处显示-->
         <LinearLayout
             android:id="@+id/linear_warnning"

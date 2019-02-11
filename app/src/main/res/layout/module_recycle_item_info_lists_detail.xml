@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="300px"
             android:scaleType="centerCrop"
-            android:src="@mipmap/default_img" />
+            android:src="@mipmap/default_img"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_content"

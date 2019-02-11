@@ -1,11 +1,14 @@
 package com.quanminjieshui.waterchain.beans;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by songxiaotao on 2019/1/31.
  * Class Note:
  */
 
-public class GoodsDetailResponseBean {
+public class GoodsDetailResponseBean implements Parcelable {
     int id; 	//商品id 	字符串(string) 	number|4
     int cate_id; 	//商品类型 	字符串(string) 		1（实物商品）|2（活动）
     String name; 	//商品名称 	字符串(string)
@@ -160,4 +163,65 @@ public class GoodsDetailResponseBean {
     public void setCount(int count) {
         this.count = count;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeInt(this.cate_id);
+        dest.writeString(this.name);
+        dest.writeString(this.img);
+        dest.writeString(this.jsl);
+        dest.writeString(this.price);
+        dest.writeString(this.description);
+        dest.writeInt(this.stock);
+        dest.writeInt(this.now_stock);
+        dest.writeString(this.intro);
+        dest.writeInt(this.status);
+        dest.writeValue(this.createtime);
+        dest.writeValue(this.updatetime);
+        dest.writeInt(this.is_sort);
+        dest.writeString(this.status_view);
+        dest.writeString(this.cate);
+        dest.writeInt(this.count);
+    }
+
+    public GoodsDetailResponseBean() {
+    }
+
+    protected GoodsDetailResponseBean(Parcel in) {
+        this.id = in.readInt();
+        this.cate_id = in.readInt();
+        this.name = in.readString();
+        this.img = in.readString();
+        this.jsl = in.readString();
+        this.price = in.readString();
+        this.description = in.readString();
+        this.stock = in.readInt();
+        this.now_stock = in.readInt();
+        this.intro = in.readString();
+        this.status = in.readInt();
+        this.createtime = (Long) in.readValue(Long.class.getClassLoader());
+        this.updatetime = (Long) in.readValue(Long.class.getClassLoader());
+        this.is_sort = in.readInt();
+        this.status_view = in.readString();
+        this.cate = in.readString();
+        this.count = in.readInt();
+    }
+
+    public static final Parcelable.Creator<GoodsDetailResponseBean> CREATOR = new Parcelable.Creator<GoodsDetailResponseBean>() {
+        @Override
+        public GoodsDetailResponseBean createFromParcel(Parcel source) {
+            return new GoodsDetailResponseBean(source);
+        }
+
+        @Override
+        public GoodsDetailResponseBean[] newArray(int size) {
+            return new GoodsDetailResponseBean[size];
+        }
+    };
 }

@@ -1,5 +1,6 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -68,6 +69,9 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     private CheckUserPayPresenter checkUserPayPresenter;
     private AlertChainDialog alertChainDialog;
     private int cateId;
+
+    private GoodsDetailResponseBean goodsDetailResponseBean;
+    public static final String EXTRA_GOODSDETAILRESPONSEBEAN="goodsDetailResponseBean";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +120,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
     @Override
     public void onGoodsDetailSuccess(GoodsDetailResponseBean beans) {
+        goodsDetailResponseBean=beans;
         if (!Util.isEmpty(beans) && !TextUtils.isEmpty(beans.getName())){
             relativeHint.setVisibility(View.GONE);
             gooodsContent.setVisibility(View.VISIBLE);
@@ -164,6 +169,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
                             @Override
                             public void onClick(View view) {
                                 // TODO: 2019/2/2 兑换
+                                jump2GoodsDetailAct();
                             }
 
 
@@ -179,6 +185,12 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
         }
 
         dismissLoadingDialog();
+    }
+
+    private void jump2GoodsDetailAct(){
+        Intent intent=new Intent(this,ConfirmGoodsOrderActivity.class);
+        intent.putExtra(EXTRA_GOODSDETAILRESPONSEBEAN,goodsDetailResponseBean);
+        startActivity(intent);
     }
 
     @Override
