@@ -172,6 +172,7 @@ public class DistributionInfoActivity extends BaseActivity {
             R.id.area_rl4, R.id.time_re6, R.id.deliveryTypeRl1, R.id.address_rl5, R.id.name_rl2, R.id.phone_rl3})
     public void OnClick(View view) {
         Bundle bundle = new Bundle();
+        bundle.putString("from","DistributionInfoActivity");
         switch (view.getId()) {
             case R.id.img_title_left:
                 goBack(view);
@@ -245,6 +246,7 @@ public class DistributionInfoActivity extends BaseActivity {
                 bundle.putInt("class", 3);
                 bundle.putParcelable("params", params);
                 jumpActivity(bundle, ConfirmOrderActivity.class);
+                finish();
                 break;
             default:
                 break;

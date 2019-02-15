@@ -40,11 +40,11 @@ public class GoodsPresenter extends BasePresenter<GoodsViewImpl> {
         this.goodsModel = goodsModel;
     }
 
-    public void getGoods(BaseActivity activity) {
+    public void getGoods(BaseActivity activity,int count) {
         if (goodsModel == null) {
             goodsModel = new GoodsModel();
         }
-        goodsModel.getGoods(activity, new GoodsModel.GoodsCallback() {
+        goodsModel.getGoods(activity,count, new GoodsModel.GoodsCallback() {
             @Override
             public void onGetGoodsSuccess(List<GoodsResposeBean> list) {
                 if (mView != null) {

@@ -13,6 +13,7 @@
 package com.quanminjieshui.waterchain.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.quanminjieshui.waterchain.contract.presenter.GoodsPresenter;
 import com.quanminjieshui.waterchain.contract.view.GoodsViewImpl;
 import com.quanminjieshui.waterchain.ui.adapter.GoodsAdapter;
 import com.quanminjieshui.waterchain.utils.StatusBarUtil;
+import com.quanminjieshui.waterchain.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,8 @@ public class GoodsActivity extends BaseActivity implements GoodsViewImpl {
     private GoodsPresenter goodsPresenter;
     private GoodsAdapter goodsAdapter;
     private List<GoodsResposeBean> list;
+    private int counter = 0;
+    private boolean isRefresh = false;
 
     @OnClick({R.id.img_title_left})
     public void onClick(View v) {
@@ -84,8 +88,8 @@ public class GoodsActivity extends BaseActivity implements GoodsViewImpl {
 
         goodsPresenter = new GoodsPresenter(new GoodsModel());
         goodsPresenter.attachView(this);
-//        showLoadingDialog();
-        goodsPresenter.getGoods(this);
+
+        getGoodsOrders();
 
         initView();
     }
@@ -94,20 +98,24 @@ public class GoodsActivity extends BaseActivity implements GoodsViewImpl {
         tvTitleCenter.setText("我的兑换");
         list = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(this, list);
+        xrv.setArrowImageView(R.drawable.iconfont_downgrey);
+        xrv.setLayoutManager(new LinearLayoutManager(this));
         xrv.setAdapter(goodsAdapter);
-        xrv.setLoadingMoreEnabled(false);
-//        xrv.setArrowImageView(R.drawable.iconfont_downgrey);
-//        xrv.setLoadingListener(new XRecyclerView.LoadingListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//            }
-//
-//            @Override
-//            public void onLoadMore() {
-//
-//            }
-//        });
+        xrv.setLoadingMoreEnabled(true);
+        xrv.setPullRefreshEnabled(true);
+        xrv.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                isRefresh = true;
+                counter = 0;
+                getGoodsOrders();
+            }
+
+            @Override
+            public void onLoadMore() {
+                getGoodsOrders();
+            }
+        });
     }
 
     @Override
@@ -119,32 +127,53 @@ public class GoodsActivity extends BaseActivity implements GoodsViewImpl {
     public void onReNetRefreshData(int viewId) {
         if (goodsPresenter != null) {
             showLoadingDialog();
-            goodsPresenter.getGoods(this);
+            goodsPresenter.getGoods(this, counter);
         }
     }
 
     @Override
-    public void onGetGoodsSuccess(List<GoodsResposeBean> list) {
-        dismissDialog();
-        if (list != null) {
-            if (list.size() == 0) {
-                relativeHint.setVisibility(View.VISIBLE);
-                xrv.setVisibility(View.GONE);
-                tvDetail.setText("您还没有兑换过任何物品！");
+    public void onGetGoodsSuccess(List<GoodsResposeBean> respList) {
+        if(isRefresh)xrv.loadMoreComplete();
+        xrv.refreshComplete();
+        if (respList != null) {
+            if (respList.size() == 0) {
+                if (counter == 0) {
+                    relativeHint.setVisibility(View.VISIBLE);
+                    xrv.setVisibility(View.GONE);
+                    tvDetail.setText("您还没有兑换过任何物品！");
+                } else {
+                    counter = list.size();
+                }
+
             } else {
                 relativeHint.setVisibility(View.GONE);
                 xrv.setVisibility(View.VISIBLE);
-                this.list = list;
+                if(isRefresh)list.clear();
+                list.addAll(respList);
                 goodsAdapter.notifyDataSetChanged();
-                xrv.refreshComplete();
+                counter = list.size();
             }
         }
+
+        dismissLoadingDialog();
+        isRefresh = false;
     }
 
     @Override
     public void onGetGoodsFailed(String msg) {
-        dismissDialog();
-        relativeHint.setVisibility(View.VISIBLE);
-        xrv.setVisibility(View.GONE);
+        ToastUtils.showCustomToast(msg, 0);
+
+        dismissLoadingDialog();
+        isRefresh = false;
     }
+
+    private void getGoodsOrders() {
+        if (goodsPresenter == null) {
+            goodsPresenter = new GoodsPresenter(new GoodsModel());
+            goodsPresenter.attachView(this);
+        }
+        showLoadingDialog();
+        goodsPresenter.getGoods(this, counter);
+    }
+
 }

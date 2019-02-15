@@ -42,6 +42,7 @@ public class ChangeInfoActivity extends BaseActivity {
     EditText address_et;
     private String nameStr = "", phoneStr = "", addressStr = "";
     private int jumpAction = -1;
+    private String from = null;//用以区分从哪个页面跳转而来DistributionInfoActivity      UserGoodsInfoActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +75,10 @@ public class ChangeInfoActivity extends BaseActivity {
             case R.id.tv_title_right:
                 if (!Util.isFastDoubleClick()) {
 
-                    bundle.putInt("jumpAction",jumpAction);
+                    bundle.putInt("jumpAction", jumpAction);
                     switch (jumpAction) {
                         case R.id.name_rl2:
+                        case R.id.ll_receiver_name:
                             String name = name_et.getText().toString();
                             if (TextUtils.isEmpty(name)) {
                                 ToastUtils.showCustomToastMsg("姓名不能为空", 150);
@@ -85,6 +87,7 @@ public class ChangeInfoActivity extends BaseActivity {
                             bundle.putString("name", name);
                             break;
                         case R.id.phone_rl3:
+                        case R.id.ll_receiver_tel:
                             String phone = phone_et.getText().toString();
                             if (TextUtils.isEmpty(phone)) {
                                 ToastUtils.showCustomToastMsg("手机号不能为空", 150);
@@ -97,6 +100,7 @@ public class ChangeInfoActivity extends BaseActivity {
                             bundle.putString("phone", phone);
                             break;
                         case R.id.address_rl5:
+                        case R.id.ll_receiver_addr:
                             String address = address_et.getText().toString();
                             if (TextUtils.isEmpty(address)) {
                                 ToastUtils.showCustomToastMsg("详细地址不能为空", 150);
@@ -110,9 +114,12 @@ public class ChangeInfoActivity extends BaseActivity {
                     }
                     hideShowKeyboard();
                     intent.putExtras(bundle);
-                    intent.setClass(ChangeInfoActivity.this, DistributionInfoActivity.class);
+                    if (from.equals("DistributionInfoActivity")) {
+                        intent.setClass(ChangeInfoActivity.this, DistributionInfoActivity.class);
+                    } else if (from.equals("UserGoodsInfoActivity")) {
+                        intent.setClass(ChangeInfoActivity.this, UserGoodsInfoActivity.class);
+                    }
                     startActivity(intent);
-
                 }
 
                 break;
@@ -123,8 +130,10 @@ public class ChangeInfoActivity extends BaseActivity {
 
     private void initData(Intent intent) {
         if (intent != null) {
-            jumpAction = getIntent().getIntExtra("jumpAction", -1);
+            from = intent.getStringExtra("from");
+            jumpAction = intent.getIntExtra("jumpAction", -1);
             switch (jumpAction) {
+                //----------------------洗涤订单相关----------------------//
                 case R.id.name_rl2:
                     nameStr = intent.getStringExtra("name");
                     name_et.setVisibility(View.VISIBLE);
@@ -144,6 +153,34 @@ public class ChangeInfoActivity extends BaseActivity {
                     tv_title_center.setText("手机号码");
                     break;
                 case R.id.address_rl5:
+                    addressStr = intent.getStringExtra("address");
+                    address_et.setVisibility(View.VISIBLE);
+                    phone_et.setVisibility(View.GONE);
+                    name_et.setVisibility(View.GONE);
+                    address_et.setText(addressStr);
+                    address_et.setSelection(addressStr.length());
+                    tv_title_center.setText("详细地址");
+                    break;
+                //----------------------兑换订单相关----------------------//
+                case R.id.ll_receiver_name:
+                    nameStr = intent.getStringExtra("name");
+                    name_et.setVisibility(View.VISIBLE);
+                    address_et.setVisibility(View.GONE);
+                    phone_et.setVisibility(View.GONE);
+                    name_et.setText(nameStr);
+                    name_et.setSelection(nameStr.length());
+                    tv_title_center.setText("收件人");
+                    break;
+                case R.id.ll_receiver_tel:
+                    phoneStr = intent.getStringExtra("phone");
+                    phone_et.setVisibility(View.VISIBLE);
+                    name_et.setVisibility(View.GONE);
+                    address_et.setVisibility(View.GONE);
+                    phone_et.setText(phoneStr);
+                    phone_et.setSelection(phoneStr.length());
+                    tv_title_center.setText("手机号码");
+                    break;
+                case R.id.ll_receiver_addr:
                     addressStr = intent.getStringExtra("address");
                     address_et.setVisibility(View.VISIBLE);
                     phone_et.setVisibility(View.GONE);

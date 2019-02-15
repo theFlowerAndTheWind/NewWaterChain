@@ -167,7 +167,7 @@
 
     <style name="style_txt_distribution_info_1">
         <item name="android:textColor">@color/text_gray</item>
-        <item name="android:textSize">22px</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
     <style name="btn_upload">

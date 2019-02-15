@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * Class Note:商品详情
  */
 
-public class GoodsDetailActivity extends BaseActivity implements GoodsDetailViewImpl,CheckUserPayViewImpl{
+public class GoodsDetailActivity extends BaseActivity implements GoodsDetailViewImpl, CheckUserPayViewImpl {
 
     @BindView(R.id.left_ll)
     LinearLayout leftLl;
@@ -69,9 +69,13 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     private CheckUserPayPresenter checkUserPayPresenter;
     private AlertChainDialog alertChainDialog;
     private int cateId;
+    private String jslPrice;
 
     private GoodsDetailResponseBean goodsDetailResponseBean;
-    public static final String EXTRA_GOODSDETAILRESPONSEBEAN="goodsDetailResponseBean";
+    private CheckUserPayResponseBean checkUserPayResponseBean;
+    public static final String EXTRA_GOODSDETAILRESPONSEBEAN = "goodsDetailResponseBean";
+    public static final String EXTRA_CHECKUSERPAYRESPONSEBEAN = "checkUserPayResponseBean";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +94,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
         alertChainDialog = new AlertChainDialog(this);
     }
 
-    @OnClick({R.id.left_ll,R.id.goods_exchange})
+    @OnClick({R.id.left_ll, R.id.goods_exchange})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -99,8 +103,10 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
                 finish();
                 break;
             case R.id.goods_exchange:
-                if (!Util.isFastDoubleClick()){
+                if (!Util.isFastDoubleClick()) {
                     doCheckUserPayRequest();
+
+//                    jump2ConfirmGoodsOrderAct();
                 }
                 break;
             default:
@@ -120,26 +126,27 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
     @Override
     public void onGoodsDetailSuccess(GoodsDetailResponseBean beans) {
-        goodsDetailResponseBean=beans;
-        if (!Util.isEmpty(beans) && !TextUtils.isEmpty(beans.getName())){
+        goodsDetailResponseBean = beans;
+        if (!Util.isEmpty(beans) && !TextUtils.isEmpty(beans.getName())) {
             relativeHint.setVisibility(View.GONE);
             gooodsContent.setVisibility(View.VISIBLE);
             goodsExchange.setVisibility(View.VISIBLE);
             tvGoodsTitle.setText(beans.getName());
-            tvGoodsDemandNumber.setText("所需水方："+beans.getJsl());
-            tvGoodsPrice.setText("市场价 ¥ "+beans.getPrice());
-            tvGoodsStockNumber.setText("库存数量："+beans.getNow_stock()+" / "+beans.getStock());
+            jslPrice = beans.getJsl();
+            tvGoodsDemandNumber.setText("所需水方：" + jslPrice);
+            tvGoodsPrice.setText("市场价 ¥ " + beans.getPrice());
+            tvGoodsStockNumber.setText("库存数量：" + beans.getNow_stock() + " / " + beans.getStock());
             tvGoodsIntroduce.setText("商品介绍");
             cateId = beans.getCate_id();
             CharSequence charSequence;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                charSequence = Html.fromHtml(beans.getDescription(),Html.FROM_HTML_MODE_LEGACY);
+                charSequence = Html.fromHtml(beans.getDescription(), Html.FROM_HTML_MODE_LEGACY);
             } else {
                 charSequence = Html.fromHtml(beans.getDescription());
             }
             tvGoodsDescribe.setText(charSequence);
             GlidImageManager.getInstance().loadImageView(this, beans.getImg(), img, R.mipmap.default_img);
-        }else{
+        } else {
             relativeHint.setVisibility(View.VISIBLE);
             gooodsContent.setVisibility(View.GONE);
             goodsExchange.setVisibility(View.GONE);
@@ -156,40 +163,72 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
     @Override
     public void onCheckUserPaySuccess(CheckUserPayResponseBean beans) {
-        if (beans.getCan_order().equals("1")){
-            String activityPrice = beans.getPay_jsl()+"水方";
-            String accountBalance = beans.getUser_jsl()+"水方";
-            String exchangeAfterBalance = (Double.valueOf(beans.getUser_jsl())-Double.valueOf(beans.getPay_jsl()))+"水方";
-            String message = "活动价格："+activityPrice+"\n账户余额："+accountBalance+"\n兑换后余额："+exchangeAfterBalance;
-            if (alertChainDialog!=null){
-                alertChainDialog.builder().setCancelable(false);
-                alertChainDialog.setTitle("确认兑换该活动")
-                        .setMsg(message)
-                        .setPositiveButton("确定", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // TODO: 2019/2/2 兑换
-                                jump2GoodsDetailAct();
-                            }
+        dismissLoadingDialog();
 
+        if (beans != null) {
+            checkUserPayResponseBean = beans;
+            String title = null;
+            String msg = null;
+            String pos = null;
+            String neg = null;
+            if (beans.getCan_order()==1) {
+                String price = new StringBuilder(jslPrice).append("水方").toString();
+                String pay_gyj = new StringBuilder(beans.getPay_gyj()).append("水方").toString();
+                String user_gyj = new StringBuilder(beans.getUser_gyj()).append("水方").toString();
+                String pay_jsl = new StringBuilder(beans.getPay_jsl()).append("水方").toString();
+                String user_jsl = new StringBuilder(beans.getUser_jsl()).append("水方").toString();
 
-                        }).setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                }).show();
+                msg = new StringBuilder()
+                        .append("活动价格：").append(price)
+                        .append("\n账户余额：").append(pay_gyj).append("(公益金账户:").append(user_gyj).append(")")
+                        .append("\n兑换后余额：").append(pay_jsl).append("(账户余额：").append(user_jsl).append(")")
+                        .toString();
+                title = "确认兑换该活动";
+                pos = "确定";
+                neg = "取消";
+            } else {
+                title = "余额不足";
+                msg = "余额不足以支付该活动";
+                neg = "知道了";
             }
-        }else{
-            ToastUtils.showCustomToast("不足支付，不可兑换并创建订单");
+            showDialog(title, msg, pos, neg);
         }
 
-        dismissLoadingDialog();
     }
 
-    private void jump2GoodsDetailAct(){
-        Intent intent=new Intent(this,ConfirmGoodsOrderActivity.class);
-        intent.putExtra(EXTRA_GOODSDETAILRESPONSEBEAN,goodsDetailResponseBean);
+    private void showDialog(String title, String msg, String pos, String neg) {
+        if (alertChainDialog == null) {
+            alertChainDialog = new AlertChainDialog(this);
+        }
+        alertChainDialog.builder().setCancelable(false);
+        alertChainDialog.setTitle(title);
+        alertChainDialog.setMsg(msg);
+        if (!TextUtils.isEmpty(pos))
+            alertChainDialog.setPositiveButton(pos, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    jump2ConfirmGoodsOrderAct();
+                }
+
+
+            });
+
+        if (!TextUtils.isEmpty(neg)) {
+            alertChainDialog.setNegativeButton(neg, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+        }
+        alertChainDialog.show();
+    }
+
+    private void jump2ConfirmGoodsOrderAct() {
+        Intent intent = new Intent(this, ConfirmGoodsOrderActivity.class);
+        intent.putExtra(ConfirmGoodsOrderActivity.INT_EXTRA,1);
+        intent.putExtra(EXTRA_GOODSDETAILRESPONSEBEAN, goodsDetailResponseBean);
+        intent.putExtra(EXTRA_CHECKUSERPAYRESPONSEBEAN, checkUserPayResponseBean);
         startActivity(intent);
     }
 
@@ -206,18 +245,18 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     }
 
     private void doGoodsDetailRequest() {
-        if (getIntent()!=null){
-            detailPresenter.getGoodsDetail(this,getIntent().getIntExtra("id",-1));
+        if (getIntent() != null) {
+            detailPresenter.getGoodsDetail(this, getIntent().getIntExtra("id", -1));
             showLoadingDialog();
         }
     }
 
-    private void doCheckUserPayRequest(){
-        if (getIntent()!=null){
+    private void doCheckUserPayRequest() {
+        if (getIntent() != null) {
             CheckUserPayReqBean bean = new CheckUserPayReqBean();
-            bean.setId(getIntent().getIntExtra("id",-1));
-            bean.setCount(cateId);//活动类商品传1 活动2
-            checkUserPayPresenter.checkUserPay(this,bean);
+            bean.setId(getIntent().getIntExtra("id", -1));
+            bean.setCount(1);//活动类商品传1 活动2
+            checkUserPayPresenter.checkUserPay(this, bean);
             showLoadingDialog();
         }
     }
@@ -225,10 +264,10 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (detailPresenter!=null){
+        if (detailPresenter != null) {
             detailPresenter.detachView();
         }
-        if (checkUserPayPresenter!=null){
+        if (checkUserPayPresenter != null) {
             checkUserPayPresenter.detachView();
         }
     }

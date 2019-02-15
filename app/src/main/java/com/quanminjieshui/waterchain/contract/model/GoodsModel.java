@@ -22,6 +22,7 @@ import com.quanminjieshui.waterchain.http.utils.ObservableTransformerUtils;
 import com.quanminjieshui.waterchain.http.utils.RequestUtil;
 import com.quanminjieshui.waterchain.utils.LogUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,10 +40,11 @@ import java.util.List;
  */
 public class GoodsModel {
 
-    public void getGoods(BaseActivity activity, final GoodsCallback callback){
-
+    public void getGoods(BaseActivity activity,int count, final GoodsCallback callback){
+        HashMap<String,Object>params=new HashMap<>();
+        params.put("count",count);
         RetrofitFactory.getInstance().createService()
-                .goods(RequestUtil.getRequestHashBody(null,false))
+                .goods(RequestUtil.getRequestHashBody(params,false))
                 .compose(activity.<BaseEntity<List<GoodsResposeBean>>>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity<List<GoodsResposeBean>>>io())
                 .subscribe(new BaseObserver<List<GoodsResposeBean>>(activity) {
