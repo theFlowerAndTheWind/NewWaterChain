@@ -12,7 +12,7 @@ public class HttpConfig {
     //开发环境
 //    public static String BASE_URL = "https://jsl.sshsky.com";
     //生产环境
-    public static String BASE_URL = "https://www.quanminjieshui.com";//香港服务器不稳定
+    public static String BASE_URL = "https://www.shuzijieshui.com";//20190220域名由www.quanminjieshui.com更改为www.shuzijieshui.com
 
 
     public static final String HEAD_TOKEN_KEY = "TOKEN";
