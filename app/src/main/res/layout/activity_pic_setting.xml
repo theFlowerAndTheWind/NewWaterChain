@@ -15,7 +15,7 @@
      -->
 
     <!--矩形裁剪框示例 -->
-    <com.quanminjieshui.waterchain.ui.widget.pictureclip.ClipViewLayout
+    <com.shuzijieshui.www.waterchain.ui.widget.pictureclip.ClipViewLayout
         android:id="@+id/cvl_rect"
         android:layout_width="match_parent"
         android:layout_height="0dp"

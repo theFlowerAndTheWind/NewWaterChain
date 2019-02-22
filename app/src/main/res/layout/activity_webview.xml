@@ -11,7 +11,7 @@
          style="?android:attr/progressBarStyleHorizontal"
          android:layout_width="match_parent"
          android:layout_height="3dp" />
-    <com.quanminjieshui.waterchain.ui.widget.WaterChainWebview
+    <com.shuzijieshui.www.waterchain.ui.widget.WaterChainWebview
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
