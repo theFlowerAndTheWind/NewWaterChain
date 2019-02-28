@@ -149,16 +149,18 @@
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.ConfirmOrderActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTask"/>
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.WashDemandActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.shuzijieshui.www.waterchain.ui.activity.DistributionInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.DistributionInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.ChangeInfoActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.PaySuceessActivity"

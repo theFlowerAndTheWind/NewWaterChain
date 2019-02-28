@@ -210,7 +210,7 @@ public class PersonalFragment extends BaseFragment
 
     private void initView() {
         String avatarUrl = (String) SPUtil.get(getActivity(), SPUtil.AVATAR, "");
-        GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.head, R.mipmap.head);
+        GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.user_head, R.mipmap.user_head);
         String user_login = (String) SPUtil.get(getActivity(), SPUtil.USER_LOGIN, "********");
         if (TextUtils.isEmpty(user_login)) {
             user_login = "********";
@@ -252,7 +252,7 @@ public class PersonalFragment extends BaseFragment
             }
             tvNickname.setText(Util.hide4Phone(user_login));
             String avatarUrl = (String) SPUtil.get(getActivity(), SPUtil.AVATAR, "");
-            GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.head, R.mipmap.head);
+            GlidImageManager.getInstance().loadCircleImg(getActivity(), avatarUrl, imgAvatar, R.mipmap.user_head, R.mipmap.user_head);
         }
     }
 
@@ -318,8 +318,8 @@ public class PersonalFragment extends BaseFragment
         GlidImageManager.getInstance().loadCircleImg(getActivity(),
                 PictureFileUtil.Uri2File(avatarUri, getActivity()),
                 imgAvatar,
-                R.mipmap.head,
-                R.mipmap.head);
+                R.mipmap.user_head,
+                R.mipmap.user_head);
         doUploadFileRuest();
     }
 

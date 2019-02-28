@@ -156,7 +156,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailViewIm
         userDetailPresenter.getUserDetail(this);
         showLoadingDialog();
         String avatarUrl = (String) SPUtil.get(this, SPUtil.AVATAR, "");
-        GlidImageManager.getInstance().loadCircleImg(this, avatarUrl, imgAvatar, R.mipmap.head, R.mipmap.head);
+        GlidImageManager.getInstance().loadCircleImg(this, avatarUrl, imgAvatar, R.mipmap.user_head, R.mipmap.user_head);
     }
 
     @Override
