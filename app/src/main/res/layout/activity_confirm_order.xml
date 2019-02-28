@@ -385,7 +385,7 @@
                             android:gravity="center_vertical"
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@+id/img_warning"
-                            android:text="组合支付（80%金额+20%JSL）"
+                            android:text="组合支付（80%金额+20%水方）"
                             android:textColor="@color/text_gray"
                             android:textSize="18px" />
 

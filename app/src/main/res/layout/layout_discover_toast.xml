@@ -17,5 +17,5 @@
         android:paddingTop="10dp"
         android:textColor="@color/white"
         android:textSize="14sp"
-        tools:text="为你推荐咨询20条" />
+        tools:text="为你推荐资讯20条" />
 </RelativeLayout>

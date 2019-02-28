@@ -128,11 +128,11 @@ public interface APIService {
     @POST(UrlConfig.USER_DETAIL)
     Observable<BaseEntity<UserDetailResponseBean>> userDetail(@Body RequestBody requestBody);
 
-    //平台咨讯详情
+    //平台资讯详情
     @POST(UrlConfig.INFO_DETAIL)
     Observable<BaseEntity<InfoDetailRespoonseBean>> infoDetail(@Body RequestBody requestBody);
 
-    //平台咨询列表
+    //平台资讯列表
     @POST(UrlConfig.INFO_LIST)
     Observable<BaseEntity<InfoListsResponseBean>> infoList(@Body RequestBody requestBody);
 

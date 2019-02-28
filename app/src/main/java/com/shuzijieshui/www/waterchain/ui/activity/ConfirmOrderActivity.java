@@ -194,7 +194,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                     return;
                 }
                 if (!isAgree) {
-                    ToastUtils.showCustomToastMsg("请阅读并同意《节水链平台用户协议》", 150);
+                    ToastUtils.showCustomToastMsg("请阅读并同意《数字节水平台用户协议》", 150);
                     return;
                 }
                 params.setFsid(fsid);
@@ -229,7 +229,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 if (alertChainDialog != null) {
                     alertChainDialog.builder().setCancelable(false);
                     alertChainDialog.setTitle("组合支付")
-                            .setMsg("组合支付，JSL按前一交易日的收盘价的1.5倍计算")
+                            .setMsg("组合支付，水方按前一交易日的收盘价的1.5倍计算")
                             .setPositiveButton("确定", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {

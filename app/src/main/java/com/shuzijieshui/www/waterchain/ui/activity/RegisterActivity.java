@@ -159,7 +159,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViewImpl {
                     presenter.verify(mobile, pwd, confirm, sms, invitation, isCheckedAgree);
                     presenter.register(this, mobile, pwd, confirm, sms, invitation, isCheckedAgree);
                 } else {
-                    ToastUtils.showCustomToastMsg("请阅读并同意《节水链平台用书协议》",150);
+                    ToastUtils.showCustomToastMsg("请阅读并同意《数字节水平台用书协议》",150);
                 }
                 break;
             case R.id.tv_existing:

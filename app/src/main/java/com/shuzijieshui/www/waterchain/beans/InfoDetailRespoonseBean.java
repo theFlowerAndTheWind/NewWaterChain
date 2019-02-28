@@ -2,7 +2,7 @@ package com.shuzijieshui.www.waterchain.beans;
 
 /**
  * Created by songxiaotao on 2018/12/10.
- * Class Note:平台咨讯详情
+ * Class Note:平台资讯详情
  */
 
 public class InfoDetailRespoonseBean {

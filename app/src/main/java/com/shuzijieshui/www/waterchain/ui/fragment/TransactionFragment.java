@@ -206,7 +206,7 @@ public class TransactionFragment extends BaseFragment implements
                     btnSell.setVisibility(View.VISIBLE);
                     tvHighest.setText("已市场最优价获取");
                     if (user_account != null && !TextUtils.isEmpty(user_account.getJsl()))
-                        tvUserAccount.setText(new StringBuilder("可用 ").append(tradeCenterResponseBean.getUser_account().getJsl()).append(" JSL"));
+                        tvUserAccount.setText(new StringBuilder("可用 ").append(tradeCenterResponseBean.getUser_account().getJsl()).append(" 水方"));
 
                 }
                 edtPrice.setText("");//清空上次输入值
@@ -304,10 +304,10 @@ public class TransactionFragment extends BaseFragment implements
             String price_limit_color = tradeCenterResponseBean.getPrice_limit_color();
             if (price_limit_color.equals("red")) {
                 tvPriceLimit.setTextColor(getResources().getColor(R.color.primary_red));
-                tvPriceLimit.setText(new StringBuilder("+").append(tradeCenterResponseBean.getPrice_limit()).toString());
+                tvPriceLimit.setText(new StringBuilder("+").append(tradeCenterResponseBean.getPrice_limit()).append("%").toString());
             } else if (price_limit_color.equals("green")) {
                 tvPriceLimit.setTextColor(getResources().getColor(R.color.text_green));
-                tvPriceLimit.setText(new StringBuilder("-").append(tradeCenterResponseBean.getPrice_limit()).toString());
+                tvPriceLimit.setText(new StringBuilder().append(tradeCenterResponseBean.getPrice_limit()).append("%").toString());
             } else {
                 tvPriceLimit.setTextColor(getResources().getColor(R.color.text_black));
                 tvPriceLimit.setText(tradeCenterResponseBean.getPrice_limit());
@@ -317,7 +317,7 @@ public class TransactionFragment extends BaseFragment implements
                 if (buyOrSell == 0)
                     tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getDs()).append(" 节水指标"));
                 else if (buyOrSell == 1)
-                    tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getJsl()).append(" JSL"));
+                    tvUserAccount.setText(new StringBuilder("可用 ").append(user_account.getJsl()).append(" 水方"));
             }
             /*************************************module3*************************************************/
 

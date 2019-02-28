@@ -333,10 +333,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
             String price_limit_color = tradeCenterResponseBean.getPrice_limit_color();
             if (price_limit_color.equals("red")) {
                 tvPriceLimit.setTextColor(getResources().getColor(R.color.primary_red));
-                tvPriceLimit.setText(new StringBuilder("+").append(tradeCenterResponseBean.getPrice_limit()).toString());
+                tvPriceLimit.setText(new StringBuilder("+").append(tradeCenterResponseBean.getPrice_limit()).append("%").toString());
             } else if (price_limit_color.equals("green")) {
                 tvPriceLimit.setTextColor(getResources().getColor(R.color.text_green));
-                tvPriceLimit.setText(new StringBuilder("-").append(tradeCenterResponseBean.getPrice_limit()).toString());
+                tvPriceLimit.setText(new StringBuilder().append(tradeCenterResponseBean.getPrice_limit()).append("%").toString());
             } else {
                 tvPriceLimit.setTextColor(getResources().getColor(R.color.text_black));
                 tvPriceLimit.setText(tradeCenterResponseBean.getPrice_limit());

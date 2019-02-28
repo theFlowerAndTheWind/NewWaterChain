@@ -25,8 +25,8 @@ public class UrlConfig {
      * 获取短信验证码
      * {
      * "code":1,
-     * "msg":"操作成功",
-     * "data":"4444"
+     * "msg":"发送成功",
+     * "data":""
      * }
      */
     public final static String SEND_VER_CODE = "api/home/common/sendVercode";
@@ -652,7 +652,7 @@ public class UrlConfig {
      * │ }
      */
     public static final String INFO_LIST = "api/home/info/infoLists";
-    //平台咨讯详情
+    //平台资讯详情
     public static final String INFO_DETAIL = "api/home/info/infoDetail";
     //用户信息
     /**

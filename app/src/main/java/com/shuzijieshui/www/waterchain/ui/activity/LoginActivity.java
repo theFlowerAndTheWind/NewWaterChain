@@ -81,6 +81,7 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
                 String user_pass = edt_pwd.getText().toString();
                 loginPresenter.verify(user_login, user_pass);
                 loginPresenter.login(this, user_login, user_pass);
+                hideShowKeyboard();
                 break;
             case R.id.tv_register:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));

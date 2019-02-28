@@ -82,7 +82,7 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
     }
 
     private void initView() {
-        tvTitleCenter.setText("咨讯详情");
+        tvTitleCenter.setText("资讯详情");
     }
 
     @Override
@@ -142,7 +142,7 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
         }else{
             rlHint.setVisibility(View.VISIBLE);
             infoDeail.setVisibility(View.GONE);
-            tvDetadil.setText("暂无咨询！");
+            tvDetadil.setText("暂无资讯！");
         }
         GlidImageManager.getInstance().loadImageView(this, infoDetailRespoonseBean.getImg(), img, R.mipmap.default_img);
         tvTitle.setText(infoDetailRespoonseBean.getTitle());
