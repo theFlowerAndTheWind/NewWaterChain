@@ -10,6 +10,7 @@
  */
 package com.shuzijieshui.www.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.shuzijieshui.www.waterchain.contract.model.FindPassModel;
 import com.shuzijieshui.www.waterchain.contract.presenter.FindPassPresenter;
 import com.shuzijieshui.www.waterchain.contract.view.FindPassViewImpl;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
+import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 
 import java.util.Map;
 
@@ -127,7 +129,7 @@ public class FindPassActivity extends BaseActivity implements FindPassViewImpl {
 
     }
 
-    @OnClick({R.id.tv_get_sms, R.id.btn_find,R.id.left_ll})
+    @OnClick({R.id.tv_get_sms, R.id.btn_find, R.id.left_ll})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -199,17 +201,18 @@ public class FindPassActivity extends BaseActivity implements FindPassViewImpl {
 
     @Override
     public void onGetSmsFailed(String msg) {
-
+        ToastUtils.showCustomToast(msg, 0);
     }
 
     @Override
     public void onFindPassSuccess() {
-
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
     public void onFindPassFaild(String msg) {
-
+        ToastUtils.showCustomToast(msg, 0);
     }
 
     @Override

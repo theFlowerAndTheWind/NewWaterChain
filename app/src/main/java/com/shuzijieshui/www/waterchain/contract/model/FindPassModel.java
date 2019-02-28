@@ -16,7 +16,14 @@ import android.util.Log;
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.WaterChainApplication;
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
+import com.shuzijieshui.www.waterchain.http.BaseObserver;
+import com.shuzijieshui.www.waterchain.http.RetrofitFactory;
+import com.shuzijieshui.www.waterchain.http.bean.BaseEntity;
+import com.shuzijieshui.www.waterchain.http.config.HttpConfig;
+import com.shuzijieshui.www.waterchain.http.utils.ObservableTransformerUtils;
+import com.shuzijieshui.www.waterchain.http.utils.RequestUtil;
 import com.shuzijieshui.www.waterchain.utils.AccountValidatorUtil;
+import com.shuzijieshui.www.waterchain.utils.LogUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,38 +65,39 @@ public class FindPassModel {
             return;
         }
         Log.e("TAG", "开始获取短信请求");
-        callback.onGetSmsSuccess();//无接口，开发用，生产时删除！！！！
-//        RetrofitFactory.getInstance().createService()
-//                .getSms(mobile)
-//                .compose(activity.<BaseEntity<SmsResponseBean>>bindToLifecycle())//绑定activity生命周期，防止内存溢出
-//                .compose(ObservableTransformerUtils.<BaseEntity<SmsResponseBean>>io())//选择线程
-//                .subscribe(new BaseObserver<SmsResponseBean>(activity) {
-//                    @Override
-//                    protected void onSuccess(SmsResponseBean bean) throws Exception {
-//                        //todo save sth. or do sth.
-//                        callback.onGetSmsSuccess();
-//                    }
-//
-//                    @Override
-//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//                        if (e != null && e.getMessage() != null) {
-//                            if (isNetWorkError) {
-//                                LogUtils.e(e.getMessage());
-//                                callback.onGetSmsFailed(HttpConfig.ERROR_MSG);
-//                            } else {
-//                                callback.onGetSmsFailed(e.getMessage());
-//                            }
-//                        } else {
-//                            callback.onGetSmsFailed("");
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onCodeError(String code, String msg) throws Exception {
-//                        super.onCodeError(code, msg);
-//                        callback.onGetSmsFailed(msg);
-//                    }
-//                });
+
+        HashMap<String,Object>params=new HashMap<>();
+        params.put("user_login",mobile);
+        RetrofitFactory.getInstance().createService()
+                .getSms(RequestUtil.getRequestHashBody(params,false))
+                .compose(activity.<BaseEntity>bindToLifecycle())//绑定activity生命周期，防止内存溢出
+                .compose(ObservableTransformerUtils.<BaseEntity>io())//选择线程
+                .subscribe(new BaseObserver(activity) {
+                    @Override
+                    protected void onSuccess(Object o) throws Exception {
+                        callback.onGetSmsSuccess();
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        if (e != null && e.getMessage() != null) {
+                            if (isNetWorkError) {
+                                LogUtils.e(e.getMessage());
+                                callback.onGetSmsFailed(HttpConfig.ERROR_MSG);
+                            } else {
+                                callback.onGetSmsFailed(e.getMessage());
+                            }
+                        } else {
+                            callback.onGetSmsFailed("");
+                        }
+                    }
+
+                    @Override
+                    protected void onCodeError(String code, String msg) throws Exception {
+                        super.onCodeError(code, msg);
+                        callback.onGetSmsFailed(msg);
+                    }
+                });
     }
 
     public Map<String, Boolean> verify(final String mobile, final String pwd,final String confirm, final String sms) {
@@ -129,42 +137,40 @@ public class FindPassModel {
         }
         Log.e("TAG", "开始重置请求");
 
-//        Map<String, Object> form = new HashMap<>();
-//        form.put(context.getString(R.string.field_mobile), mobile);
-//        form.put(context.getString(R.string.field_pwd), pwd);
-//        form.put(context.getString(R.string.field_sms), sms);
-//        RetrofitFactory.getInstance().createService()
-//                //.register(form)
-//                .findPass(form)
-//                .compose(activity.<BaseEntity<RegisterResponseBean>>bindToLifecycle())//绑定activity生命周期，防止内存溢出
-//                .compose(ObservableTransformerUtils.<BaseEntity<RegisterResponseBean>>io())//选择线程
-//                .subscribe(new BaseObserver<RegisterResponseBean>(activity) {
-//                    @Override
-//                    protected void onSuccess(RegisterResponseBean bean) throws Exception {
-//                        //todo save sth. or do sth.
-//                        callback.onFindPassSuccess();
-//                    }
-//
-//                    @Override
-//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//                        if (e != null && e.getMessage() != null) {
-//                            if (isNetWorkError) {
-//                                LogUtils.e(e.getMessage());
-//                                callback.onFindPassFaild(HttpConfig.ERROR_MSG);
-//                            } else {
-//                                callback.onFindPassFaild(e.getMessage());
-//                            }
-//                        } else {
-//                            callback.onFindPassFaild("");
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onCodeError(String code, String msg) throws Exception {
-//                        super.onCodeError(code, msg);
-//                        callback.onFindPassFaild(msg);
-//                    }
-//                });
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(context.getString(R.string.field_mobile), mobile);
+        params.put(context.getString(R.string.field_pwd), pwd);
+        params.put(context.getString(R.string.field_sms), sms);
+        RetrofitFactory.getInstance().createService()
+                .findPass(RequestUtil.getRequestHashBody(params,false))
+                .compose(activity.<BaseEntity>bindToLifecycle())//绑定activity生命周期，防止内存溢出
+                .compose(ObservableTransformerUtils.<BaseEntity>io())//选择线程
+                .subscribe(new BaseObserver(activity) {
+                    @Override
+                    protected void onSuccess(Object o) throws Exception {
+                        callback.onFindPassSuccess();
+                    }
+
+                    @Override
+                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+                        if (e != null && e.getMessage() != null) {
+                            if (isNetWorkError) {
+                                LogUtils.e(e.getMessage());
+                                callback.onFindPassFaild(HttpConfig.ERROR_MSG);
+                            } else {
+                                callback.onFindPassFaild(e.getMessage());
+                            }
+                        } else {
+                            callback.onFindPassFaild("");
+                        }
+                    }
+
+                    @Override
+                    protected void onCodeError(String code, String msg) throws Exception {
+                        super.onCodeError(code, msg);
+                        callback.onFindPassFaild(msg);
+                    }
+                });
 
     }
 
