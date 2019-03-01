@@ -20,11 +20,11 @@ public class OrderListsPresenter extends BasePresenter<OrderListsViewImpl> {
         this.orderListsModel = orderListsModel;
     }
 
-    public void getOrderList(BaseActivity activity){
+    public void getOrderList(BaseActivity activity,int status,int count){
         if(orderListsModel == null){
             orderListsModel = new OrderListsModel();
         }
-        orderListsModel.orderList(activity, new OrderListsModel.OrderListCallBack() {
+        orderListsModel.orderList(activity,status,count, new OrderListsModel.OrderListCallBack() {
             @Override
             public void success(OrderListsResponseBean orderListBean) {
                 if(mView!=null){

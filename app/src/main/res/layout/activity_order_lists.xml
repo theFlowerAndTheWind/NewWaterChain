@@ -7,36 +7,30 @@
 
     <include layout="@layout/module_include_title_bar" />
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/container"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="@dimen/commit_btn_height"
-                app:tabGravity="center"
-                app:tabIndicatorColor="@color/primary_blue"
-                app:tabIndicatorHeight="4px"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/primary_blue"
-                app:tabTextAppearance="@style/style_tablayout"
-                app:tabTextColor="@color/text_black" />
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/commit_btn_height"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/primary_blue"
+            app:tabIndicatorHeight="4px"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/primary_blue"
+            app:tabTextAppearance="@style/style_tablayout"
+            app:tabTextColor="@color/text_black" />
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <include layout="@layout/module_include_no_data"/>
-    </FrameLayout>
-
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </LinearLayout>
 

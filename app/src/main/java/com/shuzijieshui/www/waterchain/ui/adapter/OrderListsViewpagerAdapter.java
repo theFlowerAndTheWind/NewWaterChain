@@ -8,11 +8,12 @@ import com.shuzijieshui.www.waterchain.ui.fragment.OrderListsTabFragment;
 
 import java.util.ArrayList;
 
+
 public class OrderListsViewpagerAdapter extends FragmentPagerAdapter {
     private ArrayList<OrderListsTabFragment>fragments;
     private String[] titles;
 
-    public OrderListsViewpagerAdapter(FragmentManager fm,ArrayList<OrderListsTabFragment>fragments,String[] titles) {
+    public OrderListsViewpagerAdapter(FragmentManager fm, ArrayList<OrderListsTabFragment> fragments, String[] titles) {
         super(fm);
         this.fragments = fragments;
         this.titles=titles;
