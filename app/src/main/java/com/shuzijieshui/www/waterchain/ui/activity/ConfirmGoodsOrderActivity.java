@@ -405,7 +405,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
 
     @Override
     public void onCreateOrderExchangeSuccess(Object o) {
-        Intent intent = new Intent(this, PaySuceessActivity.class);
+        Intent intent = new Intent(this, PaySuccessActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("from", "ConfirmGoodsOrderActivity");
         bundle.putString("goodsName", goodsDetailBean.getName());

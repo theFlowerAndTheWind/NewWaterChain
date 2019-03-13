@@ -162,7 +162,11 @@ public interface APIService {
 
     //创建订单
     @POST(UrlConfig.CREATE_ORDER)
-    Observable<BaseEntity<CreateOrderResponseBean>> createOrder(@Body RequestBody requestBody);
+    Observable<BaseEntity> createOrder(@Body RequestBody requestBody);
+
+    //查询支付结果
+    @POST(UrlConfig.GET_PAY_RES)
+    Observable<BaseEntity> getPayRes(@Body RequestBody requestBody);
 
     //我的兑换
     @POST(UrlConfig.GOODS)
@@ -170,8 +174,6 @@ public interface APIService {
 
     @POST(UrlConfig.AD_IMG)
     Observable<BaseEntity<AdImgResponseBean>>getAdImg(@Body RequestBody body);
-
-
 
     @POST(UrlConfig.GET_URL)
     Observable<BaseEntity<GetUrlResponseBean>>getUrl(@Body RequestBody body);

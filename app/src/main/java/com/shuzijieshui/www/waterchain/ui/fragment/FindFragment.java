@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import com.shuzijieshui.www.waterchain.contract.presenter.InfoListPresenter;
 import com.shuzijieshui.www.waterchain.contract.view.AdImgViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.BannerListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.InfoListViewImpl;
+import com.shuzijieshui.www.waterchain.ui.activity.EnterpriseActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.GoodsDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.GoodsListsActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.InfoDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.adapter.InfoListsAdapter;
@@ -72,9 +75,7 @@ public class FindFragment extends BaseFragment implements
     private InfoListPresenter infoListPresenter;
     private BannerListPresenter bannerListPresenter;
     private AdImgPresenter adImgPresenter;
-    ArrayList<String> imgList = new ArrayList<>();
-    ArrayList<String> nameList = new ArrayList<>();
-    ArrayList<String> imgUrlList = new ArrayList<>();
+    private List<BannerListResponseBean.BannerListEntity>banners=new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class FindFragment extends BaseFragment implements
             infoListPresenter.getInfoList(getBaseActivity(), dataCounter);
         }
         if (bannerListPresenter != null) {
-            bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);//TODO position=2时无数据，1临时使用
+            bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);
         }
         if (adImgPresenter != null) {
             adImgPresenter.getAdImg(getBaseActivity(), "ad_goods");
@@ -117,10 +118,10 @@ public class FindFragment extends BaseFragment implements
     }
 
     private void initView() {
-        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
+        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerListResponseBean.BannerListEntity>() {
             @Override
-            public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-                GlidImageManager.getInstance().loadImageView(getBaseActivity(), model, itemView, R.drawable.holder);
+            public void fillBannerItem(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
+                GlidImageManager.getInstance().loadImageView(getBaseActivity(), model.getImg(), itemView, R.drawable.holder);
             }
         });
 
@@ -139,15 +140,27 @@ public class FindFragment extends BaseFragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //产品要求不跳转
-//        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+//        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, BannerListResponseBean.BannerListEntity>() {
 //            @Override
-//            public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+//            public void onBannerItemClick(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
+//                String id = model.getUrl_id();
+//                String type = model.getUrl_type();
 //                Intent intent = new Intent();
-//                intent.setClass(getBaseActivity(), WebViewActivity.class);
-//                intent.putExtra("URL", imgUrlList.get(position));
-//                intent.putExtra("title", nameList.get(position));
-//                startActivity(intent);
+//                if (!TextUtils.isEmpty(type)) {
+//                    if (type.equals("factory")) {//企业详情
+//                        intent.setClass(getBaseActivity(), EnterpriseActivity.class);
+//                    } else if (type.equals("goods_list")) {//商品列表
+//                        intent.setClass(getBaseActivity(), GoodsListsActivity.class);
+//                    } else if (type.equals("goods_detail")) {//商品详情
+//                        intent.setClass(getBaseActivity(), GoodsDetailActivity.class);
+//                    } else if (type.equals("info_detail")) {//资讯详情
+//                        intent.setClass(getBaseActivity(), InfoDetailActivity.class);
+//                    } /*else if () {//抽奖活动详情  待定
+//
+//                    }*/
+//                    if (!TextUtils.isEmpty(id)) intent.putExtra("id",id);
+//                    startActivity(intent);
+//                }
 //            }
 //        });
     }
@@ -239,7 +252,9 @@ public class FindFragment extends BaseFragment implements
                 break;
 
             case R.id.img_goods:
-                jump(GoodsListsActivity.class, null);
+                Intent intent=new Intent();
+                intent.putExtra("target","发现");
+                jump(GoodsListsActivity.class, intent);
             default:
                 break;
         }
@@ -249,7 +264,8 @@ public class FindFragment extends BaseFragment implements
     @Override
     public void onItemClickListener(int id) {
         Intent intent = new Intent();
-        intent.putExtra("id", id);
+        intent.putExtra("id", String.valueOf(id));
+        intent.putExtra("target","发现");
         jump(InfoDetailActivity.class, intent);
 
     }
@@ -265,15 +281,15 @@ public class FindFragment extends BaseFragment implements
 
     @Override
     public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {
-        imgList.clear();
-        nameList.clear();
-        imgUrlList.clear();
-        for (BannerListResponseBean.BannerListEntity listEntity : list) {
-            imgList.add(listEntity.getImg());
-            nameList.add(listEntity.getName());
-            imgUrlList.add(listEntity.getUrl());
-            mContentBanner.setData(imgList, null);
-        }
+        banners.clear();
+        banners.addAll(list);
+        mContentBanner.setData(banners,null);
+//        for (BannerListResponseBean.BannerListEntity listEntity : list) {
+//            imgList.add(listEntity.getImg());
+//            nameList.add(listEntity.getName());
+//            imgUrlList.add(listEntity.getUrl());
+//            mContentBanner.setData(imgList, null);
+//        }
     }
 
     @Override

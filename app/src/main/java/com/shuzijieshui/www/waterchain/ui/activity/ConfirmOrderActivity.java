@@ -22,16 +22,23 @@ import android.widget.TextView;
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
 import com.shuzijieshui.www.waterchain.beans.CreateOrderResponseBean;
+import com.shuzijieshui.www.waterchain.beans.CreateOrderResponseBean1;
 import com.shuzijieshui.www.waterchain.beans.FactoryServiceResponseBean;
 import com.shuzijieshui.www.waterchain.beans.TotalPriceResponseBean;
+import com.shuzijieshui.www.waterchain.beans.WechatBean;
 import com.shuzijieshui.www.waterchain.beans.request.CreateOrderReqParams;
+import com.shuzijieshui.www.waterchain.contract.model.GetPayResModel;
 import com.shuzijieshui.www.waterchain.contract.presenter.CreateOrderPresenter;
+import com.shuzijieshui.www.waterchain.contract.presenter.GetPayResPresenter;
 import com.shuzijieshui.www.waterchain.contract.presenter.TotalPricePresenter;
 import com.shuzijieshui.www.waterchain.contract.view.CreateOrderViewImpl;
+import com.shuzijieshui.www.waterchain.contract.view.GetPayResViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.TotalPriceViewImpl;
 import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
 import com.shuzijieshui.www.waterchain.ui.widget.popup.CreateOrderListPopupWindow;
 import com.shuzijieshui.www.waterchain.utils.LogUtils;
+import com.shuzijieshui.www.waterchain.utils.Pay;
+import com.shuzijieshui.www.waterchain.utils.SPUtil;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.TimeUtils;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
@@ -48,7 +55,7 @@ import butterknife.OnClick;
  * Class Note:确认订单
  */
 
-public class ConfirmOrderActivity extends BaseActivity implements TotalPriceViewImpl, CreateOrderViewImpl {
+public class ConfirmOrderActivity extends BaseActivity implements TotalPriceViewImpl, CreateOrderViewImpl, GetPayResViewImpl {
 
     @BindView(R.id.left_ll)
     LinearLayout left_ll;
@@ -95,8 +102,9 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     private AlertChainDialog alertChainPayDialog;
     private TotalPricePresenter totalPricePresenter;
     private CreateOrderPresenter createOrderPresenter;
+    private GetPayResPresenter getPayResPresenter;
     private ArrayList<FactoryServiceResponseBean.WashFatoryCageGory> washFatoryCageGory = new ArrayList<>();
-    private String payType = "1";//pay_type	支付渠道	字符串(string)1支付宝 2微信
+    private String payType = "2";//pay_type	支付渠道	字符串(string)1支付宝 2微信 3线下支付
     private String countDown = "00分00秒";
     private int payCate = 1;//支付类型   1全额支付   2组合支付
     private String tradeDetailStr = "";
@@ -121,7 +129,8 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         totalPricePresenter.attachView(this);
         createOrderPresenter = new CreateOrderPresenter();
         createOrderPresenter.attachView(this);
-
+        getPayResPresenter = new GetPayResPresenter(new GetPayResModel());
+        getPayResPresenter.attachView(this);
         initView();
     }
 
@@ -172,7 +181,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     }
 
     @OnClick({R.id.left_ll, R.id.order_detail, R.id.btn_create_order, R.id.wash_delivery_rl, R.id.wash_demand_rl, R.id.fullPayment,
-            R.id.combinedPayment, R.id.pay_channel_wx_rl, R.id.pay_channel_zfb_rl,R.id.tv_agreement})
+            R.id.combinedPayment, R.id.pay_channel_wx_rl, R.id.pay_channel_zfb_rl, R.id.tv_agreement})
     public void onClick(View v) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -197,13 +206,26 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                     ToastUtils.showCustomToastMsg("请阅读并同意《数字节水平台用户协议》", 150);
                     return;
                 }
+                if (totalCount < 1 || TextUtils.isEmpty(params.getTrade_detail())) {
+                    ToastUtils.showCustomToastMsg("请选择具体洗涤需求", 150);
+                    jump2WashDemand(intent,bundle);
+                    return;
+                }
+
+//                params.setProvince("北京");
+//                params.setCity("海淀");
+//                params.setPickup_time("2019-3-11");
+//                params.setExpress(1);
+//                params.setContact_tel("18329257177");
+//                params.setContact_name("sxt");
+
                 params.setFsid(fsid);
                 params.setTrade_detail(tradeDetailStr);
                 params.setPay_cate(payCate);
                 params.setPay_type(payType);
-
                 btnCreateOrder.setEnabled(true);
                 createOrderPresenter.createOrder(ConfirmOrderActivity.this, params);
+
                 break;
             case R.id.wash_delivery_rl://配送信息
                 bundle.putInt("jumpAction", R.id.wash_delivery_rl);
@@ -214,13 +236,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
                 break;
             case R.id.wash_demand_rl://洗涤需求
-                bundle.putParcelableArrayList("washFatoryCageGory", washFatoryCageGory);
-                for (FactoryServiceResponseBean.WashFatoryCageGory entry : washFatoryCageGory) {
-                    LogUtils.e(entry.getC_name() + " ***confirm send---  " + entry.getPiceCount());
-                }
-                intent.putExtras(bundle);
-                intent.setClass(ConfirmOrderActivity.this, WashDemandActivity.class);
-                startActivity(intent);
+                jump2WashDemand(intent,bundle);
                 break;
             case R.id.combinedPayment://组合支付
                 fullPayImg.setVisibility(View.GONE);
@@ -255,16 +271,17 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 payType = "2";
                 break;
             case R.id.pay_channel_zfb_rl:
-                wxPayImg.setVisibility(View.GONE);
-                zfbPayImg.setVisibility(View.VISIBLE);
-                payType = "1";
+                ToastUtils.showCustomToastMsg("暂不支持支付宝支付！",150);
+//                wxPayImg.setVisibility(View.GONE);
+//                zfbPayImg.setVisibility(View.VISIBLE);
+//                payType = "1";
                 break;
 
             case R.id.tv_agreement:
                 Intent i = new Intent(this, WebViewActivity.class);
                 i.setClass(this, WebViewActivity.class);
-                i.putExtra(WebViewActivity.WEBVIEW_ACT_TITLE,"协议");
-                i.putExtra(WebViewActivity.GET_URL_TYPE,"contract");
+                i.putExtra(WebViewActivity.WEBVIEW_ACT_TITLE, "协议");
+                i.putExtra(WebViewActivity.GET_URL_TYPE, "contract");
                 startActivity(i);
                 break;
             default:
@@ -292,6 +309,16 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
             }).show();
             countDownPayTime();
         }
+    }
+
+    private void jump2WashDemand(Intent intent,Bundle bundle){
+        bundle.putParcelableArrayList("washFatoryCageGory", washFatoryCageGory);
+        for (FactoryServiceResponseBean.WashFatoryCageGory entry : washFatoryCageGory) {
+            LogUtils.e(entry.getC_name() + " ***confirm send---  " + entry.getPiceCount());
+        }
+        intent.putExtras(bundle);
+        intent.setClass(ConfirmOrderActivity.this, WashDemandActivity.class);
+        startActivity(intent);
     }
 
     public static class MyTimeHandler extends Handler {
@@ -458,6 +485,18 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                     }
                 }
                 break;
+            case 4://微信支付成功后返回该页面
+                final String id = (String) SPUtil.get(this, SPUtil.OID, "0");
+                ToastUtils.showCustomToastMsg("正在获取支付结果", 150);
+                showLoadingDialog();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getPayResPresenter.getPayRes(ConfirmOrderActivity.this, Integer.valueOf(id));
+                        dismissLoadingDialog();
+                    }
+                }, 3000);
+                break;
             default:
                 break;
         }
@@ -478,12 +517,9 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (totalPricePresenter != null) {
-            totalPricePresenter.detachView();
-        }
-        if (createOrderPresenter != null) {
-            createOrderPresenter.detachView();
-        }
+        if (totalPricePresenter != null) totalPricePresenter.detachView();
+        if (createOrderPresenter != null) createOrderPresenter.detachView();
+        if (getPayResPresenter != null) getPayResPresenter.detachView();
     }
 
     /**
@@ -539,14 +575,48 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
     }
 
     @Override
-    public void onCreateOrderSuccess(CreateOrderResponseBean createOrderResponseBean) {
-        ToastUtils.showCustomToast("创建订单成功", 1);
-        startActivity(new Intent(ConfirmOrderActivity.this, PaySuceessActivity.class));
-        //todo 支付宝、微信支付
+    public void onCreateOrderSuccess(Object o) {
+        if (o != null) {
+            if (payType.equals("1")) {
+                //todo 支付宝
+                CreateOrderResponseBean bean = (CreateOrderResponseBean) o;
+                SPUtil.insert(this, SPUtil.OID, bean.getOid());//此处保存，支付成功后删除
+                String orderStr = bean.getOrderStr();
+                LogUtils.e(orderStr);
+            } else if (payType.equals("2")) {
+                CreateOrderResponseBean1 bean1 = (CreateOrderResponseBean1) o;
+                SPUtil.insert(this, SPUtil.OID, bean1.getOid());//此处保存，支付成功后删除
+                WechatBean wechatBean = bean1.getOrderStr();
+                if (!Pay.payByWX(this, wechatBean)) {
+                    ToastUtils.showCustomToastMsg("未安装微信", 150);
+                } else {
+                    //以下操作仅为页面显示和谐一些
+                    showLoadingDialog();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dismissLoadingDialog();
+                        }
+                    }, 500);
+                }
+            }
+        }
     }
 
     @Override
     public void onCreateOrderFailed(String msg) {
+        ToastUtils.showCustomToast(msg, 0);
+    }
+
+    @Override
+    public void onGetPayResSucc() {
+        Intent intent=new Intent(this,PaySuccessActivity.class);
+        intent.putExtra("from","ConfirmOrderActivity");
+        startActivity(intent);
+    }
+
+    @Override
+    public void onGetPayResFail(String msg) {
         ToastUtils.showCustomToast(msg, 0);
     }
 

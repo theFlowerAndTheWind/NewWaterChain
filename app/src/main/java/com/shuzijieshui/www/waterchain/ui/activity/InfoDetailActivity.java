@@ -11,6 +11,7 @@
 
 package com.shuzijieshui.www.waterchain.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -71,6 +72,8 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
     @BindView(R.id.divider)
     View divider;
     private InfoDetailPresenter infoDetailPresenter;
+    private String id;
+    private String target="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,13 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
         infoDetailPresenter = new InfoDetailPresenter();
         infoDetailPresenter.attachView(this);
         initView();
+        getIntentData();
+    }
+
+    private void getIntentData() {
+        Intent intent=getIntent();
+        id=intent.getStringExtra("id");
+        target=intent.getStringExtra("target");
     }
 
     private void initView() {
@@ -97,7 +107,7 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
 
     public void doInfoDetailRequest(){
         if (infoDetailPresenter!=null && getIntent()!=null){
-            infoDetailPresenter.getInfoDetail(this,getIntent().getIntExtra("id",-1));
+            infoDetailPresenter.getInfoDetail(this,Integer.valueOf(id));
             showLoadingDialog();
         }
     }
@@ -108,7 +118,7 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
         switch (id) {
             case R.id.left_ll:
                 goBack(view);
-                EventBus.getDefault().post(new SelectFragmentEvent("发现"));
+                EventBus.getDefault().post(new SelectFragmentEvent(target));
                 finish();
                 break;
 

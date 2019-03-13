@@ -69,7 +69,6 @@ public class OrderListsTabFragment extends BaseFragment implements OrderListsVie
             case "全部":
                 intStatus = 0;
                 break;
-            case "待付款":
             case "未付款":
                 intStatus = 1;
                 break;

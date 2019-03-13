@@ -120,16 +120,16 @@ public class DistributionInfoActivity extends BaseActivity {
                 case R.id.wash_delivery_rl:
                     CreateOrderReqParams extraParams = intent.getParcelableExtra("params");
                     if (extraParams != null) {
-                        nameStr=extraParams.getContact_name();
-                        phoneStr=extraParams.getContact_tel();
-                        addressStr=extraParams.getAddress();
-                        deliveryRegion=extraParams.getProvince()+"_"+extraParams.getCity();
-                        deliveryTime=extraParams.getPickup_time();
-                        int express=extraParams.getExpress();
-                        if(express==1){
-                            deliveryType="企业配送";
-                        }else if(express==2){
-                            deliveryType="自取";
+                        nameStr = extraParams.getContact_name();
+                        phoneStr = extraParams.getContact_tel();
+                        addressStr = extraParams.getAddress();
+                        deliveryRegion = extraParams.getProvince() + "_" + extraParams.getCity();
+                        deliveryTime = extraParams.getPickup_time();
+                        int express = extraParams.getExpress();
+                        if (express == 1) {
+                            deliveryType = "企业配送";
+                        } else if (express == 2) {
+                            deliveryType = "自取";
                         }
                         //
                         params.setExpress(express);
@@ -145,6 +145,7 @@ public class DistributionInfoActivity extends BaseActivity {
 //                        phone.setText(phoneStr);
 //                        address.setText(addressStr);
                         deliveryType_tv11.setText(deliveryType);
+                        if (deliveryRegion.equals("_")) deliveryRegion = "";
                         tvRegion.setText(deliveryRegion);
                         deliveryTime_tv66.setText(deliveryTime);
                     }
@@ -172,7 +173,7 @@ public class DistributionInfoActivity extends BaseActivity {
             R.id.area_rl4, R.id.time_re6, R.id.deliveryTypeRl1, R.id.address_rl5, R.id.name_rl2, R.id.phone_rl3})
     public void OnClick(View view) {
         Bundle bundle = new Bundle();
-        bundle.putString("from","DistributionInfoActivity");
+        bundle.putString("from", "DistributionInfoActivity");
         switch (view.getId()) {
             case R.id.img_title_left:
                 goBack(view);
@@ -342,6 +343,7 @@ public class DistributionInfoActivity extends BaseActivity {
                         options3Items.get(options1).get(options2).get(options3);
                 LogUtils.d("选择的城市列表：" + tx);
                 deliveryRegion = tx;
+                if (deliveryRegion.equals("_")) deliveryRegion = "";
                 tvRegion.setText(deliveryRegion);
             }
         }).setTitleText("城市选择")
@@ -367,7 +369,6 @@ public class DistributionInfoActivity extends BaseActivity {
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
                 deliveryTime = sf.format(date);
                 deliveryTime_tv66.setText(deliveryTime);
-                LogUtils.d("选择配送时间:" + deliveryTime);
             }
         })
                 .setCancelText("取消")

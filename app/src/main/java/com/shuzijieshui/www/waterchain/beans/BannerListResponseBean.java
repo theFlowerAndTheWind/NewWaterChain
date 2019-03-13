@@ -25,30 +25,23 @@ public class BannerListResponseBean {
     public class BannerListEntity{
         String name;
         String img;
-        String url;
+        String url_id;
+        String url_type;
 
         public String getName() {
             return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
         }
 
         public String getImg() {
             return img;
         }
 
-        public void setImg(String img) {
-            this.img = img;
+        public String getUrl_id() {
+            return url_id;
         }
 
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
+        public String getUrl_type() {
+            return url_type;
         }
     }
 }

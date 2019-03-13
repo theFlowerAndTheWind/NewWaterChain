@@ -3,8 +3,7 @@
     android:id="@+id/title_bar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_height"
-    android:background="@color/primary_blue"
-    style="@style/PaddinLeftRight">
+    android:background="@color/primary_blue">
 
     <LinearLayout
         android:id="@+id/left_ll"
@@ -13,16 +12,17 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layout_horizontal_padding">
         <!--设备内边距，方便用户点击-->
         <ImageView
             android:id="@+id/img_title_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="30px"
-            android:paddingBottom="30px"
-            android:paddingRight="30px"
             android:layout_gravity="center"
+            android:paddingTop="30px"
+            android:paddingRight="30px"
+            android:paddingBottom="30px"
             android:src="@mipmap/back" />
 
         <TextView
@@ -31,11 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:text="左侧文字"
             android:textSize="28px"
-            android:layout_gravity="center_vertical"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
 
@@ -56,23 +56,53 @@
         android:src="@drawable/ic_launcher"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tv_title_right"
-        style="@style/style_txt_title"
+    <LinearLayout
+        android:id="@+id/right_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="右侧文字"
-        android:visibility="gone" />
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/layout_horizontal_padding">
 
-    <ImageView
-        android:id="@+id/img_title_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_launcher"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/img_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="30px"
+            android:paddingRight="30px"
+            android:paddingBottom="30px"
+            android:visibility="gone"/>
 
+        <TextView
+            android:id="@+id/tv_title_right"
+            style="@style/style_txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="左侧文字"
+            android:textSize="28px"
+            android:visibility="gone"/>
+        <!--<TextView-->
+        <!--android:id="@+id/tv_title_right"-->
+        <!--style="@style/style_txt_title"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="右侧文字"-->
+        <!--android:visibility="gone" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/img_title_right"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:src="@drawable/ic_launcher"-->
+        <!--android:visibility="gone" />-->
+    </LinearLayout>
 </RelativeLayout>

@@ -1,9 +1,11 @@
 package com.shuzijieshui.www.waterchain.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,7 +50,6 @@ public class ChangeInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setImmersionStatus(this, title_bar);
-
         initView();
         initData(getIntent());
     }
@@ -63,7 +64,7 @@ public class ChangeInfoActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.left_ll, R.id.tv_title_right})
+    @OnClick({R.id.left_ll, R.id.btn_save})
     public void onClick(View v) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -72,7 +73,7 @@ public class ChangeInfoActivity extends BaseActivity {
                 goBack(v);
                 finish();
                 break;
-            case R.id.tv_title_right:
+            case R.id.btn_save:
                 if (!Util.isFastDoubleClick()) {
 
                     bundle.putInt("jumpAction", jumpAction);
@@ -135,21 +136,27 @@ public class ChangeInfoActivity extends BaseActivity {
             switch (jumpAction) {
                 //----------------------洗涤订单相关----------------------//
                 case R.id.name_rl2:
+                    tv_title_center.setText("联系人姓名");
                     nameStr = intent.getStringExtra("name");
                     name_et.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(nameStr)) {
+                        name_et.setText(nameStr);
+                        name_et.setSelection(nameStr.length());
+                    }
+
                     address_et.setVisibility(View.GONE);
                     phone_et.setVisibility(View.GONE);
-                    name_et.setText(nameStr);
-                    name_et.setSelection(nameStr.length());
-                    tv_title_center.setText("联系人姓名");
+
                     break;
                 case R.id.phone_rl3:
                     phoneStr = intent.getStringExtra("phone");
                     phone_et.setVisibility(View.VISIBLE);
                     name_et.setVisibility(View.GONE);
                     address_et.setVisibility(View.GONE);
-                    phone_et.setText(phoneStr);
-                    phone_et.setSelection(phoneStr.length());
+                    if (!TextUtils.isEmpty(phoneStr)) {
+                        phone_et.setText(phoneStr);
+                        phone_et.setSelection(phoneStr.length());
+                    }
                     tv_title_center.setText("手机号码");
                     break;
                 case R.id.address_rl5:
@@ -157,8 +164,10 @@ public class ChangeInfoActivity extends BaseActivity {
                     address_et.setVisibility(View.VISIBLE);
                     phone_et.setVisibility(View.GONE);
                     name_et.setVisibility(View.GONE);
-                    address_et.setText(addressStr);
-                    address_et.setSelection(addressStr.length());
+                    if (!TextUtils.isEmpty(addressStr)) {
+                        address_et.setText(addressStr);
+                        address_et.setSelection(addressStr.length());
+                    }
                     tv_title_center.setText("详细地址");
                     break;
                 //----------------------兑换订单相关----------------------//
@@ -196,8 +205,9 @@ public class ChangeInfoActivity extends BaseActivity {
     }
 
     private void initView() {
-        tv_title_right.setText("确定");
-        tv_title_right.setVisibility(View.VISIBLE);
+//        tv_title_right.setText("确定");
+//        tv_title_right.setVisibility(View.VISIBLE);
 
     }
+
 }

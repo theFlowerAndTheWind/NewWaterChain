@@ -103,6 +103,7 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
                 intent.putExtras(bundle);
                 intent.setClass(FactoryServiceActivity.this,ConfirmOrderActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:break;
         }

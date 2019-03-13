@@ -103,7 +103,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn2"
             android:gravity="center"
-            android:text="张三" />
+            android:text="联系人姓名" />
 
     </RelativeLayout>
 
@@ -183,7 +183,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn4"
             android:gravity="center"
-            android:text="山东 临沂" />
+            android:text="所在省市" />
 
     </RelativeLayout>
 
@@ -224,7 +224,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn5"
             android:gravity="center"
-            android:text="某个详细地址" />
+            android:text="详细地址" />
 
     </RelativeLayout>
 

@@ -55,7 +55,7 @@ import de.greenrobot.event.EventBus;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class GoodsListsActivity extends BaseActivity implements BannerListViewImpl,GoodsListViewImpl{
+public class GoodsListsActivity extends BaseActivity implements BannerListViewImpl, GoodsListViewImpl {
     @BindView(R.id.left_ll)
     LinearLayout leftLl;
     @BindView(R.id.tv_title_center)
@@ -76,12 +76,15 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     private BannerListPresenter bannerListPresenter;
     private GoodsListsAdapter adapterActivity;
     private GoodsListsAdapter adapterCommodity;
-    ArrayList<String> imgList = new ArrayList<>();
-    ArrayList<String> nameList = new ArrayList<>();
-    ArrayList<String> imgUrlList = new ArrayList<>();
+    private List<BannerListResponseBean.BannerListEntity> banners = new ArrayList<>();
     private List<GoodsListsResponseBean> goodsListActivity = new ArrayList<>();
     private List<GoodsListsResponseBean> goodsListCommodity = new ArrayList<>();
     private boolean isRefresh = false;//是否刷新
+    private String target = "首页";
+    private int actvityCounter = 0;
+    private String activityPage = "1";
+    private int commodityCounter = 0;
+    private String commodityPage = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,15 +95,20 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         bannerListPresenter = new BannerListPresenter();
         bannerListPresenter.attachView(this);
         initView();
+        getIntentData();
+    }
+
+    private void getIntentData() {
+        target = getIntent().getStringExtra("target");
     }
 
     private void initView() {
         tvTitleCenter.setText("兑换商城");
         relativeHint.setVisibility(View.VISIBLE);
-        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
+        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerListResponseBean.BannerListEntity>() {
             @Override
-            public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-                GlidImageManager.getInstance().loadImageView(GoodsListsActivity.this, model, itemView, R.drawable.holder);
+            public void fillBannerItem(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
+                GlidImageManager.getInstance().loadImageView(GoodsListsActivity.this, model.getImg(), itemView, R.drawable.holder);
             }
         });
 
@@ -115,19 +123,8 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         goodsListsXRActivity.setLayoutManager(new LinearLayoutManager(this));
         goodsListsXRActivity.setPullRefreshEnabled(false);
         goodsListsXRActivity.setLoadingMoreEnabled(false);
-        goodsListsXRActivity.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                isRefresh = true;
-                doGoodsListRequest(2);
-            }
-
-            @Override
-            public void onLoadMore() {
-                isRefresh = false;
-                doGoodsListRequest(2);
-            }
-        });
+//        goodsListsXRActivity.setHasFixedSize(true);
+//        goodsListsXRActivity.setNestedScrollingEnabled(false);
         goodsListsXRActivity.setAdapter(adapterActivity);
 
         //-----------------------------------------------热门商品-----------------------------------//
@@ -139,21 +136,22 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         });
         goodsListsXRCommodity.setArrowImageView(R.drawable.iconfont_downgrey);
         goodsListsXRCommodity.setLayoutManager(new LinearLayoutManager(this));
-        goodsListsXRCommodity.setLoadingMoreEnabled(false);
+        goodsListsXRCommodity.setLoadingMoreEnabled(true);
         goodsListsXRCommodity.setPullRefreshEnabled(false);
         goodsListsXRCommodity.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                isRefresh = true;
-                doGoodsListRequest(1);
+                //do nothing
             }
 
             @Override
             public void onLoadMore() {
                 isRefresh = false;
-                doGoodsListRequest(1);
+                doGoodsListRequest(1, commodityCounter, commodityPage);
             }
         });
+//        goodsListsXRCommodity.setHasFixedSize(true);
+//        goodsListsXRCommodity.setNestedScrollingEnabled(false);
         goodsListsXRCommodity.setAdapter(adapterCommodity);
 
         tvDetail.setText("加载数据");
@@ -165,19 +163,20 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         setContentView(R.layout.activity_goods_lists);
     }
 
-    public void jumpActivity(int id){
+    public void jumpActivity(int id) {
         Bundle bundle = new Bundle();
-        bundle.putInt("id",id);
+        bundle.putInt("id", id);
         Intent intent = new Intent();
         intent.putExtras(bundle);
         intent.setClass(GoodsListsActivity.this, GoodsDetailActivity.class);
         startActivity(intent);
     }
+
     @Override
     public void onReNetRefreshData(int viewId) {
         doBannerRequest();
-        doGoodsListRequest(1);
-        doGoodsListRequest(2);
+        doGoodsListRequest(1, commodityCounter, commodityPage);
+        doGoodsListRequest(2, actvityCounter, activityPage);
     }
 
     @OnClick({R.id.left_ll})
@@ -186,7 +185,7 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         switch (id) {
             case R.id.left_ll:
                 goBack(view);
-                EventBus.getDefault().post(new SelectFragmentEvent("发现"));
+                EventBus.getDefault().post(new SelectFragmentEvent(target));//通知mainactivity切换哪个fragment
                 finish();
                 break;
 
@@ -202,11 +201,11 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     }
 
     /**
-     *兑换商品请求
+     * 兑换商品请求
      */
-    public void doGoodsListRequest(int cateId){
-        if (goodsListsPresenter!=null){
-            goodsListsPresenter.getGoodsLists(this,cateId,1,"1");
+    public void doGoodsListRequest(int cateId, int counter, String page) {
+        if (goodsListsPresenter != null) {
+            goodsListsPresenter.getGoodsLists(this, cateId, counter, page);
 //            showLoadingDialog();
         }
     }
@@ -214,19 +213,19 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     /**
      * 兑换轮播请求
      */
-    public void doBannerRequest(){
+    public void doBannerRequest() {
         if (bannerListPresenter != null) {
-            bannerListPresenter.getBannerList(this, 3, 1);//TODO position=2时无数据，1临时使用
+            bannerListPresenter.getBannerList(this, 3, 1);
         }
     }
 
     @Override
-    public void onGetGoodsListonRefresh(List<GoodsListsResponseBean> goodsListsResponseBean,int cate_id) {
-        if (cate_id == 2){
-            if(goodsListsResponseBean.size()>0 && !Util.isEmpty(goodsListsResponseBean)){
+    public void onGetGoodsListonRefresh(List<GoodsListsResponseBean> goodsListsResponseBean, int cate_id) {
+        if (cate_id == 2) {
+            if (goodsListsResponseBean.size() > 0 && !Util.isEmpty(goodsListsResponseBean)) {
                 relativeHint.setVisibility(View.GONE);
                 goodsListsXRActivity.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 relativeHint.setVisibility(View.VISIBLE);
                 goodsListsXRActivity.setVisibility(View.GONE);
             }
@@ -234,16 +233,18 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
             goodsListActivity.addAll(goodsListsResponseBean);
             adapterActivity.notifyDataSetChanged();
             goodsListsXRActivity.refreshComplete();
-        }else {
-            if(goodsListsResponseBean.size()>0 && !Util.isEmpty(goodsListsResponseBean)){
+        } else {
+            if (goodsListsResponseBean.size() > 0 && !Util.isEmpty(goodsListsResponseBean)) {
                 relativeHint.setVisibility(View.GONE);
                 goodsListsXRCommodity.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 relativeHint.setVisibility(View.VISIBLE);
                 goodsListsXRCommodity.setVisibility(View.GONE);
             }
             goodsListCommodity.clear();
             goodsListCommodity.addAll(goodsListsResponseBean);
+            if (goodsListCommodity != null) commodityCounter = goodsListCommodity.size();
+            if (commodityCounter > 0) commodityPage = "not first request";
             adapterCommodity.notifyDataSetChanged();
             goodsListsXRCommodity.refreshComplete();
         }
@@ -252,27 +253,34 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     }
 
     @Override
-    public void onGetGoodsListonloadMore(List<GoodsListsResponseBean> goodsListsResponseBean,int cate_id) {
-        if (cate_id == 2){
-            if(goodsListsResponseBean.size()>0 && !Util.isEmpty(goodsListsResponseBean)){
+    public void onGetGoodsListonloadMore(List<GoodsListsResponseBean> goodsListsResponseBean, int cate_id) {
+        if (cate_id == 2) {
+            if (!Util.isEmpty(goodsListsResponseBean) && !Util.isEmpty(goodsListsResponseBean)) {
                 relativeHint.setVisibility(View.GONE);
                 goodsListsXRActivity.setVisibility(View.VISIBLE);
-            }else{
-                relativeHint.setVisibility(View.VISIBLE);
-                goodsListsXRActivity.setVisibility(View.GONE);
+            } else {
+                if (actvityCounter < 1) {
+                    relativeHint.setVisibility(View.VISIBLE);
+                    goodsListsXRActivity.setVisibility(View.GONE);
+                }
             }
             goodsListActivity.addAll(goodsListsResponseBean);
             adapterActivity.notifyDataSetChanged();
             goodsListsXRActivity.loadMoreComplete();
-        }else {
-            if(goodsListsResponseBean.size()>0 && !Util.isEmpty(goodsListsResponseBean)){
+        } else {
+            if (!Util.isEmpty(goodsListsResponseBean) && goodsListsResponseBean.size() > 0) {
                 relativeHint.setVisibility(View.GONE);
                 goodsListsXRCommodity.setVisibility(View.VISIBLE);
-            }else{
-                relativeHint.setVisibility(View.VISIBLE);
-                goodsListsXRCommodity.setVisibility(View.GONE);
+            } else {
+                if (commodityCounter < 1) {
+                    relativeHint.setVisibility(View.VISIBLE);
+                    goodsListsXRCommodity.setVisibility(View.GONE);
+                }
             }
             goodsListCommodity.addAll(goodsListsResponseBean);
+
+            if (goodsListCommodity != null) commodityCounter = goodsListCommodity.size();
+            if (commodityCounter > 0) commodityPage = "not first request";
             adapterCommodity.notifyDataSetChanged();
             goodsListsXRCommodity.loadMoreComplete();
         }
@@ -281,14 +289,14 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     }
 
     @Override
-    public void onGetGoodsListFailed(boolean isRefresh, String msg,int cate_id) {
-        if (cate_id == 2){
+    public void onGetGoodsListFailed(boolean isRefresh, String msg, int cate_id) {
+        if (cate_id == 2) {
             if (isRefresh) {
                 goodsListsXRActivity.refreshComplete();
             } else {
                 goodsListsXRActivity.loadMoreComplete();
             }
-        }else{
+        } else {
             if (isRefresh) {
                 goodsListsXRCommodity.refreshComplete();
             } else {
@@ -301,15 +309,9 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
 
     @Override
     public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {
-        imgList.clear();
-        nameList.clear();
-        imgUrlList.clear();
-        for (BannerListResponseBean.BannerListEntity listEntity : list) {
-            imgList.add(listEntity.getImg());
-            nameList.add(listEntity.getName());
-            imgUrlList.add(listEntity.getUrl());
-            mContentBanner.setData(imgList, null);
-        }
+        banners.clear();
+        banners.addAll(list);
+        mContentBanner.setData(banners, null);
     }
 
     @Override
@@ -321,17 +323,17 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     protected void onResume() {
         super.onResume();
         doBannerRequest();
-        doGoodsListRequest(1);
-        doGoodsListRequest(2);
+        doGoodsListRequest(1, commodityCounter, commodityPage);
+        doGoodsListRequest(2, actvityCounter, activityPage);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (goodsListsPresenter!=null){
+        if (goodsListsPresenter != null) {
             goodsListsPresenter.detachView();
         }
-        if (bannerListPresenter!=null){
+        if (bannerListPresenter != null) {
             bannerListPresenter.detachView();
         }
     }

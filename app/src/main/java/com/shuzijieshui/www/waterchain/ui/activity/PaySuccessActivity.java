@@ -2,6 +2,7 @@ package com.shuzijieshui.www.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,7 +20,7 @@ import butterknife.OnClick;
  * Class Note:支付成功
  */
 
-public class PaySuceessActivity extends BaseActivity {
+public class PaySuccessActivity extends BaseActivity {
 
     @BindView(R.id.title_bar)
     View title_bar;
@@ -41,8 +42,8 @@ public class PaySuceessActivity extends BaseActivity {
     @BindView(R.id.tv_gohome)
     TextView tv4;
 
-    private String from;
-    private String goods;
+    private String from = "";
+    private String goods = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class PaySuceessActivity extends BaseActivity {
 
     private void initView() {
         tv_title_center.setText("支付成功");
-        if (from.equals("ConfirmGoodsOrderActivity")) {
+        if (!TextUtils.isEmpty(from) && from.equals("ConfirmGoodsOrderActivity")) {
             tv_title_center.setText("兑换商城");
             tv1.setText("你已成功兑换：");
             tv2.setText(goods);
@@ -79,19 +80,17 @@ public class PaySuceessActivity extends BaseActivity {
             case R.id.tv_gohome:
                 if (from.equals("ConfirmGoodsOrderActivity")) {
                     jump(GoodsListsActivity.class);
-                    finish();
-                    return;
+                } else {
+                    jump(MainActivity.class);
                 }
-                jump(MainActivity.class);
                 finish();
                 break;
             case R.id.btn_viewOrder:
                 if (from.equals("ConfirmGoodsOrderActivity")) {
                     jump(GoodsActivity.class);
-                    finish();
-                    return;
+                } else if (from.equals("ConfirmOrderActivity")) {
+                    jump(OrderListsActivity.class);
                 }
-                jump(OrderListsActivity.class);
                 finish();
                 break;
             case R.id.left_ll:

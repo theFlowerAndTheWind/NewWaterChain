@@ -28,6 +28,7 @@ public class BannerListModel {
      */
     public void getBannerList(BaseActivity activity, int cate, int position, final BannerListCallBack callBack){
         HashMap<String,Object> params = new HashMap<>();
+        //以下两个参数接口doc中要求传递，后接口文档修改，无参
         params.put("cate",cate);
         params.put("position",position);
         RetrofitFactory.getInstance().createService()

@@ -21,7 +21,7 @@ public class CreateOrderReqParams implements Parcelable {
     String address=""; 	//详细地址 	字符串(string) 	是 	placeholder="非必填"
     int pay_cate=1; 	//支付类型 	数字(number) 	是 	placeholder="非必填" 	1全额支付 2组合支付
     String pickup_time=""; 	//配送时间 	字符串(string) 	否 	placeholder="非必填"
-    String pay_type="1";//支付渠道	字符串(string)	是		1支付宝 2微信
+    String pay_type="1";//支付渠道	字符串(string)	是		1支付宝 2微信 3线下支付
 
 
 

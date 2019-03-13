@@ -9,6 +9,6 @@ import com.shuzijieshui.www.waterchain.contract.IBaseViewImpl;
  */
 
 public interface CreateOrderViewImpl extends IBaseViewImpl {
-    void onCreateOrderSuccess(CreateOrderResponseBean createOrderResponseBean);
+    void onCreateOrderSuccess(Object o);
     void onCreateOrderFailed(String msg);
 }

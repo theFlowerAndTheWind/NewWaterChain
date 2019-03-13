@@ -20,13 +20,20 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
+import com.shuzijieshui.www.waterchain.beans.FactoryListResponse;
 import com.shuzijieshui.www.waterchain.beans.TradeLineResponseBean;
 import com.shuzijieshui.www.waterchain.beans.city.ProvinceBean;
+import com.shuzijieshui.www.waterchain.http.BaseObserver;
+import com.shuzijieshui.www.waterchain.http.RetrofitFactory;
+import com.shuzijieshui.www.waterchain.http.bean.BaseEntity;
+import com.shuzijieshui.www.waterchain.http.utils.ObservableTransformerUtils;
+import com.shuzijieshui.www.waterchain.http.utils.RequestUtil;
 import com.shuzijieshui.www.waterchain.utils.GsonUtil;
 import com.shuzijieshui.www.waterchain.utils.LogUtils;
 import com.shuzijieshui.www.waterchain.utils.Util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -89,33 +96,41 @@ public class TestActivity extends BaseActivity {
 
             case R.id.btn_request:
 //                edtcontent = edt.getText().toString();
-//                HashMap<String, Object> params = new HashMap<>();
-////                params.put("type", edtcontent);
-//                params.put("count", "10");
-//                RetrofitFactory.getInstance().createService()
-//                        .factoryList(RequestUtil.getRequestHashBody(params, false))
-//                        .compose(TestActivity.this.<BaseEntity<FactoryListResponse>>bindToLifecycle())
-//                        .compose(ObservableTransformerUtils.<BaseEntity<FactoryListResponse>>io())
-//                        .subscribe(new BaseObserver<FactoryListResponse>(TestActivity.this) {
-//
-//                            @Override
-//                            protected void onSuccess(FactoryListResponse bean) throws Exception {
-////                                url=bean.getUrl();
-//                            }
-//
-//                            @Override
-//                            protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//
-//                            }
-//                        });
+                HashMap<String, Object> params = new HashMap<>();
+//                params.put("type", edtcontent);
+                params.put("id", "10");
+                RetrofitFactory.getInstance().createService()
+                        .factoryList(RequestUtil.getRequestHashBody(params, false))
+                        .compose(TestActivity.this.<BaseEntity<FactoryListResponse>>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity<FactoryListResponse>>io())
+                        .subscribe(new BaseObserver<FactoryListResponse>(TestActivity.this) {
 
-                ShowPickerView();
+                            @Override
+                            protected void onSuccess(FactoryListResponse bean) throws Exception {
+//                                url=bean.getUrl();
+                            }
+
+                            @Override
+                            protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+
+                            }
+                        });
+
+//                ShowPickerView();
+
+                Intent intent=new Intent(this,PaySuccessActivity.class);
+                intent.putExtra("from","WXPayEntryActivity");
+                startActivity(intent);
                 break;
 
             case R.id.btn_show:
-                Intent intent = new Intent(TestActivity.this, WebViewActivity.class);
-                intent.putExtra("URL", url);
-                startActivity(intent);
+//                Intent intent = new Intent(TestActivity.this, WebViewActivity.class);
+//                intent.putExtra("URL", url);
+//                startActivity(intent);
+
+                Intent i=new Intent(this,PaySuccessActivity.class);
+                i.putExtra("from","ConfirmGoodsOrderActivity");
+                startActivity(i);
 
                 break;
         }

@@ -35,6 +35,7 @@ public class SPUtil {
     public static final String USER_NICKNAME = "user_nickname";
     public static final String IS_BLOCKED = "is_blocked";
     public static final String AVATAR = "avatar";
+    public static final String OID="order_id";
 
 
     /**

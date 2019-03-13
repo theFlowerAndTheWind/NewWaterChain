@@ -163,7 +163,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.shuzijieshui.www.waterchain.ui.activity.PaySuceessActivity"
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.PaySuccessActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.InfoDetailActivity"
@@ -193,6 +193,16 @@
         <activity android:name="com.shuzijieshui.www.waterchain.ui.activity.UserGoodsInfoActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
 
     </application>
 

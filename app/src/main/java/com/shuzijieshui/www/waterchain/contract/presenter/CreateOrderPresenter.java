@@ -28,9 +28,9 @@ public class CreateOrderPresenter extends BasePresenter<CreateOrderViewImpl> {
         }
         createOrderModel.createOrder(activity,params, new CreateOrderModel.CreateOrderCallBack() {
             @Override
-            public void success(CreateOrderResponseBean createOrderResponseBean) {
+            public void success(Object o) {
                 if (mView!=null){
-                    mView.onCreateOrderSuccess(createOrderResponseBean);
+                    mView.onCreateOrderSuccess(o);
                 }
             }
 

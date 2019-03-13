@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,11 @@ import com.shuzijieshui.www.waterchain.contract.view.FactoryListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.TradeCenterViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.TradeLineViewImpl;
 import com.shuzijieshui.www.waterchain.ui.activity.EnterpriseActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.GoodsDetailActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.GoodsListsActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.InfoDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.MainActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.WebViewActivity;
 import com.shuzijieshui.www.waterchain.ui.adapter.FactoryListIndexAdapter;
 import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
 import com.shuzijieshui.www.waterchain.ui.widget.chart.ChartUtil;
@@ -53,7 +58,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements BannerListViewImpl, FactoryListViewImpl, TradeLineViewImpl,TradeCenterViewImpl {
+public class HomeFragment extends BaseFragment implements BannerListViewImpl, FactoryListViewImpl, TradeLineViewImpl, TradeCenterViewImpl {
 
 
     @BindView(R.id.banner_guide_content)
@@ -79,9 +84,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
     private TradeLinePresenter tradeLinePresenter;
     private TradeCenterPresenter tradeCenterPresenter;//获取跌涨幅，当前市价
     private FactoryListIndexAdapter factoryListAdapter;
-    ArrayList<String> imgList = new ArrayList<>();
-    ArrayList<String> nameList = new ArrayList<>();
-    ArrayList<String> imgUrlList = new ArrayList<>();
+    private List<BannerListResponseBean.BannerListEntity> banners = new ArrayList<>();
     MainActivity activity;
     private List<Factory> listEntities = new ArrayList<>();
     private int count = 0;//factoryList计数
@@ -103,7 +106,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
             public void run() {
                 dismissLoadingDialog();
             }
-        },1000);
+        }, 1000);
     }
 
     @Override
@@ -142,10 +145,10 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
     }
 
     private void initList() {
-        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
+        mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerListResponseBean.BannerListEntity>() {
             @Override
-            public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
-                GlidImageManager.getInstance().loadImageView(getBaseActivity(), model, itemView, R.drawable.holder);
+            public void fillBannerItem(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
+                GlidImageManager.getInstance().loadImageView(getBaseActivity(), model.getImg(), itemView, R.drawable.holder);
             }
         });
 
@@ -190,17 +193,36 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//产品要求不跳转
-//        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
-//            @Override
-//            public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+
+        mContentBanner.setDelegate(new BGABanner.Delegate<ImageView, BannerListResponseBean.BannerListEntity>() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
+                String id = model.getUrl_id();
+                String type = model.getUrl_type();
+                Intent intent = new Intent();
+                if (!TextUtils.isEmpty(type)) {
+                    if (type.equals("factory")) {//企业详情
+                        intent.setClass(getBaseActivity(), EnterpriseActivity.class);
+                    } else if (type.equals("goods_list")) {//商品列表
+                        intent.setClass(getBaseActivity(), GoodsListsActivity.class);
+                    } else if (type.equals("goods_detail")) {//商品详情
+                        intent.setClass(getBaseActivity(), GoodsDetailActivity.class);
+                    } else if (type.equals("info_detail")) {//资讯详情
+                        intent.setClass(getBaseActivity(), InfoDetailActivity.class);
+                    } /*else if () {//抽奖活动详情  待定
+
+                    }*/
+                    if (!TextUtils.isEmpty(id)) intent.putExtra("id",id);
+                    intent.putExtra("target","首页");
+                    startActivity(intent);
+                }
 //                Intent intent = new Intent();
 //                intent.setClass(getBaseActivity(), WebViewActivity.class);
-//                intent.putExtra("URL",imgUrlList.get(position));
-//                intent.putExtra("title",nameList.get(position));
+//                intent.putExtra("URL", imgUrlList.get(position));
+//                intent.putExtra("title", nameList.get(position));
 //                startActivity(intent);
-//            }
-//        });
+            }
+        });
     }
 
 
@@ -238,8 +260,8 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
         if (tradeLinePresenter != null) {
             tradeLinePresenter.getTradeLine(getBaseActivity(), "today");
         }
-        if(tradeCenterPresenter==null){
-            tradeCenterPresenter=new TradeCenterPresenter(new TradeCenterModel());
+        if (tradeCenterPresenter == null) {
+            tradeCenterPresenter = new TradeCenterPresenter(new TradeCenterModel());
             tradeCenterPresenter.attachView(this);
         }
         tradeCenterPresenter.getTradeCenter(getBaseActivity());
@@ -264,7 +286,7 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
         if (tradeLinePresenter != null) {
             tradeLinePresenter.detachView();
         }
-        if(tradeCenterPresenter!=null)tradeCenterPresenter.detachView();
+        if (tradeCenterPresenter != null) tradeCenterPresenter.detachView();
     }
 
     @Override
@@ -280,27 +302,25 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
 
     @Override
     public void onTradeLineFailed(String msg) {
-        ToastUtils.showCustomToast(msg,0);
+        ToastUtils.showCustomToast(msg, 0);
     }
 
 
     @Override
     public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {
-        imgList.clear();
-        nameList.clear();
-        imgUrlList.clear();
-        for (BannerListResponseBean.BannerListEntity listEntity : list) {
-            imgList.add(listEntity.getImg());
-            nameList.add(listEntity.getName());
-            imgUrlList.add(listEntity.getUrl());
-            mContentBanner.setData(imgList, null);
-        }
+        banners.clear();
+        banners.addAll(list);
+//        List<String>tips=new ArrayList<>();
+//        for (BannerListResponseBean.BannerListEntity listEntity : list) {
+//            tips.add(listEntity.getName());
+//        }
+        mContentBanner.setData(banners, null);
 
     }
 
     @Override
     public void onBannerListFailed(String msg) {
-        ToastUtils.showCustomToast(msg,0);
+        ToastUtils.showCustomToast(msg, 0);
     }
 
     @Override
@@ -319,16 +339,13 @@ public class HomeFragment extends BaseFragment implements BannerListViewImpl, Fa
     @Override
     public void onFactoryListFailed(String msg) {
         isRefresh = false;//每次请求后必须执行
-        ToastUtils.showCustomToast(msg,0);
+        ToastUtils.showCustomToast(msg, 0);
     }
-
-
-
 
 
     @Override
     public void onTradeCenterSuccess(TradeCenterResponseBean tradeCenterResponseBean) {
-        if(tradeCenterResponseBean!=null){
+        if (tradeCenterResponseBean != null) {
             tvCurPrice.setText(new StringBuilder("1 水方 = ").append(tradeCenterResponseBean.getCur_price()).append("节水指标").toString());
             String price_limit_color = tradeCenterResponseBean.getPrice_limit_color();
             if (price_limit_color.equals("red")) {
