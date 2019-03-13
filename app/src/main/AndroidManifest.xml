@@ -45,18 +45,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- alipay start -->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" />
-        <activity
-            android:name="com.alipay.sdk.auth.AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" />
-        <!-- alipay end -->
 
         <activity android:name="com.shuzijieshui.www.waterchain.ui.activity.TestActivity" >
             <!--<intent-filter>-->
@@ -197,8 +185,7 @@
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
