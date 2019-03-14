@@ -247,14 +247,14 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                     return;
                 }
                 //todo  delete these debug codes
-                if (BuildConfig.DEBUG) {
-                    params.setProvince("北京");
-                    params.setCity("海淀");
-                    params.setPickup_time("2019-3-11");
-                    params.setExpress(1);
-                    params.setContact_tel("18329257177");
-                    params.setContact_name("sxt");
-                }
+//                if (BuildConfig.DEBUG) {
+//                    params.setProvince("北京");
+//                    params.setCity("海淀");
+//                    params.setPickup_time("2019-3-11");
+//                    params.setExpress(1);
+//                    params.setContact_tel("18329257177");
+//                    params.setContact_name("sxt");
+//                }
                 params.setFsid(fsid);
                 params.setTrade_detail(tradeDetailStr);
                 params.setPay_cate(payCate);
