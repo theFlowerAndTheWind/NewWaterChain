@@ -13,7 +13,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
 
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -23,6 +23,9 @@ buildscript {
 
 allprojects {
     repositories {
+        flatDir {
+            dirs 'libs'
+        }
         maven {
             url 'https://maven.google.com/'
             name 'Google'

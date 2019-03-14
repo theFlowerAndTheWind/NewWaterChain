@@ -5,9 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.alipay.sdk.app.PayTask;
 import com.shuzijieshui.www.waterchain.beans.WechatBean;
@@ -30,7 +28,7 @@ public class Pay {
      * @param param
      */
     public boolean payByWX(Context context, WechatBean param) {
-        IWXAPI api = WXAPIFactory.createWXAPI(context, Key.WX_APPID);
+        IWXAPI api = WXAPIFactory.createWXAPI(context, Constants.WX_APPID);
         api.registerApp(param.getAppId());
         PayReq request = new PayReq();
         request.appId = param.getAppId();
@@ -52,6 +50,10 @@ public class Pay {
             @Override
             public void run() {
                 PayTask alipay = new PayTask(activity);
+                /**
+                 *String orderInfo: app支付请求参数字符串，主要包含商户的订单信息，key=value形式，以&连接。
+                 * boolean isShowPayLoading:用户在商户app内部点击付款，是否需要一个loading做为在钱包唤起之前的过渡，这个值设置为true，将会在调用pay接口的时候直接唤起一个loading，直到唤起H5支付页面或者唤起外部的钱包付款页面loading才消失。（建议将该值设置为true，优化点击付款到支付唤起支付页面的过渡过程。）
+                 */
                 Map<String, String> result = alipay.payV2(orderInfo, true);
                 Log.i("msp", result.toString());
 

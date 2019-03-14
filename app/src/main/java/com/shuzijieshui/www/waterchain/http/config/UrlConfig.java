@@ -133,8 +133,6 @@ public class UrlConfig {
      *     │     }
      *     │ }
      *
-     *     "appid":"wxb91cf1e31a7f2a3a",
-     *     │             "partnerid":"1526355671"
      */
 
     public static final String CREATE_ORDER = "api/home/factory/addOrder";

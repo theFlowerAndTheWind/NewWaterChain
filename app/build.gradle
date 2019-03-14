@@ -28,7 +28,7 @@ android {
             //不写默认为false
             debuggable true
             //是否混淆
-            minifyEnabled true
+            minifyEnabled false
             //是否zip对齐
             zipAlignEnabled true
             // 移除无用的resource文件,依赖于minifyEnabled true,打出的包明显比debug要小
@@ -41,7 +41,7 @@ android {
             //不写默认为false
             debuggable false
             //是否混淆
-            minifyEnabled true
+            minifyEnabled false
             //是否zip对齐
             zipAlignEnabled true
             // 移除无用的resource文件,依赖于minifyEnabled true,打出的包明显比debug要小

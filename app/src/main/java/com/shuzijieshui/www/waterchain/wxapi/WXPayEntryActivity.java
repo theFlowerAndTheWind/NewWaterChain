@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.ConfirmOrderActivity;
-import com.shuzijieshui.www.waterchain.utils.Key;
+import com.shuzijieshui.www.waterchain.utils.Constants;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -22,7 +22,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        api = WXAPIFactory.createWXAPI(this, Key.WX_APPID);
+        api = WXAPIFactory.createWXAPI(this, Constants.WX_APPID);
         api.handleIntent(getIntent(), this);
     }
 
