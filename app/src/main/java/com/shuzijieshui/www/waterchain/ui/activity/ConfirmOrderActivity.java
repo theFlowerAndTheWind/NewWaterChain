@@ -151,7 +151,9 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 default:
                     break;
             }
-        };
+        }
+
+        ;
     };
 
 
@@ -200,11 +202,11 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isAgree = isChecked;
-                if (!isAgree) {
-                    btnCreateOrder.setEnabled(false);
-                } else if (isAgree && isCanPay == 1) {
-                    btnCreateOrder.setEnabled(true);
-                }
+//                if (!isAgree) {
+//                    btnCreateOrder.setEnabled(false);
+//                } else if (isAgree && isCanPay == 1) {
+//                    btnCreateOrder.setEnabled(true);
+//                }
             }
         });
         getData(getIntent());
@@ -528,17 +530,13 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
         }
     }
 
-    private void getPayResult(){
+    private void getPayResult() {
         final String id = (String) SPUtil.get(this, SPUtil.OID, "0");
         ToastUtils.showCustomToastMsg("正在获取支付结果", 150);
+        //后台为了防止支付完成立即调用该接口，有一个3秒的sleep
         showLoadingDialog();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getPayResPresenter.getPayRes(ConfirmOrderActivity.this, Integer.valueOf(id));
-                dismissLoadingDialog();
-            }
-        }, 3000);
+        getPayResPresenter.getPayRes(ConfirmOrderActivity.this, Integer.valueOf(id));
+
     }
 
 
@@ -621,7 +619,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
                 CreateOrderResponseBean bean = (CreateOrderResponseBean) o;
                 SPUtil.insert(this, SPUtil.OID, bean.getOid());//此处保存，支付成功后删除
                 String orderStr = bean.getOrderStr();
-                new Pay().payByAli(this,orderStr,mHandler);
+                new Pay().payByAli(this, orderStr, mHandler);
             } else if (payType.equals("2")) {
                 CreateOrderResponseBean1 bean1 = (CreateOrderResponseBean1) o;
                 SPUtil.insert(this, SPUtil.OID, bean1.getOid());//此处保存，支付成功后删除
@@ -649,6 +647,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
     @Override
     public void onGetPayResSucc() {
+        dismissLoadingDialog();
         Intent intent = new Intent(this, PaySuccessActivity.class);
         intent.putExtra("from", "ConfirmOrderActivity");
         startActivity(intent);
@@ -656,6 +655,7 @@ public class ConfirmOrderActivity extends BaseActivity implements TotalPriceView
 
     @Override
     public void onGetPayResFail(String msg) {
+        dismissLoadingDialog();
         ToastUtils.showCustomToast(msg, 0);
     }
 
