@@ -171,7 +171,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
             String msg = null;
             String pos = null;
             String neg = null;
-            if (beans.getCan_order()==1) {
+            if (beans.getCan_order() == 1) {
                 String price = new StringBuilder(jslPrice).append("水方").toString();
                 String pay_gyj = new StringBuilder(beans.getPay_gyj()).append("水方").toString();
                 String user_gyj = new StringBuilder(beans.getUser_gyj()).append("水方").toString();
@@ -188,7 +188,8 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
                 neg = "取消";
             } else {
                 title = "余额不足";
-                msg = "余额不足以支付该活动";
+                if (cateId == 1) msg = "余额不足以支付该商品";
+                else if (cateId == 2) msg = "余额不足以支付该活动";
                 neg = "知道了";
             }
             showDialog(title, msg, pos, neg);
@@ -226,7 +227,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
     private void jump2ConfirmGoodsOrderAct() {
         Intent intent = new Intent(this, ConfirmGoodsOrderActivity.class);
-        intent.putExtra(ConfirmGoodsOrderActivity.INT_EXTRA,1);
+        intent.putExtra(ConfirmGoodsOrderActivity.INT_EXTRA, 1);
         intent.putExtra(EXTRA_GOODSDETAILRESPONSEBEAN, goodsDetailResponseBean);
         intent.putExtra(EXTRA_CHECKUSERPAYRESPONSEBEAN, checkUserPayResponseBean);
         startActivity(intent);
