@@ -55,6 +55,8 @@ public class UrlConfig {
     public static final String BANNER_LIST = "api/home/banner/bannerLists";
     //洗涤企业列表
     /**
+     * 该接口暂时不用
+     *
      * 洗涤企业列表
      * <p>
      * │ {
@@ -72,9 +74,46 @@ public class UrlConfig {
      * │ }
      */
     public static final String FACTORY_LIST = "api/home/factory/factoryLists";
-    //洗涤项目列表
+    /**
+     * 洗涤项目列表
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "lists":[
+     *     │             {
+     *     │                 "id":10,
+     *     │                 "s_name":"污水处理合同订单",
+     *     │                 "intro":"为化工厂、PX、农业、环保、城市景观、医疗、建筑等领域的污水，定制污水解决方案",
+     *     │                 "img":"https:\/\/www.shuzijieshui.com\/upload\/fac\/20190328\/5ec43794194932ae1df39fc3578639c0.jpg",
+     *     │                 "show":1
+     *     │             },
+     *     │             {
+     *     │                 "id":11,
+     *     │                 "s_name":"脱盐水合同订单",
+     *     │                 "intro":"为热电厂、工厂等领域，定制脱盐水，在生产环节中，最低程度的减少水中溶解的盐结垢",
+     *     │                 "img":"https:\/\/www.shuzijieshui.com\/upload\/fac\/20190328\/e2227f5883f31e1149c8059eaf715d3b.jpg",
+     *     │                 "show":1
+     *     │             },
+     *     │             {
+     *     │                 "id":13,
+     *     │                 "s_name":"工业洗涤园",
+     *     │                 "intro":"工业循环用水洗涤技术”是针对布草和餐具的电化学洗涤技术，可节水95%、减少98%污水排放",
+     *     │                 "img":"https:\/\/www.shuzijieshui.com\/upload\/fac\/20190401\/13034ed0c1c8b075d20c63649945ec50.jpg",
+     *     │                 "show":0
+     *     │             },
+     *     │             {
+     *     │                 "id":14,
+     *     │                 "s_name":"节水环保产业园",
+     *     │                 "intro":"政府或企业实现产业发展目标而创立的特殊区位平台，围绕节水及环保方向的产品和服务",
+     *     │                 "img":"https:\/\/www.shuzijieshui.com\/upload\/fac\/20190401\/673b92e0dc79df19289cbb0d4a4b828c.jpg",
+     *     │                 "show":0
+     *     │             }
+     *     │         ]
+     *     │     }
+     *     │ }
+     */
     public static final String SERVICE_LIST = "api/home/common/serviceLists";
-    //洗涤企业列表
     /**
      * 洗涤企业详情
      * │ {
@@ -99,9 +138,41 @@ public class UrlConfig {
      * │ }
      */
     public static final String FACTORY_DETAIL = "api/home/factory/factoryDetail";
-    //洗涤企业项目详情
+    /**
+     * 洗涤企业项目详情
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "id":10,
+     *     │         "service_id":3,
+     *     │         "img":"https:\/\/www.shuzijieshui.com\/upload\/fac\/20190328\/5ec43794194932ae1df39fc3578639c0.jpg",
+     *     │         "s_name":"污水处理合同订单",
+     *     │         "description":"&lt;p&gt;&lt;span style=&quot;font-size: 16px; line-height:1.5&quot;&gt;利用物理、化学和生物的方法对废水进行处理，使污水及废水净化，减少污染，以至达到回收、复用，充分利用水资源，使污水达到排入某一水体或再次使用的水质要求对其进行净化的过程。&lt;\/span&gt;&lt;\/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px; line-height:1.5&quot;&gt;污水处理被广泛应用于建筑、农业、交通、能源、石化、环保、城市景观、医疗、餐饮等各个领域，我方根据客户的需求，会提供多元化组合式处理方法。&lt;\/span&gt;&lt;\/p&gt;&lt;p&gt;&lt;br\/&gt;&lt;\/p&gt;",
+     *     │         "factory_id":1,
+     *     │         "intro":"为化工厂、PX、农业、环保、城市景观、医疗、建筑等领域的污水，定制污水解决方案",
+     *     │         "content":"<p><span style=\"font-size: 16px; line-height:1.5\">利用物理、化学和生物的方法对废水进行处理，使污水及废水净化，减少污染，以至达到回收、复用，充分利用水资源，使污水达到排入某一水体或再次使用的水质要求对其进行净化的过程。<\/span><\/p><p><span style=\"font-size: 16px; line-height:1.5\">污水处理被广泛应用于建筑、农业、交通、能源、石化、环保、城市景观、医疗、餐饮等各个领域，我方根据客户的需求，会提供多元化组合式处理方法。<\/span><\/p><p><br\/><\/p>"
+     *     │     }
+     *     │ }
+     */
+
     public static final String FACTORY_SERVICE = "api/home/factory/factoryService";
-    //支付总金额
+    /**
+     * 支付总金额
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "total_price":"11.00",
+     *     │         "user_jsl":"1243",
+     *     │         "max_use_jsl":"6",
+     *     │         "max_money":"0.55",
+     *     │         "scale":"0.09000",
+     *     │         "true_max_use_jsl":"6"
+     *     │     }
+     *     │ }
+     */
+
     public static final String TOTAL_PRICE = "api/home/factory/totalPrice";
 
     /**
@@ -900,6 +971,29 @@ public class UrlConfig {
      * │         "id":48
      * │     }
      * │ }
+     *
+     *
+     *     │ {
+     *     │     "code":1,
+     *     │     "msg":"操作成功",
+     *     │     "data":{
+     *     │         "order_sn":"2019040710250559",
+     *     │         "f_name":"工业净水分离技术有限公司",
+     *     │         "status":1,
+     *     │         "s_name":"污水处理合同订单",
+     *     │         "count":"0",
+     *     │         "total_price":"0.00",
+     *     │         "pay_price":"0.00",
+     *     │         "pay_jsl":"0",
+     *     │         "pay_cate":"全额支付",
+     *     │         "add_time":"2019-04-07 23:09:19",
+     *     │         "back_jsl":"0",
+     *     │         "back_time":"-",
+     *     │         "fid":1,
+     *     │         "img":"https:\/\/www.shuzijieshui.com\/upload\/fac\/20190328\/5ec43794194932ae1df39fc3578639c0.jpg",
+     *     │         "status_view":"待付款"
+     *     │     }
+     *     │ }
      */
     public static final String ORDER_DETAIL = "api/home/user/orderDetail";
     //修改密码

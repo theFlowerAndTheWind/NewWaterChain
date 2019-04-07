@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/banner_guide_content"
+            style="@style/BannerDefaultStyle"
+            android:background="@color/white"
+            app:banner_pageChangeDuration="1000"
+            app:banner_pointAutoPlayAble="false"
+            app:banner_pointContainerBackground="@android:color/transparent"
+            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+            app:banner_pointTopBottomMargin="15dp"
+            app:banner_transitionEffect="alpha" />
+
+        <include layout="@layout/module_include_gray_space" />
+
+        <TextView
+            android:id="@+id/tv_wash_damend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20px"
+            android:paddingLeft="@dimen/layout_horizontal_padding"
+            android:text="产品服务"
+            android:textSize="16sp" />
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/rc_wash_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+
+        <TextView
+            android:id="@+id/tv_cur_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:paddingTop="@dimen/layout_horizontal_padding"
+            android:layout_marginLeft="@dimen/layout_horizontal_margin"
+            android:text="水方"
+            android:textSize="14sp" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28px"
+            android:layout_marginTop="20px"
+            android:layout_marginRight="28px"
+            android:layout_marginBottom="40px"
+            android:minHeight="386px" />
+    </LinearLayout>
+
+</ScrollView>

@@ -27,20 +27,20 @@ import butterknife.ButterKnife;
  * Class Note:首页洗涤业务接口
  */
 
-public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.RecycleHolder>{
+public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.RecycleHolder> {
 
     private Context context;
 
-    private List<ServiceListResponseBean.serviceListEntity> list ;
+    private List<ServiceListResponseBean.ServiceListEntity> list;
 
     private OnItemClickListener listener;
 
-    public ServiceListAdapter(Context context, List<ServiceListResponseBean.serviceListEntity> list){
+    public ServiceListAdapter(Context context, List<ServiceListResponseBean.ServiceListEntity> list) {
 
         this.context = context;
-        if(list == null){
+        if (list == null) {
             this.list = new ArrayList<>();
-        }else {
+        } else {
             this.list = list;
         }
     }
@@ -48,25 +48,34 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
     @NonNull
     @Override
     public RecycleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_home_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_home_item, parent, false);
         AutoUtils.auto(view);
         return new RecycleHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecycleHolder holder, final int position) {
-        GlidImageManager.getInstance().loadImageView(context,list.get(position).getImg(),holder.washImg,R.mipmap.default_img);
-        holder.washDesc.setText(TextUtils.isEmpty(list.get(position).getS_desc()) ? "专业技术，节水95%,不用洗涤剂，不产生污染，已在深圳和山东江苏等地推广  " :list.get(position).getS_desc());
+        final ServiceListResponseBean.ServiceListEntity serviceListEntity = list.get(position);
+        GlidImageManager.getInstance().loadImageView(context, serviceListEntity.getImg(), holder.washImg, R.mipmap.default_img);
+        holder.washDesc.setText(serviceListEntity.getIntro());
         holder.washTitle.setText(list.get(position).getS_name());
-        if(position == list.size()-1){
+        if (position == list.size() - 1) {
             holder.line.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             holder.line.setVisibility(View.VISIBLE);
+        }
+        int show = serviceListEntity.getShow();
+        if (show == 1) {
+            holder.washOrder.setText("立即下单");
+            holder.washOrder.setEnabled(true);
+        } else if (show == 0) {
+            holder.washOrder.setText("敬请期待");
+            holder.washOrder.setEnabled(false);
         }
         holder.washOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(listener!=null){
+                if (listener != null) {
                     listener.onItemClick(position);
                 }
             }
@@ -78,7 +87,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         return list.size();
     }
 
-    class RecycleHolder extends RecyclerView.ViewHolder{
+    class RecycleHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.wash_img)
         ImageView washImg;
@@ -90,17 +99,18 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
         Button washOrder;
         @BindView(R.id.line)
         View line;
+
         public RecycleHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 }

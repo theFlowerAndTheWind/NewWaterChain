@@ -44,6 +44,7 @@ public class PaySuccessActivity extends BaseActivity {
 
     private String from = "";
     private String goods = "";
+    private String oid="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +60,28 @@ public class PaySuccessActivity extends BaseActivity {
         if (intent != null) {
             from = intent.getStringExtra("from");
             goods = intent.getStringExtra("goodsName");
+            if(from.equals("CreateOrderActivity1")){
+                oid=intent.getStringExtra("oid");
+            }
         }
     }
 
     private void initView() {
         tv_title_center.setText("支付成功");
-        if (!TextUtils.isEmpty(from) && from.equals("ConfirmGoodsOrderActivity")) {
-            tv_title_center.setText("兑换商城");
-            tv1.setText("你已成功兑换：");
-            tv2.setText(goods);
-            tv3.setVisibility(View.GONE);
-            btn.setText("兑换记录");
-            tv4.setText("返回商城");
+        if (!TextUtils.isEmpty(from)) {
+            if(from.equals("ConfirmGoodsOrderActivity")){
+                tv_title_center.setText("兑换商城");
+                tv1.setText("你已成功兑换：");
+                tv2.setText(goods);
+                tv3.setVisibility(View.GONE);
+                btn.setText("兑换记录");
+                tv4.setText("返回商城");
+            }else if(from.equals("ConfirmOrderActivity1")){
+                tv1.setText("已成功下单，向企业打款后可获取服务");
+                tv2.setVisibility(View.GONE);
+                tv3.setVisibility(View.GONE);
+            }
+
         }
     }
 
@@ -90,6 +101,10 @@ public class PaySuccessActivity extends BaseActivity {
                     jump(GoodsActivity.class);
                 } else if (from.equals("ConfirmOrderActivity")) {
                     jump(OrderListsActivity.class);
+                }else if(from.equals("ConfirmOrderActivity1")){
+                    Intent intent=new Intent(this,OrderDetailActivity.class);
+                    intent.putExtra("oid",oid);
+                    startActivity(intent);
                 }
                 finish();
                 break;

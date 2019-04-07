@@ -30,6 +30,9 @@ import butterknife.OnClick;
 /**
  * Created by songxiaotao on 2018/12/20.
  * Class Note:洗涤企业
+ *
+ * update by sxt on 2019/4/2
+ * 删除该页面
  */
 
 public class EnterpriseActivity extends BaseActivity implements FactoryDetailViewImpl {

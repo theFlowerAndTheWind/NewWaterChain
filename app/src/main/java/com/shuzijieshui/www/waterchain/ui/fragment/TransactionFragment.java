@@ -39,7 +39,7 @@ import com.shuzijieshui.www.waterchain.ui.activity.TradeListsActivity;
 import com.shuzijieshui.www.waterchain.ui.adapter.BuySellTradeListAdapter;
 import com.shuzijieshui.www.waterchain.ui.adapter.CurrentTradeListsAdapter;
 import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
-import com.shuzijieshui.www.waterchain.ui.widget.chart.ChartUtil;
+import com.shuzijieshui.www.waterchain.ui.widget.chart.ChartUtil1;
 import com.shuzijieshui.www.waterchain.utils.SPUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 
@@ -445,9 +445,9 @@ public class TransactionFragment extends BaseFragment implements
         if (tradeLineResponseBean != null) {
             final List<TradeLineResponseBean.ChartDataEntity> data = tradeLineResponseBean.getData();
             final List<String> xaxis = tradeLineResponseBean.getXasix();
-            final List<Entry> entries = ChartUtil.getEntries(data);
-            final List<Long> longXaxis = ChartUtil.getLongXaxis(xaxis);
-            ChartUtil.initLineChart(lineChart, entries, longXaxis, tradeLineType);
+            final List<Entry> entries = ChartUtil1.getEntries(data);
+            final List<Long> longXaxis = ChartUtil1.getLongXaxis(xaxis);
+            ChartUtil1.initLineChart(lineChart, entries, longXaxis, tradeLineType);
         }
     }
 

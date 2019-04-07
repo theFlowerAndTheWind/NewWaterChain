@@ -234,20 +234,20 @@ public class DistributionInfoActivity extends BaseActivity {
                 }
                 break;
             case R.id.btn_save:
-                params.setExpress(deliveryTypeInt);
-                params.setContact_name(nameStr);
-                params.setContact_tel(phoneStr);
-                if (!TextUtils.isEmpty(deliveryRegion) && deliveryRegion.contains("_") && deliveryRegion.length() > 2) {
-                    String[] split = deliveryRegion.split("_");
-                    params.setProvince(split[0]);
-                    params.setCity(split[1]);
-                }
-                params.setAddress(addressStr);
-                params.setPickup_time(deliveryTime);
-                bundle.putInt("class", 3);
-                bundle.putParcelable("params", params);
-                jumpActivity(bundle, ConfirmOrderActivity.class);
-                finish();
+//                params.setExpress(deliveryTypeInt);
+//                params.setContact_name(nameStr);
+//                params.setContact_tel(phoneStr);
+//                if (!TextUtils.isEmpty(deliveryRegion) && deliveryRegion.contains("_") && deliveryRegion.length() > 2) {
+//                    String[] split = deliveryRegion.split("_");
+//                    params.setProvince(split[0]);
+//                    params.setCity(split[1]);
+//                }
+//                params.setAddress(addressStr);
+//                params.setPickup_time(deliveryTime);
+//                bundle.putInt("class", 3);
+//                bundle.putParcelable("params", params);
+//                jumpActivity(bundle, ConfirmOrderActivity.class);
+//                finish();
                 break;
             default:
                 break;

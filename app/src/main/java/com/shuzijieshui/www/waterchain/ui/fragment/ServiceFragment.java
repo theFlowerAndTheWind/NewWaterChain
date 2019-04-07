@@ -17,12 +17,19 @@ import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.beans.AdImgResponseBean;
 import com.shuzijieshui.www.waterchain.beans.Factory;
 import com.shuzijieshui.www.waterchain.beans.FactoryListResponse;
+import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.contract.model.AdImgModel;
+import com.shuzijieshui.www.waterchain.contract.model.ServiceListModel;
 import com.shuzijieshui.www.waterchain.contract.presenter.AdImgPresenter;
 import com.shuzijieshui.www.waterchain.contract.presenter.FactoryListPresenter;
+import com.shuzijieshui.www.waterchain.contract.presenter.ServiceListPresneter;
 import com.shuzijieshui.www.waterchain.contract.view.AdImgViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.FactoryListViewImpl;
+import com.shuzijieshui.www.waterchain.contract.view.ServiceListViewImpl;
 import com.shuzijieshui.www.waterchain.ui.activity.EnterpriseActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.FactoryServiceActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.ServiceDetailActivity;
+import com.shuzijieshui.www.waterchain.ui.adapter.ServiceListAdapter;
 import com.shuzijieshui.www.waterchain.ui.adapter.WashShopAdapter;
 import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
@@ -38,30 +45,31 @@ import butterknife.Unbinder;
 /**
  * Created by songxiaotao on 2018/12/5.
  * Class Note:洗涤
+ *
+ * update by sxt 2019/4/1
+ * 产品服务
+ * 原业务为洗涤，现更改为产品和服务业务。
  */
 
-public class WashFragment extends BaseFragment implements FactoryListViewImpl, AdImgViewImpl {
+public class ServiceFragment extends BaseFragment implements ServiceListViewImpl, AdImgViewImpl {
 
     @BindView(R.id.img_ad)
     ImageView imgAd;
-    @BindView(R.id.factoryList)
-    XRecyclerView factoryList;
-    @BindView(R.id.tv_intr_detail)
-    TextView tvIntrDetail;
+    @BindView(R.id.xrv)
+    XRecyclerView xrv;
 
-    private FactoryListPresenter factoryListPresenter;
+    private ServiceListPresneter serviceListPresneter;
     private AdImgPresenter adImgPresenter;
-    private AlertChainDialog alertChainDialog;
     private Unbinder unbinder;
     private View rootView;
-    private WashShopAdapter washShopAdapter;
-    private List<Factory> listEntities = new ArrayList<>();
+    private ServiceListAdapter serviceListAdapter;
+    private List<ServiceListResponseBean.ServiceListEntity>listEntities=new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        factoryListPresenter = new FactoryListPresenter();
-        factoryListPresenter.attachView(this);
+        serviceListPresneter=new ServiceListPresneter(new ServiceListModel());
+        serviceListPresneter.attachView(this);
         adImgPresenter = new AdImgPresenter(new AdImgModel());
         adImgPresenter.attachView(this);
     }
@@ -72,8 +80,6 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
             rootView = inflater.inflate(R.layout.fragment_washshop, container, false);
             ButterKnife.bind(this, rootView);
         }
-        alertChainDialog = new AlertChainDialog(getBaseActivity());
-
         initList();
         unbinder = ButterKnife.bind(this, rootView);
 
@@ -84,9 +90,7 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         showLoadingDialog();
-        if (factoryListPresenter != null) {
-            factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-        }
+        getServiceList();
         if (adImgPresenter != null) {
             adImgPresenter.getAdImg(getBaseActivity(), "ad_fac");
         }
@@ -95,105 +99,59 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
             public void run() {
                 dismissLoadingDialog();
             }
-        }, 800);
+        }, 1500);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            if (factoryListPresenter != null) {
-                factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-            }
+            getServiceList();
         }
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (factoryListPresenter != null) {
-            factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-        }
+        getServiceList();
     }
 
     @Override
     public void onReNetRefreshData(int viewId) {
-        if (factoryListPresenter != null) {
-            factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-        }
+        getServiceList();
     }
 
     private void initList() {
-        washShopAdapter = new WashShopAdapter(getBaseActivity(), listEntities);
-        factoryList.setArrowImageView(R.drawable.iconfont_downgrey);
-        factoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        factoryList.setAdapter(washShopAdapter);
-
-        factoryList.setLoadingMoreEnabled(false);
-        factoryList.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                if (factoryListPresenter != null) {
-                    factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-                }
-            }
-
-            @Override
-            public void onLoadMore() {
-                if (factoryListPresenter != null) {
-                    factoryListPresenter.getFactoryList(getBaseActivity(), 0);
-                }
-            }
-        });
-        washShopAdapter.setOnItemClickListener(new WashShopAdapter.OnItemClickListener() {
+        serviceListAdapter = new ServiceListAdapter(getBaseActivity(), listEntities);
+        xrv.setArrowImageView(R.drawable.iconfont_downgrey);
+        xrv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        xrv.setAdapter(serviceListAdapter);
+        xrv.setPullRefreshEnabled(false);
+        xrv.setLoadingMoreEnabled(false);
+        serviceListAdapter.setOnItemClickListener(new ServiceListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putInt("enterpriseId", listEntities.get(position).getId());
+//                bundle.putInt("enterpriseId", listEntities.get(position).getId());
+                bundle.putInt("fsid", listEntities.get(position).getId());
                 intent.putExtras(bundle);
-                intent.setClass(getBaseActivity(), EnterpriseActivity.class);
+//                intent.setClass(getBaseActivity(), EnterpriseActivity.class);
+                intent.setClass(getBaseActivity(), ServiceDetailActivity.class);
                 startActivity(intent);
 
             }
         });
     }
 
-    @Override
-    public void onFactoryListSuccess(FactoryListResponse factoryListResponse) {
-        if (factoryListResponse != null) {
-            List<Factory> factoryListEntities = factoryListResponse.getLists();
-            String tech_desc = factoryListResponse.getTech_desc();
-            listEntities.clear();
-            listEntities.addAll(factoryListEntities);
-            washShopAdapter.notifyDataSetChanged();
-            CharSequence charSequence;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                charSequence = Html.fromHtml(tech_desc, Html.FROM_HTML_MODE_LEGACY);
-            } else {
-                charSequence = Html.fromHtml(tech_desc);
-            }
-            tvIntrDetail.setText(charSequence);
+    private void getServiceList(){
+        if (serviceListPresneter != null) {
+            serviceListPresneter.getServiceList(getBaseActivity());
         }
-        factoryList.refreshComplete();
-    }
-
-    @Override
-    public void onFactoryListFailed(String msg) {
-        ToastUtils.showCustomToast(msg, 0);
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (factoryListPresenter != null) {
-            factoryListPresenter.detachView();
-        }
-        if (adImgPresenter != null) {
-            adImgPresenter.detachView();
-        }
-    }
+
 
 
     @Override
@@ -207,4 +165,32 @@ public class WashFragment extends BaseFragment implements FactoryListViewImpl, A
     public void onGetAdImgFailed(String msg) {
         ToastUtils.showCustomToast(msg, 0);
     }
+
+    @Override
+    public void onServiceListSuccess(List<ServiceListResponseBean.ServiceListEntity> serviceListEntities) {
+        if (serviceListEntities != null) {
+            listEntities.clear();
+            listEntities.addAll(serviceListEntities);
+            serviceListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onServiceListFailed(String msg) {
+        ToastUtils.showCustomToast(msg, 0);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (serviceListPresneter != null) {
+            serviceListPresneter.detachView();
+        }
+        if (adImgPresenter != null) {
+            adImgPresenter.detachView();
+        }
+        unbinder.unbind();
+    }
+
 }

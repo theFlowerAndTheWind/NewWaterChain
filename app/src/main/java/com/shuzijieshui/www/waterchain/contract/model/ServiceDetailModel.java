@@ -1,7 +1,9 @@
 package com.shuzijieshui.www.waterchain.contract.model;
 
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
-import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
+import com.shuzijieshui.www.waterchain.beans.FactoryServiceResponseBean;
+import com.shuzijieshui.www.waterchain.beans.ServiceDetail;
+import com.shuzijieshui.www.waterchain.contract.model.callback.CommonCallback;
 import com.shuzijieshui.www.waterchain.http.BaseObserver;
 import com.shuzijieshui.www.waterchain.http.RetrofitFactory;
 import com.shuzijieshui.www.waterchain.http.bean.BaseEntity;
@@ -10,24 +12,21 @@ import com.shuzijieshui.www.waterchain.http.utils.ObservableTransformerUtils;
 import com.shuzijieshui.www.waterchain.http.utils.RequestUtil;
 import com.shuzijieshui.www.waterchain.utils.LogUtils;
 
-import java.util.List;
+import java.util.HashMap;
 
-/**
- * Created by songxiaotao on 2018/12/16.
- * Class Note:
- */
+public class ServiceDetailModel {
+    public void getServiceDetail(BaseActivity activity, int fsid, final CommonCallback callBack){
 
-public class ServiceListModel {
-    public void getSrviceList(BaseActivity activity,final ServiceListCallBack callBack){
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("fsid",fsid);
         RetrofitFactory.getInstance().createService()
-                .serviceList(RequestUtil.getRequestHashBody(null,false))
-                .compose(activity.<BaseEntity<ServiceListResponseBean>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<ServiceListResponseBean>>io())
-                .subscribe(new BaseObserver<ServiceListResponseBean>(activity) {
-
+                .serviceDetail(RequestUtil.getRequestHashBody(params,false))
+                .compose(activity.<BaseEntity<ServiceDetail>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<ServiceDetail>>io())
+                .subscribe(new BaseObserver<ServiceDetail>() {
                     @Override
-                    protected void onSuccess(ServiceListResponseBean serviceListResponseBean) throws Exception {
-                        callBack.success(serviceListResponseBean.getLists());
+                    protected void onSuccess(ServiceDetail serviceDetail) throws Exception {
+                        callBack.onRequestSucc(serviceDetail);
                     }
 
                     @Override
@@ -35,28 +34,20 @@ public class ServiceListModel {
                         if (e != null && e.getMessage() != null) {
                             if (isNetWorkError) {
                                 LogUtils.e(e.getMessage());
-                                callBack.failed(HttpConfig.ERROR_MSG);
+                                callBack.onRequestFail(HttpConfig.ERROR_MSG);
                             } else {
-                                callBack.failed(e.getMessage());
+                                callBack.onRequestFail(e.getMessage());
                             }
                         } else {
-                            callBack.failed("");
+                            callBack.onRequestFail("");
                         }
                     }
 
                     @Override
                     protected void onCodeError(String code, String msg) throws Exception {
                         super.onCodeError(code, msg);
-                        callBack.failed(msg);
+                        callBack.onRequestFail(msg);
                     }
                 });
-
-
-
-    }
-
-    public interface ServiceListCallBack{
-        void success(List<ServiceListResponseBean.ServiceListEntity> serviceListEntity);
-        void failed(String msg);
     }
 }

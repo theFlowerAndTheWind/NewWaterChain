@@ -16,27 +16,50 @@ public class CreateOrderPresenter extends BasePresenter<CreateOrderViewImpl> {
 
     private CreateOrderModel createOrderModel;
 
-    public CreateOrderPresenter(){}
+    public CreateOrderPresenter() {
+    }
 
-    public CreateOrderPresenter(CreateOrderModel createOrderModel){
+    public CreateOrderPresenter(CreateOrderModel createOrderModel) {
         this.createOrderModel = createOrderModel;
     }
 
-    public void createOrder(BaseActivity activity, CreateOrderReqParams params){
-        if(createOrderModel == null){
+//    public void createOrder(BaseActivity activity, CreateOrderReqParams params) {
+//        if (createOrderModel == null) {
+//            createOrderModel = new CreateOrderModel();
+//        }
+//        createOrderModel.createOrder(activity, params, new CreateOrderModel.CreateOrderCallBack() {
+//            @Override
+//            public void success(Object o) {
+//                if (mView != null) {
+//                    mView.onCreateOrderSuccess(o);
+//                }
+//            }
+//
+//            @Override
+//            public void failed(String msg) {
+//                if (mView != null) {
+//                    mView.onCreateOrderFailed(msg);
+//                }
+//
+//            }
+//        });
+//
+//    }
+    public void createOrder(BaseActivity activity, long id, float count, float use_jsl, int pay_cate) {
+        if (createOrderModel == null) {
             createOrderModel = new CreateOrderModel();
         }
-        createOrderModel.createOrder(activity,params, new CreateOrderModel.CreateOrderCallBack() {
+        createOrderModel.createOrder(activity, id, count, use_jsl, pay_cate, new CreateOrderModel.CreateOrderCallBack() {
             @Override
             public void success(Object o) {
-                if (mView!=null){
+                if (mView != null) {
                     mView.onCreateOrderSuccess(o);
                 }
             }
 
             @Override
             public void failed(String msg) {
-                if (mView!=null){
+                if (mView != null) {
                     mView.onCreateOrderFailed(msg);
                 }
 

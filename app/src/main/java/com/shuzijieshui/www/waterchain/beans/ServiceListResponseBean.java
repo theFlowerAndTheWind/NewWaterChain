@@ -9,52 +9,43 @@ import java.util.List;
 
 public class ServiceListResponseBean {
 
-    public List<serviceListEntity> lists;
+    public List<ServiceListEntity> lists;
 
-    public List<serviceListEntity> getLists() {
+    public List<ServiceListEntity> getLists() {
         return lists;
     }
 
-    public void setLists(List<serviceListEntity> lists) {
+    public void setLists(List<ServiceListEntity> lists) {
         this.lists = lists;
     }
 
-    public class serviceListEntity{
+    public class ServiceListEntity {
         int id;
         String s_name;
         String img;
-        String s_desc;
+        String intro;
+        int show;
+
+
 
         public int getId() {
             return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
         }
 
         public String getS_name() {
             return s_name;
         }
 
-        public void setS_name(String s_name) {
-            this.s_name = s_name;
-        }
-
         public String getImg() {
             return img;
         }
 
-        public void setImg(String img) {
-            this.img = img;
+        public String getIntro() {
+            return intro;
         }
 
-        public String getS_desc() {
-            return s_desc;
-        }
-
-        public void setS_desc(String s_desc) {
-            this.s_desc = s_desc;
+        public int getShow() {
+            return show;
         }
     }
 

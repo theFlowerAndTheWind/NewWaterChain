@@ -5,7 +5,7 @@ import com.shuzijieshui.www.waterchain.beans.AdImgResponseBean;
 import com.shuzijieshui.www.waterchain.beans.AuthDetailResponseBean;
 import com.shuzijieshui.www.waterchain.beans.BannerListResponseBean;
 import com.shuzijieshui.www.waterchain.beans.CheckUserPayResponseBean;
-import com.shuzijieshui.www.waterchain.beans.CreateOrderResponseBean;
+import com.shuzijieshui.www.waterchain.beans.CreateOrderRes;
 import com.shuzijieshui.www.waterchain.beans.FactoryDetailResponseBean;
 import com.shuzijieshui.www.waterchain.beans.FactoryListResponse;
 import com.shuzijieshui.www.waterchain.beans.FactoryServiceResponseBean;
@@ -20,8 +20,9 @@ import com.shuzijieshui.www.waterchain.beans.OrderDetailResponseBean;
 import com.shuzijieshui.www.waterchain.beans.OrderListsResponseBean;
 import com.shuzijieshui.www.waterchain.beans.RegisterResponseBean;
 import com.shuzijieshui.www.waterchain.beans.SellResponseBean;
+import com.shuzijieshui.www.waterchain.beans.ServiceDetail;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
-import com.shuzijieshui.www.waterchain.beans.TotalPriceResponseBean;
+import com.shuzijieshui.www.waterchain.beans.TotalPriceRes;
 import com.shuzijieshui.www.waterchain.beans.TradeCenterResponseBean;
 import com.shuzijieshui.www.waterchain.beans.TradeDetailResponseBean;
 import com.shuzijieshui.www.waterchain.beans.TradeLineResponseBean;
@@ -83,6 +84,9 @@ public interface APIService {
     //订单详情
     @POST(UrlConfig.ORDER_DETAIL)
     Observable<BaseEntity<OrderDetailResponseBean>> orderDetail(@Body RequestBody requestBody);
+
+    @POST(UrlConfig.ORDER_DETAIL)
+    Observable<BaseEntity> getOrderDetail(@Body RequestBody requestBody);
 
     //洗地订单列表
     @POST(UrlConfig.ORDER_LIST)
@@ -155,14 +159,20 @@ public interface APIService {
     //洗涤企业项目详情
     @POST(UrlConfig.FACTORY_SERVICE)
     Observable<BaseEntity<FactoryServiceResponseBean>> factoryService(@Body RequestBody requestBody);
+    @POST(UrlConfig.FACTORY_SERVICE)
+    Observable<BaseEntity<ServiceDetail>> serviceDetail(@Body RequestBody requestBody);
 
+
+//    //下单支付总金额
+//    @POST(UrlConfig.TOTAL_PRICE)
+//    Observable<BaseEntity<TotalPriceResponseBean>> totalPrice(@Body RequestBody requestBody);
     //下单支付总金额
     @POST(UrlConfig.TOTAL_PRICE)
-    Observable<BaseEntity<TotalPriceResponseBean>> totalPrice(@Body RequestBody requestBody);
+    Observable<BaseEntity<TotalPriceRes>> getTotalPrice(@Body RequestBody requestBody);
 
     //创建订单
     @POST(UrlConfig.CREATE_ORDER)
-    Observable<BaseEntity> createOrder(@Body RequestBody requestBody);
+    Observable<BaseEntity<CreateOrderRes>> createOrder(@Body RequestBody requestBody);
 
     //查询支付结果
     @POST(UrlConfig.GET_PAY_RES)

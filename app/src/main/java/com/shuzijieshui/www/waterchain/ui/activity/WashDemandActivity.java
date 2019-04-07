@@ -102,19 +102,19 @@ public class WashDemandActivity extends BaseActivity {
                 goBack(view);
                 break;
             case R.id.btn_save:
-                Intent intent = new Intent(WashDemandActivity.this,ConfirmOrderActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("class",2);
-                washFatoryCageGory.clear();
-                washFatoryCageGory.addAll(adapter.getList());
-                bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
-                for (FactoryServiceResponseBean.WashFatoryCageGory entry:washFatoryCageGory){
-                    LogUtils.w(entry.getC_name()+"  ***demand send--- "+entry.getPiceCount());
-                }
-                intent.putExtras(bundle);
-                startActivity(intent);
-                //by sxt
-                finish();
+//                Intent intent = new Intent(WashDemandActivity.this,ConfirmOrderActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("class",2);
+//                washFatoryCageGory.clear();
+//                washFatoryCageGory.addAll(adapter.getList());
+//                bundle.putParcelableArrayList("washFatoryCageGory",washFatoryCageGory);
+//                for (FactoryServiceResponseBean.WashFatoryCageGory entry:washFatoryCageGory){
+//                    LogUtils.w(entry.getC_name()+"  ***demand send--- "+entry.getPiceCount());
+//                }
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//                //by sxt
+//                finish();
                 break;
             default:break;
         }

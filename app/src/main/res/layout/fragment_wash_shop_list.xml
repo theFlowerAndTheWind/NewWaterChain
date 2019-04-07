@@ -5,18 +5,18 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="洗涤企业"
-        android:padding="20px"
-        android:paddingLeft="@dimen/layout_horizontal_padding"
-        android:textSize="16sp"/>
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="服务项目"-->
+        <!--android:padding="20px"-->
+        <!--android:paddingLeft="@dimen/layout_horizontal_padding"-->
+        <!--android:textSize="16sp"/>-->
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/factoryList"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--<com.jcodecraeer.xrecyclerview.XRecyclerView-->
+        <!--android:id="@+id/factoryList"-->
+        <!--android:background="@color/white"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 
 </LinearLayout>

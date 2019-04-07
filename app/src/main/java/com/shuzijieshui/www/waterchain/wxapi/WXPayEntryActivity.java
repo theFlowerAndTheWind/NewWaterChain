@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
-import com.shuzijieshui.www.waterchain.ui.activity.ConfirmOrderActivity;
 import com.shuzijieshui.www.waterchain.utils.Constants;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -50,23 +49,23 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     @Override
     public void onResp(BaseResp baseResp) {
-        switch (baseResp.errCode) {
-            case 0:
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putInt("class",4);
-                intent.putExtras(bundle);
-                intent.setClass(WXPayEntryActivity.this,ConfirmOrderActivity.class);
-                startActivity(intent);
-                break;
-            case -1:
-                ToastUtils.showCustomToast("支付失败", 0);
-                break;
-            case -2:
-                ToastUtils.showCustomToastMsg("取消支付", 150);
-                break;
-        }
-        finish();
+//        switch (baseResp.errCode) {
+//            case 0:
+//                Intent intent = new Intent();
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("class",4);
+//                intent.putExtras(bundle);
+//                intent.setClass(WXPayEntryActivity.this,ConfirmOrderActivity.class);
+//                startActivity(intent);
+//                break;
+//            case -1:
+//                ToastUtils.showCustomToast("支付失败", 0);
+//                break;
+//            case -2:
+//                ToastUtils.showCustomToastMsg("取消支付", 150);
+//                break;
+//        }
+//        finish();
     }
 
 

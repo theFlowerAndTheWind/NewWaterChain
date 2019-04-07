@@ -29,7 +29,7 @@ public class ServiceListPresneter extends BasePresenter<ServiceListViewImpl> {
         }
         serviceListModel.getSrviceList(activity, new ServiceListModel.ServiceListCallBack() {
             @Override
-            public void success(List<ServiceListResponseBean.serviceListEntity> serviceListEntity) {
+            public void success(List<ServiceListResponseBean.ServiceListEntity> serviceListEntity) {
                 if(mView!=null){
                     mView.onServiceListSuccess(serviceListEntity);
                 }

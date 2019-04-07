@@ -98,15 +98,15 @@ public class TestActivity extends BaseActivity {
 //                edtcontent = edt.getText().toString();
                 HashMap<String, Object> params = new HashMap<>();
 //                params.put("type", edtcontent);
-                params.put("id", "10");
+                params.put("id", "22");
                 RetrofitFactory.getInstance().createService()
-                        .factoryList(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity<FactoryListResponse>>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity<FactoryListResponse>>io())
-                        .subscribe(new BaseObserver<FactoryListResponse>(TestActivity.this) {
+                        .getOrderDetail(RequestUtil.getRequestHashBody(params, false))
+                        .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
+                        .compose(ObservableTransformerUtils.<BaseEntity>io())
+                        .subscribe(new BaseObserver(TestActivity.this) {
 
                             @Override
-                            protected void onSuccess(FactoryListResponse bean) throws Exception {
+                            protected void onSuccess(Object bean) throws Exception {
 //                                url=bean.getUrl();
                             }
 
@@ -118,9 +118,9 @@ public class TestActivity extends BaseActivity {
 
 //                ShowPickerView();
 
-                Intent intent=new Intent(this,PaySuccessActivity.class);
-                intent.putExtra("from","WXPayEntryActivity");
-                startActivity(intent);
+//                Intent intent=new Intent(this,PaySuccessActivity.class);
+//                intent.putExtra("from","WXPayEntryActivity");
+//                startActivity(intent);
                 break;
 
             case R.id.btn_show:

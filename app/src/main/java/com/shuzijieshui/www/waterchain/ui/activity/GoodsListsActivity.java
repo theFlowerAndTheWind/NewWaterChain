@@ -31,6 +31,7 @@ import com.shuzijieshui.www.waterchain.contract.view.BannerListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.GoodsListViewImpl;
 import com.shuzijieshui.www.waterchain.event.SelectFragmentEvent;
 import com.shuzijieshui.www.waterchain.ui.adapter.GoodsListsAdapter;
+import com.shuzijieshui.www.waterchain.utils.Constants;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.Util;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
@@ -80,7 +81,7 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     private List<GoodsListsResponseBean> goodsListActivity = new ArrayList<>();
     private List<GoodsListsResponseBean> goodsListCommodity = new ArrayList<>();
     private boolean isRefresh = false;//是否刷新
-    private String target = "首页";
+    private String target = Constants.TAB_TITLE[0];
     private int actvityCounter = 0;
     private String activityPage = "1";
     private int commodityCounter = 0;

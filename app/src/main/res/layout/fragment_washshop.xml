@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/space_gray"
     android:scrollbars="none">
 
     <LinearLayout
@@ -16,7 +15,20 @@
             android:layout_height="150dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/img_goods" />
+        <include layout="@layout/module_include_gray_space"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="服务项目"
+            android:padding="20px"
+            android:paddingLeft="@dimen/layout_horizontal_padding"
+            android:textSize="16sp"/>
 
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xrv"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
         <include
             android:id="@+id/wash_list"
             layout="@layout/fragment_wash_shop_list"
@@ -25,34 +37,34 @@
             android:layout_marginBottom="@dimen/view_space_gray"
             android:layout_marginTop="@dimen/view_space_gray" />
 
-        <LinearLayout
-            style="@style/MyPadding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+        <!--<LinearLayout-->
+            <!--style="@style/MyPadding"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/white"-->
+            <!--android:orientation="vertical">-->
 
-            <TextView
+            <!--<TextView-->
 
-                android:id="@+id/tv_intr"
+                <!--android:id="@+id/tv_intr"-->
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="技术介绍"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_edt"
-                android:layout_marginBottom="10px"/>
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="技术介绍"-->
+                <!--android:textColor="@color/text_black"-->
+                <!--android:textSize="@dimen/text_size_edt"-->
+                <!--android:layout_marginBottom="10px"/>-->
 
-            <TextView
-                android:id="@+id/tv_intr_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容"
-                android:textColor="@color/text_gray"
-                android:lineSpacingExtra="5px"
-                android:textSize="11sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_intr_detail"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容技术介绍内容"-->
+                <!--android:textColor="@color/text_gray"-->
+                <!--android:lineSpacingExtra="5px"-->
+                <!--android:textSize="11sp" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
     </LinearLayout>
 </ScrollView>

@@ -74,26 +74,26 @@
                     android:paddingTop="17px"
                     android:drawableTop="@drawable/homepage_rb2_icon"
                     android:textColor="@color/homepage_rb_color"
-                    android:text="洗涤"
+                    android:text="产品服务"
                     android:textSize="10sp"
                     android:gravity="center"
                     android:layout_weight="1"/>
 
 
-                <RadioButton
-                    android:id="@+id/rb3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:button="@null"
-                    android:drawableTop="@drawable/homepage_rb3_icon"
-                    android:textColor="@color/homepage_rb_color"
-                    android:drawablePadding="5px"
-                    android:paddingBottom="10px"
-                    android:paddingTop="17px"
-                    android:text="交易"
-                    android:textSize="10sp"
-                    android:gravity="center"
-                    android:layout_weight="1"/>
+                <!--<RadioButton-->
+                    <!--android:id="@+id/rb3"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:button="@null"-->
+                    <!--android:drawableTop="@drawable/homepage_rb3_icon"-->
+                    <!--android:textColor="@color/homepage_rb_color"-->
+                    <!--android:drawablePadding="5px"-->
+                    <!--android:paddingBottom="10px"-->
+                    <!--android:paddingTop="17px"-->
+                    <!--android:text="交易"-->
+                    <!--android:textSize="10sp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_weight="1"/>-->
 
 
                 <RadioButton

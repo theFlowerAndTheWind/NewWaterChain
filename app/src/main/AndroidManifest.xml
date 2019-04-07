@@ -113,6 +113,9 @@
             android:name="com.shuzijieshui.www.waterchain.ui.activity.FactoryServiceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.ServiceDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.AboutListActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -134,10 +137,13 @@
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImagePickerThemeFullScreen" />
+        <!--<activity-->
+            <!--android:name="com.shuzijieshui.www.waterchain.ui.activity.ConfirmOrderActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:launchMode="singleTask"/>-->
         <activity
-            android:name="com.shuzijieshui.www.waterchain.ui.activity.ConfirmOrderActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.ConfirmOrderActivity1"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.WashDemandActivity"
             android:launchMode="singleTop"

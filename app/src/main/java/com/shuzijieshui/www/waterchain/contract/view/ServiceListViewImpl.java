@@ -11,6 +11,6 @@ import java.util.List;
  */
 
 public interface ServiceListViewImpl extends IBaseViewImpl {
-    void onServiceListSuccess(List<ServiceListResponseBean.serviceListEntity> serviceListEntities);
+    void onServiceListSuccess(List<ServiceListResponseBean.ServiceListEntity> serviceListEntities);
     void onServiceListFailed(String msg);
 }

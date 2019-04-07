@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
 import com.shuzijieshui.www.waterchain.event.SelectFragmentEvent;
+import com.shuzijieshui.www.waterchain.utils.Constants;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 
 import butterknife.BindView;
@@ -67,7 +68,7 @@ public class RegisterSuccessActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_register_success:
                 startActivity(new Intent(RegisterSuccessActivity.this, MainActivity.class));
-                EventBus.getDefault().post(new SelectFragmentEvent("首页"));
+                EventBus.getDefault().post(new SelectFragmentEvent(Constants.TAB_TITLE[0]));
                 finish();
                 break;
             case R.id.left_ll:

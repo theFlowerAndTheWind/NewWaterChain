@@ -48,6 +48,7 @@ import com.shuzijieshui.www.waterchain.contract.view.PictureViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.UploadFileViewImpl;
 import com.shuzijieshui.www.waterchain.event.SelectFragmentEvent;
 import com.shuzijieshui.www.waterchain.ui.widget.popup.PicturePopupWindow;
+import com.shuzijieshui.www.waterchain.utils.Constants;
 import com.shuzijieshui.www.waterchain.utils.GsonUtil;
 import com.shuzijieshui.www.waterchain.utils.PictureFileUtil;
 import com.shuzijieshui.www.waterchain.utils.SPUtil;
@@ -293,7 +294,7 @@ public class AuthActivity extends BaseActivity implements AuthViewImpl, PictureV
                 break;
             case R.id.tv_standing_off:
                 startActivity(new Intent(AuthActivity.this, MainActivity.class));
-                EventBus.getDefault().post(new SelectFragmentEvent("首页"));
+                EventBus.getDefault().post(new SelectFragmentEvent(Constants.TAB_TITLE[0]));
                 finish();
                 break;
             case R.id.ll_upload_boss_id_img_a:

@@ -21,20 +21,67 @@ import java.util.HashMap;
  */
 
 public class CreateOrderModel {
-    public void createOrder(BaseActivity activity, CreateOrderReqParams params, final CreateOrderCallBack callBack) {
+//    public void createOrder(BaseActivity activity, CreateOrderReqParams params, final CreateOrderCallBack callBack) {
+//        HashMap<String, Object> map = new HashMap<>();
+//        final String payType = params.getPay_type();
+//        map.put("fsid", params.getFsid());
+//        map.put("trade_detail", params.getTrade_detail());
+//        map.put("express", params.getExpress());
+//        map.put("contact_name", params.getContact_name());
+//        map.put("contact_tel", params.getContact_tel());
+//        map.put("province", params.getProvince());
+//        map.put("city", params.getCity());
+//        map.put("address", params.getAddress());
+//        map.put("pay_cate", params.getPay_cate());
+//        map.put("pickup_time", params.getPickup_time());
+//        map.put("pay_type", payType);
+//        RetrofitFactory.getInstance().createService()
+//                .createOrder(RequestUtil.getRequestHashBody(map, false))
+//                .compose(activity.<BaseEntity>bindToLifecycle())
+//                .compose(ObservableTransformerUtils.<BaseEntity>io())
+//                .subscribe(new BaseObserver(activity) {
+//                    @Override
+//                    protected void onSuccess(Object o) throws Exception {
+//                        Gson gson = new Gson();
+//                        String json = gson.toJson(o);
+//                        if (payType.equals("1")) {//ali
+//                            CreateOrderResponseBean bean = gson.fromJson(json, CreateOrderResponseBean.class);
+//                            callBack.success(bean);
+//                        } else if (payType.equals("2")) {//wx
+//                            CreateOrderResponseBean1 bean1 = gson.fromJson(json, CreateOrderResponseBean1.class);
+//                            callBack.success(bean1);
+//                        }
+//                    }
+//
+//                    @Override
+//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+//                        if (e != null && e.getMessage() != null) {
+//                            if (isNetWorkError) {
+//                                LogUtils.e(e.getMessage());
+//                                callBack.failed(HttpConfig.ERROR_MSG);
+//                            } else {
+//                                callBack.failed(e.getMessage());
+//                            }
+//                        } else {
+//                            callBack.failed("");
+//                        }
+//                    }
+//
+//                    @Override
+//                    protected void onCodeError(String code, String msg) throws Exception {
+//                        super.onCodeError(code, msg);
+//                        callBack.failed(msg);
+//                    }
+//                });
+//    }
+
+    public void createOrder(BaseActivity activity, long id,float count,float use_jsl,int pay_cate, final CreateOrderCallBack callBack) {
         HashMap<String, Object> map = new HashMap<>();
-        final String payType = params.getPay_type();
-        map.put("fsid", params.getFsid());
-        map.put("trade_detail", params.getTrade_detail());
-        map.put("express", params.getExpress());
-        map.put("contact_name", params.getContact_name());
-        map.put("contact_tel", params.getContact_tel());
-        map.put("province", params.getProvince());
-        map.put("city", params.getCity());
-        map.put("address", params.getAddress());
-        map.put("pay_cate", params.getPay_cate());
-        map.put("pickup_time", params.getPickup_time());
-        map.put("pay_type", payType);
+        map.put("id", id);
+        map.put("count", count);
+        map.put("use_jsl",use_jsl);
+        map.put("pay_cate", pay_cate);
+
         RetrofitFactory.getInstance().createService()
                 .createOrder(RequestUtil.getRequestHashBody(map, false))
                 .compose(activity.<BaseEntity>bindToLifecycle())
@@ -42,15 +89,7 @@ public class CreateOrderModel {
                 .subscribe(new BaseObserver(activity) {
                     @Override
                     protected void onSuccess(Object o) throws Exception {
-                        Gson gson = new Gson();
-                        String json = gson.toJson(o);
-                        if (payType.equals("1")) {//ali
-                            CreateOrderResponseBean bean = gson.fromJson(json, CreateOrderResponseBean.class);
-                            callBack.success(bean);
-                        } else if (payType.equals("2")) {//wx
-                            CreateOrderResponseBean1 bean1 = gson.fromJson(json, CreateOrderResponseBean1.class);
-                            callBack.success(bean1);
-                        }
+                            callBack.success(o);
                     }
 
                     @Override
@@ -80,53 +119,5 @@ public class CreateOrderModel {
 
         void failed(String msg);
     }
-//    public void createOrder(BaseActivity activity, CreateOrderReqParams params,final CreateOrderCallBack callBack){
-//        HashMap<String,Object>map=new HashMap<>();
-//        map.put("fsid",params.getFsid());
-//        map.put("trade_detail",params.getTrade_detail());
-//        map.put("express",params.getExpress());
-//        map.put("contact_name",params.getContact_name());
-//        map.put("contact_tel",params.getContact_tel());
-//        map.put("province",params.getProvince());
-//        map.put("city",params.getCity());
-//        map.put("address",params.getAddress());
-//        map.put("pay_cate",params.getPay_cate());
-//        map.put("pickup_time",params.getPickup_time());
-//        map.put("pay_type",params.getPay_type());
-//        RetrofitFactory.getInstance().createService()
-//                .createOrder(RequestUtil.getRequestHashBody(map,false))
-//                .compose(activity.<BaseEntity<CreateOrderResponseBean>>bindToLifecycle())
-//                .compose(ObservableTransformerUtils.<BaseEntity<CreateOrderResponseBean>>io())
-//                .subscribe(new BaseObserver<CreateOrderResponseBean>(activity) {
-//                    @Override
-//                    protected void onSuccess(CreateOrderResponseBean createOrderResponseBean) throws Exception {
-//                        callBack.success(createOrderResponseBean);
-//                    }
-//
-//                    @Override
-//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-//                        if (e != null && e.getMessage() != null) {
-//                            if (isNetWorkError) {
-//                                LogUtils.e(e.getMessage());
-//                                callBack.failed(HttpConfig.ERROR_MSG);
-//                            } else {
-//                                callBack.failed(e.getMessage());
-//                            }
-//                        } else {
-//                            callBack.failed("");
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onCodeError(String code, String msg) throws Exception {
-//                        super.onCodeError(code, msg);
-//                        callBack.failed(msg);
-//                    }
-//                });
-//    }
-//
-//    public interface CreateOrderCallBack{
-//        void success(CreateOrderResponseBean createOrderResponseBean);
-//        void failed(String msg);
-//    }
+
 }

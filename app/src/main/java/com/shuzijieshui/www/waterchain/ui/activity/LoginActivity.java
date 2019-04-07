@@ -18,6 +18,7 @@ import com.shuzijieshui.www.waterchain.contract.model.LoginModel;
 import com.shuzijieshui.www.waterchain.contract.presenter.LoginPresenter;
 import com.shuzijieshui.www.waterchain.contract.view.LoginViewImpl;
 import com.shuzijieshui.www.waterchain.event.SelectFragmentEvent;
+import com.shuzijieshui.www.waterchain.utils.Constants;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 
@@ -149,18 +150,18 @@ public class LoginActivity extends BaseActivity implements LoginViewImpl {
         ToastUtils.showCustomToast("登录成功",1);
         if(target.equals("main")){//若需求为强制登录，用户第一次登录
             jump(MainActivity.class);
-            EventBus.getDefault().post(new SelectFragmentEvent("首页"));
+            EventBus.getDefault().post(new SelectFragmentEvent(Constants.TAB_TITLE[0]));
 //            jump(TestActivity.class);
         }else if (target.equals("main_personal")) {//从"我的"跳过来，登录成功后跳回"我的"
             jump(MainActivity.class);
-            EventBus.getDefault().post(new SelectFragmentEvent("我的"));
+            EventBus.getDefault().post(new SelectFragmentEvent(Constants.TAB_TITLE[3]));
 //            EventBus.getDefault().post(new LoginEvent("login_status_changed_main_personal_change_islogin"));//头像右侧用户昵称
 //        startActivity(new Intent(LoginActivity.this, TestActivity.class));//调试接口使用
-        } else if (target.equals("main_transaction")) {//从"交易中心"跳过来，登录成功后跳回"交易中心"
+        } /*else if (target.equals("main_transaction")) {//从"交易中心"跳过来，登录成功后跳回"交易中心"
             jump(MainActivity.class);
             EventBus.getDefault().post(new SelectFragmentEvent("交易"));
 //            EventBus.getDefault().post(new LoginEvent("login_status_changed_main_personal_change_islogin"));//带着token重新请求接口
-        }
+        }*/
 
         finish();
     }

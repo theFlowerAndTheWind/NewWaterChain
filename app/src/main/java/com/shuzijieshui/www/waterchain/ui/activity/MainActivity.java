@@ -22,11 +22,11 @@ import com.shuzijieshui.www.waterchain.contract.view.AppUpdateViewImpl;
 import com.shuzijieshui.www.waterchain.event.LoginStatusChangedEvent;
 import com.shuzijieshui.www.waterchain.event.SelectFragmentEvent;
 import com.shuzijieshui.www.waterchain.ui.fragment.FindFragment;
-import com.shuzijieshui.www.waterchain.ui.fragment.HomeFragment;
+import com.shuzijieshui.www.waterchain.ui.fragment.HomeFragment1;
 import com.shuzijieshui.www.waterchain.ui.fragment.PersonalFragment;
-import com.shuzijieshui.www.waterchain.ui.fragment.TransactionFragment;
-import com.shuzijieshui.www.waterchain.ui.fragment.WashFragment;
+import com.shuzijieshui.www.waterchain.ui.fragment.ServiceFragment;
 import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
+import com.shuzijieshui.www.waterchain.utils.Constants;
 import com.shuzijieshui.www.waterchain.utils.SPUtil;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
@@ -57,16 +57,16 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     public RadioButton rb1;
     @BindView(R.id.rb2)
     public RadioButton rb2;
-    @BindView(R.id.rb3)
-    public RadioButton rb3;
+//    @BindView(R.id.rb3)
+//    public RadioButton rb3;
     @BindView(R.id.rb4)
     public RadioButton rb4;
     @BindView(R.id.rb5)
     public RadioButton rb5;
 
-    private HomeFragment homeFragment;
-    private WashFragment washFragment;
-    private TransactionFragment transactionFragment;
+    private HomeFragment1 homeFragment;
+    private ServiceFragment serviceFragment;
+//    private TransactionFragment transactionFragment;
     private PersonalFragment personalFragment;
     private FindFragment findFragment;
     private long mExitTime;
@@ -118,7 +118,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     }
 
     private void createFragments() {
-        homeFragment = new HomeFragment();
+        homeFragment = new HomeFragment1();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.activity_main_ll, homeFragment).commit();
         left_ll.setVisibility(View.GONE);
@@ -137,31 +137,18 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     private void initRbsize() {
         rb[0] = rb1;
         rb[1] = rb2;
-        rb[2] = rb3;
+//        rb[2] = rb3;
         rb[3] = rb4;
         rb[4] = rb5;
-
-//        for (int i = 0; i < rb.length; i++) {
-//            //挨着给每个RadioButton加入drawable限制边距以控制显示大小
-//            drawables = rb[i].getCompoundDrawables();
-//            //获取drawables，2/5表示图片要缩小的比例
-//            Rect r = new Rect(0, 0, drawables[1].getMinimumWidth() * 2 / 3, drawables[1].getMinimumHeight() * 2 / 3);
-//            //定义一个Rect边界
-//            drawables[1].setBounds(r);
-//            //给每一个RadioButton设置图片大小
-//            rb[i].setCompoundDrawables(null, drawables[1], null, null);
-////            rb[i].setTextSize(Util.px2sp(this,24,1334));
-//            AutoUtils.auto(rb[i]);
-//        }
         rb1.setChecked(true);
     }
 
-    @OnClick({R.id.rb1, R.id.rb2, R.id.rb3, R.id.rb4, R.id.rb5})
+    @OnClick({R.id.rb1, R.id.rb2, /*R.id.rb3,*/ R.id.rb4, R.id.rb5})
     public void onClick(View view) {
         hideFragment();
         switch (view.getId()) {
             case R.id.rb1:
-                tv_title_center.setText("首页");
+                tv_title_center.setText(Constants.TAB_TITLE[0]);
                 //by sxt
                 left_ll.setVisibility(View.GONE);
                 tv_title_center.setVisibility(View.GONE);
@@ -173,19 +160,19 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
 
                 break;
             case R.id.rb2:
-                tv_title_center.setText("洗涤");
+                tv_title_center.setText(Constants.TAB_TITLE[1]);
                 //by sxt
                 tv_title_center.setVisibility(View.VISIBLE);
                 img_title_center.setVisibility(View.GONE);
-                if (washFragment != null) {
-                    fragmentManager.beginTransaction().show(washFragment).commit();
+                if (serviceFragment != null) {
+                    fragmentManager.beginTransaction().show(serviceFragment).commit();
                     return;
                 }
-                washFragment = new WashFragment();
-                fragmentManager.beginTransaction().add(R.id.activity_main_ll, washFragment).commit();
+                serviceFragment = new ServiceFragment();
+                fragmentManager.beginTransaction().add(R.id.activity_main_ll, serviceFragment).commit();
 
                 break;
-            case R.id.rb3:
+            /*case R.id.rb3:
                 tv_title_center.setText("交易中心");
                 //by sxt
                 tv_title_center.setVisibility(View.VISIBLE);
@@ -205,9 +192,9 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
                 transactionFragment = new TransactionFragment();
                 fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commit();//
 
-                break;
+                break;*/
             case R.id.rb4:
-                tv_title_center.setText("发现");
+                tv_title_center.setText(Constants.TAB_TITLE[2]);
                 //by sxt
                 tv_title_center.setVisibility(View.VISIBLE);
                 img_title_center.setVisibility(View.GONE);
@@ -220,7 +207,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
 
                 break;
             case R.id.rb5:
-                tv_title_center.setText("我的");
+                tv_title_center.setText(Constants.TAB_TITLE[3]);
                 //by sxt
                 tv_title_center.setVisibility(View.VISIBLE);
                 img_title_center.setVisibility(View.GONE);
@@ -248,13 +235,13 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
             fragmentManager.beginTransaction().hide(homeFragment).commitAllowingStateLoss();
         }
 
-        if (washFragment != null) {
-            fragmentManager.beginTransaction().hide(washFragment).commitAllowingStateLoss();
+        if (serviceFragment != null) {
+            fragmentManager.beginTransaction().hide(serviceFragment).commitAllowingStateLoss();
         }
 
-        if (transactionFragment != null) {
-            fragmentManager.beginTransaction().hide(transactionFragment).commitAllowingStateLoss();
-        }
+//        if (transactionFragment != null) {
+//            fragmentManager.beginTransaction().hide(transactionFragment).commitAllowingStateLoss();
+//        }
 
         if (findFragment != null) {
             fragmentManager.beginTransaction().hide(findFragment).commitAllowingStateLoss();
@@ -300,12 +287,12 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
                 case "首页":
                     showHome();
                     break;
-                case "洗涤":
+                case "产品和服务":
                     showWash();
                     break;
-                case "交易中心":
-                    showTransaction();
-                    break;
+//                case "交易中心":
+////                    showTransaction();
+//                    break;
                 case "发现":
                     showFind();
                     break;
@@ -323,7 +310,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     public void showHome() {
         hideFragment();
         rb1.setChecked(true);
-        tv_title_center.setText("首页");
+        tv_title_center.setText(Constants.TAB_TITLE[0]);
         //by sxt
         left_ll.setVisibility(View.GONE);
         tv_title_center.setVisibility(View.GONE);
@@ -347,7 +334,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
             fragmentManager.beginTransaction().show(homeFragment).commitAllowingStateLoss();
             return;
         }
-        homeFragment = new HomeFragment();
+        homeFragment = new HomeFragment1();
         fragmentManager.beginTransaction().add(R.id.activity_main_ll, homeFragment).commitAllowingStateLoss();
 
     }
@@ -355,46 +342,46 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     public void showWash() {
         hideFragment();
         rb2.setChecked(true);
-        tv_title_center.setText("洗涤");
+        tv_title_center.setText(Constants.TAB_TITLE[1]);
         //by sxt
         tv_title_center.setVisibility(View.VISIBLE);
         img_title_center.setVisibility(View.GONE);
-        if (washFragment != null) {
-            fragmentManager.beginTransaction().show(washFragment).commitAllowingStateLoss();
+        if (serviceFragment != null) {
+            fragmentManager.beginTransaction().show(serviceFragment).commitAllowingStateLoss();
             return;
         }
-        washFragment = new WashFragment();
-        fragmentManager.beginTransaction().add(R.id.activity_main_ll, washFragment).commitAllowingStateLoss();
+        serviceFragment = new ServiceFragment();
+        fragmentManager.beginTransaction().add(R.id.activity_main_ll, serviceFragment).commitAllowingStateLoss();
 
 
     }
 
-    public void showTransaction() {
-        hideFragment();
-        rb3.setChecked(true);
-        tv_title_center.setText("交易中心");
-        //by sxt
-        tv_title_center.setVisibility(View.VISIBLE);
-        img_title_center.setVisibility(View.GONE);
-        if (transactionFragment != null) {
-
-            String fragmentIsLogin = transactionFragment.getIsLogin();
-            String sp = getSp();
-            if (!fragmentIsLogin.equals(sp)) {
-                EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_transaction_reconnect"));
-            }
-
-            fragmentManager.beginTransaction().show(transactionFragment).commitAllowingStateLoss();//after event
-            return;
-        }
-        transactionFragment = new TransactionFragment();
-        fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commitAllowingStateLoss();
-    }
+//    public void showTransaction() {
+//        hideFragment();
+//        rb3.setChecked(true);
+//        tv_title_center.setText("交易中心");
+//        //by sxt
+//        tv_title_center.setVisibility(View.VISIBLE);
+//        img_title_center.setVisibility(View.GONE);
+//        if (transactionFragment != null) {
+//
+//            String fragmentIsLogin = transactionFragment.getIsLogin();
+//            String sp = getSp();
+//            if (!fragmentIsLogin.equals(sp)) {
+//                EventBus.getDefault().post(new LoginStatusChangedEvent("login_status_changed_main_transaction_reconnect"));
+//            }
+//
+//            fragmentManager.beginTransaction().show(transactionFragment).commitAllowingStateLoss();//after event
+//            return;
+//        }
+//        transactionFragment = new TransactionFragment();
+//        fragmentManager.beginTransaction().add(R.id.activity_main_ll, transactionFragment).commitAllowingStateLoss();
+//    }
 
     public void showFind() {
         hideFragment();
         rb4.setChecked(true);
-        tv_title_center.setText("发现");
+        tv_title_center.setText(Constants.TAB_TITLE[2]);
         //by sxt
         tv_title_center.setVisibility(View.VISIBLE);
         img_title_center.setVisibility(View.GONE);
@@ -411,7 +398,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     public void showPersonal() {
         hideFragment();
         rb5.setChecked(true);
-        tv_title_center.setText("我的");
+        tv_title_center.setText(Constants.TAB_TITLE[3]);
         //by sxt
         tv_title_center.setVisibility(View.VISIBLE);
         img_title_center.setVisibility(View.GONE);

@@ -33,6 +33,9 @@ import butterknife.OnClick;
 /**
  * Created by songxiaotao on 2018/12/22.
  * Class Note:
+ *
+ * update by sxt on 2019/4/2
+ * 删除该页面
  */
 
 public class FactoryServiceActivity extends BaseActivity implements FactoryServiceViewImpl{
@@ -95,14 +98,14 @@ public class FactoryServiceActivity extends BaseActivity implements FactoryServi
                 finish();
                 break;
             case R.id.factoty_btn_order:
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putInt("class",1);
-                bundle.putParcelable("WashFatoryDetail", washFatoryDetail);
-                bundle.putParcelableArrayList("WashFatoryCageGoryList",arrayList);
-                intent.putExtras(bundle);
-                intent.setClass(FactoryServiceActivity.this,ConfirmOrderActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent();
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("class",1);
+//                bundle.putParcelable("WashFatoryDetail", washFatoryDetail);
+//                bundle.putParcelableArrayList("WashFatoryCageGoryList",arrayList);
+//                intent.putExtras(bundle);
+//                intent.setClass(FactoryServiceActivity.this,ConfirmOrderActivity.class);
+//                startActivity(intent);
                 finish();
                 break;
             default:break;
