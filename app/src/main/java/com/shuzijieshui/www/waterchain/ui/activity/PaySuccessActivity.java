@@ -60,7 +60,7 @@ public class PaySuccessActivity extends BaseActivity {
         if (intent != null) {
             from = intent.getStringExtra("from");
             goods = intent.getStringExtra("goodsName");
-            if(from.equals("CreateOrderActivity1")){
+            if(from.equals("ConfirmOrderActivity1")){
                 oid=intent.getStringExtra("oid");
             }
         }
@@ -102,8 +102,8 @@ public class PaySuccessActivity extends BaseActivity {
                 } else if (from.equals("ConfirmOrderActivity")) {
                     jump(OrderListsActivity.class);
                 }else if(from.equals("ConfirmOrderActivity1")){
-                    Intent intent=new Intent(this,OrderDetailActivity.class);
-                    intent.putExtra("oid",oid);
+                    Intent intent=new Intent(this,OrderDetailActivity1.class);
+                    intent.putExtra("id",oid);
                     startActivity(intent);
                 }
                 finish();

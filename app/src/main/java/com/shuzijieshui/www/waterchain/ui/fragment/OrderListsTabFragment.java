@@ -38,14 +38,8 @@ public class OrderListsTabFragment extends BaseFragment implements OrderListsVie
     TextView tvDetail;
 
     private String title;
-    /**
-     * 接口文档中
-     * 1未付款 2取件中 3洗涤中 4配送中 5已完成 10已取消
-     * <p>
-     * 产品原型中
-     * 全部 待付款 取件中 洗涤中 已完成  已取消
-     */
-    private String status = "全部";
+
+//    private String status = "全部";
     private int intStatus = 0;
     private int count = 0;
     private OrderListsAdapter orderListsAdapter;
@@ -69,17 +63,14 @@ public class OrderListsTabFragment extends BaseFragment implements OrderListsVie
             case "全部":
                 intStatus = 0;
                 break;
-            case "未付款":
+            case "待付款":
                 intStatus = 1;
                 break;
-            case "取件中":
+            case "服务中":
                 intStatus = 2;
                 break;
-            case "洗涤中":
-                intStatus = 3;
-                break;
             case "已完成":
-                intStatus = 5;
+                intStatus = 3;
                 break;
             case "已取消":
                 intStatus = 10;

@@ -17,7 +17,7 @@ import java.util.List;
 //    │                 "s_name":"餐具消毒类",
 //    │                 "img":"http:\/\/www.quanminjieshui.com\/upload\/admin\/20181211\/4aadf0b4a721ffa8bc2dbc298bfa3c27.jpg",
 //    │                 "total_price":"2.00000",
-//    │                 "status":"已取消",
+//    │                 "status_view":"已取消",
 //    │                 "id":48
 //    │             }
 //    │         ]
@@ -41,7 +41,7 @@ public class OrderListsResponseBean {
         private String s_name;
         private String img;
         private String total_price;
-        private String status;
+        private String status_view;
         private int id;
 
         public int getFid() {
@@ -84,12 +84,12 @@ public class OrderListsResponseBean {
             this.total_price = total_price;
         }
 
-        public String getStatus() {
-            return status;
+        public String getStatus_view() {
+            return status_view;
         }
 
-        public void setStatus(String status) {
-            this.status = status;
+        public void setStatus_view(String status_view) {
+            this.status_view = status_view;
         }
 
         public int getId() {

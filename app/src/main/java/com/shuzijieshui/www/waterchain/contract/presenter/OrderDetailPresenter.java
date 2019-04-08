@@ -4,13 +4,17 @@ import com.shuzijieshui.www.waterchain.base.BaseActivity;
 import com.shuzijieshui.www.waterchain.beans.OrderDetailResponseBean;
 import com.shuzijieshui.www.waterchain.contract.BasePresenter;
 import com.shuzijieshui.www.waterchain.contract.model.OrderDetailModel;
+import com.shuzijieshui.www.waterchain.contract.model.callback.CommonCallback;
+import com.shuzijieshui.www.waterchain.contract.view.CommonViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.OrderDetailViewImpl;
 
 /**
  * Created by WanghongHe on 2018/12/12 16:15.
+ *
+ * update by sxt on 2019/4/8
  */
 
-public class OrderDetailPresenter extends BasePresenter<OrderDetailViewImpl> {
+public class OrderDetailPresenter extends BasePresenter<CommonViewImpl> {
 
     private OrderDetailModel orderDetailModel;
 
@@ -20,24 +24,23 @@ public class OrderDetailPresenter extends BasePresenter<OrderDetailViewImpl> {
         this.orderDetailModel = orderDetailModel;
     }
 
-    public void orderDetail(BaseActivity activity,int id){
+    public void getOrderDetail(BaseActivity activity,int id){
         if(orderDetailModel == null){
             orderDetailModel = new OrderDetailModel();
         }
-        orderDetailModel.getOrderDetail(activity,id,new OrderDetailModel.OrderDetailCallBack() {
+        orderDetailModel.getOrderDetail(activity,id,new CommonCallback() {
             @Override
-            public void onOrderDetailSuccess(OrderDetailResponseBean orderDetailBeans) {
+            public void onRequestSucc(Object o) {
                 if(mView!=null){
-                    mView.onOrderDetailSuccess(orderDetailBeans);
+                    mView.onRequestSucc(o);
                 }
             }
 
             @Override
-            public void onOrderDetailFailed(String msg) {
+            public void onRequestFail(String msg) {
                 if(mView!=null){
-                    mView.onOrderDetailFailed(msg);
+                    mView.onRequestFail(msg);
                 }
-
             }
         });
     }

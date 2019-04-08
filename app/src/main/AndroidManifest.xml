@@ -107,7 +107,7 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
         <activity
-            android:name="com.shuzijieshui.www.waterchain.ui.activity.OrderDetailActivity"
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.OrderDetailActivity1"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.FactoryServiceActivity"

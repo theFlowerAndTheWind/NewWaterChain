@@ -1,7 +1,8 @@
 package com.shuzijieshui.www.waterchain.contract.model;
 
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
-import com.shuzijieshui.www.waterchain.beans.OrderDetailResponseBean;
+import com.shuzijieshui.www.waterchain.beans.OrderDetail;
+import com.shuzijieshui.www.waterchain.contract.model.callback.CommonCallback;
 import com.shuzijieshui.www.waterchain.http.BaseObserver;
 import com.shuzijieshui.www.waterchain.http.RetrofitFactory;
 import com.shuzijieshui.www.waterchain.http.bean.BaseEntity;
@@ -19,24 +20,73 @@ import java.util.HashMap;
 
 public class OrderDetailModel {
 
-    public void getOrderDetail(BaseActivity activity,int id, final OrderDetailCallBack callBack){
+//    public void orderDetail(BaseActivity activity, int id, final OrderDetailCallBack callBack){
+//        HashMap<String,Object>params=new HashMap<>();
+//        params.put("id",id);
+//        RetrofitFactory.getInstance().createService()
+//                .orderDetail(RequestUtil.getRequestHashBody(params,false))
+//                .compose(activity.<BaseEntity<OrderDetailResponseBean>>bindToLifecycle())
+//                .compose(ObservableTransformerUtils.<BaseEntity<OrderDetailResponseBean>>io())
+//                .subscribe(new BaseObserver<OrderDetailResponseBean>(activity) {
+//
+//                    /**
+//                     * 返回成功
+//                     *
+//                     * @param orderDetailResponseBean
+//                     * @throws Exception
+//                     */
+//                    @Override
+//                    protected void onSuccess(OrderDetailResponseBean orderDetailResponseBean) throws Exception {
+//                        callBack.onOrderDetailSuccess(orderDetailResponseBean);
+//                    }
+//
+//                    /**
+//                     * 返回失败
+//                     *
+//                     * @param e
+//                     * @param isNetWorkError 是否是网络错误
+//                     * @throws Exception
+//                     */
+//                    @Override
+//                    protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+//                        if (e != null && e.getMessage() != null) {
+//                            if (isNetWorkError) {
+//                                LogUtils.e(e.getMessage());
+//                                callBack.onOrderDetailFailed(HttpConfig.ERROR_MSG);
+//                            } else {
+//                                callBack.onOrderDetailFailed(e.getMessage());
+//                            }
+//                        } else {
+//                            callBack.onOrderDetailFailed("");
+//                        }
+//                    }
+//
+//                    @Override
+//                    protected void onCodeError(String code, String msg) throws Exception {
+//                        super.onCodeError(code, msg);
+//                        callBack.onOrderDetailFailed(msg);
+//                    }
+//                });
+//    }
+
+    public void getOrderDetail(BaseActivity activity, int id, final CommonCallback callback){
         HashMap<String,Object>params=new HashMap<>();
         params.put("id",id);
         RetrofitFactory.getInstance().createService()
-                .orderDetail(RequestUtil.getRequestHashBody(params,false))
-                .compose(activity.<BaseEntity<OrderDetailResponseBean>>bindToLifecycle())
-                .compose(ObservableTransformerUtils.<BaseEntity<OrderDetailResponseBean>>io())
-                .subscribe(new BaseObserver<OrderDetailResponseBean>(activity) {
+                .getOrderDetail(RequestUtil.getRequestHashBody(params,false))
+                .compose(activity.<BaseEntity<OrderDetail>>bindToLifecycle())
+                .compose(ObservableTransformerUtils.<BaseEntity<OrderDetail>>io())
+                .subscribe(new BaseObserver<OrderDetail>(activity) {
 
                     /**
                      * 返回成功
                      *
-                     * @param orderDetailResponseBean
+                     * @param orderDetail
                      * @throws Exception
                      */
                     @Override
-                    protected void onSuccess(OrderDetailResponseBean orderDetailResponseBean) throws Exception {
-                        callBack.onOrderDetailSuccess(orderDetailResponseBean);
+                    protected void onSuccess(OrderDetail orderDetail) throws Exception {
+                        callback.onRequestSucc(orderDetail);
                     }
 
                     /**
@@ -51,26 +101,20 @@ public class OrderDetailModel {
                         if (e != null && e.getMessage() != null) {
                             if (isNetWorkError) {
                                 LogUtils.e(e.getMessage());
-                                callBack.onOrderDetailFailed(HttpConfig.ERROR_MSG);
+                                callback.onRequestFail(HttpConfig.ERROR_MSG);
                             } else {
-                                callBack.onOrderDetailFailed(e.getMessage());
+                                callback.onRequestFail(e.getMessage());
                             }
                         } else {
-                            callBack.onOrderDetailFailed("");
+                            callback.onRequestFail("");
                         }
                     }
 
                     @Override
                     protected void onCodeError(String code, String msg) throws Exception {
                         super.onCodeError(code, msg);
-                        callBack.onOrderDetailFailed(msg);
+                        callback.onRequestFail(msg);
                     }
                 });
-    }
-
-
-    public interface OrderDetailCallBack{
-        void onOrderDetailSuccess(OrderDetailResponseBean orderDetailResponseBeans);
-        void onOrderDetailFailed(String msg);
     }
 }

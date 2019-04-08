@@ -11,6 +11,7 @@ import com.shuzijieshui.www.waterchain.http.utils.RequestUtil;
 import com.shuzijieshui.www.waterchain.utils.LogUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,8 +24,12 @@ public class OrderListsModel {
     public void orderList(BaseActivity activity, int status, int count, final OrderListCallBack callBack) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("count", count);
-        if (status > 0) {//后台告知status不传值对应"全部"
-             params.put("status", status);
+        if (status > 0 && status <= 3) {//后台告知status不传值对应"全部"
+            params.put("status", status);
+        }
+        if(status>3){//已取消
+            callBack.success(new OrderListsResponseBean());
+            return;
         }
         RetrofitFactory.getInstance().createService()
                 .orderList(RequestUtil.getRequestHashBody(params, false))

@@ -178,7 +178,7 @@
                 android:layout_centerVertical="true"
                 android:paddingLeft="26px"
                 android:layout_toRightOf="@+id/img4"
-                android:text="洗涤订单" />
+                android:text="我的订单" />
 
             <ImageView
                 android:id="@+id/img_go_order_lists"

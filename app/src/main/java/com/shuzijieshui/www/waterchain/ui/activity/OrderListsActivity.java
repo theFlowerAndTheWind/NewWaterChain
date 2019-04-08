@@ -30,7 +30,7 @@ public class OrderListsActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    public String[] titles = new String[]{"全部", "未付款", "取件中", "洗涤中", "已完成", "已取消"};
+    public String[] titles = new String[]{"全部", "待付款", "服务中",  "已完成", "已取消"};
     private ArrayList<OrderListsTabFragment> fragments = new ArrayList<>();
     private OrderListsViewpagerAdapter adapter;
 
@@ -52,7 +52,7 @@ public class OrderListsActivity extends BaseActivity {
     }
 
     private void init() {
-        tvTitleCenter.setText("洗涤订单");
+        tvTitleCenter.setText("我的订单");
         for (int i = 0; i < titles.length; i++) {
             OrderListsTabFragment fragment = new OrderListsTabFragment();
             fragment.setTitle(titles[i],this);

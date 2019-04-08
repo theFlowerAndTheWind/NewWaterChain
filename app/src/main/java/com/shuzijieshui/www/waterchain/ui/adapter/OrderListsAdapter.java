@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.beans.OrderListsResponseBean;
-import com.shuzijieshui.www.waterchain.ui.activity.OrderDetailActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.OrderDetailActivity1;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -48,21 +48,21 @@ public class OrderListsAdapter extends RecyclerView.Adapter<OrderListsAdapter.Or
     @Override
     public void onBindViewHolder(@NonNull OrderListViewHolder holder, int position) {
         final OrderListsResponseBean.OrderListEntity entity = list.get(position);
-        if(entity==null) return;
+        if (entity == null) return;
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.putExtra("id",entity.getId());
-                intent.setClass(context,OrderDetailActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra("id", String.valueOf(entity.getId()));
+                intent.setClass(context, OrderDetailActivity1.class);
                 context.startActivity(intent);
             }
         });
         holder.tvFactoryName.setText(entity.getF_name());
-        GlidImageManager.getInstance().loadImageView(context,list.get(position).getImg(),holder.img,R.drawable.ic_default_image);
+        GlidImageManager.getInstance().loadImageView(context, list.get(position).getImg(), holder.img, R.drawable.ic_default_image);
         holder.tvService.setText(entity.getS_name());
         holder.tvTotalPrice.setText(entity.getTotal_price());
-        holder.tvStatus.setText(entity.getStatus());
+        holder.tvStatus.setText(entity.getStatus_view());
 
     }
 
@@ -91,7 +91,7 @@ public class OrderListsAdapter extends RecyclerView.Adapter<OrderListsAdapter.Or
 
         public OrderListViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

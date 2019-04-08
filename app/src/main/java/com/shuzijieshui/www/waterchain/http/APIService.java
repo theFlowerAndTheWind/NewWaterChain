@@ -16,6 +16,7 @@ import com.shuzijieshui.www.waterchain.beans.GoodsResposeBean;
 import com.shuzijieshui.www.waterchain.beans.InfoDetailRespoonseBean;
 import com.shuzijieshui.www.waterchain.beans.InfoListsResponseBean;
 import com.shuzijieshui.www.waterchain.beans.LoginResponseBean;
+import com.shuzijieshui.www.waterchain.beans.OrderDetail;
 import com.shuzijieshui.www.waterchain.beans.OrderDetailResponseBean;
 import com.shuzijieshui.www.waterchain.beans.OrderListsResponseBean;
 import com.shuzijieshui.www.waterchain.beans.RegisterResponseBean;
@@ -82,11 +83,10 @@ public interface APIService {
     Observable<BaseEntity> changePass(@Body RequestBody requestBody);
 
     //订单详情
+//    @POST(UrlConfig.ORDER_DETAIL)
+//    Observable<BaseEntity<OrderDetailResponseBean>> orderDetail(@Body RequestBody requestBody);
     @POST(UrlConfig.ORDER_DETAIL)
-    Observable<BaseEntity<OrderDetailResponseBean>> orderDetail(@Body RequestBody requestBody);
-
-    @POST(UrlConfig.ORDER_DETAIL)
-    Observable<BaseEntity> getOrderDetail(@Body RequestBody requestBody);
+    Observable<BaseEntity<OrderDetail>> getOrderDetail(@Body RequestBody requestBody);
 
     //洗地订单列表
     @POST(UrlConfig.ORDER_LIST)
