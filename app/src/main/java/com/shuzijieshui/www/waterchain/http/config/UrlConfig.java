@@ -1102,4 +1102,14 @@ public class UrlConfig {
      * 获取用户地址--兑换商城
      */
     public static final String USER_ADDRESS = "api/home/goods/userAddress";
+
+    /**
+     * 我的资产-回购虚拟股票
+     */
+    public static final String BUY_BACK="https://www.shuzijieshui.com/api/home/user/buyBack";
+
+    /**
+     * 我的资产-回购虚拟股票
+     */
+    public static final String STOCK_2_JSL="https://www.shuzijieshui.com/api/home/user/stockToJsl";
 }

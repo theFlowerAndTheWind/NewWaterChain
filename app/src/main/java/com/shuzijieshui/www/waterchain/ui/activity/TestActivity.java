@@ -98,23 +98,22 @@ public class TestActivity extends BaseActivity {
 //                edtcontent = edt.getText().toString();
                 HashMap<String, Object> params = new HashMap<>();
 //                params.put("type", edtcontent);
-                params.put("id", "22");
-                RetrofitFactory.getInstance().createService()
-                        .getOrderDetail(RequestUtil.getRequestHashBody(params, false))
-                        .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
-                        .compose(ObservableTransformerUtils.<BaseEntity>io())
-                        .subscribe(new BaseObserver(TestActivity.this) {
-
-                            @Override
-                            protected void onSuccess(Object bean) throws Exception {
-//                                url=bean.getUrl();
-                            }
-
-                            @Override
-                            protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-
-                            }
-                        });
+//                params.put("id", "22");
+//                RetrofitFactory.getInstance().createService()
+//                        .getAccountDetail(RequestUtil.getRequestHashBody(params, false))
+//                        .compose(TestActivity.this.<BaseEntity>bindToLifecycle())
+//                        .compose(ObservableTransformerUtils.<BaseEntity>io())
+//                        .subscribe(new BaseObserver(TestActivity.this) {
+//
+//                            @Override
+//                            protected void onSuccess(Object bean) throws Exception {
+//                            }
+//
+//                            @Override
+//                            protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
+//
+//                            }
+//                        });
 
 //                ShowPickerView();
 

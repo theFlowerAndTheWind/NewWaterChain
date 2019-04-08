@@ -211,7 +211,6 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.showCustomToast(e.getMessage(), 150);
                     ToastUtils.showCustomToastMsg("水方最大可抵扣订单金额的5%", 150);
                     llUseJsl.setBackground(edtBorderIllegal);
                     edtTotalInput.setText("");

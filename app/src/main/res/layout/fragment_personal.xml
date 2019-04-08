@@ -127,7 +127,8 @@
             android:id="@+id/relative_trade_lists"
             style="@style/PaddinLeftRight"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/commit_btn_height">
+            android:layout_height="@dimen/commit_btn_height"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/img3"
@@ -157,7 +158,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_width"
-            android:background="@color/divider_gray" />
+            android:background="@color/divider_gray"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/relative_order_lists"

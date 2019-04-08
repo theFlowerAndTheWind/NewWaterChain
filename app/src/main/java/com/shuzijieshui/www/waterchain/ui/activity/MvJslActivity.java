@@ -75,7 +75,7 @@ public class MvJslActivity extends BaseActivity implements MvJslViewImpl {
 
     private void getIntentExtra() {
         Intent intent = getIntent();
-        jsl = intent.getFloatExtra(UserAssetActivity.EXTRA_JSL, 0);
+//        jsl = intent.getFloatExtra(UserAssetActivity.EXTRA_JSL, 0);
         tvHave.setText(jsl + "");
     }
 

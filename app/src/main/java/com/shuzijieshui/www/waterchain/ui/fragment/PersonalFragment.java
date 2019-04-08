@@ -27,13 +27,13 @@ import com.shuzijieshui.www.waterchain.contract.view.PictureViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.UploadFileViewImpl;
 import com.shuzijieshui.www.waterchain.event.LoginStatusChangedEvent;
 import com.shuzijieshui.www.waterchain.ui.activity.AboutListActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.AccountDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.ChangePassActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.GoodsActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.LoginActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.OrderListsActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.PictureSettingActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.TradeListsActivity;
-import com.shuzijieshui.www.waterchain.ui.activity.UserAssetActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.UserConfirmActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.UserDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.UserMessageActivity;
@@ -98,7 +98,7 @@ public class PersonalFragment extends BaseFragment
                 break;
             case R.id.relative_account_detail:
                 if (checkLoginStatus())
-                    jump(UserAssetActivity.class);
+                    jump(AccountDetailActivity.class);
                 else
                     showAlertChainDialog();
                 break;

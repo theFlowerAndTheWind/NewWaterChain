@@ -128,6 +128,7 @@ public interface APIService {
     @POST(UrlConfig.USER_ACCOUNT)
     Observable<BaseEntity<AccountDetailResponseBean>> accountDetail(@Body RequestBody requestBody);
 
+
     //用户信息
     @POST(UrlConfig.USER_DETAIL)
     Observable<BaseEntity<UserDetailResponseBean>> userDetail(@Body RequestBody requestBody);
@@ -246,5 +247,11 @@ public interface APIService {
      */
     @POST(UrlConfig.USER_ADDRESS)
     Observable<BaseEntity<UserAddressResponseBean>> getUserAddress(@Body RequestBody requestBody);
+
+    @POST(UrlConfig.BUY_BACK)
+    Observable<BaseEntity> buyBack(@Body RequestBody requestBody);
+
+    @POST(UrlConfig.STOCK_2_JSL)
+    Observable<BaseEntity> stock2Jsl(@Body RequestBody requestBody);
 }
 

@@ -121,9 +121,16 @@
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.AboutActivity"
             android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name="com.shuzijieshui.www.waterchain.ui.activity.UserAssetActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
-            android:name="com.shuzijieshui.www.waterchain.ui.activity.UserAssetActivity"
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.AccountDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.StockActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/dialogstyle" />
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.UserConfirmActivity"
             android:screenOrientation="portrait" />

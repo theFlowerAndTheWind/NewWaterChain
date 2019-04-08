@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            style="@style/PaddinLeftRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_phantom_stock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40px"
+                android:background="@drawable/gray_bg_shape"
+                android:orientation="horizontal"
+                android:padding="40px">
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="虚拟股票"
+                        android:textColor="@color/text_black"
+                        android:textSize="32px" />
+
+                    <TextView
+                        android:id="@+id/tv_stock"
+                        style="@style/style_txt_content_gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="51px"
+                        android:text="可用：" />
+
+                    <TextView
+                        android:id="@+id/tv_stock_freeze"
+                        style="@style/style_txt_content_gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18px"
+                        android:text="冻结：" />
+
+                    <TextView
+                        android:id="@+id/tv_stock_lock_view"
+                        style="@style/style_txt_content_gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18px"
+                        android:text="锁定：" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn_stock_2_jsl"
+                        android:layout_width="200px"
+                        android:layout_height="70px"
+                        android:background="@drawable/btn_blue_bg_selector"
+                        android:text="兑换水方"
+                        android:textColor="@android:color/white"
+                        android:textSize="28px" />
+
+                    <Button
+                        android:id="@+id/btn_buy_back"
+                        android:layout_width="200px"
+                        android:layout_height="70px"
+                        android:layout_marginTop="30px"
+                        android:background="@drawable/btn_dark_gray_bg_selector"
+                        android:text="申请回购"
+                        android:textColor="@color/white"
+                        android:textSize="28px" />
+
+                    <Button
+                        android:id="@+id/btn_unlock"
+                        android:layout_width="200px"
+                        android:layout_height="70px"
+                        android:layout_marginTop="30px"
+                        android:background="@drawable/btn_blue_border_selector"
+                        android:text="解锁记录"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="28px"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--<com.jcodecraeer.xrecyclerview.XRecyclerView-->
+                <!--android:id="@+id/xrv"-->
+                <!--android:layout_marginTop="@dimen/layout_horizontal_margin"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+            <LinearLayout
+                android:id="@+id/ll_jsl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_horizontal_margin"
+                android:background="@drawable/gray_bg_shape"
+                android:orientation="vertical"
+                android:padding="@dimen/layout_horizontal_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="水方"
+                    android:textColor="@color/text_black"
+                    android:textSize="32px" />
+
+                <TextView
+                    android:id="@+id/tv_jsl_all"
+                    style="@style/style_txt_content_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="51px"
+                    android:text="可用：" />
+
+                <TextView
+                    android:id="@+id/tv_jsl_freeze"
+                    style="@style/style_txt_content_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    android:text="冻结：" />
+
+                <TextView
+                    android:id="@+id/tv_tip"
+                    style="@style/style_txt_content_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    android:text="提示："
+                    android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

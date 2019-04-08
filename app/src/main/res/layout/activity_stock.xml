@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trans_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trans">
+
+
+    <LinearLayout
+        android:id="@+id/container"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/top_corners_shape"
+        android:orientation="vertical"
+        android:paddingTop="40px">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="申请回购"
+                android:textColor="@color/text_black"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/img_cancle"
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:padding="10px"
+                android:src="@mipmap/close1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commit_btn_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_txt"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="申请回购数量"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10px"
+                android:text="可用"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_stock_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可用"
+                android:textColor="@color/primary_blue"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/edt_input"
+            style="@style/style_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:textColor="@color/text_black"
+            android:inputType="numberDecimal"
+            android:maxLength="10"/>
+
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/commit_btn_height"
+            android:gravity="center_vertical"
+            android:text="1虚拟股票与水方比例1：1"
+            android:textColor="@color/text_black"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_commit"
+            style="@style/style_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commit_btn_height"
+            android:layout_marginVertical="60px"
+            android:text="提交申请" />
+
+    </LinearLayout>
+
+
+</FrameLayout>
