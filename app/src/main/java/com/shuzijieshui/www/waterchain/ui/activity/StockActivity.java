@@ -78,7 +78,7 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
     private void getIntentExtra() {
         Intent intent = getIntent();
         style = intent.getIntExtra(STYLE, 0);
-        fStock = intent.getFloatExtra(STOCK,0);
+        fStock = intent.getFloatExtra(STOCK, 0);
     }
 
     private void initView() {
@@ -93,7 +93,7 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
             tvTip.setVisibility(View.VISIBLE);
             btnCommit.setText("确认兑换");
         }
-        tvStockCount.setText(AccountDetailActivity.format(String.format("%.0f",fStock))+" 虚拟股票");
+        tvStockCount.setText(AccountDetailActivity.format(String.format("%.0f", fStock)) + " 虚拟股票");
         edtInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -113,24 +113,30 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
                         }
                         fCount = Float.valueOf(input);
                         if (fCount > fStock) {
-                            edtInput.setBackground(edtBorderIllegal);
-                            edtInput.setText("");
-                            ToastUtils.showCustomToastMsg("输入值不可大于" + fStock, 150);
+                            inputIllegal("输入值不可大于" + fStock);
                             return;
                         }
                         edtInput.setBackground(edtBorder);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.showCustomToastMsg("请输入正确的数值", 150);
-                    edtInput.setBackground(edtBorderIllegal);
-                    edtInput.setText("");
+                    inputIllegal("请输入正确的数值");
                 }
             }
         });
     }
 
+    private void inputIllegal(String msg) {
+        ToastUtils.showCustomToastMsg(msg, 150);
+        edtInput.setBackground(edtBorderIllegal);
+        edtInput.setText("");
+    }
+
     private void buyBack() {
+        if (fCount <= 0) {
+            inputIllegal("请输入正确的数值");
+            return;
+        }
         if (buyBackPresenter == null) {
             buyBackPresenter = new BuyBackPresenter(new BuyBackModel());
             buyBackPresenter.attachView(this);
@@ -139,6 +145,10 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
     }
 
     public void stock2Jsl() {
+        if (fCount <= 0) {
+            inputIllegal("请输入正确的数值");
+            return;
+        }
         if (stock2JslPresenter == null) {
             stock2JslPresenter = new Stock2JslPresenter(new Stock2JslModel());
             stock2JslPresenter.attachView(this);

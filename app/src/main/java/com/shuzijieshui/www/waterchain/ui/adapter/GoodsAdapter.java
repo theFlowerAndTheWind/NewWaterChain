@@ -72,21 +72,21 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.GoodsHolder>
         holder.tvOrderSn.setText(goodsResposeBean.getOrder_sn());
         holder.tvGName.setText(goodsResposeBean.getG_name());
         holder.tvCName.setText(goodsResposeBean.getC_name());
-        String gyj=goodsResposeBean.getPay_gyj();
+//        String gyj=goodsResposeBean.getPay_gyj();
         String jsl=goodsResposeBean.getPay_jsl();
-        holder.tvPayGyj.setText(new StringBuilder(gyj).append(" 水方").toString());
+//        holder.tvPayGyj.setText(new StringBuilder(gyj).append(" 水方").toString());
         holder.tvPayJsl.setText(new StringBuilder(jsl).append(" 水方").toString());
 
         holder.tvCreatetime.setText(goodsResposeBean.getCreatetime());
         holder.tvStatusView.setText(goodsResposeBean.getStatus_view());
-        try{
-            if(TextUtils.isEmpty(gyj)||Float.valueOf(gyj)==0){
-                holder.rlPayGyj.setVisibility(View.GONE);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            holder.rlPayGyj.setVisibility(View.GONE);
-        }
+//        try{
+//            if(TextUtils.isEmpty(gyj)||Float.valueOf(gyj)==0){
+//                holder.rlPayGyj.setVisibility(View.GONE);
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            holder.rlPayGyj.setVisibility(View.GONE);
+//        }
         try{
             if(TextUtils.isEmpty(jsl)||Float.valueOf(jsl)==0){
                 holder.rlPayJsl.setVisibility(View.GONE);
@@ -117,10 +117,10 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.GoodsHolder>
         TextView tvGName;
         @BindView(R.id.tv_c_name)
         TextView tvCName;
-        @BindView(R.id.rl_pay_gyj)
-        RelativeLayout rlPayGyj;
-        @BindView(R.id.tv_pay_gyj)
-        TextView tvPayGyj;
+//        @BindView(R.id.rl_pay_gyj)
+//        RelativeLayout rlPayGyj;
+//        @BindView(R.id.tv_pay_gyj)
+//        TextView tvPayGyj;
         @BindView(R.id.rl_pay_jsl)
         RelativeLayout rlPayJsl;
         @BindView(R.id.tv_pay_jsl)

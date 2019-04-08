@@ -34,7 +34,7 @@ public class GoodsResposeBean {
     private int count;
     private String total_price;
     private String pay_jsl;
-    private String pay_gyj;
+//    private String pay_gyj;
     private String createtime;
     private String g_name;
     private String c_name;
@@ -74,9 +74,9 @@ public class GoodsResposeBean {
         return pay_jsl;
     }
 
-    public String getPay_gyj() {
-        return pay_gyj;
-    }
+//    public String getPay_gyj() {
+//        return pay_gyj;
+//    }
 
     public String getCreatetime() {
         return createtime;

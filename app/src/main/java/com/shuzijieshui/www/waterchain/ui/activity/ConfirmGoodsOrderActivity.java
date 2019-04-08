@@ -55,8 +55,8 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     TextView tvReceiverAddress;
     @BindView(R.id.tv_total)
     TextView tvTotal;
-    @BindView(R.id.tv_gyj)
-    TextView tvGyj;
+//    @BindView(R.id.tv_gyj)
+//    TextView tvGyj;
     @BindView(R.id.tv_balance)
     TextView tvBalance;
     @BindView(R.id.btn_plus)
@@ -65,8 +65,8 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     ImageView btnSubtract;
     @BindView(R.id.btn_commit)
     Button btnCommit;
-    @BindView(R.id.tv_no_nomey1)
-    TextView tvNoMomey1;
+//    @BindView(R.id.tv_no_nomey1)
+//    TextView tvNoMomey1;
     @BindView(R.id.tv_no_nomey2)
     TextView tvNoMomey2;
 
@@ -84,8 +84,8 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     private int counter = 1;
     private String userJsl;
     private String payJsl;
-    private String userGyj;
-    private String payGyj;
+//    private String userGyj;
+//    private String payGyj;
     private int canOrder = 1;
     boolean gyjEnough = true;
     boolean jslEnough = true;
@@ -155,8 +155,8 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                     userJsl = checkReusltBean.getUser_jsl();
                     payJsl = checkReusltBean.getPay_jsl();
 
-                    userGyj = checkReusltBean.getUser_gyj();
-                    payGyj = checkReusltBean.getPay_gyj();
+//                    userGyj = checkReusltBean.getUser_gyj();
+//                    payGyj = checkReusltBean.getPay_gyj();
                     canOrder = checkReusltBean.getCan_order();
                     compute();
                 }
@@ -295,8 +295,8 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
 
     private void compute() {
         float unitPrice = 0;//单价   单位：水方
-        float user_gyj = 0;
-        float pay_gyj = 0;
+//        float user_gyj = 0;
+//        float pay_gyj = 0;
         float user_jsl = 0;
         float pay_jsl = 0;
 
@@ -304,12 +304,12 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
             if (!TextUtils.isEmpty(jsl)) {
                 unitPrice = Float.valueOf(jsl);
             }
-            if (!TextUtils.isEmpty(userGyj)) {
-                user_gyj = Float.valueOf(userGyj);
-            }
-            if (!TextUtils.isEmpty(payGyj)) {
-                pay_gyj = Float.valueOf(payGyj) * counter;
-            }
+//            if (!TextUtils.isEmpty(userGyj)) {
+//                user_gyj = Float.valueOf(userGyj);
+//            }
+//            if (!TextUtils.isEmpty(payGyj)) {
+//                pay_gyj = Float.valueOf(payGyj) * counter;
+//            }
             if (!TextUtils.isEmpty(userJsl)) {
                 user_jsl = Float.valueOf(userJsl);
             }
@@ -317,13 +317,13 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                 pay_jsl = Float.valueOf(payJsl) * counter;
             }
 
-            if (pay_gyj > user_gyj) {
-                gyjEnough = false;
-                tvNoMomey1.setVisibility(View.VISIBLE);
-            } else {
-                gyjEnough = true;
-                tvNoMomey1.setVisibility(View.GONE);
-            }
+//            if (pay_gyj > user_gyj) {
+//                gyjEnough = false;
+//                tvNoMomey1.setVisibility(View.VISIBLE);
+//            } else {
+//                gyjEnough = true;
+//                tvNoMomey1.setVisibility(View.GONE);
+//            }
             if (pay_jsl > user_jsl) {
                 jslEnough = false;
                 tvNoMomey2.setVisibility(View.VISIBLE);
@@ -338,10 +338,10 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                 btnCommit.setBackground(blueBg);
             }
             String str1 = new StringBuilder(String.format("%.5f", (unitPrice * counter))).append("水方").toString();
-            String str2 = new StringBuilder(String.format("%.5f", pay_gyj)).append("水方").toString();
+//            String str2 = new StringBuilder(String.format("%.5f", pay_gyj)).append("水方").toString();
             String str3 = new StringBuilder(String.format("%.5f", pay_jsl)).append("水方").toString();
             tvTotal.setText(str1);
-            tvGyj.setText(str2);
+//            tvGyj.setText(str2);
             tvBalance.setText(str3);
 
         } catch (Exception e) {

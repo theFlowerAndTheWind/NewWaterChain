@@ -13,6 +13,7 @@ package com.shuzijieshui.www.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -63,16 +64,20 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     TextView tvTitleCenter;
     @BindView(R.id.title_bar)
     View titleBar;
-    @BindView(R.id.tv_detail)
-    TextView tvDetail;
+//    @BindView(R.id.tv_detail)
+//    TextView tvDetail;
     @BindView(R.id.banner_guide_content)
     BGABanner mContentBanner;
+    @BindView(R.id.tv_activity_txt)
+    TextView tvActivityTxt;
     @BindView(R.id.goodsLists_activity)
     XRecyclerView goodsListsXRActivity;
+    @BindView(R.id.tv_commodity_txt)
+    TextView tvCommodityTxt;
     @BindView(R.id.goodsLists_commodity)
     XRecyclerView goodsListsXRCommodity;
-    @BindView(R.id.relative_hint)
-    RelativeLayout relativeHint;
+//    @BindView(R.id.relative_hint)
+//    RelativeLayout relativeHint;
     private GoodsListsPresenter goodsListsPresenter;
     private BannerListPresenter bannerListPresenter;
     private GoodsListsAdapter adapterActivity;
@@ -86,6 +91,7 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     private String activityPage = "1";
     private int commodityCounter = 0;
     private String commodityPage = "1";
+    private Handler handler=new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +111,7 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
 
     private void initView() {
         tvTitleCenter.setText("兑换商城");
-        relativeHint.setVisibility(View.VISIBLE);
+//        relativeHint.setVisibility(View.VISIBLE);
         mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerListResponseBean.BannerListEntity>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
@@ -155,8 +161,8 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
 //        goodsListsXRCommodity.setNestedScrollingEnabled(false);
         goodsListsXRCommodity.setAdapter(adapterCommodity);
 
-        tvDetail.setText("加载数据");
-        tvDetail.setTextColor(getResources().getColor(R.color.primary_blue));
+//        tvDetail.setText("加载数据");
+//        tvDetail.setTextColor(getResources().getColor(R.color.primary_blue));
     }
 
     @Override
@@ -177,7 +183,13 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     public void onReNetRefreshData(int viewId) {
         doBannerRequest();
         doGoodsListRequest(1, commodityCounter, commodityPage);
-        doGoodsListRequest(2, actvityCounter, activityPage);
+        //避免返回顺序与请求顺序不一致
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doGoodsListRequest(2, actvityCounter, activityPage);
+            }
+        },300);
     }
 
     @OnClick({R.id.left_ll})
@@ -223,31 +235,39 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     @Override
     public void onGetGoodsListonRefresh(List<GoodsListsResponseBean> goodsListsResponseBean, int cate_id) {
         if (cate_id == 2) {
-            if (goodsListsResponseBean.size() > 0 && !Util.isEmpty(goodsListsResponseBean)) {
-                relativeHint.setVisibility(View.GONE);
-                goodsListsXRActivity.setVisibility(View.VISIBLE);
-            } else {
-                relativeHint.setVisibility(View.VISIBLE);
-                goodsListsXRActivity.setVisibility(View.GONE);
-            }
+//            if (goodsListsResponseBean.size() > 0 && !Util.isEmpty(goodsListsResponseBean)) {
+//                relativeHint.setVisibility(View.GONE);
+//                goodsListsXRActivity.setVisibility(View.VISIBLE);
+//            } else {
+//                relativeHint.setVisibility(View.VISIBLE);
+//                goodsListsXRActivity.setVisibility(View.GONE);
+//            }
             goodsListActivity.clear();
             goodsListActivity.addAll(goodsListsResponseBean);
             adapterActivity.notifyDataSetChanged();
             goodsListsXRActivity.refreshComplete();
-        } else {
-            if (goodsListsResponseBean.size() > 0 && !Util.isEmpty(goodsListsResponseBean)) {
-                relativeHint.setVisibility(View.GONE);
-                goodsListsXRCommodity.setVisibility(View.VISIBLE);
-            } else {
-                relativeHint.setVisibility(View.VISIBLE);
-                goodsListsXRCommodity.setVisibility(View.GONE);
+            if(goodsListActivity!=null&&goodsListActivity.size()==0){
+                tvActivityTxt.setVisibility(View.GONE);
+                goodsListsXRActivity.setVisibility(View.GONE);
             }
+        } else {
+//            if (goodsListsResponseBean.size() > 0 && !Util.isEmpty(goodsListsResponseBean)) {
+//                relativeHint.setVisibility(View.GONE);
+//                goodsListsXRCommodity.setVisibility(View.VISIBLE);
+//            } else {
+//                relativeHint.setVisibility(View.VISIBLE);
+//                goodsListsXRCommodity.setVisibility(View.GONE);
+//            }
             goodsListCommodity.clear();
             goodsListCommodity.addAll(goodsListsResponseBean);
             if (goodsListCommodity != null) commodityCounter = goodsListCommodity.size();
             if (commodityCounter > 0) commodityPage = "not first request";
             adapterCommodity.notifyDataSetChanged();
             goodsListsXRCommodity.refreshComplete();
+            if(goodsListCommodity!=null&&goodsListCommodity.size()==0){
+                tvCommodityTxt.setVisibility(View.GONE);
+                goodsListsXRCommodity.setVisibility(View.GONE);
+            }
         }
 
         dismissLoadingDialog();
@@ -256,34 +276,42 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
     @Override
     public void onGetGoodsListonloadMore(List<GoodsListsResponseBean> goodsListsResponseBean, int cate_id) {
         if (cate_id == 2) {
-            if (!Util.isEmpty(goodsListsResponseBean) && !Util.isEmpty(goodsListsResponseBean)) {
-                relativeHint.setVisibility(View.GONE);
-                goodsListsXRActivity.setVisibility(View.VISIBLE);
-            } else {
-                if (actvityCounter < 1) {
-                    relativeHint.setVisibility(View.VISIBLE);
-                    goodsListsXRActivity.setVisibility(View.GONE);
-                }
-            }
+//            if (!Util.isEmpty(goodsListsResponseBean) && !Util.isEmpty(goodsListsResponseBean)) {
+//                relativeHint.setVisibility(View.GONE);
+//                goodsListsXRActivity.setVisibility(View.VISIBLE);
+//            } else {
+//                if (actvityCounter < 1) {
+//                    relativeHint.setVisibility(View.VISIBLE);
+//                    goodsListsXRActivity.setVisibility(View.GONE);
+//                }
+//            }
             goodsListActivity.addAll(goodsListsResponseBean);
             adapterActivity.notifyDataSetChanged();
             goodsListsXRActivity.loadMoreComplete();
-        } else {
-            if (!Util.isEmpty(goodsListsResponseBean) && goodsListsResponseBean.size() > 0) {
-                relativeHint.setVisibility(View.GONE);
-                goodsListsXRCommodity.setVisibility(View.VISIBLE);
-            } else {
-                if (commodityCounter < 1) {
-                    relativeHint.setVisibility(View.VISIBLE);
-                    goodsListsXRCommodity.setVisibility(View.GONE);
-                }
+            if(goodsListActivity!=null&&goodsListActivity.size()==0){
+                tvActivityTxt.setVisibility(View.GONE);
+                goodsListsXRActivity.setVisibility(View.GONE);
             }
+        } else {
+//            if (!Util.isEmpty(goodsListsResponseBean) && goodsListsResponseBean.size() > 0) {
+//                relativeHint.setVisibility(View.GONE);
+//                goodsListsXRCommodity.setVisibility(View.VISIBLE);
+//            } else {
+//                if (commodityCounter < 1) {
+//                    relativeHint.setVisibility(View.VISIBLE);
+//                    goodsListsXRCommodity.setVisibility(View.GONE);
+//                }
+//            }
             goodsListCommodity.addAll(goodsListsResponseBean);
 
             if (goodsListCommodity != null) commodityCounter = goodsListCommodity.size();
             if (commodityCounter > 0) commodityPage = "not first request";
             adapterCommodity.notifyDataSetChanged();
             goodsListsXRCommodity.loadMoreComplete();
+            if(goodsListCommodity!=null&&goodsListCommodity.size()==0){
+                tvCommodityTxt.setVisibility(View.GONE);
+                goodsListsXRCommodity.setVisibility(View.GONE);
+            }
         }
 
         dismissLoadingDialog();
@@ -325,7 +353,13 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         super.onResume();
         doBannerRequest();
         doGoodsListRequest(1, commodityCounter, commodityPage);
-        doGoodsListRequest(2, actvityCounter, activityPage);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doGoodsListRequest(2, actvityCounter, activityPage);
+            }
+        },300);
+
     }
 
     @Override

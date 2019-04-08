@@ -167,21 +167,22 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
         if (beans != null) {
             checkUserPayResponseBean = beans;
+
             String title = null;
             String msg = null;
             String pos = null;
             String neg = null;
             if (beans.getCan_order() == 1) {
                 String price = new StringBuilder(jslPrice).append("水方").toString();
-                String pay_gyj = new StringBuilder(beans.getPay_gyj()).append("水方").toString();
-                String user_gyj = new StringBuilder(beans.getUser_gyj()).append("水方").toString();
+//                String pay_gyj = new StringBuilder(beans.getPay_gyj()).append("水方").toString();
+//                String user_gyj = new StringBuilder(beans.getUser_gyj()).append("水方").toString();
                 String pay_jsl = new StringBuilder(beans.getPay_jsl()).append("水方").toString();
                 String user_jsl = new StringBuilder(beans.getUser_jsl()).append("水方").toString();
 
                 msg = new StringBuilder()
                         .append("活动价格：").append(price)
-                        .append("\n账户余额：").append(pay_gyj).append("(公益金账户:").append(user_gyj).append(")")
-                        .append("\n兑换后余额：").append(pay_jsl).append("(账户余额：").append(user_jsl).append(")")
+                        .append("\n账户余额：").append(user_jsl)/*.append("(公益金账户:").append(user_gyj).append(")")*/
+                        .append("\n需支付：").append(pay_jsl)/*.append("(账户余额：").append(user_jsl).append(")")*/
                         .toString();
                 title = "确认兑换该活动";
                 pos = "确定";

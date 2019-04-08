@@ -76,28 +76,28 @@
 
     <include layout="@layout/module_include_divider" />
 
-    <RelativeLayout
-        android:id="@+id/rl_pay_gyj"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/commit_btn_height"
-        android:gravity="center_vertical">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_pay_gyj"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/commit_btn_height"-->
+        <!--android:gravity="center_vertical">-->
 
-        <TextView
-            style="@style/style_txt_confirm_order1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="支付公益金" />
+        <!--<TextView-->
+            <!--style="@style/style_txt_confirm_order1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="支付公益金" />-->
 
-        <TextView
-            android:id="@+id/tv_pay_gyj"
-            style="@style/style_txt_confirm_order1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/layout_horizontal_margin"
-            android:text="198.00 JSL"
-            android:textColor="@color/text_gray" />
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_pay_gyj"-->
+            <!--style="@style/style_txt_confirm_order1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="@dimen/layout_horizontal_margin"-->
+            <!--android:text="198.00 JSL"-->
+            <!--android:textColor="@color/text_gray" />-->
+    <!--</RelativeLayout>-->
 
     <include layout="@layout/module_include_divider" />
 
