@@ -46,6 +46,7 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
         initView();
         serviceDetailPresenter = new ServiceDetailPresenter(new ServiceDetailModel());
         serviceDetailPresenter.attachView(this);
+        showLoadingDialog();
         getServiceDetail();
     }
 
@@ -82,7 +83,7 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
         if (serviceDetailPresenter != null) serviceDetailPresenter.detachView();
     }
 
-    @OnClick({R.id.left_ll,R.id.btn_add_order})
+    @OnClick({R.id.left_ll, R.id.btn_add_order})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -91,8 +92,8 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
                 break;
 
             case R.id.btn_add_order:
-                Intent intent=new Intent(this,ConfirmOrderActivity1.class);
-                intent.putExtra("ServiceDetail",serviceDetail);
+                Intent intent = new Intent(this, ConfirmOrderActivity1.class);
+                intent.putExtra("ServiceDetail", serviceDetail);
                 startActivity(intent);
                 break;
         }
@@ -118,11 +119,12 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
             tvContent.setText(charSequenceContent);
         }
 
-
+        dismissLoadingDialog();
     }
 
     @Override
     public void onRequestFail(String msg) {
+        dismissLoadingDialog();
         ToastUtils.showCustomToast(msg, 0);
     }
 }

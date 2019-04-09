@@ -52,8 +52,8 @@ import de.greenrobot.event.EventBus;
  * @Description: 兑换商城
  * @Author: sxt
  * @CreateDate: 2019/1/2 9:18 AM
- * @UpdateUser: 更新者
- * @UpdateDate: 2019/1/2 9:18 AM
+ * @UpdateUser: sxt
+ * @UpdateDate: 2019/4/8 22:18 AM
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
@@ -111,7 +111,6 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
 
     private void initView() {
         tvTitleCenter.setText("兑换商城");
-//        relativeHint.setVisibility(View.VISIBLE);
         mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerListResponseBean.BannerListEntity>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
@@ -130,8 +129,6 @@ public class GoodsListsActivity extends BaseActivity implements BannerListViewIm
         goodsListsXRActivity.setLayoutManager(new LinearLayoutManager(this));
         goodsListsXRActivity.setPullRefreshEnabled(false);
         goodsListsXRActivity.setLoadingMoreEnabled(false);
-//        goodsListsXRActivity.setHasFixedSize(true);
-//        goodsListsXRActivity.setNestedScrollingEnabled(false);
         goodsListsXRActivity.setAdapter(adapterActivity);
 
         //-----------------------------------------------热门商品-----------------------------------//

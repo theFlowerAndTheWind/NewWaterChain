@@ -2,6 +2,7 @@ package com.shuzijieshui.www.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -136,10 +137,16 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
                 }
                 String jslAll = String.format("%.5f", Float.valueOf(accountDetailResponseBean.getJsl_all()));
                 String jslFreeze = String.format("%.5f", Float.valueOf(accountDetailResponseBean.getJsl_freeze()));
-                String balanceV = String.format("%.5f", Float.valueOf(accountDetailResponseBean.getBalance_v()));
                 tvJslAll.setText("可用：" + jslAll);
                 tvJslFreeze.setText("冻结：" + jslFreeze);
-                tvTip.setText("提示：其中" + balanceV + "水方即将在 " + accountDetailResponseBean.getExpire_time() + " 到期");
+                final String balance_v = accountDetailResponseBean.getBalance_v();
+                final String expire_time = accountDetailResponseBean.getExpire_time();
+                if (!TextUtils.isEmpty(balance_v) && !TextUtils.isEmpty(expire_time)) {
+                    String balanceV = String.format("%.5f", Float.valueOf(balance_v));
+                    tvTip.setText("提示：其中" + balanceV + "水方即将在 " + expire_time + " 到期");
+                }else{
+                    tvTip.setVisibility(View.GONE);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

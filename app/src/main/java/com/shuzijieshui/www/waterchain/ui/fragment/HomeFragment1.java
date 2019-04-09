@@ -95,12 +95,6 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
         tradeLinePresenter.attachView(this);
         showLoadingDialog();
         requestNetwork();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dismissLoadingDialog();
-            }
-        }, 1500);
     }
 
     @Override
@@ -221,6 +215,7 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
 
     @Override
     public void onReNetRefreshData(int viewId) {
+        showLoadingDialog();
         requestNetwork();
     }
 
@@ -290,10 +285,17 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
             count = listEntities.size();
             serviceListAdapter.notifyDataSetChanged();
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+            }
+        },500);
     }
 
     @Override
     public void onServiceListFailed(String msg) {
+        dismissLoadingDialog();
         ToastUtils.showCustomToast(msg, 0);
     }
 }

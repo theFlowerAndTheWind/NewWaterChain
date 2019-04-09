@@ -39,7 +39,7 @@ public class OrderListsTabFragment extends BaseFragment implements OrderListsVie
 
     private String title;
 
-//    private String status = "全部";
+    //    private String status = "全部";
     private int intStatus = 0;
     private int count = 0;
     private OrderListsAdapter orderListsAdapter;
@@ -135,12 +135,11 @@ public class OrderListsTabFragment extends BaseFragment implements OrderListsVie
      * 5.上垃加载更多
      */
     private void doRequest() {
-        if (!isLoadMore) showLoadingDialog();
+//        if (!isLoadMore && isVisiable) /*showLoadingDialog();*/
         if (orderListsPresenter == null) {
             orderListsPresenter = new OrderListsPresenter(new OrderListsModel());
             orderListsPresenter.attachView(this);
         }
-
         orderListsPresenter.getOrderList(baseActivity, intStatus, count);
     }
 
@@ -220,7 +219,7 @@ public class OrderListsTabFragment extends BaseFragment implements OrderListsVie
             //懒加载
             if (isFirstVisable == 1) {
                 doRequest();
-            }else if(isFirstVisable>1){
+            } else if (isFirstVisable > 1) {
                 if (list != null && list.size() == 0) {
                     xrv.setVisibility(View.GONE);
                     rlHint.setVisibility(View.VISIBLE);
@@ -231,20 +230,7 @@ public class OrderListsTabFragment extends BaseFragment implements OrderListsVie
 
     }
 
-    @Override
-    public void showLoadingDialog() {
-        if (isVisiable) {
-//            super.showLoadingDialog();//懒加载时直接使用fragment的showloadingDialog方法报异常。跟生命周期有关
-            baseActivity.showLoadingDialog();
-        }
-    }
 
-    @Override
-    public void dismissLoadingDialog() {
-        if (isVisiable) {
-            baseActivity.dismissLoadingDialog();
-        }
-    }
 
     @Override
     public void onDestroy() {

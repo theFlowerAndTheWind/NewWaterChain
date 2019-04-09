@@ -64,7 +64,7 @@ public class OrderListsActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
     }
 
-    @OnClick({})
+    @OnClick({R.id.left_ll})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {

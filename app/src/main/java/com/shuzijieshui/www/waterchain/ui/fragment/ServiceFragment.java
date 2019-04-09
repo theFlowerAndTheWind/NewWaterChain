@@ -94,12 +94,6 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
         if (adImgPresenter != null) {
             adImgPresenter.getAdImg(getBaseActivity(), "ad_fac");
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dismissLoadingDialog();
-            }
-        }, 1500);
     }
 
     @Override
@@ -118,6 +112,7 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
 
     @Override
     public void onReNetRefreshData(int viewId) {
+        showLoadingDialog();
         getServiceList();
     }
 
@@ -173,10 +168,17 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
             listEntities.addAll(serviceListEntities);
             serviceListAdapter.notifyDataSetChanged();
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+            }
+        },500);
     }
 
     @Override
     public void onServiceListFailed(String msg) {
+        dismissLoadingDialog();
         ToastUtils.showCustomToast(msg, 0);
     }
 

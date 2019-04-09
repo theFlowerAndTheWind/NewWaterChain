@@ -167,17 +167,23 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
         if (beans != null) {
             checkUserPayResponseBean = beans;
+//            checkUserPayResponseBean.setCan_order(1);
+//            checkUserPayResponseBean.setUser_jsl("100000");
 
             String title = null;
             String msg = null;
             String pos = null;
             String neg = null;
             if (beans.getCan_order() == 1) {
-                String price = new StringBuilder(jslPrice).append("水方").toString();
+//                String price = new StringBuilder(jslPrice).append("水方").toString();
+                float fPrice=Float.valueOf(beans.getGoods_pay());
+                float fUserJsl=Float.valueOf(beans.getUser_jsl());
+                float fPayJsl=Float.valueOf(beans.getPay_jsl());
+                String price = new StringBuilder(String.format("%.5f",fPrice)).append("水方").toString();
 //                String pay_gyj = new StringBuilder(beans.getPay_gyj()).append("水方").toString();
 //                String user_gyj = new StringBuilder(beans.getUser_gyj()).append("水方").toString();
-                String pay_jsl = new StringBuilder(beans.getPay_jsl()).append("水方").toString();
-                String user_jsl = new StringBuilder(beans.getUser_jsl()).append("水方").toString();
+                String pay_jsl = new StringBuilder(String.format("%.5f",fPayJsl)).append("水方").toString();
+                String user_jsl = new StringBuilder(String.format("%.5f",fUserJsl)).append("水方").toString();
 
                 msg = new StringBuilder()
                         .append("活动价格：").append(price)

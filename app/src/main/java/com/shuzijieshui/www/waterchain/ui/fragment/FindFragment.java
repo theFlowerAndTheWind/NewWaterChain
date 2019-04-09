@@ -88,23 +88,17 @@ public class FindFragment extends BaseFragment implements
         adImgPresenter.attachView(this);
         showLoadingDialog();
         requestNetwork();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dismissLoadingDialog();
-            }
-        },800);
     }
 
     public void requestNetwork() {
-        if (infoListPresenter != null) {
-            infoListPresenter.getInfoList(getBaseActivity(), dataCounter);
-        }
         if (bannerListPresenter != null) {
             bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);
         }
         if (adImgPresenter != null) {
             adImgPresenter.getAdImg(getBaseActivity(), "ad_goods");
+        }
+        if (infoListPresenter != null) {
+            infoListPresenter.getInfoList(getBaseActivity(), dataCounter);
         }
     }
 
@@ -205,10 +199,18 @@ public class FindFragment extends BaseFragment implements
             xrv.loadMoreComplete();
             xrv.refreshComplete();
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismissLoadingDialog();
+            }
+        },500);
+
     }
 
     @Override
     public void infoListFailed(String msg) {
+        dismissLoadingDialog();
         ToastUtils.showCustomToast("加载失败",0);
     }
 
