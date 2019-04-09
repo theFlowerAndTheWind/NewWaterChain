@@ -17,6 +17,7 @@ import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.beans.AdImgResponseBean;
 import com.shuzijieshui.www.waterchain.beans.Factory;
 import com.shuzijieshui.www.waterchain.beans.FactoryListResponse;
+import com.shuzijieshui.www.waterchain.beans.ServiceEntity;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.contract.model.AdImgModel;
 import com.shuzijieshui.www.waterchain.contract.model.ServiceListModel;
@@ -63,7 +64,7 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
     private Unbinder unbinder;
     private View rootView;
     private ServiceListAdapter serviceListAdapter;
-    private List<ServiceListResponseBean.ServiceListEntity>listEntities=new ArrayList<>();
+    private List<ServiceEntity>listEntities=new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -162,7 +163,7 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
     }
 
     @Override
-    public void onServiceListSuccess(List<ServiceListResponseBean.ServiceListEntity> serviceListEntities) {
+    public void onServiceListSuccess(List<ServiceEntity> serviceListEntities) {
         if (serviceListEntities != null) {
             listEntities.clear();
             listEntities.addAll(serviceListEntities);

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shuzijieshui.www.waterchain.R;
+import com.shuzijieshui.www.waterchain.beans.ServiceEntity;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -31,11 +32,11 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     private Context context;
 
-    private List<ServiceListResponseBean.ServiceListEntity> list;
+    private List<ServiceEntity> list;
 
     private OnItemClickListener listener;
 
-    public ServiceListAdapter(Context context, List<ServiceListResponseBean.ServiceListEntity> list) {
+    public ServiceListAdapter(Context context, List<ServiceEntity> list) {
 
         this.context = context;
         if (list == null) {
@@ -55,7 +56,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull RecycleHolder holder, final int position) {
-        final ServiceListResponseBean.ServiceListEntity serviceListEntity = list.get(position);
+        final ServiceEntity serviceListEntity = list.get(position);
         GlidImageManager.getInstance().loadImageView(context, serviceListEntity.getImg(), holder.washImg, R.mipmap.default_img);
         holder.washDesc.setText(serviceListEntity.getIntro());
         holder.washTitle.setText(list.get(position).getS_name());

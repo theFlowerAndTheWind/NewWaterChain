@@ -1,6 +1,7 @@
 package com.shuzijieshui.www.waterchain.contract.model;
 
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
+import com.shuzijieshui.www.waterchain.beans.ServiceEntity;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.http.BaseObserver;
 import com.shuzijieshui.www.waterchain.http.RetrofitFactory;
@@ -56,7 +57,7 @@ public class ServiceListModel {
     }
 
     public interface ServiceListCallBack{
-        void success(List<ServiceListResponseBean.ServiceListEntity> serviceListEntity);
+        void success(List<ServiceEntity> serviceListEntity);
         void failed(String msg);
     }
 }

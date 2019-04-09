@@ -1,6 +1,7 @@
 package com.shuzijieshui.www.waterchain.contract.presenter;
 
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
+import com.shuzijieshui.www.waterchain.beans.ServiceEntity;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.contract.BasePresenter;
 import com.shuzijieshui.www.waterchain.contract.model.ServiceListModel;
@@ -29,7 +30,7 @@ public class ServiceListPresneter extends BasePresenter<ServiceListViewImpl> {
         }
         serviceListModel.getSrviceList(activity, new ServiceListModel.ServiceListCallBack() {
             @Override
-            public void success(List<ServiceListResponseBean.ServiceListEntity> serviceListEntity) {
+            public void success(List<ServiceEntity> serviceListEntity) {
                 if(mView!=null){
                     mView.onServiceListSuccess(serviceListEntity);
                 }

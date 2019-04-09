@@ -91,7 +91,7 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
             case R.id.btn_buy_back:
                 jump(0);
                 break;
-
+            default:break;
         }
     }
 
@@ -143,7 +143,7 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
                 final String expire_time = accountDetailResponseBean.getExpire_time();
                 if (!TextUtils.isEmpty(balance_v) && !TextUtils.isEmpty(expire_time)) {
                     String balanceV = String.format("%.5f", Float.valueOf(balance_v));
-                    tvTip.setText("提示：其中" + balanceV + "水方即将在 " + expire_time + " 到期");
+                    tvTip.setText("提示：其中 " + balanceV + " 水方即将在 " + expire_time + " 到期");
                 }else{
                     tvTip.setVisibility(View.GONE);
                 }
@@ -159,15 +159,5 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
     public void onAccountDetailFailed(String msg) {
         dismissLoadingDialog();
         ToastUtils.showCustomToast(msg, 1);
-//        AccountDetailResponseBean bean = new AccountDetailResponseBean();
-//        bean.setJsl_all("1997000");
-//        bean.setJsl_freeze("500");
-//        bean.setIs_investor("1");
-//        bean.setStock("199745");
-//        bean.setStock_freeze("500");
-//        bean.setStock_lock_view("1935000");
-//        bean.setBalance_v("100");
-//        bean.setExpire_time("2019-3-25");
-//        onAccountDetailSuccess(bean);
     }
 }

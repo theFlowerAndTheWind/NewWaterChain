@@ -1,5 +1,6 @@
 package com.shuzijieshui.www.waterchain.contract.view;
 
+import com.shuzijieshui.www.waterchain.beans.ServiceEntity;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.contract.IBaseViewImpl;
 
@@ -11,6 +12,6 @@ import java.util.List;
  */
 
 public interface ServiceListViewImpl extends IBaseViewImpl {
-    void onServiceListSuccess(List<ServiceListResponseBean.ServiceListEntity> serviceListEntities);
+    void onServiceListSuccess(List<ServiceEntity> serviceListEntities);
     void onServiceListFailed(String msg);
 }

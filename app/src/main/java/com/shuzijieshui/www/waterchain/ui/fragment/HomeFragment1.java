@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.beans.BannerListResponseBean;
+import com.shuzijieshui.www.waterchain.beans.ServiceEntity;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.beans.TradeLineResponseBean;
 import com.shuzijieshui.www.waterchain.contract.model.ServiceListModel;
@@ -28,8 +29,6 @@ import com.shuzijieshui.www.waterchain.contract.presenter.TradeLinePresenter;
 import com.shuzijieshui.www.waterchain.contract.view.BannerListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.ServiceListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.TradeLineViewImpl;
-import com.shuzijieshui.www.waterchain.ui.activity.EnterpriseActivity;
-import com.shuzijieshui.www.waterchain.ui.activity.FactoryServiceActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.GoodsDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.GoodsListsActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.InfoDetailActivity;
@@ -80,7 +79,7 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
     private ServiceListAdapter serviceListAdapter;
     private List<BannerListResponseBean.BannerListEntity> banners = new ArrayList<>();
     MainActivity activity;
-    private List<ServiceListResponseBean.ServiceListEntity> listEntities = new ArrayList<>();
+    private List<ServiceEntity> listEntities = new ArrayList<>();
     private int count = 0;//factoryList计数
     private boolean isRefresh = false;//是否刷新
 
@@ -278,7 +277,7 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
     }
 
     @Override
-    public void onServiceListSuccess(List<ServiceListResponseBean.ServiceListEntity> serviceListEntities) {
+    public void onServiceListSuccess(List<ServiceEntity> serviceListEntities) {
         if (serviceListEntities != null) {
             listEntities.clear();
             listEntities.addAll(serviceListEntities);
