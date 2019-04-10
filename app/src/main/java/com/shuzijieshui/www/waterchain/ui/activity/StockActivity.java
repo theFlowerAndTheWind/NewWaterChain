@@ -170,7 +170,7 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
                 } else if (style == 1) {
                     stock2Jsl();
                 }
-                finish();
+
                 break;
         }
     }
@@ -190,22 +190,26 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
     @Override
     public void onRequestSucc(Object o) {
         ToastUtils.showCustomToast("申请成功，请耐心等待审核", 1);
+        finish();
     }
 
     @Override
     public void onRequestFail(String msg) {
         ToastUtils.showCustomToast("申请失败", 0);
+        finish();
     }
 
     @Override
     public void onStock2JslSucc(Object o) {
         ToastUtils.showCustomToast("兑换成功", 1);
+        finish();
 
     }
 
     @Override
     public void onStock2JslFail(String msg) {
         ToastUtils.showCustomToast("兑换失败", 0);
+        finish();
     }
 
     @Override

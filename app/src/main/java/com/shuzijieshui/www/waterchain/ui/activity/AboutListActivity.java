@@ -66,7 +66,6 @@ public class AboutListActivity extends BaseActivity implements AppUpdateViewImpl
                 intent.putExtra(WebViewActivity.WEBVIEW_ACT_TITLE,"关于我们");
                 intent.putExtra(WebViewActivity.GET_URL_TYPE,"about");
                 startActivity(intent);
-//                //todo c2c没有H5相关接口
 //                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.img_title_left:
