@@ -32,22 +32,26 @@
             android:text="产品服务"
             android:textSize="16sp" />
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/rc_wash_list"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
 
-        </com.jcodecraeer.xrecyclerview.XRecyclerView>
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/rc_wash_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
 
 
         <TextView
             android:id="@+id/tv_cur_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_horizontal_margin"
             android:layout_weight="1"
             android:gravity="left|center"
             android:paddingTop="@dimen/layout_horizontal_padding"
-            android:layout_marginLeft="@dimen/layout_horizontal_margin"
             android:text="水方"
             android:textSize="14sp" />
 

@@ -73,6 +73,7 @@ public class GoodsListsAdapter extends RecyclerView.Adapter<GoodsListsAdapter.Go
         holder.tvContent.setText(list.get(position).getJsl()+" 水方");
         holder.tvContent.setTextColor(context.getResources().getColor(R.color.primary_red));
         holder.tvPublishtime.setText("市场价：¥ "+list.get(position).getPrice());
+        holder.tvPublishtime.setVisibility(View.GONE);//产品要求去掉市场价信息
         if (position == list.size()-1){
             holder.divider.setVisibility(View.INVISIBLE);
         }else {

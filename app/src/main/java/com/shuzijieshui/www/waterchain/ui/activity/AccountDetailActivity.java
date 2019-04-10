@@ -17,6 +17,7 @@ import com.shuzijieshui.www.waterchain.contract.view.AccountDetailViewImpl;
 import com.shuzijieshui.www.waterchain.utils.LogUtils;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
+import com.shuzijieshui.www.waterchain.utils.Util;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -103,19 +104,7 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
         overridePendingTransition(R.anim.actionsheet_dialog_in, 0);
     }
 
-    public static String format(String str) {
-        // 创建一个空的StringBuilder对象
-        StringBuilder sb = new StringBuilder();
-        // 追加字符串
-        sb.append(str);
-        // 从后往前每隔三位插入逗号
-        int last = sb.length();
-        for (int i = last - 3; i > 0; i -= 3) {
-            sb.insert(i, ',');
-        }
-        // 将StringBuilder对象转换为String对象并输出
-        return sb.toString();
-    }
+
 
 
     @Override
@@ -124,25 +113,29 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
             try {
                 String investor = accountDetailResponseBean.getIs_investor();
                 if (investor.equals("1")) {//用户为投资人
-                    fStock = Float.valueOf(accountDetailResponseBean.getStock());
-                    String stock = format(accountDetailResponseBean.getStock());
-                    String stockFreeze = format(accountDetailResponseBean.getStock_freeze());
-                    String stockLockView = format(accountDetailResponseBean.getStock_lock_view());
+                    String stock = accountDetailResponseBean.getStock();
+                    String stockFreeze = accountDetailResponseBean.getStock_freeze();
+                    String stockLockView = accountDetailResponseBean.getStock_lock_view();
                     tvStock.setText("可用：" + stock);
                     tvStockFreeze.setText("冻结：" + stockFreeze);
                     tvStockLockView.setText("锁定：" + stockLockView);
+                    fStock = Util.str2Flt(Util.deleteComma(stock));
                     llStock.setVisibility(View.VISIBLE);
                 } else if (investor.equals("0")) {
                     llStock.setVisibility(View.GONE);
                 }
-                String jslAll = String.format("%.5f", Float.valueOf(accountDetailResponseBean.getJsl_all()));
-                String jslFreeze = String.format("%.5f", Float.valueOf(accountDetailResponseBean.getJsl_freeze()));
-                tvJslAll.setText("可用：" + jslAll);
-                tvJslFreeze.setText("冻结：" + jslFreeze);
+
+                String jslAll = accountDetailResponseBean.getJsl_all();
+                String jslFreeze=accountDetailResponseBean.getJsl_freeze();
+
+                String jslAllStr=new StringBuilder("可用：").append(String.format("%.5f",Util.str2Flt(Util.deleteComma(jslAll)))).toString();
+                String jslFreezeStr=new StringBuilder("可用：").append(String.format("%.5f",Util.str2Flt(Util.deleteComma(jslFreeze)))).toString();
+                tvJslAll.setText(jslAllStr);
+                tvJslFreeze.setText(jslFreezeStr);
                 final String balance_v = accountDetailResponseBean.getBalance_v();
                 final String expire_time = accountDetailResponseBean.getExpire_time();
                 if (!TextUtils.isEmpty(balance_v) && !TextUtils.isEmpty(expire_time)) {
-                    String balanceV = String.format("%.5f", Float.valueOf(balance_v));
+                    String balanceV = String.format("%.5f", Util.str2Flt(Util.deleteComma(balance_v)));
                     tvTip.setText("提示：其中 " + balanceV + " 水方即将在 " + expire_time + " 到期");
                 }else{
                     tvTip.setVisibility(View.GONE);

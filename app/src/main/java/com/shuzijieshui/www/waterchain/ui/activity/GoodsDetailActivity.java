@@ -2,7 +2,6 @@ package com.shuzijieshui.www.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.base.BaseActivity;
@@ -22,10 +22,17 @@ import com.shuzijieshui.www.waterchain.contract.presenter.GoodsDetailPresenter;
 import com.shuzijieshui.www.waterchain.contract.view.CheckUserPayViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.GoodsDetailViewImpl;
 import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
+import com.shuzijieshui.www.waterchain.utils.LogUtils;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.shuzijieshui.www.waterchain.utils.Util;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
+import com.zzhoujay.richtext.RichText;
+import com.zzhoujay.richtext.callback.OnImageClickListener;
+
+import java.net.URL;
+import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,6 +72,10 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     ScrollView gooodsContent;
     @BindView(R.id.goods_exchange)
     Button goodsExchange;
+
+
+    private RichText richText;
+
     private GoodsDetailPresenter detailPresenter;
     private CheckUserPayPresenter checkUserPayPresenter;
     private AlertChainDialog alertChainDialog;
@@ -76,9 +87,11 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
     public static final String EXTRA_GOODSDETAILRESPONSEBEAN = "goodsDetailResponseBean";
     public static final String EXTRA_CHECKUSERPAYRESPONSEBEAN = "checkUserPayResponseBean";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RichText.initCacheDir(this);
         StatusBarUtil.setImmersionStatus(this, titleBar);
         detailPresenter = new GoodsDetailPresenter();
         detailPresenter.attachView(this);
@@ -105,8 +118,6 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
             case R.id.goods_exchange:
                 if (!Util.isFastDoubleClick()) {
                     doCheckUserPayRequest();
-
-//                    jump2ConfirmGoodsOrderAct();
                 }
                 break;
             default:
@@ -131,21 +142,17 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
             relativeHint.setVisibility(View.GONE);
             gooodsContent.setVisibility(View.VISIBLE);
             goodsExchange.setVisibility(View.VISIBLE);
+            GlidImageManager.getInstance().loadImageView(this, beans.getImg(), img, R.mipmap.default_img);
             tvGoodsTitle.setText(beans.getName());
             jslPrice = beans.getJsl();
             tvGoodsDemandNumber.setText("所需水方：" + jslPrice);
             tvGoodsPrice.setText("市场价 ¥ " + beans.getPrice());
+            tvGoodsPrice.setVisibility(View.GONE);//产品要求去掉市场价信息
             tvGoodsStockNumber.setText("库存数量：" + beans.getNow_stock() + " / " + beans.getStock());
             tvGoodsIntroduce.setText("商品介绍");
             cateId = beans.getCate_id();
-            CharSequence charSequence;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                charSequence = Html.fromHtml(beans.getDescription(), Html.FROM_HTML_MODE_LEGACY);
-            } else {
-                charSequence = Html.fromHtml(beans.getDescription());
-            }
-            tvGoodsDescribe.setText(charSequence);
-            GlidImageManager.getInstance().loadImageView(this, beans.getImg(), img, R.mipmap.default_img);
+            richText = RichText.from(beans.getDescription()).into(tvGoodsDescribe);
+
         } else {
             relativeHint.setVisibility(View.VISIBLE);
             gooodsContent.setVisibility(View.GONE);
@@ -167,23 +174,17 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
         if (beans != null) {
             checkUserPayResponseBean = beans;
-//            checkUserPayResponseBean.setCan_order(1);
-//            checkUserPayResponseBean.setUser_jsl("100000");
-
             String title = null;
             String msg = null;
             String pos = null;
             String neg = null;
             if (beans.getCan_order() == 1) {
-//                String price = new StringBuilder(jslPrice).append("水方").toString();
-                float fPrice=Float.valueOf(beans.getGoods_pay());
-                float fUserJsl=Float.valueOf(beans.getUser_jsl());
-                float fPayJsl=Float.valueOf(beans.getPay_jsl());
-                String price = new StringBuilder(String.format("%.5f",fPrice)).append("水方").toString();
-//                String pay_gyj = new StringBuilder(beans.getPay_gyj()).append("水方").toString();
-//                String user_gyj = new StringBuilder(beans.getUser_gyj()).append("水方").toString();
-                String pay_jsl = new StringBuilder(String.format("%.5f",fPayJsl)).append("水方").toString();
-                String user_jsl = new StringBuilder(String.format("%.5f",fUserJsl)).append("水方").toString();
+                float fPrice = Util.str2Flt(Util.deleteComma(beans.getGoods_pay()));
+                float fUserJsl = Util.str2Flt(Util.deleteComma(beans.getUser_jsl()));
+                float fPayJsl = Util.str2Flt(Util.deleteComma(beans.getPay_jsl()));
+                String price = new StringBuilder(String.format("%.5f", fPrice)).append("水方").toString();
+                String pay_jsl = new StringBuilder(String.format("%.5f", fPayJsl)).append("水方").toString();
+                String user_jsl = new StringBuilder(String.format("%.5f", fUserJsl)).append("水方").toString();
 
                 msg = new StringBuilder()
                         .append("活动价格：").append(price)
@@ -254,8 +255,8 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
 
     private void doGoodsDetailRequest() {
         if (getIntent() != null) {
+//            showLoadingDialog();
             detailPresenter.getGoodsDetail(this, getIntent().getIntExtra("id", -1));
-            showLoadingDialog();
         }
     }
 
@@ -264,14 +265,16 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
             CheckUserPayReqBean bean = new CheckUserPayReqBean();
             bean.setId(getIntent().getIntExtra("id", -1));
             bean.setCount(1);//活动类商品传1 活动2
-            checkUserPayPresenter.checkUserPay(this, bean);
             showLoadingDialog();
+            checkUserPayPresenter.checkUserPay(this, bean);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (richText != null) richText.clear();
+        richText = null;
         if (detailPresenter != null) {
             detailPresenter.detachView();
         }

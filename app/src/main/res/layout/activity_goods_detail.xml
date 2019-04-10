@@ -13,7 +13,8 @@
             android:id="@+id/goods_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/commit_btn_height">
+            android:paddingBottom="@dimen/commit_btn_height"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,7 +104,6 @@
                         android:paddingVertical="30px"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="临沂"
                         android:textColor="#ff888888"
                         android:textSize="11sp"/>
                 </LinearLayout>

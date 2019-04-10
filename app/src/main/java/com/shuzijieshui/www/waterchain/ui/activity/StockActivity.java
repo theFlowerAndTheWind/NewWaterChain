@@ -23,6 +23,7 @@ import com.shuzijieshui.www.waterchain.contract.presenter.Stock2JslPresenter;
 import com.shuzijieshui.www.waterchain.contract.view.CommonViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.Stock2JslViewImpl;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
+import com.shuzijieshui.www.waterchain.utils.Util;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -93,7 +94,7 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
             tvTip.setVisibility(View.VISIBLE);
             btnCommit.setText("确认兑换");
         }
-        tvStockCount.setText(AccountDetailActivity.format(String.format("%.0f", fStock)) + " 虚拟股票");
+        tvStockCount.setText(Util.insertComma(String.format("%.0f", fStock)) + " 虚拟股票");
         edtInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -169,6 +170,7 @@ public class StockActivity extends BaseActivity implements CommonViewImpl, Stock
                 } else if (style == 1) {
                     stock2Jsl();
                 }
+                finish();
                 break;
         }
     }

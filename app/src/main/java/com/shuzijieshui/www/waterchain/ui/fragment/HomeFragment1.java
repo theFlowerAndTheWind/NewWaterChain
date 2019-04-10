@@ -127,6 +127,7 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
         serviceListAdapter = new ServiceListAdapter(activity, listEntities);
         serviceList.setArrowImageView(R.drawable.iconfont_downgrey);
         serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        serviceList.setNestedScrollingEnabled(false);//禁止滑动
         serviceList.setAdapter(serviceListAdapter);
         serviceList.setPullRefreshEnabled(false);
         serviceList.setLoadingMoreEnabled(false);

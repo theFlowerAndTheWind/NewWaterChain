@@ -150,4 +150,5 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:latest.release'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     implementation(name: 'alipaySdk-15.6.0-20190226104053', ext: 'aar')
+    implementation 'com.zzhoujay.richtext:richtext:3.0.5'//html解析
 }

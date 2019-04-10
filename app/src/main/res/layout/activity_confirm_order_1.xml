@@ -7,101 +7,58 @@
 
     <include layout="@layout/module_include_title_bar" />
 
+
     <LinearLayout
+        style="@style/PaddinLeftRight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:paddingTop="19px"
+        android:paddingBottom="40px">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="0px"
+            android:layout_height="190px"
+            android:layout_weight="1"
+            android:minWidth="294px"
+            android:src="@drawable/ic_default_image" />
 
         <RelativeLayout
-            style="@style/PaddinLeftRight"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/commit_btn_height">
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="34px"
+            android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_factory_name_1"
+                android:id="@+id/tv_s_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="深圳洗涤企业A"
+                android:text="酒店布草洗涤"
                 android:textColor="@color/text_black"
-                android:textSize="@dimen/text_size_edt" />
+                android:textSize="22px" />
 
-            <ImageButton
-                android:id="@+id/btn_go_factory_detail_1"
+            <TextView
+                android:id="@+id/tv_intro"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_go_to" />
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_s_name"
+                android:layout_marginTop="21px"
+                android:text="专业技术，节水95%，不用洗涤剂，不产生污染，已经在推广"
+                android:textColor="@color/text_gray"
+                android:textSize="18px" />
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_width"
-            android:background="@color/divider_gray" />
-
-        <LinearLayout
-            style="@style/PaddinLeftRight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="19px"
-            android:paddingBottom="40px">
-
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="0px"
-                android:layout_height="190px"
-                android:layout_weight="1"
-                android:minWidth="294px"
-                android:src="@drawable/ic_default_image" />
-
-            <RelativeLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="34px"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_s_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="酒店布草洗涤"
-                    android:textColor="@color/text_black"
-                    android:textSize="22px" />
-
-                <TextView
-                    android:id="@+id/tv_intro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/tv_s_name"
-                    android:layout_marginTop="21px"
-                    android:text="专业技术，节水95%，不用洗涤剂，不产生污染，已经在推广"
-                    android:textColor="@color/text_gray"
-                    android:textSize="18px" />
-
-                <!--<Button-->
-                <!--android:id="@+id/btn_see_detail"-->
-                <!--android:layout_width="500px"-->
-                <!--android:layout_height="100px"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:background="@drawable/btn_blue_bg_selector"-->
-                <!--android:text="立即下单"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/small_btn_text_size" />-->
-            </RelativeLayout>
-        </LinearLayout>
     </LinearLayout>
 
-   <include layout="@layout/module_include_gray_space"/>
+    <include layout="@layout/module_include_gray_space" />
 
     <LinearLayout
         style="@style/MarginLeftRight"
         android:layout_width="match_parent"
         android:layout_height="@dimen/commit_btn_height"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -127,10 +84,10 @@
                 android:layout_weight="1"
                 android:background="@color/trans"
                 android:inputType="numberDecimal"
+                android:maxLength="10"
                 android:paddingLeft="@dimen/edt_padding_left"
                 android:textColorHint="@color/hit_color"
-                android:textSize="@dimen/text_size_edt"
-                android:maxLength="10"/>
+                android:textSize="@dimen/text_size_edt" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -206,7 +163,7 @@
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
                     android:src="@drawable/check_mark_blue"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
             </LinearLayout>
 
@@ -246,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/check_mark_blue"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>
@@ -258,8 +215,9 @@
             style="@style/MarginLeftRight"
             android:layout_width="match_parent"
             android:layout_height="@dimen/commit_btn_height"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -285,10 +243,10 @@
                     android:layout_weight="1"
                     android:background="@color/trans"
                     android:inputType="numberDecimal"
+                    android:maxLength="10"
                     android:paddingLeft="@dimen/edt_padding_left"
                     android:textColorHint="@color/hit_color"
-                    android:textSize="@dimen/text_size_edt"
-                    android:maxLength="10"/>
+                    android:textSize="@dimen/text_size_edt" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -326,7 +284,8 @@
 
         <include
             android:id="@+id/gs4"
-            layout="@layout/module_include_gray_space" />
+            layout="@layout/module_include_gray_space"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/ll_total_price"
@@ -361,7 +320,8 @@
             style="@style/PaddinLeftRight"
             android:layout_width="match_parent"
             android:layout_height="@dimen/commit_btn_height"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -388,9 +348,9 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
+        android:background="@color/space_gray"
         android:gravity="bottom"
-        android:orientation="vertical"
-        android:background="@color/space_gray">
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_next_step"
@@ -431,579 +391,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <!--<FrameLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
-
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:paddingBottom="@dimen/commit_btn_height"-->
-    <!--android:scrollbars="none">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<RelativeLayout-->
-    <!--style="@style/PaddinLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="89px">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_factory_name"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:text="深圳洗涤企业A"-->
-    <!--android:textColor="@color/text_black"-->
-    <!--android:textSize="@dimen/text_size_edt" />-->
-
-    <!--<ImageButton-->
-    <!--android:id="@+id/btn_go_factory_detail"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:background="@drawable/ic_go_to" />-->
-
-    <!--</RelativeLayout>-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/divider_width"-->
-    <!--android:background="@color/divider_gray" />-->
-
-    <!--<LinearLayout-->
-    <!--style="@style/PaddinLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:paddingTop="19px"-->
-    <!--android:paddingBottom="40px">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/img"-->
-    <!--android:layout_width="0px"-->
-    <!--android:layout_height="190px"-->
-    <!--android:layout_weight="1"-->
-    <!--android:minWidth="294px"-->
-    <!--android:src="@drawable/ic_default_image" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="0px"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginLeft="34px"-->
-    <!--android:layout_weight="1">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_service_title"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="酒店布草洗涤"-->
-    <!--android:textColor="@color/text_black"-->
-    <!--android:textSize="22px" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_services_desc"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_below="@id/tv_service_title"-->
-    <!--android:layout_marginTop="21px"-->
-    <!--android:text="专业技术，节水95%，不用洗涤剂，不产生污染，已经在推广"-->
-    <!--android:textColor="@color/text_gray"-->
-    <!--android:textSize="18px" />-->
-
-    <!--&lt;!&ndash;<Button&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/btn_see_detail"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="500px"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="100px"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_alignParentBottom="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:background="@drawable/btn_blue_bg_selector"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="立即下单"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="@dimen/small_btn_text_size" />&ndash;&gt;-->
-    <!--</RelativeLayout>-->
-    <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/view_space_gray"-->
-    <!--android:background="@color/space_gray" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--style="@style/style_txt_confirm_order1"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:minHeight="@dimen/commit_btn_height"-->
-    <!--android:text="洗涤需求" />-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/divider_width"-->
-    <!--android:background="@color/divider_gray" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/wash_demand_rl"-->
-    <!--style="@style/PaddinLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:gravity="center_vertical">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/wash_detail_tv"-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_width="400px"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:ellipsize="marquee"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:singleLine="true"-->
-    <!--android:text="选择洗涤需求" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/wash_detail_count"-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_centerVertical="true" />-->
-
-    <!--<ImageButton-->
-    <!--android:id="@+id/btn_go_services_counter"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-
-
-    <!--android:background="@drawable/ic_go_to" />-->
-
-    <!--</LinearLayout>-->
-
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/tv_jian"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_toLeftOf="@+id/btn_go_services_counter"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="件"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textColor="@color/text_gray"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="14sp" />&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/tv_counter"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_toLeftOf="@+id/tv_jian"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="1987"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textColor="@color/text_gray"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="14sp" />&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/tv_gong"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_toLeftOf="@+id/tv_counter"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="共"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textColor="@color/text_gray"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:textSize="14sp" />&ndash;&gt;-->
-
-    <!--</RelativeLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/view_space_gray"-->
-    <!--android:background="@color/space_gray" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--style="@style/style_txt_confirm_order1"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:minHeight="@dimen/commit_btn_height"-->
-    <!--android:text="配送信息" />-->
-
-    <!--<include layout="@layout/module_include_divider" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/rl_trans_infos"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:visibility="gone">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_receiver_name"-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginLeft="40px"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="张三" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_receiver_tel"-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginLeft="40px"-->
-    <!--android:layout_toRightOf="@+id/tv_receiver_name"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="12345671234" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_express"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_marginVertical="10px"-->
-    <!--android:layout_marginRight="40px"-->
-    <!--android:background="@color/tint_blue"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:paddingHorizontal="20px"-->
-    <!--android:text="企业配送"-->
-    <!--android:textColor="@color/primary_blue" />-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/divider_width"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:background="@color/divider_gray" />-->
-    <!--</RelativeLayout>-->
-
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/wash_delivery_rl"-->
-    <!--style="@style/PaddinLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:gravity="center_vertical">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_info_txt"-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_width="400px"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:ellipsize="marquee"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:singleLine="true"-->
-    <!--android:text="选择配送信息" />-->
-
-    <!--<ImageButton-->
-    <!--android:id="@+id/btn_go_distribution_info"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:background="@drawable/ic_go_to" />-->
-
-    <!--</RelativeLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/view_space_gray"-->
-    <!--android:background="@color/space_gray" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--style="@style/style_txt_confirm_order1"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:minHeight="@dimen/commit_btn_height"-->
-    <!--android:text="支付方式" />-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/divider_width"-->
-    <!--android:background="@color/divider_gray" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/fullPayment"-->
-    <!--style="@style/MarginLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:gravity="center_vertical">-->
-
-
-    <!--<TextView-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="全额支付"-->
-    <!--android:textColor="@color/text_black" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/img_pay_cate_1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:src="@drawable/check_mark_blue"-->
-    <!--android:visibility="visible" />-->
-
-    <!--</RelativeLayout>-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/divider_width"-->
-    <!--android:background="@color/divider_gray" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/combinedPayment"-->
-    <!--style="@style/PaddinLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:gravity="center_vertical">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_pay_cate_2"-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="组合支付"-->
-    <!--android:textColor="@color/text_black" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/img_warning"-->
-    <!--android:layout_width="25px"-->
-    <!--android:layout_height="25px"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:layout_marginLeft="90px"-->
-    <!--android:layout_marginRight="10px"-->
-    <!--android:layout_toRightOf="@+id/tv_pay_cate_2"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:src="@mipmap/tip" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:layout_toRightOf="@+id/img_warning"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="组合支付（80%金额+20%水方）"-->
-    <!--android:textColor="@color/text_gray"-->
-    <!--android:textSize="18px" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/img_pay_cate_2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:src="@drawable/check_mark_blue"-->
-    <!--android:visibility="gone" />-->
-
-    <!--</RelativeLayout>-->
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/view_space_gray"-->
-    <!--android:background="@color/space_gray" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--style="@style/style_txt_confirm_order1"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:minHeight="@dimen/commit_btn_height"-->
-    <!--android:text="支付渠道" />-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/divider_width"-->
-    <!--android:background="@color/divider_gray" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/pay_channel_wx_rl"-->
-    <!--style="@style/MarginLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:gravity="center_vertical">-->
-
-
-    <!--<ImageView-->
-    <!--android:id="@+id/img_wx"-->
-    <!--android:layout_width="17dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:src="@drawable/wx" />-->
-
-    <!--<TextView-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginLeft="15px"-->
-    <!--android:layout_toRightOf="@+id/img_wx"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:paddingLeft="0px"-->
-    <!--android:text="微信支付"-->
-    <!--android:textColor="@color/text_black" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/payChannel_wx"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:src="@drawable/check_mark_blue"-->
-    <!--android:visibility="gone" />-->
-
-
-    <!--</RelativeLayout>-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/divider_width"-->
-    <!--android:background="@color/divider_gray" />-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/pay_channel_zfb_rl"-->
-    <!--style="@style/MarginLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:gravity="center_vertical">-->
-
-
-    <!--<ImageView-->
-    <!--android:id="@+id/img_zfb"-->
-    <!--android:layout_width="17dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:src="@drawable/zfb" />-->
-
-    <!--<TextView-->
-    <!--style="@style/style_txt_confirm_order2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginLeft="15px"-->
-    <!--android:layout_toRightOf="@+id/img_zfb"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:paddingLeft="0px"-->
-    <!--android:text="支付宝支付"-->
-    <!--android:textColor="@color/text_black" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/payChannel_zfb"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:src="@drawable/check_mark_blue"-->
-    <!--android:visibility="gone" />-->
-
-
-    <!--</RelativeLayout>-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--style="@style/PaddinLeftRight"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="#F0EFF5"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:minHeight="110px"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<CheckBox-->
-    <!--android:id="@+id/cb_agreement"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:checked="true"-->
-    <!--android:theme="@style/MyCheckBox" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_readed"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/edt_invitation"-->
-    <!--android:layout_alignBaseline="@id/cb_agreement"-->
-    <!--android:layout_toRightOf="@id/cb_agreement"-->
-    <!--android:text="我已阅读并同意"-->
-    <!--android:textColor="@color/text_gray"-->
-    <!--android:textSize="24px" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tv_agreement"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_toRightOf="@id/tv_readed"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="@string/agreement"-->
-    <!--android:textColor="@color/primary_blue"-->
-    <!--android:textSize="24px" />-->
-    <!--</LinearLayout>-->
-
-
-    <!--</LinearLayout>-->
-    <!--</ScrollView>-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/create_order_ll"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/commit_btn_height"-->
-    <!--android:layout_gravity="bottom">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/order_detail"-->
-    <!--style="@style/PaddinLeftRight"-->
-    <!--android:layout_width="0px"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="@color/white"-->
-    <!--android:text="￥0.00"-->
-    <!--android:textColor="@color/actionsheet_red"-->
-    <!--android:textSize="14sp" />-->
-
-    <!--<Button-->
-    <!--android:id="@+id/btn_create_order"-->
-    <!--android:layout_width="0px"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="@drawable/btn_blue_bg_selector_noconer"-->
-    <!--android:text="立即下单"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="@dimen/text_size_commit" />-->
-    <!--</LinearLayout>-->
-    <!--</FrameLayout>-->
 </LinearLayout>

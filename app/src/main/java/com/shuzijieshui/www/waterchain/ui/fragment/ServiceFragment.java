@@ -5,34 +5,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.beans.AdImgResponseBean;
-import com.shuzijieshui.www.waterchain.beans.Factory;
-import com.shuzijieshui.www.waterchain.beans.FactoryListResponse;
 import com.shuzijieshui.www.waterchain.beans.ServiceEntity;
-import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
 import com.shuzijieshui.www.waterchain.contract.model.AdImgModel;
 import com.shuzijieshui.www.waterchain.contract.model.ServiceListModel;
 import com.shuzijieshui.www.waterchain.contract.presenter.AdImgPresenter;
-import com.shuzijieshui.www.waterchain.contract.presenter.FactoryListPresenter;
 import com.shuzijieshui.www.waterchain.contract.presenter.ServiceListPresneter;
 import com.shuzijieshui.www.waterchain.contract.view.AdImgViewImpl;
-import com.shuzijieshui.www.waterchain.contract.view.FactoryListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.ServiceListViewImpl;
-import com.shuzijieshui.www.waterchain.ui.activity.EnterpriseActivity;
-import com.shuzijieshui.www.waterchain.ui.activity.FactoryServiceActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.ServiceDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.adapter.ServiceListAdapter;
-import com.shuzijieshui.www.waterchain.ui.adapter.WashShopAdapter;
-import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
 
@@ -78,7 +67,7 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
-            rootView = inflater.inflate(R.layout.fragment_washshop, container, false);
+            rootView = inflater.inflate(R.layout.fragment_service, container, false);
             ButterKnife.bind(this, rootView);
         }
         initList();
@@ -122,6 +111,7 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
         xrv.setArrowImageView(R.drawable.iconfont_downgrey);
         xrv.setLayoutManager(new LinearLayoutManager(getActivity()));
         xrv.setAdapter(serviceListAdapter);
+        xrv.setNestedScrollingEnabled(false);//禁止滑动
         xrv.setPullRefreshEnabled(false);
         xrv.setLoadingMoreEnabled(false);
         serviceListAdapter.setOnItemClickListener(new ServiceListAdapter.OnItemClickListener() {
@@ -129,10 +119,8 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
             public void onItemClick(int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-//                bundle.putInt("enterpriseId", listEntities.get(position).getId());
                 bundle.putInt("fsid", listEntities.get(position).getId());
                 intent.putExtras(bundle);
-//                intent.setClass(getBaseActivity(), EnterpriseActivity.class);
                 intent.setClass(getBaseActivity(), ServiceDetailActivity.class);
                 startActivity(intent);
 

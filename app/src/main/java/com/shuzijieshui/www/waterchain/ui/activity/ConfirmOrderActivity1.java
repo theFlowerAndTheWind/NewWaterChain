@@ -30,6 +30,7 @@ import com.shuzijieshui.www.waterchain.ui.view.NewAlertDialog;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
+import com.zzhoujay.richtext.RichText;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -97,9 +98,11 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
     @BindDrawable(R.drawable.red_border_illegal_bg_shape)
     Drawable edtBorderIllegal;
 
+    private RichText richText;
+
     private boolean step = false;//false对应原型中输入订单数量页面  true对应输入订单数量之后点击"下一步"后确认订单页面
     private float count = 0;//用户输入购买数量
-    private int payCate = 2;//支付类型   1全额支付  2组合支付
+    private int payCate = 1;//支付类型   1全额支付  2组合支付
     private float fTotalPrice;//订单总金额
     private float fUserJsl;//用户拥有水方数量
     private float fMaxUseJsl;//理论用户最多可用水方
@@ -116,6 +119,7 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RichText.initCacheDir(this);
         StatusBarUtil.setImmersionStatus(this, titleBar);
         totalPricePresenter = new TotalPricePresenter(new TotalPriceModel());
         totalPricePresenter.attachView(this);
@@ -135,15 +139,7 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
         tvTitleCenter.setText("确认订单");
         GlidImageManager.getInstance().loadImageView(this, serviceDetail.getImg(), img, R.mipmap.default_img);
         tvSName.setText(serviceDetail.getS_name());
-        CharSequence charSequence;
-        String strIntro = serviceDetail.getIntro();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            charSequence = Html.fromHtml(strIntro, Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            charSequence = Html.fromHtml(strIntro);
-        }
-        tvIntro.setText(charSequence);
-
+        richText.from(serviceDetail.getIntro()).into(tvIntro);
         edtTotalInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -166,7 +162,7 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.showCustomToast("请正确填写订单数量", 150);
+                    ToastUtils.showCustomToastMsg("请正确填写订单数量", 150);
                     llTotalInput.setBackground(edtBorderIllegal);
                     edtTotalInput.setText("");
                 }
@@ -202,7 +198,6 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
                             ToastUtils.showCustomToastMsg("水方最大可抵扣订单金额的5%", 150);
                             return;
                         }
-                        llUseJsl.setBackground(edtBorder);
                         float fDeduction = fScale * fUserInputJsl;
                         String inputDeduction = String.format("%.2f", fDeduction);
                         tvDeduction.setText("抵¥" + inputDeduction);
@@ -269,22 +264,36 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
     }
 
     private void requestTotalPrice() {
+
+        if (count <= 0) {
+            llTotalInput.setBackground(edtBorderIllegal);
+            ToastUtils.showCustomToastMsg("请正确填写订单数量", 150);
+            return;
+        }
         if (totalPricePresenter == null) {
             totalPricePresenter = new TotalPricePresenter(new TotalPriceModel());
             totalPricePresenter.attachView(this);
         }
-        if (count <= 0) {
-            ToastUtils.showCustomToast("请正确填写订单数量", 150);
-            return;
-        }
+        llTotalInput.setBackground(edtBorder);
         totalPricePresenter.getTotalPrice(this, count, serviceDetail.getId());
     }
 
     private void createOrder() {
+        if (count <= 0) {
+            ToastUtils.showCustomToastMsg("请正确填写订单数量", 150);
+            return;
+        }
+        if (fUserInputJsl <= 0) {
+            llUseJsl.setBackground(edtBorderIllegal);
+            edtUseJsl.setText("");
+            ToastUtils.showCustomToastMsg("请正确填写使用水方数量", 150);
+            return;
+        }
         if (createOrderPresenter == null) {
             createOrderPresenter = new CreateOrderPresenter(new CreateOrderModel());
             createOrderPresenter.attachView(this);
         }
+        llUseJsl.setBackground(edtBorder);
         createOrderPresenter.createOrder(this, serviceDetail.getId(), count, fUserInputJsl, payCate);
     }
 
@@ -318,14 +327,6 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
         if (o != null) {
             try {
                 TotalPriceRes totalPriceRes = (TotalPriceRes) o;
-
-//                totalPriceRes.setTotal_price("11.00");
-//                totalPriceRes.setUser_jsl("1243");
-//                totalPriceRes.setMax_use_jsl("6");
-//                totalPriceRes.setMax_money("0.55");
-//                totalPriceRes.setTrue_max_use_jsl("6");
-
-
                 fTotalPrice = Float.valueOf(totalPriceRes.getTotal_price());
                 fUserJsl = Float.valueOf(totalPriceRes.getUser_jsl());
                 fMaxUseJsl = Float.valueOf(totalPriceRes.getMax_use_jsl());
@@ -333,7 +334,7 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
                 fScale = Float.valueOf(totalPriceRes.getScale());
                 fTrueMaxUseJsl = Float.valueOf(totalPriceRes.getTrue_max_use_jsl());
                 String str = new StringBuffer("共").append(totalPriceRes.getUser_jsl())
-                        .append("水方。可用")
+                        .append("水方  可用")
                         .append(totalPriceRes.getMax_use_jsl())
                         .append("水方，抵¥")
                         .append(totalPriceRes.getMax_money())
@@ -372,8 +373,18 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
 
     @Override
     public void onCreateOrderFailed(String msg) {
-        ToastUtils.showCustomToast(msg, 1);
+        ToastUtils.showCustomToast(msg, 0);
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (richText != null) {
+            richText.clear();
+        }
+        richText = null;
+        if (totalPricePresenter != null) totalPricePresenter.detachView();
+        if (createOrderPresenter != null) createOrderPresenter.detachView();
+    }
 }

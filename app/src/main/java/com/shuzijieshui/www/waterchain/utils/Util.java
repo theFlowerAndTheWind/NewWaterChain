@@ -10,8 +10,10 @@ import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.util.SparseLongArray;
+import android.widget.TextView;
 
 import com.shuzijieshui.www.waterchain.WaterChainApplication;
+import com.zzhoujay.richtext.RichText;
 
 import java.lang.reflect.Array;
 import java.text.DateFormat;
@@ -247,4 +249,44 @@ public class Util {
         }
         return name;
     }
+
+    /**
+     * 删除数字字符串中的逗号    1,234,567->1234567
+     * @param str
+     * @return
+     */
+    public static String deleteComma(String str){
+        if(str.contains(",")){
+            str=str.replace(",","");
+        }
+        if(str.contains("，")){
+            str=str.replace("，","");
+
+        }
+        return str;
+    }
+
+    public static String insertComma(String str) {
+        // 创建一个空的StringBuilder对象
+        StringBuilder sb = new StringBuilder();
+        // 追加字符串
+        sb.append(str);
+        // 从后往前每隔三位插入逗号
+        int last = sb.length();
+        for (int i = last - 3; i > 0; i -= 3) {
+            sb.insert(i, ',');
+        }
+        // 将StringBuilder对象转换为String对象并输出
+        return sb.toString();
+    }
+
+    public static float str2Flt(String str){
+        try{
+            return Float.valueOf(str);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1f;
+        }
+    }
+
 }

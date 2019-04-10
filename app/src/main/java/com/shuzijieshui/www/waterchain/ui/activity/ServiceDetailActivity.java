@@ -2,7 +2,6 @@ package com.shuzijieshui.www.waterchain.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import com.shuzijieshui.www.waterchain.contract.view.CommonViewImpl;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
+import com.zzhoujay.richtext.RichText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,6 +33,7 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
     @BindView(R.id.tv_content)
     TextView tvContent;
 
+    private RichText richText;
 
     private int fsid;
     private ServiceDetail serviceDetail;
@@ -41,6 +42,7 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RichText.initCacheDir(this);
         StatusBarUtil.setImmersionStatus(this, titleBar);
         getIntentExtra();
         initView();
@@ -77,11 +79,6 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
         getServiceDetail();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (serviceDetailPresenter != null) serviceDetailPresenter.detachView();
-    }
 
     @OnClick({R.id.left_ll, R.id.btn_add_order})
     public void onClick(View view) {
@@ -105,18 +102,8 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
             serviceDetail = (ServiceDetail) o;
             tvTitleCenter.setText(serviceDetail.getS_name());
             GlidImageManager.getInstance().loadImageView(this, serviceDetail.getImg(), img, R.mipmap.default_img);
-            CharSequence charSequenceIntro, charSequenceContent;
-            String strIntro = serviceDetail.getIntro();
-            String strContent = serviceDetail.getContent();
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                charSequenceIntro = Html.fromHtml(strIntro, Html.FROM_HTML_MODE_LEGACY);
-                charSequenceContent = Html.fromHtml(strContent, Html.FROM_HTML_MODE_LEGACY);
-            } else {
-                charSequenceIntro = Html.fromHtml(strIntro);
-                charSequenceContent = Html.fromHtml(strContent);
-            }
-            tvIntro.setText(charSequenceIntro);
-            tvContent.setText(charSequenceContent);
+            richText.from(serviceDetail.getIntro()).into(tvIntro);
+            richText.from(serviceDetail.getContent()).into(tvContent);
         }
 
         dismissLoadingDialog();
@@ -126,5 +113,13 @@ public class ServiceDetailActivity extends BaseActivity implements CommonViewImp
     public void onRequestFail(String msg) {
         dismissLoadingDialog();
         ToastUtils.showCustomToast(msg, 0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (richText != null) richText.clear();
+        richText = null;
+        if (serviceDetailPresenter != null) serviceDetailPresenter.detachView();
     }
 }

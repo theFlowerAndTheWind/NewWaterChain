@@ -26,6 +26,7 @@ import com.shuzijieshui.www.waterchain.R;
 import com.shuzijieshui.www.waterchain.beans.InfoListsResponseBean;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
 import com.zhy.autolayout.utils.AutoUtils;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.LinkedList;
 
@@ -81,13 +82,7 @@ public class InfoListsAdapter extends RecyclerView.Adapter<InfoListsAdapter.Info
                 });
                 GlidImageManager.getInstance().loadImageView(context, infoEntity.getImg(), holder.img, R.mipmap.default_img);
                 holder.tvTitle.setText(infoEntity.getTitle());
-                CharSequence charSequence;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                    charSequence = Html.fromHtml(infoEntity.getContent(),Html.FROM_HTML_MODE_LEGACY);
-                } else {
-                    charSequence = Html.fromHtml(infoEntity.getContent());
-                }
-                holder.tvContent.setText(charSequence);
+                RichText.from(infoEntity.getContent()).singleLoad(false).into(holder.tvContent);
                 holder.tvPublishtime.setText(infoEntity.getPublishtime());
             }
         }

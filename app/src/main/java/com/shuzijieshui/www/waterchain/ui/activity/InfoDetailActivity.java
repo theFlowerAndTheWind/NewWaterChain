@@ -30,6 +30,7 @@ import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.shuzijieshui.www.waterchain.utils.Util;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
+import com.zzhoujay.richtext.RichText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -71,6 +72,9 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
     TextView tvPublishtime;
     @BindView(R.id.divider)
     View divider;
+
+    private RichText richText;
+
     private InfoDetailPresenter infoDetailPresenter;
     private String id;
     private String target="";
@@ -78,6 +82,7 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RichText.initCacheDir(this);
         StatusBarUtil.setImmersionStatus(this, titleBar);
         infoDetailPresenter = new InfoDetailPresenter();
         infoDetailPresenter.attachView(this);
@@ -139,10 +144,7 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
         doInfoDetailRequest();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
+
 
     @Override
     public void infoDetailSuccess(InfoDetailRespoonseBean infoDetailRespoonseBean) {
@@ -156,14 +158,7 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
         }
         GlidImageManager.getInstance().loadImageView(this, infoDetailRespoonseBean.getImg(), img, R.mipmap.default_img);
         tvTitle.setText(infoDetailRespoonseBean.getTitle());
-
-        CharSequence charSequence;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            charSequence = Html.fromHtml(infoDetailRespoonseBean.getContent(),Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            charSequence = Html.fromHtml(infoDetailRespoonseBean.getContent());
-        }
-        tvContent.setText(charSequence);
+        richText.from(infoDetailRespoonseBean.getContent()).into(tvContent);
         tvPublishtime.setText(infoDetailRespoonseBean.getPublishtime());
         divider.setVisibility(View.INVISIBLE);
         dismissLoadingDialog();
@@ -173,5 +168,15 @@ public class InfoDetailActivity extends BaseActivity implements InfoDetailViewIm
     public void infoDetailFailed(String msg) {
         dismissLoadingDialog();
         ToastUtils.showCustomToast(msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(richText!=null){
+            richText.clear();
+        }
+        richText=null;
+        if(infoDetailPresenter!=null)infoDetailPresenter.detachView();
     }
 }

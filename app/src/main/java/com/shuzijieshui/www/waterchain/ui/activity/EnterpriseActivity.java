@@ -20,6 +20,7 @@ import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
 import com.shuzijieshui.www.waterchain.utils.LogUtils;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,9 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
     XRecyclerView enterpriseList;
     @BindView(R.id.enterpriseDetail)
     TextView enterpriseDetail;
+
+    private RichText richText;
+
     private AlertChainDialog alertChainDialog;
     private FactoryDetailPresenter factoryDetailPresenter;
     private FactoryListAdapter factoryListAdapter;
@@ -59,6 +63,7 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RichText.initCacheDir(this);
         StatusBarUtil.setImmersionStatus(this, title_bar);
         factoryDetailPresenter = new FactoryDetailPresenter();
         factoryDetailPresenter.attachView(this);
@@ -141,6 +146,8 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(richText!=null)richText.clear();
+        richText=null;
         if(factoryDetailPresenter!=null){
             factoryDetailPresenter.detachView();
         }
@@ -149,14 +156,7 @@ public class EnterpriseActivity extends BaseActivity implements FactoryDetailVie
     @Override
     public void onFactoryDetailSuccess(FactoryDetailResponseBean factoryDetailResponseBean) {
         dismissLoadingDialog();
-        LogUtils.d("factoryDetailResponseBean；"+factoryDetailResponseBean);
-        CharSequence charSequence;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            charSequence = Html.fromHtml(factoryDetailResponseBean.getDetail().getDescription(),Html.FROM_HTML_MODE_LEGACY);
-        } else {
-            charSequence = Html.fromHtml(factoryDetailResponseBean.getDetail().getDescription());
-        }
-        enterpriseDetail.setText(charSequence);
+        richText.from(factoryDetailResponseBean.getDetail().getDescription()).into(enterpriseDetail);
         GlidImageManager.getInstance().loadImageView(EnterpriseActivity.this,factoryDetailResponseBean.getDetail().getLogo(),enterpriseImg,R.drawable.ic_default_image);
         listEntities.clear();
         listEntities.addAll(factoryDetailResponseBean.getService_lists());
