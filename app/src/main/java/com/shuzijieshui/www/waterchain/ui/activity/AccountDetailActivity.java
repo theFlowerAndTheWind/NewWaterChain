@@ -53,6 +53,12 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
 
         accountDetailPresenter = new AccountDetailPresenter(new AccountDetailModel());
         accountDetailPresenter.attachView(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getAccountDetail();
     }
 
@@ -65,6 +71,7 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
             accountDetailPresenter = new AccountDetailPresenter(new AccountDetailModel());
             accountDetailPresenter.attachView(this);
         }
+        showLoadingDialog();
         accountDetailPresenter.getAccountDetail(this);
     }
 
