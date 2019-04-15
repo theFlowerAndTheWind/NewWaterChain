@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_find_fragment_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <cn.bingoogolapple.bgabanner.BGABanner
+        android:id="@+id/banner"
+        style="@style/BannerDefaultStyle"
+        android:background="@color/white"
+        app:banner_pageChangeDuration="1000"
+        app:banner_pointAutoPlayAble="false"
+        app:banner_pointContainerBackground="@android:color/transparent"
+        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointTopBottomMargin="15dp"
+        app:banner_transitionEffect="alpha" />
+
+    <ImageView
+        android:id="@+id/img_goods"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:layout_marginHorizontal="@dimen/layout_horizontal_margin"
+        android:layout_marginVertical="@dimen/view_space_edt_vertical"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_goods"
+        android:layout_below="@+id/banner"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="平台资讯"
+        android:textColor="@color/text_black"
+        android:textSize="16sp"
+        android:layout_below="@+id/img_goods"/>
+
+
+</RelativeLayout>

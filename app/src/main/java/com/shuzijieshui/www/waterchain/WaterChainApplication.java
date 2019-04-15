@@ -38,7 +38,7 @@ public class WaterChainApplication extends Application {
          *
          *     建议在测试阶段建议设置成true，发布时设置为false。
          */
-        CrashReport.initCrashReport(getApplicationContext(), "30a36d4566", true);//todo  正式发布
+        CrashReport.initCrashReport(getApplicationContext(), "55cd264394", true);//todo  正式发布
         application = this;
 
         //初始化网络receiver

@@ -99,7 +99,8 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
             case R.id.btn_buy_back:
                 jump(0);
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
@@ -110,8 +111,6 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
         startActivity(intent);
         overridePendingTransition(R.anim.actionsheet_dialog_in, 0);
     }
-
-
 
 
     @Override
@@ -133,18 +132,18 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
                 }
 
                 String jslAll = accountDetailResponseBean.getJsl_all();
-                String jslFreeze=accountDetailResponseBean.getJsl_freeze();
+                String jslFreeze = accountDetailResponseBean.getJsl_freeze();
 
-                String jslAllStr=new StringBuilder("可用：").append(String.format("%.5f",Util.str2Flt(Util.deleteComma(jslAll)))).toString();
-                String jslFreezeStr=new StringBuilder("可用：").append(String.format("%.5f",Util.str2Flt(Util.deleteComma(jslFreeze)))).toString();
+                String jslAllStr = new StringBuilder("可用：").append(String.format("%.0f", Util.str2Flt(Util.deleteComma(jslAll)))).toString();
+                String jslFreezeStr = new StringBuilder("可用：").append(String.format("%.0f", Util.str2Flt(Util.deleteComma(jslFreeze)))).toString();
                 tvJslAll.setText(jslAllStr);
                 tvJslFreeze.setText(jslFreezeStr);
                 final String balance_v = accountDetailResponseBean.getBalance_v();
                 final String expire_time = accountDetailResponseBean.getExpire_time();
                 if (!TextUtils.isEmpty(balance_v) && !TextUtils.isEmpty(expire_time)) {
-                    String balanceV = String.format("%.5f", Util.str2Flt(Util.deleteComma(balance_v)));
+                    String balanceV = String.format("%.0f", Util.str2Flt(Util.deleteComma(balance_v)));
                     tvTip.setText("提示：其中 " + balanceV + " 水方即将在 " + expire_time + " 到期");
-                }else{
+                } else {
                     tvTip.setVisibility(View.GONE);
                 }
             } catch (Exception e) {

@@ -18,6 +18,7 @@ import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class OrderDetailActivity1 extends BaseActivity implements CommonViewImpl {
 
@@ -96,6 +97,15 @@ public class OrderDetailActivity1 extends BaseActivity implements CommonViewImpl
         orderDetailPresenter.getOrderDetail(this, Integer.valueOf(id));
     }
 
+    @OnClick({R.id.left_ll})
+    public void onClick(View view){
+        int id=view.getId();
+        switch (id){
+            case R.id.left_ll:
+                goBack(view);
+                break;
+        }
+    }
 
     @Override
     public void onRequestSucc(Object o) {

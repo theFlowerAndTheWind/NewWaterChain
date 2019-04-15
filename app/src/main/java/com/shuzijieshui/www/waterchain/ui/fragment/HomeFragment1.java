@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -30,7 +31,7 @@ import com.shuzijieshui.www.waterchain.contract.view.BannerListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.ServiceListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.TradeLineViewImpl;
 import com.shuzijieshui.www.waterchain.ui.activity.GoodsDetailActivity;
-import com.shuzijieshui.www.waterchain.ui.activity.GoodsListsActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.GoodsListActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.InfoDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.MainActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.ServiceDetailActivity;
@@ -59,14 +60,12 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 
 public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, ServiceListViewImpl, TradeLineViewImpl {
-
-
-    @BindView(R.id.banner_guide_content)
+    @BindView(R.id.banner)
     BGABanner mContentBanner;
+    @BindView(R.id.xrv)
+    XRecyclerView serviceList;
     @BindView(R.id.lineChart)
     LineChart lineChart;
-    @BindView(R.id.rc_wash_list)
-    XRecyclerView serviceList;
     @BindView(R.id.tv_wash_damend)
     TextView washDamend;
 
@@ -116,7 +115,6 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
     }
 
     private void initView() {
-
         mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerListResponseBean.BannerListEntity>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
@@ -131,23 +129,6 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
         serviceList.setAdapter(serviceListAdapter);
         serviceList.setPullRefreshEnabled(false);
         serviceList.setLoadingMoreEnabled(false);
-//        serviceList.setLoadingListener(new XRecyclerView.LoadingListener() {
-//            @Override
-//            public void onRefresh() {
-//                if (serviceListPresneter != null) {
-//                    isRefresh = true;
-//                    serviceListPresneter.getServiceList(getBaseActivity());
-//                }
-//            }
-//
-//            @Override
-//            public void onLoadMore() {
-//                if (factoryListPresenter != null) {
-//                    isRefresh = false;
-//                    factoryListPresenter.getFactoryList(getBaseActivity(), count);
-//                }
-//            }
-//        });
         serviceListAdapter.setOnItemClickListener(new ServiceListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -156,7 +137,6 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
                 bundle.putInt("fsid", listEntities.get(position).getId());
                 intent.putExtras(bundle);
                 intent.setClass(getBaseActivity(), ServiceDetailActivity.class);
-
                 startActivity(intent);
             }
         });
@@ -178,7 +158,7 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
                     if (type.equals("factory")) {//企业详情
 //                        intent.setClass(getBaseActivity(), EnterpriseActivity.class);
                     } else if (type.equals("goods_list")) {//商品列表
-                        intent.setClass(getBaseActivity(), GoodsListsActivity.class);
+                        intent.setClass(getBaseActivity(), GoodsListActivity.class);
                     } else if (type.equals("goods_detail")) {//商品详情
                         intent.setClass(getBaseActivity(), GoodsDetailActivity.class);
                     } else if (type.equals("info_detail")) {//资讯详情
@@ -224,7 +204,7 @@ public class HomeFragment1 extends BaseFragment implements BannerListViewImpl, S
             bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);
         }
         if (serviceListPresneter != null) {
-            serviceListPresneter.getServiceList(activity);
+            serviceListPresneter.getServiceList(activity,0);
         }
         if (tradeLinePresenter != null) {
             tradeLinePresenter.getTradeLine(getBaseActivity(), "month");

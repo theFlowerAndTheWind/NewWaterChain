@@ -24,11 +24,11 @@ public class ServiceListPresneter extends BasePresenter<ServiceListViewImpl> {
         this.serviceListModel = serviceListModel;
     }
 
-    public void getServiceList(BaseActivity activity){
+    public void getServiceList(BaseActivity activity,int count){
         if(serviceListModel == null){
             serviceListModel = new ServiceListModel();
         }
-        serviceListModel.getSrviceList(activity, new ServiceListModel.ServiceListCallBack() {
+        serviceListModel.getSrviceList(activity,count, new ServiceListModel.ServiceListCallBack() {
             @Override
             public void success(List<ServiceEntity> serviceListEntity) {
                 if(mView!=null){

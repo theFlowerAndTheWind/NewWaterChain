@@ -178,26 +178,28 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
             String msg = null;
             String pos = null;
             String neg = null;
+            String cate="";
+            if(cateId==1)cate="商品";
+            else if(cateId==2)cate="活动";
             if (beans.getCan_order() == 1) {
-                float fPrice = Util.str2Flt(Util.deleteComma(beans.getGoods_pay()));
-                float fUserJsl = Util.str2Flt(Util.deleteComma(beans.getUser_jsl()));
-                float fPayJsl = Util.str2Flt(Util.deleteComma(beans.getPay_jsl()));
-                String price = new StringBuilder(String.format("%.5f", fPrice)).append("水方").toString();
-                String pay_jsl = new StringBuilder(String.format("%.5f", fPayJsl)).append("水方").toString();
-                String user_jsl = new StringBuilder(String.format("%.5f", fUserJsl)).append("水方").toString();
+                float fGoodesPay = Util.str2Flt(Util.deleteComma(beans.getGoods_pay()));//水方 单价
+                float fUserJsl = Util.str2Flt(Util.deleteComma(beans.getUser_jsl()));//用户持有水方
+                float fPayJsl = Util.str2Flt(Util.deleteComma(beans.getPay_jsl()));//需支付水方
+                String goods_pay = new StringBuilder(String.format("%.0f", fGoodesPay)).append("水方").toString();
+                String pay_jsl = new StringBuilder(String.format("%.0f", fPayJsl)).append("水方").toString();
+                String user_jsl = new StringBuilder(String.format("%.0f", fUserJsl)).append("水方").toString();
 
                 msg = new StringBuilder()
-                        .append("活动价格：").append(price)
+                        .append("活动价格：").append(goods_pay)
                         .append("\n账户余额：").append(user_jsl)/*.append("(公益金账户:").append(user_gyj).append(")")*/
                         .append("\n需支付：").append(pay_jsl)/*.append("(账户余额：").append(user_jsl).append(")")*/
                         .toString();
-                title = "确认兑换该活动";
+                title = "确认兑换该"+cate;
                 pos = "确定";
                 neg = "取消";
             } else {
                 title = "余额不足";
-                if (cateId == 1) msg = "余额不足以支付该商品";
-                else if (cateId == 2) msg = "余额不足以支付该活动";
+                msg = "余额不足以支付该"+cate;
                 neg = "知道了";
             }
             showDialog(title, msg, pos, neg);

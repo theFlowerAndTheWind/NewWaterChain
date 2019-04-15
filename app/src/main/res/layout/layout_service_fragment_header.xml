@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_service_fragment_header"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_ad"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/img_goods" />
+
+    <View
+        android:id="@+id/gray_space"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_space_gray"
+        android:background="@color/space_gray"
+        android:layout_below="@+id/img_ad"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20px"
+        android:paddingLeft="@dimen/layout_horizontal_padding"
+        android:text="服务项目"
+        android:textSize="16sp"
+        android:layout_below="@+id/gray_space"/>
+
+</RelativeLayout>

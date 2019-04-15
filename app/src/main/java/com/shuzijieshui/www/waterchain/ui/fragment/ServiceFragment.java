@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.shuzijieshui.www.waterchain.R;
@@ -22,6 +24,7 @@ import com.shuzijieshui.www.waterchain.contract.view.AdImgViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.ServiceListViewImpl;
 import com.shuzijieshui.www.waterchain.ui.activity.ServiceDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.adapter.ServiceListAdapter;
+import com.shuzijieshui.www.waterchain.utils.LogUtils;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
 
@@ -35,15 +38,14 @@ import butterknife.Unbinder;
 /**
  * Created by songxiaotao on 2018/12/5.
  * Class Note:洗涤
- *
+ * <p>
  * update by sxt 2019/4/1
  * 产品服务
  * 原业务为洗涤，现更改为产品和服务业务。
  */
 
 public class ServiceFragment extends BaseFragment implements ServiceListViewImpl, AdImgViewImpl {
-
-    @BindView(R.id.img_ad)
+    RelativeLayout llHeader;
     ImageView imgAd;
     @BindView(R.id.xrv)
     XRecyclerView xrv;
@@ -53,12 +55,14 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
     private Unbinder unbinder;
     private View rootView;
     private ServiceListAdapter serviceListAdapter;
-    private List<ServiceEntity>listEntities=new ArrayList<>();
+    private List<ServiceEntity> listEntities = new ArrayList<>();
+    private int count = 0;
+    private List<Integer>ids=new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        serviceListPresneter=new ServiceListPresneter(new ServiceListModel());
+        serviceListPresneter = new ServiceListPresneter(new ServiceListModel());
         serviceListPresneter.attachView(this);
         adImgPresenter = new AdImgPresenter(new AdImgModel());
         adImgPresenter.attachView(this);
@@ -72,8 +76,14 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
         }
         initList();
         unbinder = ButterKnife.bind(this, rootView);
-
+        initView();
         return rootView;
+    }
+
+    private void initView() {
+        llHeader = (RelativeLayout) LayoutInflater.from(getBaseActivity()).inflate(R.layout.layout_service_fragment_header, null);
+        imgAd = llHeader.findViewById(R.id.img_ad);
+        xrv.addHeaderView(llHeader);
     }
 
     @Override
@@ -86,19 +96,11 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
         }
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            getServiceList();
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        getServiceList();
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        getServiceList();
+//    }
 
     @Override
     public void onReNetRefreshData(int viewId) {
@@ -113,7 +115,18 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
         xrv.setAdapter(serviceListAdapter);
         xrv.setNestedScrollingEnabled(false);//禁止滑动
         xrv.setPullRefreshEnabled(false);
-        xrv.setLoadingMoreEnabled(false);
+        xrv.setLoadingMoreEnabled(true);
+        xrv.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                //do nothing
+            }
+
+            @Override
+            public void onLoadMore() {
+                getServiceList();
+            }
+        });
         serviceListAdapter.setOnItemClickListener(new ServiceListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -128,14 +141,11 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
         });
     }
 
-    private void getServiceList(){
+    private void getServiceList() {
         if (serviceListPresneter != null) {
-            serviceListPresneter.getServiceList(getBaseActivity());
+            serviceListPresneter.getServiceList(getBaseActivity(), count);
         }
     }
-
-
-
 
 
     @Override
@@ -153,8 +163,20 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
     @Override
     public void onServiceListSuccess(List<ServiceEntity> serviceListEntities) {
         if (serviceListEntities != null) {
-            listEntities.clear();
+            xrv.loadMoreComplete();
+            if (listEntities != null && listEntities.size() == 0){
+                listEntities.clear();
+                ids.clear();
+            }
+            for(int i=0;i<serviceListEntities.size();i++){
+                if(ids.contains(serviceListEntities.get(i).getId())){
+                    return;
+                }else{
+                    ids.add(serviceListEntities.get(i).getId());
+                }
+            }
             listEntities.addAll(serviceListEntities);
+            count = listEntities.size();
             serviceListAdapter.notifyDataSetChanged();
         }
         new Handler().postDelayed(new Runnable() {
@@ -162,7 +184,7 @@ public class ServiceFragment extends BaseFragment implements ServiceListViewImpl
             public void run() {
                 dismissLoadingDialog();
             }
-        },500);
+        }, 500);
     }
 
     @Override

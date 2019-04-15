@@ -162,7 +162,7 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.showCustomToastMsg("请正确填写订单数量", 150);
+                    ToastUtils.showCustomToastMsg("请正确填写订单数量1", 150);
                     llTotalInput.setBackground(edtBorderIllegal);
                     edtTotalInput.setText("");
                 }
@@ -243,7 +243,6 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
                 llInputLayout.setVisibility(View.GONE);
                 graySpace4.setVisibility(View.GONE);
                 llExpenseDeduction.setVisibility(View.GONE);
-                count = 0;
                 btnPayRMB.setText(strTotalPrice);
                 break;
             case R.id.ll_combinedPayment:
@@ -267,7 +266,7 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
 
         if (count <= 0) {
             llTotalInput.setBackground(edtBorderIllegal);
-            ToastUtils.showCustomToastMsg("请正确填写订单数量", 150);
+            ToastUtils.showCustomToastMsg("请正确填写订单数量2", 150);
             return;
         }
         if (totalPricePresenter == null) {
@@ -280,10 +279,10 @@ public class ConfirmOrderActivity1 extends BaseActivity implements CommonViewImp
 
     private void createOrder() {
         if (count <= 0) {
-            ToastUtils.showCustomToastMsg("请正确填写订单数量", 150);
+            ToastUtils.showCustomToastMsg("请正确填写订单数量3", 150);
             return;
         }
-        if (fUserInputJsl <= 0) {
+        if (payCate == 2 && fUserInputJsl <= 0) {
             llUseJsl.setBackground(edtBorderIllegal);
             edtUseJsl.setText("");
             ToastUtils.showCustomToastMsg("请正确填写使用水方数量", 150);

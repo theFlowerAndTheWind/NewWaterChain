@@ -22,8 +22,10 @@ import com.shuzijieshui.www.waterchain.contract.presenter.UserAddressPresenter;
 import com.shuzijieshui.www.waterchain.contract.view.CreateOrderExchangeViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.UserAddressViewImpl;
 import com.shuzijieshui.www.waterchain.ui.view.AlertChainDialog;
+import com.shuzijieshui.www.waterchain.utils.LogUtils;
 import com.shuzijieshui.www.waterchain.utils.StatusBarUtil;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
+import com.shuzijieshui.www.waterchain.utils.Util;
 import com.shuzijieshui.www.waterchain.utils.image.GlidImageManager;
 
 import butterknife.BindDrawable;
@@ -81,13 +83,11 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     private int cate_id;//
     private int max;//本次最大可兑换量
     private String jsl;
+    private String imgUrl;
     private int counter = 1;
-    private String userJsl;
-    private String payJsl;
-//    private String userGyj;
-//    private String payGyj;
-    private int canOrder = 1;
-    boolean gyjEnough = true;
+    private String goodsPay;//水方单价
+    private String userJsl;//用户持有水方
+    private String payJsl;//需支付水方  此处为商品数量为1
     boolean jslEnough = true;
 
     private AlertChainDialog alertChainDialog;
@@ -95,7 +95,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     private UserAddressPresenter userAddressPresenter;
     private CreateOrderExchangePresenter createOrderExchangePresenter;
     private CreateOrderExchangeReqBean params = new CreateOrderExchangeReqBean();
-    public static final String INT_EXTRA = "int_extra";
+    public static final String INT_EXTRA = "int_extra_where_from";
 
 
     @Override
@@ -104,6 +104,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
         getIntentData(getIntent());
         StatusBarUtil.setImmersionStatus(this, titleBar);
         initView();
+
 
 //        checkUserPayPresenter = new CheckUserPayPresenter(new CheckUserPayModel());
 //        checkUserPayPresenter.attachView(this);
@@ -121,13 +122,14 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
         tvReceiverName.setText(params.getReceiver());
         tvReceiverTel.setText(params.getTel());
         tvReceiverAddress.setText(new StringBuilder().append(params.getProvince()).append(params.getCity()).append(params.getAddress()).toString());
+
     }
 
     private void getIntentData(Intent intent) {
-        //存储用户设置的各信息
+
         if (intent != null) {
             int intExtra = intent.getIntExtra(INT_EXTRA, 1);
-            if (intExtra == 2) {//form
+            if (intExtra == 2) {//form UserGoodsInfoActivity   //存储用户设置的各信息
                 CreateOrderExchangeReqBean bean = intent.getParcelableExtra("CreateOrderExchangeReqBean");
                 if (bean != null) {
                     params.setReceiver(bean.getReceiver());
@@ -135,6 +137,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                     params.setAddress(bean.getAddress());
                     params.setProvince(bean.getProvince());
                     params.setCity(bean.getCity());
+                    LogUtils.e("666after reset："+params.getReceiver()+"@"+params.getTel()+"@"+params.getAddress()+"@"+params.getProvince()+"@"+params.getCity());
                 }
 
             } else if (intExtra == 1) {//from GoodsDetailActivigty
@@ -145,19 +148,15 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                     max = goodsDetailBean.getNow_stock();
                     jsl = goodsDetailBean.getJsl();
 
-
                     params.setGid(id);
                     params.setCount(counter);
                 }
 
                 checkReusltBean = intent.getParcelableExtra(GoodsDetailActivity.EXTRA_CHECKUSERPAYRESPONSEBEAN);
                 if (checkReusltBean != null) {
+                    goodsPay=checkReusltBean.getGoods_pay();
                     userJsl = checkReusltBean.getUser_jsl();
                     payJsl = checkReusltBean.getPay_jsl();
-
-//                    userGyj = checkReusltBean.getUser_gyj();
-//                    payGyj = checkReusltBean.getPay_gyj();
-                    canOrder = checkReusltBean.getCan_order();
                     compute();
                 }
 
@@ -219,7 +218,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                 break;
             case R.id.btn_commit:
 //                doCheckUserPay();
-                if (!gyjEnough || !jslEnough) {
+                if (!jslEnough) {
                     //donothing
                 } else {
                     createOrder();
@@ -227,11 +226,9 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                 break;
 
             case R.id.tv_edt:
-                //将现有信息传给下一个页面显示
-                Intent intent = new Intent(this, UserGoodsInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("jumpActon", R.id.edt);
-                bundle.putParcelable("CreateOrderExchangeReqBean", params);
+                Intent intent=new Intent(this,UserGoodsInfoActivity1.class);
+                intent.putExtra(CreateOrderExchangeReqBean.class.getSimpleName(),params);
+                LogUtils.e("222confirm sent to info："+params.getReceiver()+"@"+params.getTel()+"@"+params.getAddress()+"@"+params.getProvince()+"@"+params.getCity());
                 startActivity(intent);
                 break;
         }
@@ -295,35 +292,20 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
 
     private void compute() {
         float unitPrice = 0;//单价   单位：水方
-//        float user_gyj = 0;
-//        float pay_gyj = 0;
         float user_jsl = 0;
         float pay_jsl = 0;
 
         try {
-            if (!TextUtils.isEmpty(jsl)) {
-                unitPrice = Float.valueOf(jsl);
+            if (!TextUtils.isEmpty(goodsPay)) {
+                unitPrice=Util.str2Flt(Util.deleteComma(goodsPay));
             }
-//            if (!TextUtils.isEmpty(userGyj)) {
-//                user_gyj = Float.valueOf(userGyj);
-//            }
-//            if (!TextUtils.isEmpty(payGyj)) {
-//                pay_gyj = Float.valueOf(payGyj) * counter;
-//            }
             if (!TextUtils.isEmpty(userJsl)) {
-                user_jsl = Float.valueOf(userJsl);
+                user_jsl=Util.str2Flt(Util.deleteComma(userJsl));
             }
-            if (!TextUtils.isEmpty(payJsl)) {
-                pay_jsl = Float.valueOf(payJsl) * counter;
+            if (!TextUtils.isEmpty(goodsPay)) {
+                pay_jsl=Util.str2Flt(Util.deleteComma(goodsPay))*counter;
             }
 
-//            if (pay_gyj > user_gyj) {
-//                gyjEnough = false;
-//                tvNoMomey1.setVisibility(View.VISIBLE);
-//            } else {
-//                gyjEnough = true;
-//                tvNoMomey1.setVisibility(View.GONE);
-//            }
             if (pay_jsl > user_jsl) {
                 jslEnough = false;
                 tvNoMomey2.setVisibility(View.VISIBLE);
@@ -332,14 +314,14 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                 tvNoMomey2.setVisibility(View.GONE);
             }
 
-            if (!gyjEnough || !jslEnough) {
+            if (!jslEnough) {
                 btnCommit.setBackground(grayBg);
             } else {
                 btnCommit.setBackground(blueBg);
             }
-            String str1 = new StringBuilder(String.format("%.5f", (unitPrice * counter))).append("水方").toString();
+            String str1 = new StringBuilder(String.format("%.0f", (unitPrice * counter))).append("水方").toString();
 //            String str2 = new StringBuilder(String.format("%.5f", pay_gyj)).append("水方").toString();
-            String str3 = new StringBuilder(String.format("%.5f", pay_jsl)).append("水方").toString();
+            String str3 = new StringBuilder(String.format("%.0f", pay_jsl)).append("水方").toString();
             tvTotal.setText(str1);
 //            tvGyj.setText(str2);
             tvBalance.setText(str3);
@@ -350,48 +332,14 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     }
 
 
-//    @Override
-//    public void onCheckUserPaySuccess(CheckUserPayResponseBean beans) {
-//        dismissLoadingDialog();
-//        if (beans != null) {
-//            checkUserPayResponseBean = beans;
-//            String title = null;
-//            String msg = null;
-//            String pos = null;
-//            String neg = null;
-//            if (beans.getCan_order()==1) {
-//                String price = new StringBuilder(jslPrice).append("水方").toString();
-//                String pay_gyj = new StringBuilder(beans.getPay_gyj()).append("水方").toString();
-//                String user_gyj = new StringBuilder(beans.getUser_gyj()).append("水方").toString();
-//                String pay_jsl = new StringBuilder(beans.getPay_jsl()).append("水方").toString();
-//                String user_jsl = new StringBuilder(beans.getUser_jsl()).append("水方").toString();
-//
-//                msg = new StringBuilder()
-//                        .append("活动价格：").append(price)
-//                        .append("\n账户余额：").append(pay_gyj).append("(公益金账户:").append(user_gyj).append(")")
-//                        .append("\n兑换后余额：").append(pay_jsl).append("(账户余额：").append(user_jsl).append(")")
-//                        .toString();
-//                title = "确认兑换该活动";
-//                pos = "确定";
-//                neg = "取消";
-//            } else {
-//                title = "余额不足";
-//                msg = "余额不足以支付该活动";
-//                neg = "知道了";
-//            }
-//            showDialog(title, msg, pos, neg);
-//        }
-//    }
-
-//    @Override
-//    public void onCheckUserPayFailed(String msg) {
-//        ToastUtils.showCustomToastMsg(msg, 150);
-//    }
-
-
     @Override
     public void onUserAddressSuccess(UserAddressResponseBean beans) {
         if (beans != null) {
+            params.setReceiver(beans.getReceiver());
+            params.setTel(beans.getTel());
+            params.setAddress(beans.getAddress());
+            params.setProvince(beans.getProvince());
+            params.setCity(beans.getCity());
             tvReceiverName.setText(beans.getReceiver());
             tvReceiverTel.setText(beans.getTel());
             tvReceiverAddress.setText(beans.getAddr());
@@ -406,9 +354,8 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     @Override
     public void onCreateOrderExchangeSuccess(Object o) {
         Intent intent = new Intent(this, PaySuccessActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("from", "ConfirmGoodsOrderActivity");
-        bundle.putString("goodsName", goodsDetailBean.getName());
+        intent.putExtra("from", ConfirmGoodsOrderActivity.class.getSimpleName());
+        intent.putExtra("goodsName", goodsDetailBean.getName());
         startActivity(intent);
     }
 

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by songxiaotao on 2019/1/30.
+ * Created by sxt on 2019/4/14.
  * Class Note:
  */
 
@@ -27,7 +27,7 @@ public class GoodsListModel {
      * @param cate_id 商品分类 1（实物商品）|2（活动）
      * @param count 当前页面已显示指定分类下数据个数
      */
-    public void getGoodsLists(BaseActivity activity,int cate_id,int count,final GoodsListsCallBack callBack){
+    public void getGoodsLists(BaseActivity activity, final int cate_id, int count, final GoodsListsCallBack callBack){
         HashMap<String,Object> params = new HashMap<>();
         params.put("cate_id",cate_id);
         params.put("count",count);
@@ -38,7 +38,7 @@ public class GoodsListModel {
                 .subscribe(new BaseObserver<List<GoodsListsResponseBean>>(activity) {
                     @Override
                     protected void onSuccess(List<GoodsListsResponseBean> goodsListsResponseBean) throws Exception {
-                        callBack.success(goodsListsResponseBean);
+                        callBack.success(goodsListsResponseBean,cate_id);
                     }
 
                     @Override
@@ -64,7 +64,7 @@ public class GoodsListModel {
     }
 
     public interface GoodsListsCallBack{
-        void success(List<GoodsListsResponseBean> goodsListsResponseBean);
+        void success(List<GoodsListsResponseBean> goodsListsResponseBean,int cate_id);
         void failed(String msg);
     }
 }

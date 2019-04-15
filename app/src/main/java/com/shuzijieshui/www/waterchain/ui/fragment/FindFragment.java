@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,9 +28,7 @@ import com.shuzijieshui.www.waterchain.contract.presenter.InfoListPresenter;
 import com.shuzijieshui.www.waterchain.contract.view.AdImgViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.BannerListViewImpl;
 import com.shuzijieshui.www.waterchain.contract.view.InfoListViewImpl;
-import com.shuzijieshui.www.waterchain.ui.activity.EnterpriseActivity;
-import com.shuzijieshui.www.waterchain.ui.activity.GoodsDetailActivity;
-import com.shuzijieshui.www.waterchain.ui.activity.GoodsListsActivity;
+import com.shuzijieshui.www.waterchain.ui.activity.GoodsListActivity;
 import com.shuzijieshui.www.waterchain.ui.activity.InfoDetailActivity;
 import com.shuzijieshui.www.waterchain.ui.adapter.InfoListsAdapter;
 import com.shuzijieshui.www.waterchain.utils.ToastUtils;
@@ -59,9 +58,7 @@ public class FindFragment extends BaseFragment implements
 
 
     Unbinder unbinder;
-    @BindView(R.id.banner_guide_content)
     BGABanner mContentBanner;
-    @BindView(R.id.img_goods)
     ImageView imgGoods;
     @BindView(R.id.xrv)
     XRecyclerView xrv;
@@ -69,6 +66,7 @@ public class FindFragment extends BaseFragment implements
     TextView tvDetail;
     @BindView(R.id.relative_hint)
     RelativeLayout relativeHint;
+    RelativeLayout llHeader;
     private int dataCounter = 0;
     private LinkedList<InfoListsResponseBean.InfoEntity> list = new LinkedList<>();
     private InfoListsAdapter infoListsAdapter;
@@ -90,18 +88,6 @@ public class FindFragment extends BaseFragment implements
         requestNetwork();
     }
 
-    public void requestNetwork() {
-        if (bannerListPresenter != null) {
-            bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);
-        }
-        if (adImgPresenter != null) {
-            adImgPresenter.getAdImg(getBaseActivity(), "ad_goods");
-        }
-        if (infoListPresenter != null) {
-            infoListPresenter.getInfoList(getBaseActivity(), dataCounter);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_find, container, false);
@@ -112,6 +98,20 @@ public class FindFragment extends BaseFragment implements
     }
 
     private void initView() {
+        llHeader= (RelativeLayout) LayoutInflater.from(getBaseActivity()).inflate(R.layout.layout_find_fragment_header,null);
+        mContentBanner=llHeader.findViewById(R.id.banner);
+        imgGoods=llHeader.findViewById(R.id.img_goods);
+        imgGoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.putExtra("target","发现");
+                jump(GoodsListActivity.class, intent);
+            }
+        });
+        xrv.addHeaderView(llHeader);
+
+
         mContentBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerListResponseBean.BannerListEntity>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, BannerListResponseBean.BannerListEntity model, int position) {
@@ -121,7 +121,6 @@ public class FindFragment extends BaseFragment implements
 
         infoListsAdapter = new InfoListsAdapter(getActivity(), list);
         infoListsAdapter.setOnItemClickListener(this);
-//        xrv.setNestedScrollingEnabled(false);
         xrv.setArrowImageView(R.drawable.iconfont_downgrey);
         xrv.setLayoutManager(new LinearLayoutManager(getActivity()));
         xrv.setLoadingMoreEnabled(true);
@@ -242,7 +241,7 @@ public class FindFragment extends BaseFragment implements
     }
 
 
-    @OnClick({R.id.tv_detail, R.id.img_goods})
+    @OnClick({R.id.tv_detail})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -253,15 +252,22 @@ public class FindFragment extends BaseFragment implements
                 getData(dataCounter);
                 break;
 
-            case R.id.img_goods:
-                Intent intent=new Intent();
-                intent.putExtra("target","发现");
-                jump(GoodsListsActivity.class, intent);
             default:
                 break;
         }
     }
 
+    private void requestNetwork() {
+        if (bannerListPresenter != null) {
+            bannerListPresenter.getBannerList(getBaseActivity(), 3, 1);
+        }
+        if (adImgPresenter != null) {
+            adImgPresenter.getAdImg(getBaseActivity(), "ad_goods");
+        }
+        if (infoListPresenter != null) {
+            infoListPresenter.getInfoList(getBaseActivity(), dataCounter);
+        }
+    }
 
     @Override
     public void onItemClickListener(int id) {
@@ -273,25 +279,10 @@ public class FindFragment extends BaseFragment implements
     }
 
     @Override
-    public void onDestroy() {
-        unbinder.unbind();
-        infoListPresenter.detachView();
-        bannerListPresenter.detachView();
-        adImgPresenter.detachView();
-        super.onDestroy();
-    }
-
-    @Override
     public void onBannerListSuccess(List<BannerListResponseBean.BannerListEntity> list) {
         banners.clear();
         banners.addAll(list);
         mContentBanner.setData(banners,null);
-//        for (BannerListResponseBean.BannerListEntity listEntity : list) {
-//            imgList.add(listEntity.getImg());
-//            nameList.add(listEntity.getName());
-//            imgUrlList.add(listEntity.getUrl());
-//            mContentBanner.setData(imgList, null);
-//        }
     }
 
     @Override
@@ -310,5 +301,14 @@ public class FindFragment extends BaseFragment implements
     @Override
     public void onGetAdImgFailed(String msg) {
         ToastUtils.showCustomToast(msg,0);
+    }
+
+    @Override
+    public void onDestroy() {
+        unbinder.unbind();
+        infoListPresenter.detachView();
+        bannerListPresenter.detachView();
+        adImgPresenter.detachView();
+        super.onDestroy();
     }
 }

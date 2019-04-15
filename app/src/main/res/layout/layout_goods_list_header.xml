@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_header_goods_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <cn.bingoogolapple.bgabanner.BGABanner
+        android:id="@+id/banner"
+        style="@style/BannerDefaultStyle"
+        android:background="@color/white"
+        app:banner_pageChangeDuration="1000"
+        app:banner_pointAutoPlayAble="false"
+        app:banner_pointContainerBackground="@android:color/transparent"
+        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointTopBottomMargin="15dp"
+        app:banner_transitionEffect="alpha" />
+
+    <LinearLayout
+        android:id="@+id/ll_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/module_include_gray_space" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commit_btn_height"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/layout_horizontal_padding"
+            android:text="热门活动"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/xrv_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_goods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/module_include_gray_space" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commit_btn_height"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/layout_horizontal_padding"
+            android:text="热门商品"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

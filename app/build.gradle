@@ -83,23 +83,6 @@ android {
             outputFileName = "${apkName}_${version}-${buildTime}.apk"
         }
 
-//        variant.outputs.all { output ->
-//            def outputFile = output.outputFile
-//            def buildTime = new Date().format("yyyy-MM-dd")
-//            println outputFile     //打印日志
-//            if (outputFile != null && outputFile.name.contains('.apk')) {
-//                // 版本号-版本名称-编译时间.apk
-//                def version = "${variant.flavorName}_v${variant.versionName}_(${variant.versionCode})"
-//                def apkName = "app" //输出名字
-//                if (variant.buildType.name == "debug") {
-//                    apkName = "WaterChain_Debug"
-//                } else if (variant.buildType.name == "release") {
-//                    apkName = "WaterChain_Release"
-//                }
-//                def fileName = "${apkName}_${version}_${buildTime}.apk"
-//                outputFileName = fileName
-//            }
-//        }
     }
 
     lintOptions { //程序在build的时候,会执行lint检查，有任何的错误或者警告提示，都会终止构建,提示BUILD FAILED，我们可以关掉，忽略lint错误

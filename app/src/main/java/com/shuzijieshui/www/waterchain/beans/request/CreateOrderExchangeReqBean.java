@@ -114,4 +114,102 @@ public class CreateOrderExchangeReqBean implements Parcelable {
             return new CreateOrderExchangeReqBean[size];
         }
     };
+
+
+//    public int getGid() {
+//        return gid;
+//    }
+//
+//    public void setGid(int gid) {
+//        this.gid = gid;
+//    }
+//
+//    public int getCount() {
+//        return count;
+//    }
+//
+//    public void setCount(int count) {
+//        this.count = count;
+//    }
+//
+//    public String getReceiver() {
+//        return receiver;
+//    }
+//
+//    public void setReceiver(String receiver) {
+//        this.receiver = receiver;
+//    }
+//
+//    public String getTel() {
+//        return tel;
+//    }
+//
+//    public void setTel(String tel) {
+//        this.tel = tel;
+//    }
+//
+//    public String getProvince() {
+//        return province;
+//    }
+//
+//    public void setProvince(String province) {
+//        this.province = province;
+//    }
+//
+//    public String getCity() {
+//        return city;
+//    }
+//
+//    public void setCity(String city) {
+//        this.city = city;
+//    }
+//
+//    public String getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeInt(this.gid);
+//        dest.writeInt(this.count);
+//        dest.writeString(this.receiver);
+//        dest.writeString(this.tel);
+//        dest.writeString(this.province);
+//        dest.writeString(this.city);
+//        dest.writeString(this.address);
+//    }
+//
+//    public CreateOrderExchangeReqBean() {
+//    }
+//
+//    protected CreateOrderExchangeReqBean(Parcel in) {
+//        this.gid = in.readInt();
+//        this.count = in.readInt();
+//        this.receiver = in.readString();
+//        this.tel = in.readString();
+//        this.province = in.readString();
+//        this.city = in.readString();
+//        this.address = in.readString();
+//    }
+//
+//    public static final Parcelable.Creator<CreateOrderExchangeReqBean> CREATOR = new Parcelable.Creator<CreateOrderExchangeReqBean>() {
+//        @Override
+//        public CreateOrderExchangeReqBean createFromParcel(Parcel source) {
+//            return new CreateOrderExchangeReqBean(source);
+//        }
+//
+//        @Override
+//        public CreateOrderExchangeReqBean[] newArray(int size) {
+//            return new CreateOrderExchangeReqBean[size];
+//        }
+//    };
 }

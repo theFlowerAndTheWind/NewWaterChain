@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/module_include_title_bar"/>
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_goods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_goods"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<include layout="@layout/module_include_gray_space" />-->
+        <!---->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/commit_btn_height"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="@dimen/layout_horizontal_padding"-->
+            <!--android:text="热门商品"-->
+            <!--android:textColor="@color/text_black"-->
+            <!--android:textSize="16sp" />-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:descendantFocusability="blocksDescendants">-->
+
+        <!--<com.jcodecraeer.xrecyclerview.XRecyclerView-->
+            <!--android:id="@+id/xrv_goods"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+</LinearLayout>

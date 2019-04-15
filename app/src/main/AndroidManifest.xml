@@ -170,7 +170,7 @@
             android:name="com.shuzijieshui.www.waterchain.ui.activity.InfoDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.shuzijieshui.www.waterchain.ui.activity.GoodsListsActivity"
+            android:name="com.shuzijieshui.www.waterchain.ui.activity.GoodsListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.shuzijieshui.www.waterchain.ui.activity.TradeListsActivity"
@@ -190,10 +190,12 @@
             android:screenOrientation="portrait"/>
         <activity android:name="com.shuzijieshui.www.waterchain.ui.activity.ConfirmGoodsOrderActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTask"/>
         <activity android:name="com.shuzijieshui.www.waterchain.ui.activity.UserGoodsInfoActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
+        <activity android:name="com.shuzijieshui.www.waterchain.ui.activity.UserGoodsInfoActivity1"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

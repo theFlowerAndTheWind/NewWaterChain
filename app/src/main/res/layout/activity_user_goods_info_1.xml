@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/module_include_title_bar" />
+
+    <TextView
+        style="@style/style_txt_confirm_order1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical"
+        android:text="配送信息" />
+
+    <include layout="@layout/module_include_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_receiver_name"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_receiver_name_txt"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="收件人" />
+
+        <EditText
+            android:id="@+id/edt_receiver_name"
+            style="@style/style_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginLeft="@dimen/layout_horizontal_margin"
+            android:maxLength="20"
+            android:paddingRight="20px"
+            android:textColor="@color/text_gray"
+            android:textDirection="rtl"
+            android:textSize="11sp" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_receiver_name"-->
+        <!--style="@style/style_txt_distribution_info_1"-->
+        <!--android:layout_width="0px"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_toLeftOf="@+id/btn2"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="right" />-->
+
+    </LinearLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_receiver_tel"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_receiver_tel_txt"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="手机号码" />
+
+        <EditText
+            android:id="@+id/edt_receiver_tel"
+            style="@style/style_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginLeft="@dimen/layout_horizontal_margin"
+            android:inputType="number"
+            android:maxLength="11"
+            android:paddingRight="20px"
+            android:textColor="@color/text_gray"
+            android:textDirection="rtl"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_receiver_tel"
+            style="@style/style_txt_distribution_info_1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn2"
+            android:layout_weight="1"
+            android:gravity="right" />
+
+    </LinearLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <RelativeLayout
+        android:id="@+id/rl_receiver_city"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height">
+
+        <TextView
+            android:id="@+id/tv4"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="所在城市" />
+
+
+        <ImageView
+            android:id="@+id/btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_go_to" />
+
+        <TextView
+            android:id="@+id/tv_receiver_city"
+            style="@style/style_txt_distribution_info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn4"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/module_include_divider" />
+
+    <LinearLayout
+        android:id="@+id/ll_receiver_addr"
+        style="@style/PaddinLeftRight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commit_btn_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_receiver_addr_txt"
+            style="@style/style_txt_confirm_order2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="详细地址" />
+
+        <EditText
+            android:id="@+id/edt_receiver_addr"
+            style="@style/style_edt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginLeft="@dimen/layout_horizontal_margin"
+            android:lines="3"
+            android:maxLength="50"
+            android:paddingRight="20px"
+            android:textColor="@color/text_gray"
+            android:textDirection="rtl"
+            android:textSize="11sp" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_receiver_addr"-->
+        <!--style="@style/style_txt_distribution_info_1"-->
+        <!--android:layout_width="0px"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_toLeftOf="@+id/btn2"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="right" />-->
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/style_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="@dimen/view_space_bottom_btn_above"
+        android:layout_marginRight="@dimen/layout_horizontal_margin"
+        android:text="保存" />
+
+
+</LinearLayout>

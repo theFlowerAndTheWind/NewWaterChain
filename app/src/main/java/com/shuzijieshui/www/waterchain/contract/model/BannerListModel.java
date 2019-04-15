@@ -20,19 +20,18 @@ import java.util.List;
 public class BannerListModel {
 
     /**
-     *
      * @param activity
-     * @param cate 终端类型 （2IOS/3ANDROID）
+     * @param cate     终端类型 （2IOS/3ANDROID）
      * @param position 1首页 2资讯页
      * @param callBack
      */
-    public void getBannerList(BaseActivity activity, int cate, int position, final BannerListCallBack callBack){
-        HashMap<String,Object> params = new HashMap<>();
+    public void getBannerList(BaseActivity activity, int cate, int position, final BannerListCallBack callBack) {
+        HashMap<String, Object> params = new HashMap<>();
         //以下两个参数接口doc中要求传递，后接口文档修改，无参
-        params.put("cate",cate);
-        params.put("position",position);
+        if (cate > 0) params.put("cate", cate);
+        if (position > 0) params.put("position", position);
         RetrofitFactory.getInstance().createService()
-                .bannerList(RequestUtil.getRequestHashBody(params,false))
+                .bannerList(RequestUtil.getRequestHashBody(params, false))
                 .compose(activity.<BaseEntity<BannerListResponseBean>>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity<BannerListResponseBean>>io())
                 .subscribe(new BaseObserver<BannerListResponseBean>() {
@@ -69,7 +68,6 @@ public class BannerListModel {
                     }
 
 
-
                     @Override
                     protected void onCodeError(String code, String msg) throws Exception {
                         super.onCodeError(code, msg);
@@ -79,8 +77,9 @@ public class BannerListModel {
 
     }
 
-    public interface BannerListCallBack{
+    public interface BannerListCallBack {
         void success(List<BannerListResponseBean.BannerListEntity> list);
+
         void failed(String msg);
     }
 }

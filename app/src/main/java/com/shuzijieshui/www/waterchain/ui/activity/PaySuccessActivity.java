@@ -44,7 +44,7 @@ public class PaySuccessActivity extends BaseActivity {
 
     private String from = "";
     private String goods = "";
-    private String oid="";
+    private String oid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,8 @@ public class PaySuccessActivity extends BaseActivity {
         if (intent != null) {
             from = intent.getStringExtra("from");
             goods = intent.getStringExtra("goodsName");
-            if(from.equals("ConfirmOrderActivity1")){
-                oid=intent.getStringExtra("oid");
+            if (!TextUtils.isEmpty(from) && from.equals("ConfirmOrderActivity1")) {
+                oid = intent.getStringExtra("oid");
             }
         }
     }
@@ -69,14 +69,14 @@ public class PaySuccessActivity extends BaseActivity {
     private void initView() {
         tv_title_center.setText("支付成功");
         if (!TextUtils.isEmpty(from)) {
-            if(from.equals("ConfirmGoodsOrderActivity")){
+            if (from.equals(ConfirmGoodsOrderActivity.class.getSimpleName())) {
                 tv_title_center.setText("兑换商城");
                 tv1.setText("你已成功兑换：");
                 tv2.setText(goods);
                 tv3.setVisibility(View.GONE);
                 btn.setText("兑换记录");
                 tv4.setText("返回商城");
-            }else if(from.equals("ConfirmOrderActivity1")){
+            } else if (from.equals("ConfirmOrderActivity1")) {
                 tv1.setText("已成功下单，向企业打款后可获取服务");
                 tv2.setVisibility(View.GONE);
                 tv3.setVisibility(View.GONE);
@@ -90,20 +90,20 @@ public class PaySuccessActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_gohome:
                 if (from.equals("ConfirmGoodsOrderActivity")) {
-                    jump(GoodsListsActivity.class);
+                    jump(GoodsListActivity.class);
                 } else {
                     jump(MainActivity.class);
                 }
                 finish();
                 break;
             case R.id.btn_viewOrder:
-                if (from.equals("ConfirmGoodsOrderActivity")) {
+                if (from.equals(ConfirmGoodsOrderActivity.class.getSimpleName())) {
                     jump(GoodsActivity.class);
                 } else if (from.equals("ConfirmOrderActivity")) {
                     jump(OrderListsActivity.class);
-                }else if(from.equals("ConfirmOrderActivity1")){
-                    Intent intent=new Intent(this,OrderDetailActivity1.class);
-                    intent.putExtra("id",oid);
+                } else if (from.equals("ConfirmOrderActivity1")) {
+                    Intent intent = new Intent(this, OrderDetailActivity1.class);
+                    intent.putExtra("id", oid);
                     startActivity(intent);
                 }
                 finish();

@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <cn.bingoogolapple.bgabanner.BGABanner
-            android:id="@+id/banner_guide_content"
+            android:id="@+id/banner"
             style="@style/BannerDefaultStyle"
             android:background="@color/white"
             app:banner_pageChangeDuration="1000"
@@ -38,7 +38,7 @@
             android:descendantFocusability="blocksDescendants">
 
             <com.jcodecraeer.xrecyclerview.XRecyclerView
-                android:id="@+id/rc_wash_list"
+                android:id="@+id/xrv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>

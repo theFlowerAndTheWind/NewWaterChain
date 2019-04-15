@@ -11,6 +11,7 @@ import com.shuzijieshui.www.waterchain.http.utils.ObservableTransformerUtils;
 import com.shuzijieshui.www.waterchain.http.utils.RequestUtil;
 import com.shuzijieshui.www.waterchain.utils.LogUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,9 +20,12 @@ import java.util.List;
  */
 
 public class ServiceListModel {
-    public void getSrviceList(BaseActivity activity,final ServiceListCallBack callBack){
+    public void getSrviceList(BaseActivity activity,int count,final ServiceListCallBack callBack){
+        HashMap<String, Object> params = new HashMap<>();
+        //以下两个参数接口doc中要求传递，后接口文档修改，无参
+        params.put("count", count);
         RetrofitFactory.getInstance().createService()
-                .serviceList(RequestUtil.getRequestHashBody(null,false))
+                .serviceList(RequestUtil.getRequestHashBody(params,false))
                 .compose(activity.<BaseEntity<ServiceListResponseBean>>bindToLifecycle())
                 .compose(ObservableTransformerUtils.<BaseEntity<ServiceListResponseBean>>io())
                 .subscribe(new BaseObserver<ServiceListResponseBean>(activity) {
