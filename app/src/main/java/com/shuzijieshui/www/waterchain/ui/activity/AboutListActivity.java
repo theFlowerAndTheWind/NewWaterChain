@@ -63,8 +63,8 @@ public class AboutListActivity extends BaseActivity implements AppUpdateViewImpl
         switch (id) {
             case R.id.btn_about:
                 Intent intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra(WebViewActivity.WEBVIEW_ACT_TITLE,"关于我们");
-                intent.putExtra(WebViewActivity.GET_URL_TYPE,"about");
+                intent.putExtra(WebViewActivity.WEBVIEW_ACT_TITLE, "关于我们");
+                intent.putExtra(WebViewActivity.GET_URL_TYPE, "about");
                 startActivity(intent);
 //                startActivity(new Intent(this, AboutActivity.class));
                 break;
@@ -87,7 +87,6 @@ public class AboutListActivity extends BaseActivity implements AppUpdateViewImpl
     @Override
     public void onAppUpdateSuccess(Object bean) {
         dismissLoadingDialog();
-
         if (bean instanceof AppUpdateResponseBean) {
             String version = ((AppUpdateResponseBean) bean).getVer();
             if (TextUtils.isEmpty(version)) {
@@ -107,8 +106,8 @@ public class AboutListActivity extends BaseActivity implements AppUpdateViewImpl
         }
         if (alertChainDialog != null) {
             alertChainDialog.builder().setCancelable(false);
-            alertChainDialog.setTitle("提示消息")
-                    .setMsg(isUpdate ? "有新版可供更新" : "当前已是最新版本")
+            alertChainDialog.setTitle(isUpdate?"发现新版本":"提示消息")
+                    .setMsg(isUpdate ? "有新版可供更新,为了您有更好的使用体验，请前往应用市场更新" : "当前已是最新版本")
                     .setPositiveButton("确定", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -116,14 +115,7 @@ public class AboutListActivity extends BaseActivity implements AppUpdateViewImpl
                                 update();
                             }
                         }
-
-
-                    }).setNegativeButton("取消", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            }).show();
+                    }).show();
         }
     }
 

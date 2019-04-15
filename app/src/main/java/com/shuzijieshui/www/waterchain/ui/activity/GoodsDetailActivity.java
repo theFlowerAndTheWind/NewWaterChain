@@ -190,7 +190,8 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailView
                 String user_jsl = new StringBuilder(String.format("%.0f", fUserJsl)).append("水方").toString();
 
                 msg = new StringBuilder()
-                        .append("活动价格：").append(goods_pay)
+                        .append(cate)
+                        .append("价格：").append(goods_pay)
                         .append("\n账户余额：").append(user_jsl)/*.append("(公益金账户:").append(user_gyj).append(")")*/
                         .append("\n需支付：").append(pay_jsl)/*.append("(账户余额：").append(user_jsl).append(")")*/
                         .toString();

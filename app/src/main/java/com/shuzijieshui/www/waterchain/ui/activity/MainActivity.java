@@ -442,6 +442,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
     public void onAppUpdateSuccess(Object bean) {
         if (bean instanceof AppUpdateResponseBean) {
             String version = ((AppUpdateResponseBean) bean).getVer();
+
             if (TextUtils.isEmpty(version)) {
                 isUpdate = false;
                 return;
@@ -460,8 +461,8 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
         if (isUpdate) {
             if (alertChainDialog != null) {
                 alertChainDialog.builder().setCancelable(false);
-                alertChainDialog.setTitle("提示消息")
-                        .setMsg(isUpdate ? "有新版可供更新" : "当前已是最新版本")
+                alertChainDialog.setTitle(isUpdate?"发现新版本":"提示消息")
+                        .setMsg(isUpdate ? "有新版可供更新,为了您有更好的使用体验，请前往应用市场更新" : "当前已是最新版本")
                         .setPositiveButton("确定", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -471,12 +472,7 @@ public class MainActivity extends BaseActivity implements AppUpdateViewImpl {
                             }
 
 
-                        }).setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                }).show();
+                        }).show();
             }
         }
     }

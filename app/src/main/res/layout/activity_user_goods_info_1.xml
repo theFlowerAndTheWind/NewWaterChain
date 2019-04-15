@@ -40,18 +40,9 @@
             android:maxLength="20"
             android:paddingRight="20px"
             android:textColor="@color/text_gray"
-            android:textDirection="rtl"
+            android:gravity="center_vertical|right"
             android:textSize="11sp" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_receiver_name"-->
-        <!--style="@style/style_txt_distribution_info_1"-->
-        <!--android:layout_width="0px"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_toLeftOf="@+id/btn2"-->
-        <!--android:layout_weight="1"-->
-        <!--android:gravity="right" />-->
 
     </LinearLayout>
 
@@ -83,7 +74,7 @@
             android:maxLength="11"
             android:paddingRight="20px"
             android:textColor="@color/text_gray"
-            android:textDirection="rtl"
+            android:gravity="center_vertical|right"
             android:textSize="11sp" />
 
         <TextView
@@ -162,18 +153,9 @@
             android:maxLength="50"
             android:paddingRight="20px"
             android:textColor="@color/text_gray"
-            android:textDirection="rtl"
+            android:gravity="center_vertical|right"
             android:textSize="11sp" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_receiver_addr"-->
-        <!--style="@style/style_txt_distribution_info_1"-->
-        <!--android:layout_width="0px"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_toLeftOf="@+id/btn2"-->
-        <!--android:layout_weight="1"-->
-        <!--android:gravity="right" />-->
 
     </LinearLayout>
 

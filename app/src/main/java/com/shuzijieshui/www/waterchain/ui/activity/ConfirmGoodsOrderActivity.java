@@ -57,7 +57,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     TextView tvReceiverAddress;
     @BindView(R.id.tv_total)
     TextView tvTotal;
-//    @BindView(R.id.tv_gyj)
+    //    @BindView(R.id.tv_gyj)
 //    TextView tvGyj;
     @BindView(R.id.tv_balance)
     TextView tvBalance;
@@ -67,7 +67,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     ImageView btnSubtract;
     @BindView(R.id.btn_commit)
     Button btnCommit;
-//    @BindView(R.id.tv_no_nomey1)
+    //    @BindView(R.id.tv_no_nomey1)
 //    TextView tvNoMomey1;
     @BindView(R.id.tv_no_nomey2)
     TextView tvNoMomey2;
@@ -91,7 +91,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     boolean jslEnough = true;
 
     private AlertChainDialog alertChainDialog;
-//    private CheckUserPayPresenter checkUserPayPresenter;
+    //    private CheckUserPayPresenter checkUserPayPresenter;
     private UserAddressPresenter userAddressPresenter;
     private CreateOrderExchangePresenter createOrderExchangePresenter;
     private CreateOrderExchangeReqBean params = new CreateOrderExchangeReqBean();
@@ -137,7 +137,6 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                     params.setAddress(bean.getAddress());
                     params.setProvince(bean.getProvince());
                     params.setCity(bean.getCity());
-                    LogUtils.e("666after reset："+params.getReceiver()+"@"+params.getTel()+"@"+params.getAddress()+"@"+params.getProvince()+"@"+params.getCity());
                 }
 
             } else if (intExtra == 1) {//from GoodsDetailActivigty
@@ -154,7 +153,7 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
 
                 checkReusltBean = intent.getParcelableExtra(GoodsDetailActivity.EXTRA_CHECKUSERPAYRESPONSEBEAN);
                 if (checkReusltBean != null) {
-                    goodsPay=checkReusltBean.getGoods_pay();
+                    goodsPay = checkReusltBean.getGoods_pay();
                     userJsl = checkReusltBean.getUser_jsl();
                     payJsl = checkReusltBean.getPay_jsl();
                     compute();
@@ -226,9 +225,8 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
                 break;
 
             case R.id.tv_edt:
-                Intent intent=new Intent(this,UserGoodsInfoActivity1.class);
-                intent.putExtra(CreateOrderExchangeReqBean.class.getSimpleName(),params);
-                LogUtils.e("222confirm sent to info："+params.getReceiver()+"@"+params.getTel()+"@"+params.getAddress()+"@"+params.getProvince()+"@"+params.getCity());
+                Intent intent = new Intent(this, UserGoodsInfoActivity1.class);
+                intent.putExtra(CreateOrderExchangeReqBean.class.getSimpleName(), params);
                 startActivity(intent);
                 break;
         }
@@ -254,6 +252,31 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
     }
 
     private void createOrder() {
+        if (params.getCount() <= 0) {
+            ToastUtils.showCustomToastMsg("请选择正确的数量！",150);
+            return;
+        }
+        if (TextUtils.isEmpty(params.getReceiver())) {
+            ToastUtils.showCustomToastMsg("收件人姓名不能为空",150);
+            return;
+        }
+        if (TextUtils.isEmpty(params.getTel())) {
+            ToastUtils.showCustomToastMsg("手机号码姓名不能为空",150);
+            return;
+        }
+        if (TextUtils.isEmpty(params.getAddress())) {
+            ToastUtils.showCustomToastMsg("地址不能为空",150);
+            return;
+        }
+        if (TextUtils.isEmpty(params.getProvince())) {
+            ToastUtils.showCustomToastMsg("请选择所在省份",150);
+            return;
+        }
+        if (TextUtils.isEmpty(params.getCity())) {
+            ToastUtils.showCustomToastMsg("请选择所在城市",150);
+            return;
+        }
+
         if (createOrderExchangePresenter == null) {
             createOrderExchangePresenter = new CreateOrderExchangePresenter(new CreateOrderExchangeModel());
             createOrderExchangePresenter.attachView(this);
@@ -297,13 +320,13 @@ public class ConfirmGoodsOrderActivity extends BaseActivity implements /*CheckUs
 
         try {
             if (!TextUtils.isEmpty(goodsPay)) {
-                unitPrice=Util.str2Flt(Util.deleteComma(goodsPay));
+                unitPrice = Util.str2Flt(Util.deleteComma(goodsPay));
             }
             if (!TextUtils.isEmpty(userJsl)) {
-                user_jsl=Util.str2Flt(Util.deleteComma(userJsl));
+                user_jsl = Util.str2Flt(Util.deleteComma(userJsl));
             }
             if (!TextUtils.isEmpty(goodsPay)) {
-                pay_jsl=Util.str2Flt(Util.deleteComma(goodsPay))*counter;
+                pay_jsl = Util.str2Flt(Util.deleteComma(goodsPay)) * counter;
             }
 
             if (pay_jsl > user_jsl) {
