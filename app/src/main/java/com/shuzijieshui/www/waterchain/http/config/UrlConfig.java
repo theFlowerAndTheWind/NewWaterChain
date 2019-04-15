@@ -1112,4 +1112,9 @@ public class UrlConfig {
      * 我的资产-回购虚拟股票
      */
     public static final String STOCK_2_JSL="https://www.shuzijieshui.com/api/home/user/stockToJsl";
+
+    /**
+     * 系统消息
+     */
+    public static final String SYS_MSG="https://www.shuzijieshui.com/api/home/user/msg";
 }

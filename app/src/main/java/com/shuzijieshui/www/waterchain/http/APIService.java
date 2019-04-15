@@ -23,6 +23,7 @@ import com.shuzijieshui.www.waterchain.beans.RegisterResponseBean;
 import com.shuzijieshui.www.waterchain.beans.SellResponseBean;
 import com.shuzijieshui.www.waterchain.beans.ServiceDetail;
 import com.shuzijieshui.www.waterchain.beans.ServiceListResponseBean;
+import com.shuzijieshui.www.waterchain.beans.SysMsg;
 import com.shuzijieshui.www.waterchain.beans.TotalPriceRes;
 import com.shuzijieshui.www.waterchain.beans.TradeCenterResponseBean;
 import com.shuzijieshui.www.waterchain.beans.TradeDetailResponseBean;
@@ -253,5 +254,8 @@ public interface APIService {
 
     @POST(UrlConfig.STOCK_2_JSL)
     Observable<BaseEntity> stock2Jsl(@Body RequestBody requestBody);
+
+    @POST(UrlConfig.SYS_MSG)
+    Observable<BaseEntity<List<SysMsg>>>getSysMsg(@Body RequestBody requestBody);
 }
 
