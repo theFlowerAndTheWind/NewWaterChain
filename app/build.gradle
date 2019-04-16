@@ -79,7 +79,7 @@ android {
                 apkName = "WaterChain_Release"
             }
             def version = "${variant.flavorName}_v${variant.versionName}_(${variant.versionCode})"
-            def buildTime = new Date().format("yyyy-MM-dd HH:mm")
+            def buildTime = new Date().format("yyyy-MM-dd-HHmm")
             outputFileName = "${apkName}_${version}-${buildTime}.apk"
         }
 
